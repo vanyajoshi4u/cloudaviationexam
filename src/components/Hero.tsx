@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/ThemeProvider";
 import heroImage from "@/assets/hero-runway.jpg";
 
 const Hero = () => {
+  const { theme } = useTheme();
+
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image with Overlay */}
@@ -9,7 +12,7 @@ const Hero = () => {
         <img
           src={heroImage}
           alt="Aircraft on runway at dawn"
-          className="w-full h-full object-cover opacity-30"
+          className={`w-full h-full object-cover ${theme === 'light' ? 'opacity-40' : 'opacity-30'}`}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
         <div className="absolute inset-0 bg-gradient-hero" />
