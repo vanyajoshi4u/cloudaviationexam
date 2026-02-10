@@ -5,7 +5,8 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  :root,
+  .dark {
     --background: 225 30% 6%;
     --foreground: 210 40% 95%;
 
@@ -52,6 +53,54 @@
     --sky-gradient-start: 217 91% 60%;
     --sky-gradient-end: 225 80% 35%;
     --gold: 38 92% 55%;
+  }
+
+  .light {
+    --background: 210 30% 98%;
+    --foreground: 225 30% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 225 30% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 30% 10%;
+
+    --primary: 217 91% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 215 25% 93%;
+    --secondary-foreground: 225 25% 20%;
+
+    --muted: 215 20% 93%;
+    --muted-foreground: 215 15% 45%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 20% 88%;
+    --input: 215 20% 88%;
+    --ring: 217 91% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 210 25% 96%;
+    --sidebar-foreground: 225 25% 20%;
+    --sidebar-primary: 217 91% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 20% 93%;
+    --sidebar-accent-foreground: 225 25% 20%;
+    --sidebar-border: 215 20% 88%;
+    --sidebar-ring: 217 91% 50%;
+
+    --glass: 210 20% 96%;
+    --glass-border: 215 20% 85%;
+    --glow: 217 91% 50%;
+    --sky-gradient-start: 217 91% 50%;
+    --sky-gradient-end: 225 80% 40%;
+    --gold: 38 92% 50%;
   }
 }
 
@@ -103,7 +152,7 @@
   }
 
   .bg-gradient-aviation {
-    background: linear-gradient(180deg, hsl(225, 30%, 6%) 0%, hsl(225, 35%, 10%) 50%, hsl(217, 40%, 8%) 100%);
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--card)) 50%, hsl(var(--background)) 100%);
   }
 
   .bg-gradient-hero {

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plane, Menu, X, LogIn } from "lucide-react";
+import { Plane, Menu, X, LogIn, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/components/ThemeProvider";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -12,6 +13,7 @@ const navItems = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <motion.nav
@@ -52,8 +54,14 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
               <LogIn className="w-4 h-4 mr-2" />
               Login
@@ -94,6 +102,13 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-2 border-t border-border/30">
+                <button
+                  onClick={toggleTheme}
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground py-2"
+                >
+                  {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                  {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                </button>
                 <Button variant="ghost" size="sm" className="justify-start text-muted-foreground">
                   <LogIn className="w-4 h-4 mr-2" />
                   Login
