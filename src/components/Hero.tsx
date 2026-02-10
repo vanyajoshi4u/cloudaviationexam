@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-aircraft.jpg";
+import heroImage from "@/assets/hero-runway.jpg";
 
 const Hero = () => {
   return (
@@ -10,7 +8,7 @@ const Hero = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Aircraft flying through clouds"
+          alt="Aircraft on runway at dawn"
           className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
@@ -49,7 +47,7 @@ const Hero = () => {
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-xs sm:text-sm text-muted-foreground tracking-wide">
-              India's Premier DGCA Exam Platform
+              CloudAviationExam's
             </span>
           </motion.div>
 
@@ -60,11 +58,11 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-display text-3xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 sm:mb-6"
           >
-            Your Flight Path to{" "}
+            India's #1{" "}
             <span className="text-gradient-sky">DGCA</span>{" "}
             <br className="hidden sm:block" />
-            Exam{" "}
-            <span className="text-gradient-gold">Excellence</span>
+            Question{" "}
+            <span className="text-gradient-gold">Bank</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -74,40 +72,16 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-4"
           >
-            Master Air Navigation, Meteorology, Regulations & Technical subjects 
+            Master Air Navigation, Meteorology, Regulations & Technical subjects
             with our comprehensive question bank, mock tests, and performance analytics.
           </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Button
-              size="lg"
-              className="glow-blue font-display text-xs sm:text-sm tracking-wider px-8 py-6 w-full sm:w-auto"
-            >
-              Start Practicing Free
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-border/60 hover:border-primary/50 font-sans px-8 py-6 w-full sm:w-auto"
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Watch Demo
-            </Button>
-          </motion.div>
 
           {/* Stats Row */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="grid grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-16 max-w-xl mx-auto"
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="grid grid-cols-3 gap-4 sm:gap-8 mt-4 sm:mt-8 max-w-xl mx-auto"
           >
             {[
               { value: "10,000+", label: "Questions" },
