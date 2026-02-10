@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
+type AuthMode = "signup" | "login" | "forgot";
+
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [mode, setMode] = useState<AuthMode>("signup");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -21,12 +23,30 @@ const Auth = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(
+        formData.email.trim(),
+        { redirectTo: window.location.origin }
+      );
+      if (error) throw error;
+      toast.success("Password reset link sent! Check your email.");
+    } catch (error: any) {
+      toast.error(error.message || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (mode === "forgot") return handleForgotPassword(e);
     setLoading(true);
 
     try {
-      if (isLogin) {
+      if (mode === "login") {
         const { error } = await supabase.auth.signInWithPassword({
           email: formData.email.trim(),
           password: formData.password,
@@ -34,7 +54,6 @@ const Auth = () => {
         if (error) throw error;
         toast.success("Logged in successfully!");
       } else {
-        // Validate fields
         if (!formData.fullName.trim() || !formData.phone.trim()) {
           toast.error("Please fill in all fields.");
           setLoading(false);
@@ -62,7 +81,6 @@ const Auth = () => {
 
         if (error) throw error;
 
-        // Create profile
         if (data.user) {
           const { error: profileError } = await supabase
             .from("profiles")
@@ -85,6 +103,12 @@ const Auth = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const headings: Record<AuthMode, { title: string; subtitle: string }> = {
+    signup: { title: "Create Account", subtitle: "Join India's #1 DGCA Question Bank" },
+    login: { title: "Welcome Back", subtitle: "Sign in to continue your preparation" },
+    forgot: { title: "Reset Password", subtitle: "Enter your email to receive a reset link" },
   };
 
   return (
@@ -114,122 +138,74 @@ const Auth = () => {
         {/* Form Card */}
         <div className="glass-card p-8">
           <h2 className="font-display text-2xl font-bold text-center mb-2 text-foreground">
-            {isLogin ? "Welcome Back" : "Create Account"}
+            {headings[mode].title}
           </h2>
           <p className="text-sm text-muted-foreground text-center mb-6">
-            {isLogin
-              ? "Sign in to continue your preparation"
-              : "Join India's #1 DGCA Question Bank"}
+            {headings[mode].subtitle}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
+            {mode === "signup" && (
               <>
                 <div className="space-y-2">
-                  <Label htmlFor="fullName" className="text-sm text-foreground">
-                    Full Name
-                  </Label>
+                  <Label htmlFor="fullName" className="text-sm text-foreground">Full Name</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      id="fullName"
-                      name="fullName"
-                      placeholder="Enter your full name"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                      className="pl-10"
-                      required={!isLogin}
-                      maxLength={100}
-                    />
+                    <Input id="fullName" name="fullName" placeholder="Enter your full name" value={formData.fullName} onChange={handleChange} className="pl-10" required maxLength={100} />
                   </div>
                 </div>
-
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-sm text-foreground">
-                    Mobile Number
-                  </Label>
+                  <Label htmlFor="phone" className="text-sm text-foreground">Mobile Number</Label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="10-digit mobile number"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="pl-10"
-                      required={!isLogin}
-                      maxLength={10}
-                    />
+                    <Input id="phone" name="phone" type="tel" placeholder="10-digit mobile number" value={formData.phone} onChange={handleChange} className="pl-10" required maxLength={10} />
                   </div>
                 </div>
               </>
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm text-foreground">
-                Email Address
-              </Label>
+              <Label htmlFor="email" className="text-sm text-foreground">Email Address</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="pl-10"
-                  required
-                  maxLength={255}
-                />
+                <Input id="email" name="email" type="email" placeholder="you@example.com" value={formData.email} onChange={handleChange} className="pl-10" required maxLength={255} />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm text-foreground">
-                Password
-              </Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Min. 6 characters"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="pl-10"
-                  required
-                  minLength={6}
-                />
+            {mode !== "forgot" && (
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm text-foreground">Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input id="password" name="password" type="password" placeholder="Min. 6 characters" value={formData.password} onChange={handleChange} className="pl-10" required minLength={6} />
+                </div>
               </div>
-            </div>
+            )}
 
-            <Button
-              type="submit"
-              className="w-full glow-blue font-display text-sm tracking-wider py-5"
-              disabled={loading}
-            >
-              {loading ? (
-                <Loader2 className="w-4 h-4 animate-spin mr-2" />
-              ) : (
-                <ArrowRight className="w-4 h-4 mr-2" />
-              )}
-              {isLogin ? "Sign In" : "Create Account"}
+            {mode === "login" && (
+              <div className="text-right">
+                <button type="button" onClick={() => setMode("forgot")} className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                  Forgot password?
+                </button>
+              </div>
+            )}
+
+            <Button type="submit" className="w-full glow-blue font-display text-sm tracking-wider py-5" disabled={loading}>
+              {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ArrowRight className="w-4 h-4 mr-2" />}
+              {mode === "signup" ? "Create Account" : mode === "login" ? "Sign In" : "Send Reset Link"}
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              {isLogin
-                ? "Don't have an account? Sign Up"
-                : "Already have an account? Sign In"}
-            </button>
+          <div className="mt-6 text-center space-y-2">
+            {mode === "forgot" ? (
+              <button type="button" onClick={() => setMode("login")} className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1">
+                <ArrowLeft className="w-3 h-3" /> Back to Sign In
+              </button>
+            ) : (
+              <button type="button" onClick={() => setMode(mode === "login" ? "signup" : "login")} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                {mode === "login" ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
+              </button>
+            )}
           </div>
         </div>
       </motion.div>
