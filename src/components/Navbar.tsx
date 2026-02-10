@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plane, Menu, X, LogIn, Sun, Moon } from "lucide-react";
+import { Plane, Menu, X, LogOut, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/ThemeProvider";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -62,12 +64,17 @@ const Navbar = () => {
             >
               {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              <LogIn className="w-4 h-4 mr-2" />
-              Login
-            </Button>
-            <Button size="sm" className="glow-blue font-display text-xs tracking-wider">
-              Get Started
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={async () => {
+                await supabase.auth.signOut();
+                toast.success("Logged out");
+              }}
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
             </Button>
           </div>
 
@@ -109,12 +116,18 @@ const Navbar = () => {
                   {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                   {theme === "dark" ? "Light Mode" : "Dark Mode"}
                 </button>
-                <Button variant="ghost" size="sm" className="justify-start text-muted-foreground">
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Login
-                </Button>
-                <Button size="sm" className="glow-blue font-display text-xs tracking-wider">
-                  Get Started
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="justify-start text-muted-foreground"
+                  onClick={async () => {
+                    await supabase.auth.signOut();
+                    toast.success("Logged out");
+                    setIsOpen(false);
+                  }}
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
                 </Button>
               </div>
             </div>
