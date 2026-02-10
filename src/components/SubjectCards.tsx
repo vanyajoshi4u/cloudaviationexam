@@ -1,66 +1,224 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Navigation, Cloud, Scale, Wrench, Radio, BookOpen } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { BookOpen, ChevronDown, ChevronRight } from "lucide-react";
 
-const subjects = [
+interface SubTopic {
+  title: string;
+  chapters: string[];
+}
+
+interface Subject {
+  title: string;
+  subtopics: SubTopic[];
+}
+
+const subjectsData: Subject[] = [
   {
-    icon: Navigation,
     title: "Air Navigation",
-    description: "Charts, plotting, instruments, and navigation procedures for DGCA exams.",
-    questions: "2,500+",
-    color: "from-blue-500/20 to-cyan-500/10",
-    iconColor: "text-blue-400",
+    subtopics: [
+      {
+        title: "General Navigation",
+        chapters: [
+          "Basics of Navigation",
+          "Maps & Charts",
+          "Direction & Distance",
+          "Triangle of Velocities",
+          "Time & Chronometry",
+        ],
+      },
+      {
+        title: "Radio Navigation",
+        chapters: [
+          "NDB & ADF",
+          "VOR & DME",
+          "ILS & MLS",
+          "GNSS / GPS",
+          "RNAV & RNP",
+          "Radar Principles",
+        ],
+      },
+      {
+        title: "Instrument Navigation",
+        chapters: [
+          "Pressure Instruments",
+          "Gyroscopic Instruments",
+          "Compass Systems",
+          "Flight Director Systems",
+          "Autopilot & FMS",
+          "EFIS & Glass Cockpit",
+        ],
+      },
+    ],
   },
   {
-    icon: Cloud,
     title: "Air Meteorology",
-    description: "Weather patterns, atmospheric science, and aviation weather services.",
-    questions: "2,000+",
-    color: "from-sky-500/20 to-indigo-500/10",
-    iconColor: "text-sky-400",
+    subtopics: [
+      {
+        title: "Atmosphere",
+        chapters: [
+          "Composition & Structure",
+          "Temperature & Lapse Rate",
+          "Pressure & Altimetry",
+          "Density & ICAO Standard Atmosphere",
+        ],
+      },
+      {
+        title: "Wind & Weather Systems",
+        chapters: [
+          "General Circulation",
+          "Local Winds",
+          "Turbulence & Wind Shear",
+          "Jet Streams",
+          "Fronts & Air Masses",
+        ],
+      },
+      {
+        title: "Clouds & Precipitation",
+        chapters: [
+          "Cloud Formation & Types",
+          "Precipitation Types",
+          "Thunderstorms & CB",
+          "Icing Conditions",
+          "Visibility & Fog",
+        ],
+      },
+    ],
   },
   {
-    icon: Scale,
     title: "Air Regulations",
-    description: "DGCA rules, ICAO standards, airspace classifications, and compliance.",
-    questions: "1,800+",
-    color: "from-amber-500/20 to-orange-500/10",
-    iconColor: "text-amber-400",
+    subtopics: [
+      {
+        title: "ICAO Standards",
+        chapters: [
+          "Annexes Overview",
+          "Airspace Classification",
+          "Flight Rules (VFR/IFR)",
+          "SARPS & PANS",
+        ],
+      },
+      {
+        title: "Indian Aviation Rules",
+        chapters: [
+          "Aircraft Act 1934",
+          "Aircraft Rules 1937",
+          "DGCA CAR Series",
+          "Licensing Requirements",
+          "Operations Specifications",
+        ],
+      },
+      {
+        title: "Air Traffic Services",
+        chapters: [
+          "ATC Procedures",
+          "Separation Standards",
+          "Aerodrome Operations",
+          "Emergency Procedures",
+        ],
+      },
+    ],
   },
   {
-    icon: Wrench,
     title: "Technical General",
-    description: "Aircraft systems, engines, aerodynamics, and general technical knowledge.",
-    questions: "2,200+",
-    color: "from-emerald-500/20 to-teal-500/10",
-    iconColor: "text-emerald-400",
+    subtopics: [
+      {
+        title: "Aerodynamics",
+        chapters: [
+          "Principles of Flight",
+          "Lift, Drag & Thrust",
+          "Stability & Control",
+          "High Speed Aerodynamics",
+          "Stall & Spin",
+        ],
+      },
+      {
+        title: "Aircraft Systems",
+        chapters: [
+          "Hydraulic Systems",
+          "Pneumatic Systems",
+          "Electrical Systems",
+          "Fuel Systems",
+          "Landing Gear & Brakes",
+        ],
+      },
+      {
+        title: "Powerplant",
+        chapters: [
+          "Piston Engines",
+          "Gas Turbine Engines",
+          "Propellers",
+          "Engine Instruments",
+          "Fire Protection",
+        ],
+      },
+    ],
   },
   {
-    icon: Wrench,
     title: "Technical Specific",
-    description: "Aircraft-type specific systems, performance, and flight planning.",
-    questions: "1,500+",
-    color: "from-violet-500/20 to-purple-500/10",
-    iconColor: "text-violet-400",
+    subtopics: [
+      {
+        title: "Aircraft Performance",
+        chapters: [
+          "Takeoff Performance",
+          "Climb & Cruise Performance",
+          "Landing Performance",
+          "Weight & Balance",
+          "Flight Planning",
+        ],
+      },
+      {
+        title: "Type-Specific Systems",
+        chapters: [
+          "Airframe & Structures",
+          "Avionics Suite",
+          "Flight Controls",
+          "Pressurization & Air Conditioning",
+        ],
+      },
+    ],
   },
   {
-    icon: Radio,
     title: "RTR",
-    description: "Radio telephony, communication procedures, and phraseology.",
-    questions: "800+",
-    color: "from-rose-500/20 to-pink-500/10",
-    iconColor: "text-rose-400",
+    subtopics: [
+      {
+        title: "Radio Telephony",
+        chapters: [
+          "Standard Phraseology",
+          "Communication Procedures",
+          "Distress & Urgency",
+          "ATIS & VOLMET",
+        ],
+      },
+      {
+        title: "Radio Regulations",
+        chapters: [
+          "ITU Radio Regulations",
+          "Frequency Allocation",
+          "Radio Licensing",
+          "Equipment Requirements",
+        ],
+      },
+    ],
   },
 ];
 
 const SubjectCards = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const [openSubject, setOpenSubject] = useState<string | null>(null);
+  const [openSubtopic, setOpenSubtopic] = useState<string | null>(null);
+
+  const toggleSubject = (title: string) => {
+    setOpenSubject(openSubject === title ? null : title);
+    setOpenSubtopic(null);
+  };
+
+  const toggleSubtopic = (title: string) => {
+    setOpenSubtopic(openSubtopic === title ? null : title);
+  };
 
   return (
     <section id="subjects" className="py-20 sm:py-32 relative" ref={ref}>
-      <div className="container mx-auto px-4 sm:px-6">
+      <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -79,43 +237,99 @@ const SubjectCards = () => {
             <span className="text-gradient-sky">Subject</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-            Comprehensive coverage of all DGCA exam subjects with detailed explanations and topic-wise practice.
+            Click on any subject to explore its topics and chapters.
           </p>
         </motion.div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {subjects.map((subject, index) => (
-            <motion.div
-              key={subject.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group cursor-pointer"
-            >
-              <div className={`glass-card p-6 sm:p-8 h-full transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 bg-gradient-to-br ${subject.color}`}>
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-xl bg-card/60 border border-border/30 ${subject.iconColor} transition-transform duration-300 group-hover:scale-110`}>
-                    <subject.icon className="w-6 h-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground font-display tracking-wider">
-                    {subject.questions} Q's
+        {/* Accordion Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="flex flex-col gap-2"
+        >
+          {subjectsData.map((subject) => {
+            const isSubjectOpen = openSubject === subject.title;
+
+            return (
+              <div key={subject.title} className="glass-card overflow-hidden">
+                {/* Subject Header */}
+                <button
+                  onClick={() => toggleSubject(subject.title)}
+                  className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-primary/5 transition-colors duration-200"
+                >
+                  <span className="font-display text-sm sm:text-base font-semibold text-foreground">
+                    {subject.title}
                   </span>
-                </div>
-                <h3 className="font-display text-base sm:text-lg font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
-                  {subject.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {subject.description}
-                </p>
-                <div className="mt-4 pt-4 border-t border-border/20 flex items-center gap-2 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span>Start Practicing</span>
-                  <span>→</span>
-                </div>
+                  <ChevronDown
+                    className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${
+                      isSubjectOpen ? "rotate-180 text-primary" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Subtopics */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isSubjectOpen ? "auto" : 0,
+                    opacity: isSubjectOpen ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="border-t border-border/30 px-4 sm:px-5 pb-3">
+                    {subject.subtopics.map((subtopic) => {
+                      const isSubtopicOpen = openSubtopic === subtopic.title;
+
+                      return (
+                        <div key={subtopic.title} className="mt-1">
+                          {/* Subtopic Header */}
+                          <button
+                            onClick={() => toggleSubtopic(subtopic.title)}
+                            className="w-full flex items-center gap-2 py-3 px-3 text-left rounded-lg hover:bg-primary/5 transition-colors duration-200"
+                          >
+                            <ChevronRight
+                              className={`w-4 h-4 text-primary/60 transition-transform duration-300 flex-shrink-0 ${
+                                isSubtopicOpen ? "rotate-90 text-primary" : ""
+                              }`}
+                            />
+                            <span className="text-sm text-muted-foreground font-medium">
+                              {subtopic.title}
+                            </span>
+                          </button>
+
+                          {/* Chapters */}
+                          <motion.div
+                            initial={false}
+                            animate={{
+                              height: isSubtopicOpen ? "auto" : 0,
+                              opacity: isSubtopicOpen ? 1 : 0,
+                            }}
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pl-9 pb-2 flex flex-col gap-1">
+                              {subtopic.chapters.map((chapter) => (
+                                <a
+                                  key={chapter}
+                                  href="#"
+                                  className="text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block"
+                                >
+                                  {chapter}
+                                </a>
+                              ))}
+                            </div>
+                          </motion.div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );
