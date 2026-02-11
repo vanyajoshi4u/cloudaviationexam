@@ -36,35 +36,15 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "Atmosphere",
-        chapters: [
-          "Composition & Structure",
-          "Temperature & Lapse Rate",
-          "Pressure & Altimetry",
-          "Density & ICAO Standard Atmosphere",
-        ],
-        books: ["I C Joshi", "Oxford"],
+        chapters: ["I C Joshi", "Oxford"],
       },
       {
         title: "Wind & Weather Systems",
-        chapters: [
-          "General Circulation",
-          "Local Winds",
-          "Turbulence & Wind Shear",
-          "Jet Streams",
-          "Fronts & Air Masses",
-        ],
-        books: ["I C Joshi", "Oxford"],
+        chapters: ["I C Joshi", "Oxford"],
       },
       {
         title: "Clouds & Precipitation",
-        chapters: [
-          "Cloud Formation & Types",
-          "Precipitation Types",
-          "Thunderstorms & CB",
-          "Icing Conditions",
-          "Visibility & Fog",
-        ],
-        books: ["I C Joshi", "Oxford"],
+        chapters: ["I C Joshi", "Oxford"],
       },
     ],
   },
