@@ -1,11 +1,14 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BookOpen, ChevronDown, ChevronRight, Library } from "lucide-react";
+import { icJoshiTopics } from "@/data/icJoshiQuestions";
 
 interface SubTopic {
   title: string;
   chapters: string[];
   books?: string[];
+  hasQuiz?: boolean;
 }
 
 interface Subject {
@@ -36,7 +39,8 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "I C Joshi",
-        chapters: [],
+        chapters: icJoshiTopics.map((t) => t.title),
+        hasQuiz: true,
       },
       {
         title: "Oxford",
@@ -167,6 +171,7 @@ const subjectsData: Subject[] = [
 const SubjectCards = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const navigate = useNavigate();
   const [openSubject, setOpenSubject] = useState<string | null>(null);
   const [openSubtopic, setOpenSubtopic] = useState<string | null>(null);
 
@@ -273,15 +278,23 @@ const SubjectCards = () => {
                             className="overflow-hidden"
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
-                              {subtopic.chapters.map((chapter) => (
-                                <a
-                                  key={chapter}
-                                  href="#"
-                                  className="text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block"
-                                >
-                                  {chapter}
-                                </a>
-                              ))}
+                              {subtopic.chapters.map((chapter) => {
+                                const quizTopic = subtopic.hasQuiz
+                                  ? icJoshiTopics.find((t) => t.title === chapter)
+                                  : null;
+                                return (
+                                  <button
+                                    key={chapter}
+                                    onClick={() => quizTopic && navigate(`/topics/${quizTopic.id}`)}
+                                    className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${quizTopic ? "cursor-pointer" : "cursor-default"}`}
+                                  >
+                                    {chapter}
+                                    {quizTopic && (
+                                      <span className="ml-2 text-[10px] text-primary/60">({quizTopic.questions.length} MCQs)</span>
+                                    )}
+                                  </button>
+                                );
+                              })}
                               {subtopic.books && subtopic.books.length > 0 && (
                                 <div className="mt-2 pt-2 border-t border-border/20">
                                   <div className="flex items-center gap-1.5 mb-1 px-3">
