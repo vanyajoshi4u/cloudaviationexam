@@ -19,38 +19,15 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "General Navigation",
-        chapters: [
-          "Basics of Navigation",
-          "Maps & Charts",
-          "Direction & Distance",
-          "Triangle of Velocities",
-          "Time & Chronometry",
-        ],
-        books: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
+        chapters: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
       },
       {
         title: "Radio Navigation",
-        chapters: [
-          "NDB & ADF",
-          "VOR & DME",
-          "ILS & MLS",
-          "GNSS / GPS",
-          "RNAV & RNP",
-          "Radar Principles",
-        ],
-        books: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
+        chapters: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
       },
       {
         title: "Instrument Navigation",
-        chapters: [
-          "Pressure Instruments",
-          "Gyroscopic Instruments",
-          "Compass Systems",
-          "Flight Director Systems",
-          "Autopilot & FMS",
-          "EFIS & Glass Cockpit",
-        ],
-        books: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
+        chapters: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
       },
     ],
   },
