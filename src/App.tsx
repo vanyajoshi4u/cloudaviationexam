@@ -8,6 +8,8 @@ import AuthGuard from "@/components/AuthGuard";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import TopicSelect from "./pages/TopicSelect";
+import Quiz from "./pages/Quiz";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ const App = () => (
                 </AuthGuard>
               }
             />
+            <Route path="/topics/:topicId" element={<TopicSelect />} />
+            <Route path="/quiz/:topicId" element={<Quiz />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
