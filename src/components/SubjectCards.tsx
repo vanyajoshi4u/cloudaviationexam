@@ -35,16 +35,12 @@ const subjectsData: Subject[] = [
     title: "Air Meteorology",
     subtopics: [
       {
-        title: "Atmosphere",
-        chapters: ["I C Joshi", "Oxford"],
+        title: "I C Joshi",
+        chapters: [],
       },
       {
-        title: "Wind & Weather Systems",
-        chapters: ["I C Joshi", "Oxford"],
-      },
-      {
-        title: "Clouds & Precipitation",
-        chapters: ["I C Joshi", "Oxford"],
+        title: "Oxford",
+        chapters: [],
       },
     ],
   },
