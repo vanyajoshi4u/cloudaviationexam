@@ -1,10 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { BookOpen, ChevronDown, ChevronRight } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronRight, Library } from "lucide-react";
 
 interface SubTopic {
   title: string;
   chapters: string[];
+  books?: string[];
 }
 
 interface Subject {
@@ -25,6 +26,7 @@ const subjectsData: Subject[] = [
           "Triangle of Velocities",
           "Time & Chronometry",
         ],
+        books: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
       },
       {
         title: "Radio Navigation",
@@ -36,6 +38,7 @@ const subjectsData: Subject[] = [
           "RNAV & RNP",
           "Radar Principles",
         ],
+        books: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
       },
       {
         title: "Instrument Navigation",
@@ -47,6 +50,7 @@ const subjectsData: Subject[] = [
           "Autopilot & FMS",
           "EFIS & Glass Cockpit",
         ],
+        books: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
       },
     ],
   },
@@ -61,6 +65,7 @@ const subjectsData: Subject[] = [
           "Pressure & Altimetry",
           "Density & ICAO Standard Atmosphere",
         ],
+        books: ["I C Joshi", "Oxford"],
       },
       {
         title: "Wind & Weather Systems",
@@ -71,6 +76,7 @@ const subjectsData: Subject[] = [
           "Jet Streams",
           "Fronts & Air Masses",
         ],
+        books: ["I C Joshi", "Oxford"],
       },
       {
         title: "Clouds & Precipitation",
@@ -81,6 +87,7 @@ const subjectsData: Subject[] = [
           "Icing Conditions",
           "Visibility & Fog",
         ],
+        books: ["I C Joshi", "Oxford"],
       },
     ],
   },
@@ -95,6 +102,7 @@ const subjectsData: Subject[] = [
           "Flight Rules (VFR/IFR)",
           "SARPS & PANS",
         ],
+        books: ["R K Bali", "Oxford"],
       },
       {
         title: "Indian Aviation Rules",
@@ -105,6 +113,7 @@ const subjectsData: Subject[] = [
           "Licensing Requirements",
           "Operations Specifications",
         ],
+        books: ["R K Bali", "Oxford"],
       },
       {
         title: "Air Traffic Services",
@@ -114,6 +123,7 @@ const subjectsData: Subject[] = [
           "Aerodrome Operations",
           "Emergency Procedures",
         ],
+        books: ["R K Bali", "Oxford"],
       },
     ],
   },
@@ -319,6 +329,24 @@ const SubjectCards = () => {
                                   {chapter}
                                 </a>
                               ))}
+                              {subtopic.books && subtopic.books.length > 0 && (
+                                <div className="mt-2 pt-2 border-t border-border/20">
+                                  <div className="flex items-center gap-1.5 mb-1 px-3">
+                                    <Library className="w-3.5 h-3.5 text-primary/60" />
+                                    <span className="text-xs text-muted-foreground/70 font-medium">Reference Books</span>
+                                  </div>
+                                  <div className="flex flex-wrap gap-1.5 px-3">
+                                    {subtopic.books.map((book) => (
+                                      <span
+                                        key={book}
+                                        className="text-xs bg-primary/8 text-primary/80 px-2.5 py-1 rounded-full border border-primary/10"
+                                      >
+                                        {book}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </motion.div>
                         </div>
