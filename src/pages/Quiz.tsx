@@ -255,6 +255,32 @@ const Quiz = () => {
             </Button>
           )}
         </div>
+
+        {/* Question Number Grid */}
+        <div className="mt-6 glass-card p-4">
+          <p className="text-xs text-muted-foreground mb-3">Jump to question</p>
+          <div className="flex flex-wrap gap-2">
+            {questions.map((q, idx) => {
+              const isActive = idx === currentIndex;
+              const isAnswered = answers[q.id] !== undefined;
+              const isRevealedCorrect = mode === "practice" && revealed[q.id] && answers[q.id] === q.correct;
+              const isRevealedWrong = mode === "practice" && revealed[q.id] && answers[q.id] !== q.correct;
+
+              let cls = "w-9 h-9 rounded-lg text-xs font-medium flex items-center justify-center border transition-all cursor-pointer ";
+              if (isActive) cls += "border-primary bg-primary text-primary-foreground";
+              else if (isRevealedCorrect) cls += "border-green-500/50 bg-green-500/15 text-green-400";
+              else if (isRevealedWrong) cls += "border-destructive/50 bg-destructive/15 text-destructive";
+              else if (isAnswered) cls += "border-primary/40 bg-primary/10 text-foreground";
+              else cls += "border-border/40 text-muted-foreground hover:border-primary/40";
+
+              return (
+                <button key={q.id} className={cls} onClick={() => setCurrentIndex(idx)}>
+                  {idx + 1}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
