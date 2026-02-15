@@ -3,12 +3,14 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, ChevronDown, ChevronRight, Library } from "lucide-react";
 import { icJoshiTopics } from "@/data/icJoshiQuestions";
+import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 
 interface SubTopic {
   title: string;
   chapters: string[];
   books?: string[];
   hasQuiz?: boolean;
+  quizSource?: "joshi" | "oxford";
 }
 
 interface Subject {
@@ -44,7 +46,9 @@ const subjectsData: Subject[] = [
       },
       {
         title: "Oxford",
-        chapters: [],
+        chapters: oxfordMetTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "oxford",
       },
     ],
   },
@@ -279,8 +283,9 @@ const SubjectCards = () => {
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
                               {subtopic.chapters.map((chapter) => {
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
-                                  ? icJoshiTopics.find((t) => t.title === chapter)
+                                  ? topicSource.find((t) => t.title === chapter)
                                   : null;
                                 return (
                                   <button

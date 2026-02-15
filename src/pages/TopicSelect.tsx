@@ -1,13 +1,19 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { icJoshiTopics } from "@/data/icJoshiQuestions";
+import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics];
+
 const TopicSelect = () => {
   const { topicId } = useParams();
   const navigate = useNavigate();
-  const topic = icJoshiTopics.find((t) => t.id === topicId);
+  const topic = allTopics.find((t) => t.id === topicId);
+
+  const isOxford = oxfordMetTopics.some((t) => t.id === topicId);
+  const subtitle = isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (
@@ -38,7 +44,7 @@ const TopicSelect = () => {
           <div className="inline-flex items-center gap-2 glass-panel px-4 py-2 mb-4">
             <BookOpen className="w-4 h-4 text-primary" />
             <span className="text-xs sm:text-sm text-muted-foreground tracking-wide">
-              I C Joshi — Air Meteorology
+              {subtitle}
             </span>
           </div>
           <h1 className="font-display text-xl sm:text-2xl font-bold mb-2">
