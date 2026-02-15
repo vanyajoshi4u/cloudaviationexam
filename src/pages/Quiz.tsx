@@ -149,7 +149,7 @@ const Quiz = () => {
       <div className="container mx-auto px-4 py-6 max-w-2xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <button onClick={() => navigate("/")} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <button onClick={() => navigate(`/topics/${topicId}`)} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
           <span className="text-xs px-3 py-1 rounded-full glass-panel font-medium">
