@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { icJoshiTopics } from "@/data/icJoshiQuestions";
 import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
+import { rtrTopics } from "@/data/rtrQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
@@ -13,7 +14,8 @@ const TopicSelect = () => {
   const topic = allTopics.find((t) => t.id === topicId);
 
   const isOxford = oxfordMetTopics.some((t) => t.id === topicId);
-  const subtitle = isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const isRtr = rtrTopics.some((t) => t.id === topicId);
+  const subtitle = isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (

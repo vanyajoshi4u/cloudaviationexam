@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen, ChevronDown, ChevronRight, Library } from "lucide-react";
 import { icJoshiTopics } from "@/data/icJoshiQuestions";
 import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
+import { rtrTopics } from "@/data/rtrQuestions";
 
 interface SubTopic {
   title: string;
   chapters: string[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford";
+  quizSource?: "joshi" | "oxford" | "rtr";
 }
 
 interface Subject {
@@ -152,43 +153,9 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "RTR Part 1 (DGCA)",
-        chapters: [
-          "Ch 1 – Broad Guidelines, Syllabus & RTR Licensing",
-          "Ch 2 – Definitions (Annex-10 & Doc 9432)",
-          "Ch 3 – Definitions (Doc 4444, AIP)",
-          "Ch 4 – Common ATC Abbreviations",
-          "Ch 5 – Civil Aviation Setup in India (MOCA, DGCA)",
-          "Ch 6 – ITU Convention & Radio Regulations",
-          "Ch 7 – ICAO & IATA",
-          "Ch 8 – General & Aeronautical Code (Annex 10)",
-          "Ch 9 – Licensing of Aircraft Radio Apparatus",
-          "Ch 10 – Minimum Equipment Requirements in India",
-          "Ch 11 – Met Information & Pre-Flight Briefing",
-          "Ch 12 – AIP & Integrated Aeronautical Information",
-          "Ch 13 – Location Indicators",
-          "Ch 14 – NOTAM, AIC & CAR",
-          "Ch 15 – GPS & GAGAN",
-          "Ch 16 – RADAR",
-          "Ch 17 – INS (Inertial Navigation System)",
-          "Ch 18 – Electrical Units (Volt, Ampere, Watt, Frequency)",
-          "Ch 19 – Radio Frequency & Propagation",
-          "Ch 20 – SELCAL & Preflight SELCAL Check",
-          "Ch 21 – Intercommunication & Announcing Systems",
-          "Ch 22 – Squelch, Microphones, Headphones & AVC",
-          "Ch 23 – Transmitter Tuning, Simplex & Duplex",
-          "Ch 24 – RT Communication Limitations & Interference",
-          "Ch 25 – Instrument Landing System (ILS)",
-          "Ch 26 – NDB & ADF",
-          "Ch 27 – VOR",
-          "Ch 28 – DME",
-          "Ch 29 – General Phraseology",
-          "Ch 30 – General Operating Procedures & Call Signs",
-          "Ch 31 – RT Call Signs & Station Communications",
-          "Ch 32 – Clearance, Read-back & Test Transmissions",
-          "Ch 33 – Distress & Urgency Procedures",
-          "Ch 34 – Communications Failure",
-          "Ch 35 – Model MCQ Practice for DGCA RTR Exam",
-        ],
+        chapters: rtrTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "rtr" as const,
       },
     ],
   },
@@ -305,7 +272,7 @@ const SubjectCards = () => {
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
                               {subtopic.chapters.map((chapter) => {
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? rtrTopics : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapter)
                                   : null;
