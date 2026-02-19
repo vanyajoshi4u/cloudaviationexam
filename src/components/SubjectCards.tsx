@@ -153,7 +153,25 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "RTR Part 1 (DGCA)",
-        chapters: rtrTopics.map((t) => t.title),
+        chapters: [
+          "Ch 1 – Broad Guidelines, Syllabus, Radio Telephone Restricted Licence Examination",
+          "Ch 2 – Definitions Related with Annex-10",
+          "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP",
+          ...rtrTopics.map((t) => t.title),
+          "Ch 5 – Civil Aviation Set Up in India – Ministry of Civil Aviation (MOCA) & DGCA",
+          "Ch 10 – Minimum Requirement of Radio Equipment on Aircraft (ICAO Annex 6 & DGCA)",
+          "Ch 17 – RADAR – Radio Detection & Ranging",
+          "Ch 21 – SELCAL & Preflight SELCAL Check",
+          "Ch 23 – Operation of Microphones, Headphones, Squelch, AVC, Volume Control & Simplex/Duplex",
+          "Ch 34 – Voice – Aircraft Communications Failure",
+          "Ch 35 – Model MCQ Practice for DGCA RTR Exam Part-I",
+        ].sort((a, b) => {
+          const getChNum = (s: string) => {
+            const m = s.match(/Ch\s*(\d+)/);
+            return m ? parseInt(m[1]) : 999;
+          };
+          return getChNum(a) - getChNum(b);
+        }),
         hasQuiz: true,
         quizSource: "rtr" as const,
       },
