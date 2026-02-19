@@ -2,6 +2,27 @@ import { MCQuestion, Topic } from "./icJoshiQuestions";
 
 export const rtrTopics: Topic[] = [
   {
+    id: "rtr-ch5-civil-aviation",
+    title: "Ch 5 – Civil Aviation Set Up in India – Ministry of Civil Aviation (MOCA) & DGCA",
+    questions: [
+      { id: 1, question: "DGCA in expanded form means", options: ["Directorate of Corporate Affairs", "Directorate General of Civil Aviation", "Directorate General of Civil accounts"], correct: 1 },
+      { id: 2, question: "What is the primary role of the DGCA in India?", options: ["Managing railway safety", "Regulating civil aviation safety and standards", "Promoting road transport"], correct: 1 },
+      { id: 3, question: "Which authority is responsible for formulating national aviation policies and programmes in India?", options: ["Ministry of Road Transport", "Ministry of Civil Aviation", "Ministry of Railways"], correct: 1 },
+      { id: 4, question: "Which international body does DGCA coordinate regulatory functions with?", options: ["United Nations", "International Civil Aviation Organization (ICAO)", "World Health Organization"], correct: 1 },
+      { id: 5, question: "The following organizations is NOT under the Ministry of Civil Aviation?", options: ["Bureau of Civil Aviation Security (BCAS)", "Airports Authority of India (AAI)", "Indian Meteorological Department (IMD)"], correct: 2 },
+      { id: 6, question: "Which act is currently administered by the Ministry of Civil Aviation in India?", options: ["Indian Aviation Act, 2000", "Aircraft Act, 1994", "Bharatiya Vayuyan Adhiniyam, 2024"], correct: 2 },
+      { id: 7, question: "Where is the headquarters of the Ministry of Civil Aviation located?", options: ["Indira Gandhi International Airport, New Delhi", "Opp Rajiv Gandhi Bhavan, Safdarjung Airport, New Delhi", "Central Vista, New Delhi"], correct: 1 },
+      { id: 8, question: "Who is the regulatory body in India for civil airworthiness and air safety?", options: ["Airports Authority of India", "Bureau of Civil Aviation Security", "Directorate General of Civil Aviation"], correct: 2 },
+      { id: 9, question: "Which of the following is NOT a division of DGCA?", options: ["Surveillance & Enforcement", "Cargo Regulation", "RTR"], correct: 1 },
+      { id: 10, question: "First commercial civil aviation flight took place in India between", options: ["Hawda-Kolkatta", "Allahabad/Parygaraj-Naini", "Mennabkam Chennai-Tambram"], correct: 1 },
+      { id: 11, question: "DGCA is", options: ["PSU", "Central Govt Department", "Private Organisation"], correct: 1 },
+      { id: 12, question: "In which city DGCA do not have its office", options: ["Ahmedabad", "Pune", "Shimla"], correct: 2 },
+      { id: 13, question: "Department of Civil Aviation modern DGCA was set up in", options: ["1927", "1947", "1934"], correct: 0 },
+      { id: 14, question: "How many CE ICAO has for safety oversight of states", options: ["11", "7", "8"], correct: 2 },
+      { id: 15, question: "The vision of DGCA is", options: ["Endeavour to promote safe and efficient Air Transportation through facilitation and cheap flights to Public", "Endeavour to promote International flight operations in coordination with ICAO", "Endeavour to manage Air Traffic at Airports for safe and efficient Air Transportation with guidance to Airport Operators", "Endeavour to promote safe and efficient Air Transportation through regulation and proactive safety oversight system"], correct: 3 },
+    ],
+  },
+  {
     id: "rtr-abbreviations",
     title: "Ch 4 – Common ATC Abbreviations",
     questions: [
