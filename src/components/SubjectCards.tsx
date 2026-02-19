@@ -158,7 +158,7 @@ const subjectsData: Subject[] = [
           "Ch 2 – Definitions Related with Annex-10",
           "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP",
           ...rtrTopics.map((t) => t.title),
-          "Ch 5 – Civil Aviation Set Up in India – Ministry of Civil Aviation (MOCA) & DGCA",
+          
           "Ch 10 – Minimum Requirement of Radio Equipment on Aircraft (ICAO Annex 6 & DGCA)",
           "Ch 17 – RADAR – Radio Detection & Ranging",
           "Ch 21 – SELCAL & Preflight SELCAL Check",
