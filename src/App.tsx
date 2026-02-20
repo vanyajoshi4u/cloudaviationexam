@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import TopicSelect from "./pages/TopicSelect";
 import Quiz from "./pages/Quiz";
+import RtrChapter from "./pages/RtrChapter";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
               }
             />
             <Route path="/topics/:topicId" element={<TopicSelect />} />
+            <Route path="/rtr-chapter/:chapterId" element={<RtrChapter />} />
             <Route path="/quiz/:topicId" element={<Quiz />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
