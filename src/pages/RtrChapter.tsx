@@ -99,6 +99,139 @@ const rtrChapters: Record<string, ChapterContent> = {
       },
     ],
   },
+  "rtr-ch2": {
+    title: "Ch 2 – Definitions Related with Annex-10 Services",
+    sections: [
+      {
+        heading: "Aeronautical Broadcasting Service",
+        body: ["A broadcasting service intended for the transmission of information relating to air navigation."],
+      },
+      {
+        heading: "Aeronautical Fixed Service",
+        body: ["Telecommunication service between specified fixed points provided primarily for the safety of air navigation and for the regular, efficient and economical operation of air services."],
+      },
+      {
+        heading: "Aeronautical Fixed Telecommunication Network (AFTN)",
+        body: ["A worldwide system of aeronautical fixed circuits provided as part of the aeronautical fixed service for the exchange of messages and/or digital data between aeronautical fixed stations having the same or compatible communications characteristics."],
+      },
+      {
+        heading: "Aeronautical Mobile Service",
+        body: ["A mobile service between aeronautical stations and aircraft stations, or between aircraft stations, in which survival craft stations may participate; emergency position-indicating radio beacon stations may also participate in this service on designated distress and emergency frequencies."],
+      },
+      {
+        heading: "Aeronautical Mobile-Satellite Service (RR S1.35)",
+        body: ["A mobile satellite service in which mobile earth stations are located on board aircraft; survival craft stations and emergency position-indicating radio beacon stations may also participate in this service."],
+      },
+      {
+        heading: "Aeronautical Mobile-Satellite Service (RR S1.36)",
+        body: ["An aeronautical mobile-satellite service reserved for communications relating to safety and regularity of flights, primarily along national or international civil air routes."],
+      },
+      {
+        heading: "Aeronautical Radio Navigation Service (RR S1.46)",
+        body: [
+          "A radio navigation service intended for the benefit and for the safe operation of aircraft.",
+          "Note — The following Radio Regulations are quoted for reference:\n• RR S1.10 Radio navigation: Radio determination used for the purpose of navigation, including obstruction warning.\n• RR S1.9 Radio determination: The determination of the position, velocity and/or other characteristics of an object, or the obtaining of information relating to these parameters, by means of the propagation properties of radio waves.",
+        ],
+      },
+      {
+        heading: "Aeronautical Telecommunication Service",
+        body: ["A telecommunication service provided for any aeronautical purpose."],
+      },
+      {
+        heading: "International Telecommunication Service",
+        body: ["A telecommunication service between offices or stations of different States, or between mobile stations which are not in the same State, or are subject to different States."],
+      },
+      {
+        heading: "Stations",
+        body: [
+          "Aerodrome Control Radio Station: A station providing radio communication between an aerodrome control tower and aircraft or mobile aeronautical stations.",
+          "Aeronautical Fixed Station: A station in the aeronautical fixed service.",
+          "Aeronautical Station (RR S1.81): A land station in the aeronautical mobile service. In certain instances, an aeronautical station may be located, for example, on board ship or on a platform at sea.",
+          "Aeronautical Telecommunication Station: A station in the aeronautical telecommunication service.",
+          "AFTN Communication Center: An AFTN station whose primary function is the relay or retransmission of AFTN traffic from (or to) a number of other AFTN stations connected to it.",
+          "AFTN Destination Station: An AFTN station to which messages and/or digital data are addressed for processing for delivery to the addressee.",
+          "AFTN Origin Station: An AFTN station where messages and/or digital data are accepted for transmission over the AFTN.",
+          "AFTN Station: A station forming part of the aeronautical fixed telecommunication network (AFTN) and operating as such under the authority or control of a State.",
+          "Air-Ground Control Radio Station: An aeronautical telecommunication station having primary responsibility for handling communications pertaining to the operation and control of aircraft in a given area.",
+          "Aircraft Station (RR S1.83): A mobile station in the aeronautical mobile service, other than a survival craft station, located on board an aircraft.",
+          "Communication Center: An aeronautical fixed station which relays or retransmits telecommunication traffic from (or to) a number of other aeronautical fixed stations directly connected to it.",
+          "Mobile Surface Station: A station in the aeronautical telecommunication service, other than an aircraft station, intended to be used while in motion or during halts at unspecified points.",
+          "Network Station: An aeronautical station forming part of a radiotelephony network.",
+        ],
+      },
+      {
+        heading: "Radiotelephony & Direction Finding",
+        body: [
+          "Radiotelephony: A form of radio-communication primarily intended for the exchange of information in the form of speech.",
+          "Radio Direction Finding (RR S1.12): Radio determination using the reception of radio waves for the purpose of determining the direction of a station or object.",
+          "Radio Direction-Finding Station (RR S1.91): A radio determination station using radio direction finding. Note: The aeronautical application of radio direction finding is in the aeronautical radio navigation service.",
+          "Regular Station: A station selected from those forming an en route air-ground radiotelephony network to communicate with or to intercept communications from aircraft in normal conditions.",
+          "Tributary Station: An aeronautical fixed station that may receive or transmit messages and/or digital data but which does not relay except for the purpose of serving similar stations connected through it to a communication center.",
+        ],
+      },
+      {
+        heading: "Communication Methods",
+        body: [
+          "Air-Ground Communication: Two-way communication between aircraft and stations or locations on the surface of the earth.",
+          "Air-to-Ground Communication: One-way communication from aircraft to stations or locations on the surface of the earth.",
+          "Blind Transmission: A transmission from one station to another station in circumstances where two-way communication cannot be established but where it is believed that the called station is able to receive the transmission.",
+          "Broadcast: A transmission of information relating to air navigation that is not addressed to a specific station or stations.",
+          "Duplex: A method in which telecommunication between two stations can take place in both directions simultaneously.",
+          "Ground-to-Air Communication: One-way communication from stations or locations on the surface of the earth to aircraft.",
+          "Interpilot Air-to-Air Communication: Two-way communication on the designated air-to-air channel to enable necessary operational information and to facilitate the resolution of operational problems.",
+          "Non-Network Communications: Radiotelephony communications conducted by a station of the aeronautical mobile service, other than those conducted as part of a radiotelephony network.",
+          "Radiotelephony Network: A group of radiotelephony aeronautical stations which operate on and guard frequencies from the same family and which support each other in a defined manner to ensure maximum dependability of air-ground communications and dissemination of air-ground traffic.",
+          "Readback: A procedure whereby the receiving station repeats a received message or an appropriate part thereof back to the transmitting station so as to obtain confirmation of correct reception.",
+          "Simplex: A method in which telecommunication between two stations takes place in one direction at a time.",
+          "Telecommunication (RR S1.3): Any transmission, emission, or reception of signs, signals, writing, images and sounds or intelligence of any nature by wire, radio, optical or other electromagnetic systems.",
+        ],
+      },
+      {
+        heading: "Direction Finding",
+        body: [
+          "Homing: The procedure of using the direction-finding equipment of one radio station with the emission of another radio station, where at least one of the stations is mobile, and whereby the mobile station proceeds continuously towards the other station.",
+          "Radio Bearing: The angle between the apparent direction of a definite source of emission of electromagnetic waves and a reference direction, as determined at a radio direction finding station. A true radio bearing is one for which the reference direction is that of true North. A magnetic radio bearing is one for which the reference direction is that of magnetic North.",
+        ],
+      },
+      {
+        heading: "Teletypewriter Systems",
+        body: [
+          "Automatic Relay Installation: A teletypewriter installation where automatic equipment is used to transfer messages from incoming to outgoing circuits.",
+          "Fully Automatic Relay Installation: A teletypewriter installation where interpretation of the relaying responsibility and the resultant setting up of connections is carried out automatically, obviating the need for operator intervention except for supervisory purposes.",
+          "Semi-Automatic Relay Installation: A teletypewriter installation where interpretation of the relaying responsibility requires the intervention of an operator but where all other normal operations of relay are carried out automatically.",
+          "Message Field: An assigned area of a message containing specified elements of data.",
+          "Teletypewriter Tape: A tape on which signals are recorded in the 5-unit Start-Stop code by completely severed perforations (Chad Type) or by partially severed perforations (Chadless Type) for transmission over teletypewriter circuits.",
+          "\"Torn-Tape\" Relay Installation: A teletypewriter installation where messages are received and relayed in teletypewriter tape form and where all operations of relay are performed as the result of operator intervention.",
+        ],
+      },
+      {
+        heading: "Agencies",
+        body: [
+          "Aeronautical Telecommunication Agency: An agency responsible for operating a station or stations in the aeronautical telecommunication service.",
+          "Aircraft Operating Agency: The person, organization or enterprise engaged in, or offering to engage in, an aircraft operation.",
+        ],
+      },
+      {
+        heading: "Frequencies",
+        body: [
+          "Primary Frequency: The radiotelephony frequency assigned to an aircraft as a first choice for air-ground communication in a radiotelephony network.",
+          "Secondary Frequency: The radiotelephony frequency assigned to an aircraft as a second choice for air-ground communication in a radiotelephony network.",
+          "Frequency Channel: A continuous portion of the frequency spectrum appropriate for a transmission utilizing a specified class of emission.",
+        ],
+      },
+      {
+        heading: "Data Link Communications",
+        body: [
+          "Controller-Pilot Data Link Communications (CPDLC): A means of communication between controller and pilot, using data link for ATC communications.",
+          "Current Data Authority: The designated ground system through which a CPDLC dialogue between a pilot and a controller currently responsible for the flight is permitted to take place.",
+          "Downstream Data Authority: A designated ground system, different from the current data authority, through which the pilot can contact an appropriate ATC unit for the purposes of receiving a downstream clearance.",
+          "Next Data Authority: The ground system so designated by the current data authority through which an onward transfer of communications and control can take place.",
+          "Meteorological Operational Telecommunication Network: An integrated system of meteorological operational channels, as part of the aeronautical fixed service (AFS), for the exchange of aeronautical meteorological information between the aeronautical fixed stations within the network.",
+          "Operational Control Communications: Communications required for the exercise of authority over the initiation, continuation, diversion or termination of a flight in the interest of the safety of the aircraft and the regularity and efficiency of a flight.",
+        ],
+      },
+    ],
+  },
 };
 
 const RtrChapter = () => {
