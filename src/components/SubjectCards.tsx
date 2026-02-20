@@ -294,15 +294,29 @@ const SubjectCards = () => {
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapter)
                                   : null;
+                                
+                                // Check for content pages (non-quiz chapters)
+                                const contentPageMap: Record<string, string> = {
+                                  "Ch 1 – Broad Guidelines, Syllabus, Radio Telephone Restricted Licence Examination": "/rtr-chapter/rtr-ch1",
+                                };
+                                const contentLink = contentPageMap[chapter];
+                                const isClickable = !!quizTopic || !!contentLink;
+
                                 return (
                                   <button
                                     key={chapter}
-                                    onClick={() => quizTopic && navigate(`/topics/${quizTopic.id}`)}
-                                    className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${quizTopic ? "cursor-pointer" : "cursor-default"}`}
+                                    onClick={() => {
+                                      if (quizTopic) navigate(`/topics/${quizTopic.id}`);
+                                      else if (contentLink) navigate(contentLink);
+                                    }}
+                                    className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${isClickable ? "cursor-pointer" : "cursor-default"}`}
                                   >
                                     {chapter}
                                     {quizTopic && (
                                       <span className="ml-2 text-[10px] text-primary/60">({quizTopic.questions.length} MCQs)</span>
+                                    )}
+                                    {contentLink && !quizTopic && (
+                                      <span className="ml-2 text-[10px] text-primary/60">(Notes)</span>
                                     )}
                                   </button>
                                 );
