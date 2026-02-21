@@ -302,6 +302,7 @@ const contentPageMap: Record<string, string> = {
                                    "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP": "/rtr-chapter/rtr-ch3",
                                    "Ch 18 – INS – Inertial Navigation System": "/rtr-chapter/rtr-ch18",
                                    "Ch 22 – Squelch, Microphones & Headphones": "/rtr-chapter/rtr-ch22",
+                                   "Met Instruments": "/rtr-chapter/icj-met-instruments",
                                 };
                                 const contentLink = contentPageMap[chapter];
                                 const isClickable = !!quizTopic || !!contentLink;
