@@ -12,6 +12,7 @@ import turbulenceAppendixA from "@/assets/turbulence-appendix-a.png";
 import altimetryDiagram13 from "@/assets/altimetry-diagram-13.png";
 import altimetryDiagram29 from "@/assets/altimetry-diagram-29.png";
 import cloudsId from "@/assets/clouds-identification.png";
+import stationModelDiagram from "@/assets/station-model-diagram.png";
 
 const diagramMap: Record<string, string> = {
   "pressure-annexes": pressureAnnexes,
@@ -19,6 +20,7 @@ const diagramMap: Record<string, string> = {
   "altimetry-13": altimetryDiagram13,
   "altimetry-29": altimetryDiagram29,
   "clouds-id": cloudsId,
+  "station-model": stationModelDiagram,
 };
 
 const Quiz = () => {
