@@ -220,6 +220,8 @@ export const oxfordMetTopics: Topic[] = [
       { id: 33, question: "You fly from east to west at the 500 hPa level in the Northern Hemisphere:", options: ["If the wind is from the north there will be a gain in altitude", "If the wind is from the south there is a gain in altitude", "If you encounter northerly drift, there is a gain in altitude", "You fly towards an area of lower pressure and therefore experience a loss in altitude"], correct: 0 },
       { id: 34, question: "You have landed on an airport elevation 1240 ft and QNH 1008 hPa. Your altimeter subscale is erroneously set to 1013 hPa. The indication on the altimeter will be:", options: ["1200 ft", "1375 ft", "1105 ft", "1280 ft"], correct: 1 },
       { id: 35, question: "You are cruising at FL200, OAT is -40°C, sea level pressure is 1033 hPa. Calculate the true altitude.", options: ["20,660 ft", "21,740 ft", "18,260 ft", "19,340 ft"], correct: 3 },
+      { id: 36, question: "(Using the diagram below) You are on a flight from A to B at 1500 ft. Which statement is true?", options: ["True altitude at A is greater than B", "True altitude at B is greater than A", "True altitude is the same", "Cannot tell"], correct: 1, diagram: "altimetry-13" },
+      { id: 37, question: "(Using the diagram below) Flying from A to B at a constant indicated altitude in the Northern Hemisphere.", options: ["True altitude increases", "Wind is northerly", "True altitude decreases", "Wind is southerly"], correct: 2, diagram: "altimetry-29" },
     ],
   },
   {
