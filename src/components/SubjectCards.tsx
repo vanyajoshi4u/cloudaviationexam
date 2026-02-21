@@ -161,7 +161,7 @@ const subjectsData: Subject[] = [
           
           
           
-          "Ch 21 – SELCAL & Preflight SELCAL Check",
+          
           "Ch 23 – Operation of Microphones, Headphones, Squelch, AVC, Volume Control & Simplex/Duplex",
           "Ch 34 – Voice – Aircraft Communications Failure",
           "Ch 35 – Model MCQ Practice for DGCA RTR Exam Part-I",
