@@ -335,6 +335,9 @@ export const oxfordMetTopics: Topic[] = [
       { id: 34, question: "From which of the following clouds are you least likely to get precipitation in summer?", options: ["CS/NS", "CS/AS", "CB/CU", "CU/ST"], correct: 1 },
       { id: 35, question: "A layer of air cooling at the SALR compared to the DALR would give what kind of cloud?", options: ["Stratus if saturated", "Cumulus if saturated", "No cloud if saturated", "Convective cloud"], correct: 0 },
       { id: 36, question: "Over flat dry land what would cause cloud?", options: ["Orographic uplift", "Convective uplift during the day", "Release of latent heat", "Advection"], correct: 1 },
+      { id: 37, question: "(Refer to the diagram) What best shows Altocumulus Lenticularis?", options: ["A", "B", "C", "D"], correct: 0, diagram: "clouds-id" },
+      { id: 38, question: "(Refer to the diagram) What best shows Cumulonimbus capillatus?", options: ["A", "B", "C", "D"], correct: 3, diagram: "clouds-id" },
+      { id: 39, question: "(Refer to the diagram) What best shows Acc?", options: ["A", "B", "C", "D"], correct: 2, diagram: "clouds-id" },
     ],
   },
   {
