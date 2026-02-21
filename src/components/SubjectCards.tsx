@@ -298,7 +298,7 @@ const SubjectCards = () => {
                                 // Check for content pages (non-quiz chapters)
 const contentPageMap: Record<string, string> = {
                                   "Ch 1 – Broad Guidelines, Syllabus, Radio Telephone Restricted Licence Examination": "/rtr-chapter/rtr-ch1",
-                                  "Ch 2 – Definitions Related with Annex-10 Services": "/rtr-chapter/rtr-ch2",
+                                  "Ch 2 – Definitions Related with Annex-10": "/rtr-chapter/rtr-ch2",
                                 };
                                 const contentLink = contentPageMap[chapter];
                                 const isClickable = !!quizTopic || !!contentLink;
