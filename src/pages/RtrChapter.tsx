@@ -2,10 +2,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import {
+  Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
+} from "@/components/ui/table";
+
+interface TableData {
+  headers: string[];
+  rows: string[][];
+}
 
 interface ChapterContent {
   title: string;
-  sections: { heading?: string; body: string[] }[];
+  subtitle?: string;
+  sections: { heading?: string; body: string[]; table?: TableData }[];
 }
 
 const rtrChapters: Record<string, ChapterContent> = {
@@ -915,6 +924,33 @@ const rtrChapters: Record<string, ChapterContent> = {
       },
     ],
   },
+  "icj-met-instruments": {
+    title: "Ch 23 – Met Instruments",
+    subtitle: "I C Joshi — Air Meteorology",
+    sections: [
+      {
+        heading: "Table 23.1 – Meteorological Instruments",
+        body: [],
+        table: {
+          headers: ["S.No", "Element", "Instruments Used", "Unit of Measure"],
+          rows: [
+            ["1", "Pressure", "a. Mercury barometer\nb. Aneroid barometer\nc. Barograph (Self-recording)", "Hectopascal (hPa) or Millibar (mb) or Inches (in) of mercury"],
+            ["2", "Air Temp. (TT)", "Dry, Max (Mercury) thermometer\nMin (Alcohol) thermometer", "Degree Celsius °C"],
+            ["3", "Dew Point Temp (TdTd)", "Dry & Wet bulb (Mercury) thermometers", ""],
+            ["4", "Relative Humidity (RH)", "a. Dry & wet bulb thermometer\nb. Hygrometers\nc. Hygrograph (Self-recording)\nd. Psychrometer", "Percentage (%)"],
+            ["5", "Humidity Mixing Ratio (HMR)", "Hygrograph", "gm/kg"],
+            ["6", "Precipitation\nRain / Snow", "a. Raingauge\nb. Self-recording rain-gauge\nc. Hyetograph\nd. Snowgauge", "mm or cm\ndepth, amount (by melting)"],
+            ["7", "Surface Wind\n(Direction & Speed)", "a. Wind Vane (for Direction)\nb. Anemometer\nc. Anemograph (Self-recording)", "Direction in degree from True North in clockwise\nSpeed in knots (KT)"],
+            ["8", "Cloud Base", "a. Search light / Laser beam\nb. Ceilometer / Ceilograph\nc. Ceiling Balloon\nd. Nephoscope (direction of movement)\ne. Alidade", "Feet (ft) or m\n8 points of compass"],
+            ["9", "Visibility / RVR", "AVRA, Transmissometer or\nScopograph\nForward Scatterometer\nManually – Visibility Landmarks", "m\nm or km"],
+            ["10", "Upper Winds", "a. Optical Theodolite\nb. Hydrogen filled Pilot Balloon\nc. Radar Wind (RAWIN)", "Direction: in degrees\nSpeed: Knots (KT)\nor km per hour (KMH)\nor m per sec (MPS)"],
+            ["11", "Upper Air Pressure, Temp and Humidity", "Radio Sonde\nDropsonde (used in cyclones)", "Hectopascal (hPa)\nDegree Centigrade\n%"],
+            ["12", "Clouds", "Weather Satellites, RADAR", ""],
+          ],
+        },
+      },
+    ],
+  },
 };
 
 const RtrChapter = () => {
@@ -958,7 +994,7 @@ const RtrChapter = () => {
           <div className="inline-flex items-center gap-2 glass-panel px-4 py-2 mb-4">
             <BookOpen className="w-4 h-4 text-primary" />
             <span className="text-xs sm:text-sm text-muted-foreground tracking-wide">
-              RTR Part 1 (DGCA)
+              {chapter.subtitle || "RTR Part 1 (DGCA)"}
             </span>
           </div>
           <h1 className="font-display text-xl sm:text-2xl font-bold">
@@ -988,6 +1024,32 @@ const RtrChapter = () => {
                   {paragraph}
                 </p>
               ))}
+              {section.table && (
+                <div className="overflow-x-auto mt-3">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        {section.table.headers.map((h, hi) => (
+                          <TableHead key={hi} className="text-xs font-semibold text-primary whitespace-nowrap">
+                            {h}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {section.table.rows.map((row, ri) => (
+                        <TableRow key={ri}>
+                          {row.map((cell, ci) => (
+                            <TableCell key={ci} className="text-xs sm:text-sm text-muted-foreground whitespace-pre-line">
+                              {cell}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>

@@ -675,4 +675,9 @@ export const icJoshiTopics: Topic[] = [
       { id: 45, question: "Nowcasting forecast is valid for:", options: ["30 hr", "48 hr", "Less than 24 hr"], correct: 2 },
     ],
   },
+  {
+    id: "met-instruments",
+    title: "Met Instruments",
+    questions: [],
+  },
 ];
