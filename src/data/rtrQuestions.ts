@@ -265,6 +265,22 @@ export const rtrTopics: Topic[] = [
     ],
   },
   {
+    id: "rtr-radar-ch17",
+    title: "Ch 17 – RADAR – Radio Detection & Ranging",
+    questions: [
+      { id: 1, question: "What does RADAR stand for?", options: ["Radio Detection And Ranging", "Radio Direction And Reception", "Radio Distance And Refracting"], correct: 0 },
+      { id: 2, question: "How does radar determine the distance to an object?", options: ["By measuring the strength of the radio signal received", "By measuring the time delay between sending the pulse and receiving the echo", "By calculating the angle of the transmitted radio wave"], correct: 1 },
+      { id: 3, question: "What is the primary function of Surface Movement Radar (SMR) in air traffic control?", options: ["Tracking aircraft in flight at long range", "Detecting and tracking aircraft and vehicles on airport runways and taxiways", "Measuring the speed of airplanes during takeoff"], correct: 1 },
+      { id: 4, question: "How does Monopulse Secondary Surveillance Radar (MSSR) differ from Primary Surveillance Radar (PSR)?", options: ["MSSR uses transponder replies to provide aircraft identity and altitude, while PSR detects all reflected signals", "MSSR can only detect ground targets, whereas PSR can detect airborne targets", "MSSR sends continuous waves, PSR uses short pulses"], correct: 0 },
+      { id: 5, question: "Which frequency band is commonly used for long-range air traffic control radar?", options: ["L band (1-2 GHz)", "C band (4-8 GHz)", "Ku band (12-18 GHz)"], correct: 0 },
+      { id: 6, question: "What is the main purpose of Radar?", options: ["To send radio messages", "To detect objects and measure their distance", "To amplify signals"], correct: 1 },
+      { id: 7, question: "Radar works by sending out radio waves and then:", options: ["Ignoring the reflected signals", "Listening for signals that bounce back from objects", "Sending continuous sound waves"], correct: 1 },
+      { id: 8, question: "What does SMR (Surface Movement Radar) mainly track?", options: ["Airplanes in the sky", "Vehicles and aircraft on the ground at airports", "Weather systems"], correct: 1 },
+      { id: 9, question: "Which radar type uses aircraft transponders to get information like identity and altitude?", options: ["Primary Surveillance Radar (PSR)", "Monopulse Secondary Surveillance Radar (MSSR)", "Surface Movement Radar (SMR)"], correct: 1 },
+      { id: 10, question: "Doppler radar can measure the speed of an object by using:", options: ["The time delay of the signal", "Change in frequency of the reflected waves", "Strength of the radio wave"], correct: 1 },
+    ],
+  },
+  {
     id: "rtr-electrical-units",
     title: "Ch 18 – Electrical Units",
     questions: [

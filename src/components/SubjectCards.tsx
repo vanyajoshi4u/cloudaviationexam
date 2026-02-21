@@ -160,7 +160,7 @@ const subjectsData: Subject[] = [
           ...rtrTopics.map((t) => t.title),
           
           
-          "Ch 17 – RADAR – Radio Detection & Ranging",
+          
           "Ch 21 – SELCAL & Preflight SELCAL Check",
           "Ch 23 – Operation of Microphones, Headphones, Squelch, AVC, Volume Control & Simplex/Duplex",
           "Ch 34 – Voice – Aircraft Communications Failure",
