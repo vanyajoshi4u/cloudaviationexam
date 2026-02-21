@@ -371,6 +371,22 @@ export const rtrTopics: Topic[] = [
     ],
   },
   {
+    id: "rtr-microphones-ch23",
+    title: "Ch 23 – Operation of Microphones, Headphones, Squelch, AVC, Volume Control & Simplex/Duplex",
+    questions: [
+      { id: 1, question: "The device used by a pilot to hear ATC instructions is called:", options: ["Microphone", "Headphones", "Antenna"], correct: 1 },
+      { id: 2, question: "A microphone works on the principle of converting:", options: ["Sound to electrical signals", "Electrical signals to sound", "Sound to light"], correct: 0 },
+      { id: 3, question: "Which knob adjusts loudness in a radio set?", options: ["Squelch control", "Volume control", "Frequency selector"], correct: 1 },
+      { id: 4, question: "Squelch control is used to:", options: ["Increase transmitter power", "Reduce unwanted noise", "Tune the antenna"], correct: 1 },
+      { id: 5, question: "AVC stands for:", options: ["Automatic Voltage Control", "Automatic Volume Control", "Automatic Voice Channel"], correct: 1 },
+      { id: 6, question: "In simplex communication:", options: ["Only one party can talk at a time", "Both parties can talk at the same time", "No one can talk"], correct: 0 },
+      { id: 7, question: "121.5 MHz is known as:", options: ["ATIS frequency", "Emergency frequency", "Tower frequency"], correct: 1 },
+      { id: 8, question: "In half-duplex communication:", options: ["Transmission happens both ways but one at a time", "Only one-way talk is possible", "Tower talks and pilot listens simultaneously"], correct: 0 },
+      { id: 9, question: "A pilot changes frequency using:", options: ["Audio panel", "Radio tuning panel", "Weather radar"], correct: 1 },
+      { id: 10, question: "Headphones in an aircraft help to:", options: ["Remove wind and engine noise", "Increase transmission power", "Tune the VHF radio"], correct: 0 },
+    ],
+  },
+  {
     id: "rtr-communication-limitations",
     title: "Ch 24 – RT Communication Limitations",
     questions: [
