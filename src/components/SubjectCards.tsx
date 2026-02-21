@@ -164,7 +164,7 @@ const subjectsData: Subject[] = [
           
           
           
-          "Ch 35 – Model MCQ Practice for DGCA RTR Exam Part-I",
+          
         ].sort((a, b) => {
           const getChNum = (s: string) => {
             const m = s.match(/Ch\s*(\d+)/);
