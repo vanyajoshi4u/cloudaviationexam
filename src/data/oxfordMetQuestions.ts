@@ -87,6 +87,12 @@ export const oxfordMetTopics: Topic[] = [
       { id: 17, question: "At FL60 what pressure chart would you use?", options: ["700 hPa", "500 hPa", "800 hPa", "1000 hPa"], correct: 2 },
       { id: 18, question: "At which average height can the 500 hPa pressure level be expected in moderate latitudes?", options: ["12.2 km", "3 km", "5.5 km", "9.0 km"], correct: 2 },
       { id: 19, question: "The average pressure found at a height of 1620 m in mid latitudes would be:", options: ["350 hPa", "400 hPa", "850 hPa", "950 hPa"], correct: 2 },
+      { id: 20, question: "(For this question use Annex A) Which of the following best describes Zone D?", options: ["Ridge of high pressure", "Anticyclone", "Trough of low pressure", "Col"], correct: 3, diagram: "pressure-annexes" },
+      { id: 21, question: "(For this question use Annex A) Which of the following best describes Zone C?", options: ["Trough of low pressure", "Depression", "Ridge of high pressure", "Anticyclone"], correct: 3, diagram: "pressure-annexes" },
+      { id: 22, question: "(For this question use Annex B) Which of the following best describes Zone A?", options: ["Col", "Ridge of High Pressure", "Depression", "Trough of low pressure"], correct: 1, diagram: "pressure-annexes" },
+      { id: 23, question: "(For this question use Annex B) Which of the following best describes Zone B?", options: ["Ridge of high pressure", "Depression", "Anticyclone", "Col"], correct: 0, diagram: "pressure-annexes" },
+      { id: 24, question: "(For this question use Annex C) The pressure system at position A is a:", options: ["trough of low pressure", "anticyclone", "col", "secondary low"], correct: 0, diagram: "pressure-annexes" },
+      { id: 25, question: "(For this question use Annex C) The pressure system located in area \"B\" is a:", options: ["Ridge of high pressure", "col", "trough of low pressure", "depression"], correct: 1, diagram: "pressure-annexes" },
     ],
   },
   {
