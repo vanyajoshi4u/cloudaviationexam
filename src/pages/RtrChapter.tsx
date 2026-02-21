@@ -655,6 +655,119 @@ const rtrChapters: Record<string, ChapterContent> = {
       },
     ],
   },
+  "rtr-ch18": {
+    title: "Ch 18 – INS – Inertial Navigation System",
+    sections: [
+      {
+        heading: "What is an Inertial Navigation System (INS)?",
+        body: [
+          "An inertial navigation system, commonly known as an INS, is an electronic system that uses a variety of environmental sensors that are able to detect and measure the change in motion of an object. Using sensor data, an inertial navigation system can determine the position of the vehicle or object relative to its starting point. This is known as dead-reckoning.",
+        ],
+      },
+      {
+        heading: "Inertial Sensors Used in an INS",
+        body: [
+          "There are a number of types of sensors used in inertial navigation systems, however, the two primary types are accelerometers and gyroscopes.",
+          "Accelerometers can measure changes in linear velocity. As most objects can move in three-dimensional space, it is typical to use three accelerometers mounted orthogonally; that is, the axis of each accelerometer is at 90° to the others. They are usually given the labels of X-axis, Y-axis and Z-axis.",
+          "Gyroscopes measure rotational velocity, and again, as most objects are free to rotate in three-dimensional space, using three gyroscope axes is typical. They are also mounted on the object orthogonally, and aligned as best possible with the three accelerometer axes.",
+        ],
+      },
+      {
+        heading: "How Does INS Work?",
+        body: [
+          "The system measures the aircraft's acceleration and angular velocity from a known starting point.",
+          "Accelerometers detect changes in velocity along different axes.",
+          "Gyroscopes measure the aircraft's angular rotation.",
+          "By integrating these measurements over time, the INS calculates the current position, direction, and speed.",
+        ],
+      },
+      {
+        heading: "Key Features",
+        body: [
+          "Self-contained: Does not depend on external signals like GPS or radio beacons, making it useful in areas where such signals are unavailable.",
+          "Continuous Navigation Data: Provides real-time position and velocity updates.",
+          "Error Accumulation: Errors build up over time (called drift), so INS is usually combined with other navigation aids for correction.",
+        ],
+      },
+      {
+        heading: "Use of INS in Aviation",
+        body: [
+          "Commonly used in aircraft for precise navigation during flight, especially over oceans or remote areas.",
+          "Supports autopilots and flight management systems by providing accurate positioning and heading data.",
+          "Often integrated with GPS in modern systems to improve overall accuracy.",
+        ],
+      },
+      {
+        heading: "Summary",
+        body: [
+          "The INS is a vital onboard navigation tool that uses internal sensors to track an aircraft's position and movement independently, enhancing reliability and safety in flight navigation.",
+        ],
+      },
+      {
+        heading: "Types of Navigation in Aviation",
+        body: [
+          "Modern aviation employs several types of navigation methods, each with unique principles and uses.",
+        ],
+      },
+      {
+        heading: "1. Pilotage",
+        body: [
+          "Definition: Navigation by visual reference to landmarks and terrain features on the ground.",
+          "How It Works: Pilots use charts and visible checkpoints (such as rivers, roads, and buildings) to determine their position and direction.",
+          "Best For: Daytime flying under Visual Flight Rules (VFR), especially in areas with prominent features.",
+        ],
+      },
+      {
+        heading: "2. Dead Reckoning",
+        body: [
+          "Definition: Calculation of position based on a previously known position, elapsed time, speed, and heading.",
+          "How It Works: Pilots plot a straight-line course ('track') from the last known position and use airspeed, wind, and estimated time to calculate current location.",
+          "Use Case: Useful when visual references are sparse and provides a navigation backup.",
+        ],
+      },
+      {
+        heading: "3. Radio Navigation",
+        body: [
+          "Definition: Uses radio signals from ground-based stations to determine position and direction.",
+          "Main Systems:",
+          "• ADF (Automatic Direction Finder): Guides pilots toward or away from Non-Directional Beacons (NDBs) by showing the direction of the station relative to the aircraft's nose.",
+          "• VOR/DME (VHF Omnidirectional Range/Distance Measuring Equipment): VOR provides azimuth (direction) information; DME tells the pilot their distance from the station. Allows for accurate point-to-point navigation.",
+          "• RNAV (Area Navigation): Enables aircraft to navigate on any desired course within a network of navigation beacons or GPS waypoints, not just to and from ground-based stations.",
+        ],
+      },
+      {
+        heading: "4. Electronic Navigation",
+        body: [
+          "Definition: Relies on sophisticated electronic systems and satellites.",
+          "Major Types:",
+          "• Loran (Long Range Navigation): Now mostly obsolete, Loran used low-frequency radio signals from fixed transmitters to provide position fixes.",
+          "• GPS (Global Positioning System): Satellite-based navigation offering precise latitude, longitude, altitude, and speed information worldwide.",
+          "• Inertial Navigation: Uses accelerometers and gyroscopes (INS) to provide continuous position updates without external signals; often backed up by GPS for error correction.",
+        ],
+      },
+      {
+        heading: "5. Celestial Navigation",
+        body: [
+          "Definition: Determining position by observing celestial bodies (sun, moon, planets, stars).",
+          "How It Works: Using a sextant and accurate timepiece, pilots (usually in oceanic or remote flight before GPS) can fix their position based on the angles of celestial bodies.",
+          "Modern Use: Rare due to electronic systems but still a valuable backup for long-distance and polar flights.",
+        ],
+      },
+      {
+        heading: "Table: Overview of Navigation Types",
+        body: [
+          "Pilotage — Principle: Visual ground reference — Tools: Sectional charts, landmarks — Modern Use: Basic VFR, backup",
+          "Dead Reckoning — Principle: Time, speed, heading — Tools: Stopwatches, compasses — Modern Use: Backup",
+          "ADF — Principle: Radio direction finding — Tools: ADF/NDB — Modern Use: Limited",
+          "VOR/DME/RNAV — Principle: Radio position & ranging — Tools: VOR/DME, RNAV — Modern Use: Wide",
+          "Loran — Principle: Electronic timing (obsolete) — Tools: Loran-C receivers — Modern Use: Largely obsolete",
+          "GPS — Principle: Satellite position fix — Tools: GPS receivers, FMS — Modern Use: Standard",
+          "Inertial — Principle: Motion/rotation sensors — Tools: INS, IRS — Modern Use: Supplementary",
+          "Celestial — Principle: Astronomical observations — Tools: Sextant, chronometer — Modern Use: Rare, backup",
+        ],
+      },
+    ],
+  },
 };
 
 const RtrChapter = () => {

@@ -299,7 +299,8 @@ const SubjectCards = () => {
 const contentPageMap: Record<string, string> = {
                                   "Ch 1 – Broad Guidelines, Syllabus, Radio Telephone Restricted Licence Examination": "/rtr-chapter/rtr-ch1",
                                   "Ch 2 – Definitions Related with Annex-10": "/rtr-chapter/rtr-ch2",
-                                  "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP": "/rtr-chapter/rtr-ch3",
+                                   "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP": "/rtr-chapter/rtr-ch3",
+                                   "Ch 18 – INS – Inertial Navigation System": "/rtr-chapter/rtr-ch18",
                                 };
                                 const contentLink = contentPageMap[chapter];
                                 const isClickable = !!quizTopic || !!contentLink;
