@@ -9,10 +9,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import pressureAnnexes from "@/assets/pressure-systems-annexes.png";
 import turbulenceAppendixA from "@/assets/turbulence-appendix-a.png";
+import altimetryDiagram13 from "@/assets/altimetry-diagram-13.png";
+import altimetryDiagram29 from "@/assets/altimetry-diagram-29.png";
 
 const diagramMap: Record<string, string> = {
   "pressure-annexes": pressureAnnexes,
   "turbulence-appendix-a": turbulenceAppendixA,
+  "altimetry-13": altimetryDiagram13,
+  "altimetry-29": altimetryDiagram29,
 };
 
 const Quiz = () => {
