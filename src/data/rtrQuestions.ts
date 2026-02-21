@@ -282,7 +282,7 @@ export const rtrTopics: Topic[] = [
   },
   {
     id: "rtr-electrical-units",
-    title: "Ch 18 – Electrical Units",
+    title: "Ch 18 – INS – Inertial Navigation System",
     questions: [
       { id: 1, question: "Ohm's Law states that:", options: ["Voltage = Current ÷ Resistance", "Voltage = Current × Resistance", "Power = Voltage + Current"], correct: 1 },
       { id: 2, question: "The relationship between Wavelength (λ), Frequency (f), and Speed of Light (c) is:", options: ["λ = f × c", "c = λf", "f = λ ÷ c"], correct: 1 },
