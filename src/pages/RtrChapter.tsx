@@ -768,6 +768,153 @@ const rtrChapters: Record<string, ChapterContent> = {
       },
     ],
   },
+  "rtr-ch22": {
+    title: "Ch 22 – Intercommunications & Announcing System of Aircraft",
+    sections: [
+      {
+        heading: "Introduction",
+        body: [
+          "Aircraft intercommunication and announcing systems facilitate communication between flight crew, cabin crew, and passengers. These systems include interphone systems for crew-to-crew communication and Public Address (PA) systems for announcements to passengers. Additionally, ACARS (Aircraft Communications Addressing and Reporting System) is a digital data link used for transmitting messages between aircraft and ground stations.",
+          "Aircraft rely on a complex network of communication systems to ensure the safety and efficiency of flight. These systems can be broadly categorized into two main groups: intercommunication systems and announcing systems.",
+        ],
+      },
+      {
+        heading: "Interphone Systems",
+        body: [
+          "The interphone system enables internal communication between various crew members, such as pilots, cabin crew, and ground personnel during pre-flight, in-flight, and post-flight operations.",
+          "Flight Interphone: Enables communication between the flight crew (pilots) and the cabin crew (flight attendants). It also facilitates communication between flight crew members within the cockpit and with ground mechanics during pre-flight checks and maintenance activities.",
+          "Service Interphone: Allows communication between flight crew and ground personnel, and maintenance technicians. Used by maintenance personnel on the ground to communicate with the cockpit crew and cabin crew, often through conveniently located jacks on the aircraft's exterior.",
+          "Cabin Interphone: Facilitates communication among the cabin crew. Enables communication between the flight crew and cabin attendants, as well as between cabin attendants at different stations within the aircraft.",
+          "Ground Crew Call System: Allows communication between the flight compartment and ground personnel to coordinate activities like aircraft servicing and pushback operations.",
+        ],
+      },
+      {
+        heading: "Call Prioritization",
+        body: [
+          "Interphone systems often include a call panel with visual and audible indicators to show the source and priority of each call (e.g., flight deck, senior crew member, passenger call).",
+        ],
+      },
+      {
+        heading: "Public Address (PA) Systems",
+        body: [
+          "The Public Address (PA) system is a crucial part of the aircraft's communication infrastructure, used for transmitting announcements to the passengers and crew members in the cabin.",
+          "Purpose: PA systems broadcast announcements to passengers for safety instructions, flight status updates, and other general information.",
+          "Control: PA announcements can be initiated from the flight deck or cabin crew stations.",
+          "Priority: Flight deck announcements generally have the highest priority, followed by cabin crew announcements.",
+          "Volume Control: PA systems often have automatic volume adjustment features to ensure announcements are clear and audible above the cabin noise.",
+          "PA System Components: Consists of microphones, amplifiers, and speakers strategically placed throughout the cabin to distribute announcements from the cockpit or flight attendant stations. This includes routine announcements, safety instructions, and updates on flight status.",
+          "Pre-recorded Announcement Machine (PRAM): Some PA systems are integrated with a PRAM to play pre-recorded messages, music for boarding, or chimes as needed, according to AVIXA Xchange.",
+        ],
+      },
+      {
+        heading: "ACARS (Aircraft Communications Addressing and Reporting System)",
+        body: [
+          "ACARS is a digital data link system that transmits short messages between the aircraft and ground stations via VHF radio or satellite.",
+          "1. Text Communication between aircraft / ground\n2. Similarity to CPDLC – text communication\n3. Difference – Text communication directly to company dispatch\n4. In ACARS, Communication is with the company not ATC.",
+          "Types of Messages: ACARS can be used for Air Traffic Control (ATC) communications, Aeronautical Operational Control (AOC), and Airline Administrative Control (AAC).",
+          "Automatic Reporting: ACARS can automatically send reports (e.g., flight data, engine performance) to ground stations at scheduled times or when specific events occur.",
+          "ACARS systems were originally used to exchange messages between aircraft and flight operations centres. Since the 1990s, the ACARS network and avionics have been used to support the exchange of pre-FANS and FANS 1/A messages (i.e. Automatic Dependent Surveillance-Contract (ADS-C) and Controller Pilot Data Link Communications (CPDLC)) between aircraft and ATS units. ACARS has not been standardized by ICAO; the technical and operational requirements are defined in a set of documents issued by ARINC.",
+          "Use of ACARS for ATS communications has reduced potential for error inherent in voice communications, and off-loaded congested ATS voice channels. ACARS is currently available via HF, VHF and satellite data links.",
+        ],
+      },
+      {
+        heading: "Importance of These Systems",
+        body: [
+          "Both intercommunication and announcing systems play a crucial role in aircraft safety and efficiency:",
+          "Enhanced Communication: They ensure clear, concise, and timely communication among crew members and with ground personnel, facilitating smooth operations and coordination.",
+          "Situational Awareness: Effective communication helps maintain situational awareness for pilots and air traffic controllers, crucial for navigating safely and avoiding potential conflicts or errors.",
+          "Emergency Procedures: In emergencies, the interphone and PA systems become vital tools for relaying critical information and instructions to the crew and passengers, enabling quick responses and coordinated actions to mitigate risks and protect lives.",
+          "Reduced Workload and Errors: By automating routine reports and facilitating efficient communication, systems like ACARS and the interphone can help reduce pilot workload and minimize the risk of human errors associated with communication breakdowns.",
+        ],
+      },
+      {
+        heading: "Technological Advancements",
+        body: [
+          "Recent technological advancements have significantly enhanced aircraft intercommunication and announcing systems, including the transition to digital systems, the integration of wireless solutions, and the incorporation of noise-canceling technology. The integration of artificial intelligence and the Internet of Things is expected to further improve these systems, leading to more advanced features, enhanced communication, and improved flight safety.",
+        ],
+      },
+      {
+        heading: "Aircraft Communications Systems Overview",
+        body: [
+          "The aircraft communication system is used for speech (voice) communications and also for data communications. It is used for communication between the crew members and between crew members and ground personnel. It is also used to communicate with the passengers, other aircraft, and ground stations (both speech and data).",
+          "Radio Communication:\n• HF System – For long-distance voice communications\n• VHF System – For short-range voice communications\n• Radio Management Panels\n• SELCAL System – For selective calling using HF and VHF\n• SATCOM System – For satellite communication\n• ACARS – For datalink communication",
+          "Interphone Communication:\n• Flight Interphone System – For internal cockpit communication and also with ground mechanics\n• Cabin Interphone System – For cabin crew or cabin crew/pilots communications\n• Service Interphone System – On ground only, for maintenance personnel only\n• Ground Crew Call System – To tell ground crew or flight crew there is a call\n• Passenger Address System – For passenger announcement from cockpit and cabin crew station\n• Audio Management System",
+        ],
+      },
+      {
+        heading: "Communications – Introduction",
+        body: [
+          "Communication is one of the three CNS elements used by both ATS and Airlines. Safety and efficiency of aircraft operations are directly related to the availability and performance of aeronautical communications and the supporting infrastructure. ANSPs, Aircraft Operators, Avionics Manufacturers, and other agencies providing supporting communication services and infrastructure depend on 'Communication' and they participate in deciding specifications and harnessing technologies to ensure that Air Transportation and Air Traffic Service provision are effectively conducted in a safety critical domain for which Communication is the backbone.",
+        ],
+      },
+      {
+        heading: "Ground-Ground Communications",
+        body: [
+          "Ground-ground communications refer to exchange of ATM-related messages linking ground-based stakeholders, concerning planning and movement of aircraft. Such communications are transitioning from analogue to digital format and are becoming increasingly automated.",
+          "Technologies and applications include:",
+          "• Aeronautical Fixed Telecommunications Network (AFTN) and ATS Message Handling Services (AMHS)\n• Very Small Aperture Terminal (VSAT)\n• Air Traffic Services Inter-Facility Data Communications (AIDC)\n• Hot lines for voice communication between adjacent ACC/ATC Centres.",
+        ],
+      },
+      {
+        heading: "Very Small Aperture Terminal (VSAT)",
+        body: [
+          "A VSAT ground station uses satellites to relay voice and data from small terminals to other terminals. VSATs are typically used for communications between ATC units in areas where line connections are unreliable or uneconomical.",
+          "Usages of VSAT ground station terminals on an established network and satellite are versatile, economical and scalable. However, a deployment of new VSAT networks and satellites is considerably more expensive.",
+        ],
+      },
+      {
+        heading: "Air Traffic Services Interfacility Data Communication (AIDC)",
+        body: [
+          "AIDC is a ground-ground data link communication service that provides the capability to automatically exchange data between ATS units for notification, coordination and transfer of aircraft between flight information regions (FIRs). AIDC message format and procedures is an international standard designed for use through any ground-ground circuit, including the legacy AFTN.",
+          "AIDC greatly reduces the need for voice coordination between ATC facilities, resulting in fewer errors and reduced workload.",
+        ],
+      },
+      {
+        heading: "Air-Ground Communications",
+        body: [
+          "Current controller-pilot communications use primarily voice links provided by analogue radios operating in the VHF and HF bands. Aviation is moving towards a new communications infrastructure that provides superior quality through use of air-ground data link.",
+          "A first generation of ATC applications was implemented using Aircraft Communications Addressing and Reporting System (ACARS) air-ground data links. ACARS now needs to transition to modern communications protocols, such as VDL Mode 2 in order to support increasing user traffic and provide the performance needed for today and future air traffic management (ATM).",
+          "Adoption of Controller Pilot Datalink Communications (CPDLC) as the primary means of routine communication while maintaining the requirement for voice communications for non-routine, tactical communications and as a backup, is definitely not envisaged in near term (0-5 years) and perhaps not even medium term (6-10 years). A long-term (11+ years) paradigm shift may have to be factored in for planning purposes.",
+        ],
+      },
+      {
+        heading: "Voice Communication Technologies",
+        body: [
+          "Very High Frequency (VHF) Voice: VHF voice communication systems, used in the International Aeronautical Mobile Service are amplitude modulated. VHF analogue radios use channels of varying bandwidth. The channel spacing can be defined as 100 kHz, 50 kHz, 25 kHz or 8.33 kHz. In March 2007, the ICAO European Region made the carriage and operation of 8.33 kHz radios mandatory above FL195.",
+          "High Frequency (HF) Voice: HF voice communication is used for air-ground ATC communications in remote and oceanic areas outside the range of VHF frequencies. In most cases, an HF radio operator functions as an intermediary between controllers and pilots. HF communications have long-distance coverage because signals are reflected by the ionosphere. Link quality and availability are variable, and influenced by frequency congestion, sunspot activity, the eleven-year solar cycle, and day/night atmospheric and ionospheric conditions.",
+          "In most cases, Controller Pilot Datalink Communications (CPDLC) can replace HF voice communication. CPDLC is increasingly being deployed as the primary means of communication for oceanic and remote areas while continuing to provide HF voice service as a backup.",
+          "Voice Communication via Satellites (SATVOICE): Voice communication via satellites is currently used to complement other forms of long-range communications, such as CPDLC and HF Voice. SATVOICE provides a means of reducing the risk of communication failures, and can improve the safety and efficiency of operations.",
+        ],
+      },
+      {
+        heading: "Data and Network Communication",
+        body: [
+          "Controller Pilot Data Link Communications (CPDLC): CPDLC refers to communications between controllers and pilots using pre-defined message sets, with a free-text option for non-routine messages. CPDLC is a desirable form of controller-pilot communications, as it reduces voice errors and misinterpretations. It can be used for routine communications but is less suitable for tactical interactions as compared with VHF voice communications.",
+          "VHF Data Link (VDL) Mode 2: VDL Mode 2 is a bit-oriented air-ground digital data link that was introduced as an VHF Mode 0 (VHF ACARS) upgrade for ATC controller-pilot data communications while still allowing ACARS equipped aircraft to use the same network. VDL Mode 2 delivers data at 31.5 Kbps, which is over 13 times faster than the VHF ACARS 2.4 kbps rate.",
+          "VHF Data Link (VDL) Mode 3: VDL Mode 3 data link was proposed to relieve VHF voice channel congestion in the U.S. It faced competition from 8.33 kHz channel spacing, which is implemented in Europe. VDL Mode 3 is not expected to be used given major stakeholders' concerns.",
+          "VHF Data Link (VDL) Mode 4: VDL Mode 4 is a bit-oriented VHF data link capable of providing air-air and air-ground communications. VDL Mode 4 supports time-critical applications and is efficient in exchanging short repetitive messages. It is based on the Self-organizing Time Division Multiple Access (STDMA) protocol.",
+          "High Frequency Data Link (HFDL): HFDL provides data-link coverage for polar operations, where geostationary satellites have no coverage. Because of this, and the small incremental cost to implement HFDL in HF equipped aircraft, many airlines use HFDL for operational communications outside of the coverage of VHF and satellites.",
+          "L-band Digital Aeronautical Communications System (LDACS): LDACS is a ground-based data link system being developed for continental airspace for en-route and terminal area communications. LDACS covers both high-rate data and voice communication and will support ICAO security requirements.",
+          "Aeronautical Telecommunication Network over Internet Protocol Suites (ATN IPS): ATN is an internetwork architecture that allows ground, air-ground and avionics data sub-networks to interoperate by adopting common interface services and protocols based on the International Organization for Standardization (ISO) Open Systems Interconnection (OSI) reference model.",
+        ],
+      },
+      {
+        heading: "Aeronautical Mobile Airport Communications System (Aero MACS)",
+        body: [
+          "Aero MACS is intended to support on-the-ground secured communication exchanges and is based on the IEEE 802.16-2009 mobile standards for WiMAX. The uses of Aero MACS are limited to aviation applications on the surface within the airport vicinity and can support three categories of users: ATC/ATM and infrastructure, airline operations and airport authority operations.",
+          "Aero MACS is a technology which has been standardized exclusively for aviation uses. A global frequency allocation for Aero MACS was introduced in the International Telecommunication Union (ITU) Radio Regulations for the frequency bands of 5000–5030 MHz and 5091–5150 MHz.",
+          "Aero MACS is a part of the Future Communication Infrastructure supporting the Airport Surface Component and is reflected within the ICAO Global Air Navigation Plan (GANP) and the ICAO Communication Roadmap in the GANP.",
+        ],
+      },
+      {
+        heading: "Other Data Link Services",
+        body: [
+          "Digital Automatic Terminal Information Service (D-ATIS): ATIS is predominantly a voice broadcast service over a dedicated VHF frequency that provides operational information to aircraft operating in the vicinity of an airport, eliminating the need for a controller to transmit the information to each aircraft individually. It is normally accomplished through a voice recording, updated when conditions change.",
+          "Data link is an alternative mean of transmitting ATIS to equipped aircraft. It reduces flight crew workload as D-ATIS information is printed on a cockpit printer or is recallable on a data link display.",
+        ],
+      },
+    ],
+  },
 };
 
 const RtrChapter = () => {
