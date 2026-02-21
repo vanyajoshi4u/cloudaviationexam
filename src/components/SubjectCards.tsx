@@ -309,17 +309,17 @@ const contentPageMap: Record<string, string> = {
                                   <button
                                     key={chapter}
                                     onClick={() => {
-                                      if (quizTopic) navigate(`/topics/${quizTopic.id}`);
-                                      else if (contentLink) navigate(contentLink);
+                                      if (contentLink) navigate(contentLink);
+                                      else if (quizTopic) navigate(`/topics/${quizTopic.id}`);
                                     }}
                                     className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${isClickable ? "cursor-pointer" : "cursor-default"}`}
                                   >
                                     {chapter}
-                                    {quizTopic && (
-                                      <span className="ml-2 text-[10px] text-primary/60">({quizTopic.questions.length} MCQs)</span>
-                                    )}
-                                    {contentLink && !quizTopic && (
+                                    {contentLink && (
                                       <span className="ml-2 text-[10px] text-primary/60">(Notes)</span>
+                                    )}
+                                    {quizTopic && !contentLink && (
+                                      <span className="ml-2 text-[10px] text-primary/60">({quizTopic.questions.length} MCQs)</span>
                                     )}
                                   </button>
                                 );
