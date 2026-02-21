@@ -8,9 +8,11 @@ import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } fro
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import pressureAnnexes from "@/assets/pressure-systems-annexes.png";
+import turbulenceAppendixA from "@/assets/turbulence-appendix-a.png";
 
 const diagramMap: Record<string, string> = {
   "pressure-annexes": pressureAnnexes,
+  "turbulence-appendix-a": turbulenceAppendixA,
 };
 
 const Quiz = () => {

@@ -175,6 +175,10 @@ export const oxfordMetTopics: Topic[] = [
       { id: 9, question: "Clear air turbulence, in association with a polar front jet stream in the Northern Hemisphere, is more severe:", options: ["Underneath the jet core", "In the centre of the jet core", "Looking downstream on the right hand side", "Looking downstream on the left hand side"], correct: 3 },
       { id: 10, question: "Mountain waves can occur:", options: ["Up to a maximum of 5000 ft above the mountains and 50-100 NM downwind", "Up to mountain height only and 50-100 NM downwind", "Above the mountain and downwind up to a maximum height at the tropopause and 50-100 NM downwind", "In the stratosphere and troposphere"], correct: 3 },
       { id: 11, question: "Clear air turbulence (CAT) should be reported whenever it is experienced. What should be reported if crew and passengers feel a definite strain against their seat or shoulder straps, food service and walking is difficult and loose objects become dislodged?", options: ["Light TURB", "Extreme TURB", "Severe TURB", "Moderate TURB"], correct: 3 },
+      { id: 12, question: "(Refer to Appendix A, assuming mountain waves are present) The wind at square A3 is likely to be:", options: ["35 kt", "50 kt", "25 kt", "light"], correct: 1, diagram: "turbulence-appendix-a" },
+      { id: 13, question: "(Refer to Appendix A, assuming mountain waves are present) The wind at ABC 4 may be:", options: ["50 kt", "40 kt", "35 kt", "a jet stream"], correct: 3, diagram: "turbulence-appendix-a" },
+      { id: 14, question: "(Refer to Appendix A, assuming mountain waves are present) Flight conditions at B1 are likely to be:", options: ["smooth", "turbulent", "turbulent in breaking wave crests", "turbulent due to marked up and down currents"], correct: 3, diagram: "turbulence-appendix-a" },
+      { id: 15, question: "(Refer to Appendix A, assuming mountain waves are present) The most extreme turbulence can occur:", options: ["at B1", "at A2", "at ABC 4", "at B2, 3, 4 and at C2, 3, 4"], correct: 3, diagram: "turbulence-appendix-a" },
     ],
   },
   {
