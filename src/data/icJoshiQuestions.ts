@@ -3,6 +3,7 @@ export interface MCQuestion {
   question: string;
   options: string[];
   correct: number; // index of correct answer
+  diagram?: string;
 }
 
 export interface Topic {

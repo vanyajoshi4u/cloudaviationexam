@@ -7,6 +7,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
+import pressureAnnexes from "@/assets/pressure-systems-annexes.png";
+
+const diagramMap: Record<string, string> = {
+  "pressure-annexes": pressureAnnexes,
+};
 
 const Quiz = () => {
   const { topicId } = useParams();
@@ -185,6 +190,12 @@ const Quiz = () => {
               <span className="text-primary mr-2">Q{currentIndex + 1}.</span>
               {currentQ.question}
             </p>
+
+            {currentQ.diagram && diagramMap[currentQ.diagram] && (
+              <div className="mb-5 rounded-lg overflow-hidden border border-border/30">
+                <img src={diagramMap[currentQ.diagram]} alt="Reference diagram" className="w-full bg-white" />
+              </div>
+            )}
 
             <div className="flex flex-col gap-2.5">
               {currentQ.options.map((opt, oi) => {
