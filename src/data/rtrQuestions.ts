@@ -239,18 +239,13 @@ export const rtrTopics: Topic[] = [
   },
   {
     id: "rtr-gps",
-    title: "Ch 15 – GPS & GAGAN",
+    title: "Ch 15 – GPS – Global Positioning System",
     questions: [
       { id: 1, question: "How many satellites does the GPS constellation consist of?", options: ["18", "24", "36"], correct: 1 },
-      { id: 2, question: "What coordinate system does GPS use?", options: ["Universal Transverse Mercator (UTM)", "World Geodetic System 1984 (WGS-84)", "North American Datum 1983 (NAD83)"], correct: 1 },
-      { id: 3, question: "What does GAGAN stand for?", options: ["Global Altimeter Guidance and Navigation", "GPS Aided GEO Augmented Navigation", "General Aviation Guidance and Navigation"], correct: 1 },
-      { id: 4, question: "How does GAGAN enhance airspace usage over India?", options: ["By reducing the number of flights permitted", "By enabling more efficient routing and tighter spacing", "By providing free meals to pilots"], correct: 1 },
-      { id: 5, question: "GAGAN is a system developed jointly by which organizations?", options: ["DRDO and HAL", "ISRO and AAI", "NAL and IAF"], correct: 1 },
-      { id: 6, question: "The main objective of GAGAN is to:", options: ["Provide inflight Wi-Fi", "Augment GPS signals for increased positional accuracy", "Free internet access", "Forecast weather en route"], correct: 1 },
-      { id: 7, question: "The coverage area of GAGAN includes:", options: ["Only Indian mainland", "Indian region, Bay of Bengal, South East Asia, Middle East up to Africa", "Entire globe"], correct: 1 },
-      { id: 8, question: "Which statement is correct regarding the accuracy of GAGAN?", options: ["Reduces error margin to 3.5 meters for aircraft position", "Works only within 25 meters accuracy", "Has no effect on accuracy"], correct: 0 },
-      { id: 9, question: "What benefits, besides aviation, are supported by GAGAN?", options: ["Railway operations and Maritime navigation", "Only private pilot training", "Only military applications"], correct: 0 },
-      { id: 10, question: "Which of the following is NOT a benefit of GAGAN?", options: ["Reduced fuel costs for airlines", "Improved on-time performance", "Increased runway length at airports"], correct: 2 },
+      { id: 2, question: "What is the minimum number of satellites required for an accurate three-dimensional position fix?", options: ["2", "3", "4"], correct: 2 },
+      { id: 3, question: "What coordinate system does GPS use for positioning?", options: ["Universal Transverse Mercator (UTM)", "World Geodetic System 1984 (WGS-84)", "North American Datum 1983 (NAD83)"], correct: 1 },
+      { id: 4, question: "What is RAIM in GPS?", options: ["A system to monitor the GPS receiver's battery", "Receiver Autonomous Integrity Monitoring", "A military augmentation system"], correct: 1 },
+      { id: 5, question: "What does the Wide Area Augmentation System (WAAS) do?", options: ["Provides ground station repairs", "Corrects GPS data based on atmospheric conditions", "Tracks military aircraft only"], correct: 1 },
     ],
   },
   {
