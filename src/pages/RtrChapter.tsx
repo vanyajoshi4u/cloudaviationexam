@@ -232,6 +232,429 @@ const rtrChapters: Record<string, ChapterContent> = {
       },
     ],
   },
+  "rtr-ch3": {
+    title: "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP",
+    sections: [
+      {
+        heading: "Aerodrome",
+        body: [
+          "A defined area on land or water (including any buildings, installations and equipment) intended to be used either wholly or in part for the arrival, departure and surface movement of aircraft.",
+          "Note — The term \"aerodrome\" where used in the provisions relating to flight plans and ATS messages is intended to cover also sites other than aerodromes which may be used by certain types of aircraft, e.g. helicopters or balloons.",
+        ],
+      },
+      {
+        heading: "Aerodrome Elevation",
+        body: ["The elevation of the highest point of the landing area."],
+      },
+      {
+        heading: "Advisory Airspace",
+        body: ["Airspace of defined dimensions, or designated route, within which air traffic advisory service is available."],
+      },
+      {
+        heading: "Advisory Route",
+        body: ["A designated route along which air traffic advisory service is available."],
+      },
+      {
+        heading: "Aeronautical Fixed Station",
+        body: ["A station in the aeronautical fixed service."],
+      },
+      {
+        heading: "Aeronautical Information Publication (AIP)",
+        body: [
+          "A publication issued by or with the authority of a State (DGCA in India) and containing aeronautical information of a lasting character essential to air navigation.",
+          "Note: In India AIP is published by Airports Authority of India on behalf of DGCA. AIP is a legal document, whereas Jeppeson charts etc are not a legal document, but Jeppeson charts are widely used in aviation.",
+        ],
+      },
+      {
+        heading: "Airborne Collision Avoidance System (ACAS)",
+        body: ["An aircraft system based on secondary surveillance radar (SSR) transponder signals which operates independently of ground-based equipment to provide advice to the pilot on potential conflicting aircraft that are equipped with SSR transponders."],
+      },
+      {
+        heading: "Aircraft",
+        body: ["Any machine that can derive support in the atmosphere from the reactions of the air other than the reactions of the air against the earth's surface."],
+      },
+      {
+        heading: "Aircraft Identification",
+        body: ["A group of letters, figures or a combination thereof which is either identical to, or the coded equivalent of, the aircraft call sign to be used in air-ground communications, and which is used to identify the aircraft in ground-ground air traffic services communications."],
+      },
+      {
+        heading: "Aircraft Proximity",
+        body: [
+          "A situation in which, in the opinion of a pilot or air traffic services personnel, the distance between aircraft as well as their relative positions and speed have been such that the safety of the aircraft involved may have been compromised. An aircraft proximity is classified as follows:",
+          "Risk of collision: The risk classification of an aircraft proximity in which serious risk of collision has existed.",
+          "Safety not assured: The risk classification of an aircraft proximity in which the safety of the aircraft may have been compromised.",
+          "No risk of collision: The risk classification of an aircraft proximity in which no risk of collision has existed.",
+          "Risk not determined: The risk classification of an aircraft proximity in which insufficient information was available to determine the risk involved, or inconclusive or conflicting evidence precluded such determination.",
+        ],
+      },
+      {
+        heading: "AIRMET Information",
+        body: ["Information issued by a meteorological watch office concerning the occurrence or expected occurrence of specified en-route weather phenomena which may affect the safety of low-level aircraft operations and which was not already included in the forecast issued for low-level flights in the flight information region concerned or sub-area thereof."],
+      },
+      {
+        heading: "AIRPROX (AIRMISS)",
+        body: ["The code word used in an air traffic incident report to designate aircraft proximity."],
+      },
+      {
+        heading: "Air-report (AIREP)",
+        body: ["A report from an aircraft in flight prepared in conformity with requirements for position, and operational and/or meteorological reporting."],
+      },
+      {
+        heading: "Air-taxiing",
+        body: [
+          "Movement of a helicopter/VTOL above the surface of an aerodrome, normally in ground effect and at a ground speed normally less than 37 km/h (20 kt).",
+          "Note — The actual height may vary, and some helicopters may require air-taxiing above 8 m (25 ft) AGL to reduce ground effect turbulence or provide clearance for cargo sling loads.",
+        ],
+      },
+      {
+        heading: "Air Traffic",
+        body: ["All aircraft in flight or operating on the manoeuvring area of an aerodrome."],
+      },
+      {
+        heading: "Air Traffic Advisory Service",
+        body: ["A service provided within advisory airspace to ensure separation, in so far as practical, between aircraft which are operating on IFR flight plans."],
+      },
+      {
+        heading: "Air Traffic Control Clearance (ATC CLEARANCE)",
+        body: [
+          "Authorization for an aircraft to proceed under conditions specified by an air traffic control unit.",
+          "Note 1 — For convenience, the term \"air traffic control clearance\" is frequently abbreviated to \"clearance\" when used in appropriate contexts.",
+          "Note 2 — The abbreviated term \"clearance\" may be prefixed by the words \"taxi\", \"take-off\", \"departure\", \"en-route\", \"approach\" or \"landing\" to indicate the particular portion of flight to which the air traffic control clearance relates.",
+        ],
+      },
+      {
+        heading: "Air Traffic Control Instruction",
+        body: ["Directives issued by air traffic control for the purpose of requiring a pilot to take a specific action. Expeditious flow of air traffic by ensuring that ATC capacity is utilized to the maximum extent possible."],
+      },
+      {
+        heading: "Air Traffic Service (ATS)",
+        body: ["A generic term meaning variously, flight information service, alerting service, air traffic advisory service, air traffic control service (area control service, approach control service or aerodrome control service). Control unit, flight information centre or air traffic services reporting office."],
+      },
+      {
+        heading: "Airway",
+        body: ["A control area or portion thereof established in the form of a corridor."],
+      },
+      {
+        heading: "ALERFA",
+        body: ["The code word used to designate an alert phase."],
+      },
+      {
+        heading: "Alerting Service",
+        body: ["A service provided to notify appropriate organizations regarding aircraft in need of search and rescue aid, and assist such organizations as required."],
+      },
+      {
+        heading: "Alert Phase",
+        body: ["A situation wherein apprehension exists as to the safety of an aircraft and its occupants."],
+      },
+      {
+        heading: "Alternate Aerodrome",
+        body: [
+          "An aerodrome to which an aircraft may proceed when it becomes either impossible or inadvisable to proceed to or to land at the aerodrome of intended landing. Alternate aerodromes include the following:",
+          "Take-off alternate: An alternate aerodrome at which an aircraft can land should this become necessary shortly after take-off and it is not possible to use the aerodrome of departure.",
+          "En-route alternate: An aerodrome at which an aircraft would be able to land after experiencing an abnormal or emergency condition while en route.",
+          "Destination alternate: An alternate aerodrome to which an aircraft may proceed should it become either impossible or inadvisable to land at the aerodrome of intended landing.",
+          "Note: The aerodrome from which a flight departs may also be an en-route or a destination alternate aerodrome for that flight.",
+        ],
+      },
+      {
+        heading: "Altitude",
+        body: ["The vertical distance of a level, a point or an object considered as a point, measured from mean sea level (MSL)."],
+      },
+      {
+        heading: "Apron",
+        body: ["A defined area, on a land aerodrome, intended to accommodate aircraft for purposes of loading or unloading passengers, mail or cargo, fuelling, parking or maintenance."],
+      },
+      {
+        heading: "ATIS",
+        body: ["The symbol used to designate automatic terminal information service."],
+      },
+      {
+        heading: "ATS Route",
+        body: [
+          "A specified route designed for channeling the flow of traffic as necessary for the provision of air traffic services.",
+          "Note 1 — The term \"ATS route\" is used to mean variously, airway, advisory route, controlled or uncontrolled route, arrival or departure route, etc.",
+          "Note 2 — An ATS route is defined by route specifications which include an ATS route designator, the track to or from significant points (waypoints), distance between significant points, reporting requirements and, as determined by the appropriate ATS authority, the lowest safe altitude.",
+        ],
+      },
+      {
+        heading: "Automatic Terminal Information Service (ATIS)",
+        body: [
+          "The automatic provision of current, routine information to arriving and departing aircraft throughout 24 hours or a specified portion thereof.",
+          "Data link-automatic terminal information service (D-ATIS): The provision of ATIS via data link.",
+          "Voice-automatic terminal information service (Voice-ATIS): The provision of ATIS by means of continuous and repetitive voice broadcasts.",
+        ],
+      },
+      {
+        heading: "Ceiling",
+        body: ["The height above the ground or water of the base of the lowest layer of cloud below 6 000 m (20 000 ft) covering more than half the sky."],
+      },
+      {
+        heading: "Code (SSR)",
+        body: ["The number assigned to a particular multiple pulse reply signal transmitted by a transponder in Mode A or Mode C."],
+      },
+      {
+        heading: "Control Area",
+        body: ["A controlled airspace extending upwards from a specified limit above the earth."],
+      },
+      {
+        heading: "Controlled Aerodrome",
+        body: [
+          "An aerodrome at which air traffic control service is provided to aerodrome traffic.",
+          "Note — The term \"controlled aerodrome\" indicates that air traffic control service is provided to aerodrome traffic but does not necessarily imply that a control zone exists.",
+        ],
+      },
+      {
+        heading: "Controlled Airspace",
+        body: [
+          "A controlled airspace of defined dimensions within which air traffic control service is provided in accordance with the airspace classification.",
+          "Note — Controlled airspace is a generic term which covers ATS airspace Classes A, B, C, D and E as controlled airspace.",
+        ],
+      },
+      {
+        heading: "Controlled Flight",
+        body: ["Any flight which is subject to an air traffic control clearance."],
+      },
+      {
+        heading: "Control Zone",
+        body: ["A controlled airspace extending upwards from the surface of the earth to a specified upper limit."],
+      },
+      {
+        heading: "Cruising Level",
+        body: ["A level maintained during a significant portion of a flight."],
+      },
+      {
+        heading: "Decision Altitude (DA) or Decision Height (DH)",
+        body: [
+          "A specified altitude or height in the precision approach or approach with vertical guidance at which a missed approach must be initiated if the required visual reference to continue the approach has not been established.",
+          "Note 1 — Decision altitude (DA) is referenced to mean sea level and decision height (DH) is referenced to the threshold elevation.",
+          "Note 2 — The required visual reference means that section of the visual aids or of the approach area which should have been in view for sufficient time for the pilot to have made an assessment of the aircraft position and rate of change of position, in relation to the desired flight path. In Category III operations with a decision height the required visual reference is that specified for the particular procedure and operation.",
+          "Note 3 — For convenience where both expressions are used they may be written in the form \"decision altitude/height\" and abbreviated \"DA/H\".",
+        ],
+      },
+      {
+        heading: "DETRESFA",
+        body: ["The code word used to designate a distress phase."],
+      },
+      {
+        heading: "Discrete Code",
+        body: ["A four-digit SSR Code with the last two digits not being \"00\"."],
+      },
+      {
+        heading: "Distress Phase",
+        body: ["A situation wherein there is reasonable certainty that an aircraft and its occupants are threatened by grave and imminent danger or require immediate assistance."],
+      },
+      {
+        heading: "Elevation",
+        body: ["The vertical distance of a point or a level, on or affixed to the surface of the earth, measured from mean sea level."],
+      },
+      {
+        heading: "Emergency Phase",
+        body: ["A generic term meaning, as the case may be, uncertainty phase, alert phase or distress phase."],
+      },
+      {
+        heading: "Estimated Elapsed Time",
+        body: ["The estimated time required to proceed from one significant point to another."],
+      },
+      {
+        heading: "Estimated Off-block Time",
+        body: ["The estimated time at which the aircraft will commence movement associated with departure."],
+      },
+      {
+        heading: "Estimated Time of Arrival",
+        body: ["For IFR flights, the time at which it is estimated that the aircraft will arrive over that designated point, defined by reference to navigation aids, from which it is intended that an instrument approach procedure will be commenced, or, if no navigation aid is associated with the aerodrome, the time at which the aircraft will arrive over the aerodrome. For VFR flights, the time at which it is estimated that the aircraft will arrive over the aerodrome."],
+      },
+      {
+        heading: "Expected Approach Time",
+        body: [
+          "The time at which ATC expects that an arriving aircraft, following a delay, will leave the holding point to complete its approach for a landing.",
+          "Note — The actual time of leaving the holding point will depend upon the approach clearance.",
+        ],
+      },
+      {
+        heading: "Filed Flight Plan (FPL)",
+        body: [
+          "The flight plan as filed with an ATS unit by the pilot or a designated representative, without any subsequent changes.",
+          "Note — When the word \"message\" is used as a suffix to this term, it denotes the content and format of the filed flight plan data as transmitted.",
+        ],
+      },
+      {
+        heading: "Flight Information Centre",
+        body: ["A unit established to provide flight information service and alerting service."],
+      },
+      {
+        heading: "Flight Information Region (FIR)",
+        body: ["An airspace of defined dimensions within which flight information service and alerting service are provided."],
+      },
+      {
+        heading: "Flight Information Service",
+        body: ["A service provided for the purpose of giving advice and information useful for the safe and efficient conduct of flights."],
+      },
+      {
+        heading: "Flight Level",
+        body: [
+          "A surface of constant atmospheric pressure which is related to a specific pressure datum, 1013.2 hectopascals (hPa), and is separated from other such surfaces by specific pressure intervals.",
+          "Note 1 — A pressure type altimeter calibrated in accordance with the Standard Atmosphere:\na) When set to a QNH altimeter setting, will indicate altitude; b) when set to QFE altimeter setting, will indicate height above the QFE reference datum;\nc) When set to a pressure of 1 013.2 hPa, may be used to indicate flight levels.",
+          "Note 2 — The terms \"height\" and \"altitude\", used in Note 1 above, indicate altimetric rather than geometric heights and altitudes.",
+        ],
+      },
+      {
+        heading: "Flight Visibility",
+        body: ["The visibility forward from the cockpit of an aircraft in flight."],
+      },
+      {
+        heading: "Ground Visibility",
+        body: ["The visibility at an aerodrome, as reported by an accredited observer or by automatic systems."],
+      },
+      {
+        heading: "Glide Path",
+        body: ["A descent profile determined for vertical guidance during a final approach."],
+      },
+      {
+        heading: "Heading",
+        body: ["The direction in which the longitudinal axis of an aircraft is pointed, usually expressed in degrees from North (true, magnetic, compass or grid)."],
+      },
+      {
+        heading: "Height",
+        body: ["The vertical distance of a level, a point or an object considered as a point, measured from a specified datum."],
+      },
+      {
+        heading: "Holding Point",
+        body: ["A specified location, identified by visual or other means, in the vicinity of which the position of an aircraft in flight is maintained in accordance with air traffic control clearances."],
+      },
+      {
+        heading: "Manoeuvring Area",
+        body: ["That part of an aerodrome to be used for the take-off, landing and taxiing of aircraft, excluding aprons."],
+      },
+      {
+        heading: "Movement Area",
+        body: ["That part of an aerodrome to be used for the take-off, landing and taxiing of aircraft, consisting of the manoeuvring area and the apron(s)."],
+      },
+      {
+        heading: "IFR",
+        body: ["The symbol used to designate the instrument flight rules."],
+      },
+      {
+        heading: "IFR Flight",
+        body: ["A flight conducted in accordance with the instrument flight rules."],
+      },
+      {
+        heading: "IMC",
+        body: ["The symbol used to designate instrument meteorological conditions."],
+      },
+      {
+        heading: "Instrument Meteorological Conditions (IMC)",
+        body: ["Meteorological conditions expressed in terms of visibility, distance from cloud, and ceiling, less than the minima specified for visual meteorological conditions."],
+      },
+      {
+        heading: "Landing Area",
+        body: ["That part of a movement area intended for the landing or takeoff of aircraft."],
+      },
+      {
+        heading: "Night",
+        body: ["Hours between the end of evening civil twilight and the beginning of morning civil twilight or such other period between sunset and sunrise, as may be prescribed by the appropriate authority. Civil twilight ends in the evening when the centre of the sun's disc is 6 degrees below the horizon and begins in the morning when the centre of the sun's disc is 6 degrees below the horizon."],
+      },
+      {
+        heading: "Operational Control Communications",
+        body: ["Communications required for the exercise of authority over the initiation, continuation, diversion or termination of a flight in the interest of the safety of the aircraft and the regularity and efficiency of a flight."],
+      },
+      {
+        heading: "Prohibited Area",
+        body: ["An airspace of defined dimensions, above the land areas or territorial waters of a State, within which the flight of aircraft is prohibited."],
+      },
+      {
+        heading: "Repetitive Flight Plan (RPL)",
+        body: ["A flight plan related to a series of frequently recurring, regularly operated individual flights with identical basic features, submitted by an operator for retention and repetitive use by ATS units."],
+      },
+      {
+        heading: "Reporting Point",
+        body: ["A specified geographical location in relation to which the position of an aircraft can be reported."],
+      },
+      {
+        heading: "Restricted Area",
+        body: ["An airspace of defined dimensions, above the land areas or territorial waters of a State, within which the flight of aircraft is restricted in accordance with certain specified conditions."],
+      },
+      {
+        heading: "Runway",
+        body: ["A defined rectangular area on a land aerodrome prepared for the landing and take-off of Aircraft."],
+      },
+      {
+        heading: "Runway-holding Position",
+        body: ["A designated position intended to protect a runway, an obstacle limitation surface, or an ILS/MLS critical/sensitive area at which taxiing aircraft and vehicles shall stop and hold, unless otherwise authorized by the aerodrome control tower."],
+      },
+      {
+        heading: "Runway Visual Range (RVR)",
+        body: ["The RVR is the maximum distance in the direction of take-off or landing at which the runway or the specified light or markers delineating it can be seen from a height corresponding to the average eye-level of pilots at touchdown."],
+      },
+      {
+        heading: "Signal Area",
+        body: ["An area on an aerodrome used for the display of ground signals."],
+      },
+      {
+        heading: "Special VFR Flight",
+        body: ["A VFR flight cleared by air traffic control to operate within a control zone in meteorological conditions below VMC."],
+      },
+      {
+        heading: "Taxiing",
+        body: ["Movement of an aircraft on the surface of an aerodrome under its own power, excluding take-off and landing."],
+      },
+      {
+        heading: "Taxiway",
+        body: ["A defined path on a land aerodrome established for the taxiing of aircraft and intended to provide a link between one part of the aerodrome and another, including:"],
+      },
+      {
+        heading: "Rapid Exit Taxiway",
+        body: ["A taxiway connected to a runway at an acute angle and designed to allow landing aero planes to turn off at higher speeds than are achieved on other exit taxiways thereby minimizing runway occupancy times."],
+      },
+      {
+        heading: "Track",
+        body: ["The projection on the earth's surface of the path of an aircraft, the direction of which path at any point is usually expressed in degrees from North (true, magnetic or grid)."],
+      },
+      {
+        heading: "Transition Altitude",
+        body: ["The altitude at or below which the vertical position of an aircraft is controlled by reference to altitudes."],
+      },
+      {
+        heading: "VFR",
+        body: ["The symbol used to designate the visual flight rules."],
+      },
+      {
+        heading: "VFR Flight",
+        body: ["A flight conducted in accordance with the visual flight rules."],
+      },
+      {
+        heading: "Visual Approach",
+        body: ["An approach by an IFR flight when either part or all of an instrument approach procedure is not completed and the approach is executed in visual reference to terrain."],
+      },
+      {
+        heading: "Visibility",
+        body: ["Visibility for aeronautical purposes is the greater of: a) the greatest distance at which a black object of suitable dimensions, situated near the ground, can be seen and recognized when observed against a bright background; b) the greatest distance at which lights in the vicinity of 1000 candelas can be seen and identified against an unlit background."],
+      },
+      {
+        heading: "Visual Meteorological Conditions (VMC)",
+        body: ["Meteorological conditions expressed in terms of visibility, distance from cloud, and ceiling, equal to or better than specified minima."],
+      },
+      {
+        heading: "VMC",
+        body: ["The symbol used to designate visual meteorological conditions."],
+      },
+      {
+        heading: "Automatic Telecommunication Log",
+        body: ["A record of the activities of an aeronautical telecommunication station recorded by electrical or mechanical means."],
+      },
+      {
+        heading: "Location Indicator",
+        body: ["A four-letter code group formulated in accordance with rules prescribed by ICAO and assigned to the location of an aeronautical fixed station."],
+      },
+      {
+        heading: "NOTAM",
+        body: ["A notice distributed by means of telecommunication containing information concerning the establishment, condition or change in any aeronautical facility, service, procedure or hazard, the timely knowledge of which is essential to personnel concerned with flight operations."],
+      },
+      {
+        heading: "SNOWTAM",
+        body: ["A special series NOTAM notifying the presence or removal of hazardous conditions due to snow, ice, slush or standing water associated with snow, slush and ice on the movement area, by means of a specific format."],
+      },
+    ],
+  },
 };
 
 const RtrChapter = () => {
