@@ -322,16 +322,13 @@ export const rtrTopics: Topic[] = [
   },
   {
     id: "rtr-selcal",
-    title: "Ch 20 – SELCAL",
+    title: "Ch 20 – Electrical Units",
     questions: [
-      { id: 1, question: "What is the main purpose of the SELCAL system in aviation?", options: ["Reduces radio fatigue by alerting crew to incoming calls", "Records cockpit voice data", "Increases fuel efficiency", "Automatically switches frequencies"], correct: 0 },
-      { id: 2, question: "How many letters are used in a single SELCAL code?", options: ["Two", "Three", "Four", "Five"], correct: 2 },
-      { id: 3, question: "What is the duration of a SELCAL tone transmission?", options: ["1 second", "2 seconds", "5 seconds", "10 seconds"], correct: 1 },
-      { id: 4, question: "What is the primary benefit of using SELCAL for pilots?", options: ["Allows continuous listening watch", "Reduces pilot fatigue by replacing constant listening", "Automatically switches radio frequencies", "Increases fuel efficiency"], correct: 1 },
-      { id: 5, question: "What happens in the cockpit upon receipt of the correct SELCAL code?", options: ["Light controls are unlocked", "A light and/or chime is activated", "Aircraft systems are shut down", "Cabin lighting is adjusted"], correct: 1 },
-      { id: 6, question: "Where is the SELCAL code for each flight located?", options: ["On the aircraft body", "On the ticket", "In the flight plan", "On the captain's license"], correct: 2 },
-      { id: 7, question: "What type of signal is transmitted with SELCAL?", options: ["Audible tones", "Digital text", "Morse code", "Visual flashes"], correct: 0 },
-      { id: 8, question: "When a SELCAL system has been repaired and is again functional, what should be done?", options: ["Only inform the airline's maintenance", "Nothing, resume as normal", "All relevant stations should be advised", "Change flight plan"], correct: 2 },
+      { id: 1, question: "One volt is defined as the potential difference required to:", options: ["Move one electron against one coulomb of resistance", "Move one ampere of current through one ohm of resistance", "Deliver one watt of power in one second"], correct: 1 },
+      { id: 2, question: "The unit of electrical current is the:", options: ["Watt", "Ampere", "Ohm"], correct: 1 },
+      { id: 3, question: "Ohm's Law states that:", options: ["Voltage = Current ÷ Resistance", "Voltage = Current × Resistance", "Power = Voltage + Current"], correct: 1 },
+      { id: 4, question: "The relationship between Wavelength (λ), Frequency (f), and Speed of Light (c) is:", options: ["λ = f × c", "c = λ × f", "f = λ ÷ c"], correct: 1 },
+      { id: 5, question: "If an AC transmission operates at a frequency of 50 Hz, this means:", options: ["50 cycles of current direction change occur per second", "50 coulombs of charge pass a point every second", "The wavelength is fixed, independent of speed"], correct: 0 },
     ],
   },
   {
