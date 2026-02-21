@@ -159,7 +159,7 @@ const subjectsData: Subject[] = [
           "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP",
           ...rtrTopics.map((t) => t.title),
           
-          "Ch 10 – Minimum Requirement of Radio Equipment on Aircraft (ICAO Annex 6 & DGCA)",
+          
           "Ch 17 – RADAR – Radio Detection & Ranging",
           "Ch 21 – SELCAL & Preflight SELCAL Check",
           "Ch 23 – Operation of Microphones, Headphones, Squelch, AVC, Volume Control & Simplex/Duplex",
