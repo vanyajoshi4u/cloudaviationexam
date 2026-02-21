@@ -922,12 +922,19 @@ const RtrChapter = () => {
   const navigate = useNavigate();
   const chapter = chapterId ? rtrChapters[chapterId] : null;
 
+  const goToSubjects = () => {
+    navigate("/");
+    setTimeout(() => {
+      document.getElementById("subjects")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
+
   if (!chapter) {
     return (
       <div className="min-h-screen bg-gradient-aviation flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Chapter not found</h1>
-          <Button onClick={() => navigate("/#subjects")}>Go Back</Button>
+          <Button onClick={goToSubjects}>Go Back</Button>
         </div>
       </div>
     );
@@ -937,7 +944,7 @@ const RtrChapter = () => {
     <div className="min-h-screen bg-gradient-aviation">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
         <button
-          onClick={() => navigate("/#subjects")}
+          onClick={goToSubjects}
           className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" /> Back
