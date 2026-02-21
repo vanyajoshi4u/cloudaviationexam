@@ -222,6 +222,7 @@ export const oxfordMetTopics: Topic[] = [
       { id: 35, question: "You are cruising at FL200, OAT is -40°C, sea level pressure is 1033 hPa. Calculate the true altitude.", options: ["20,660 ft", "21,740 ft", "18,260 ft", "19,340 ft"], correct: 3 },
       { id: 36, question: "(Using the diagram below) You are on a flight from A to B at 1500 ft. Which statement is true?", options: ["True altitude at A is greater than B", "True altitude at B is greater than A", "True altitude is the same", "Cannot tell"], correct: 1, diagram: "altimetry-13" },
       { id: 37, question: "(Using the diagram below) Flying from A to B at a constant indicated altitude in the Northern Hemisphere.", options: ["True altitude increases", "Wind is northerly", "True altitude decreases", "Wind is southerly"], correct: 2, diagram: "altimetry-29" },
+      { id: 38, question: "Which of the following is true? QNH is:", options: ["Always more than 1013.25 hPa", "Always less than 1013.25 hPa", "Never 1013.25 hPa", "Can never be above or below 1013 hPa"], correct: 2 },
     ],
   },
   {
