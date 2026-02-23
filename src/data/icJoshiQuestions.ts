@@ -809,4 +809,20 @@ export const icJoshiTopics: Topic[] = [
       { id: 26, question: "Wind at 40,000 ft expected is?", options: ["270/105 kt", "270/115 KMH", "270/140 kt"], correct: 0 },
     ],
   },
+  {
+    id: "met-documentation-briefing",
+    title: "Met Documentation and Briefing",
+    questions: [
+      { id: 1, question: "Who prepares National SIGWX Charts", options: ["AMOs", "WAFC", "MWOs"], correct: 2 },
+      { id: 2, question: "Flight Level of freezing Level is included in ………… SIGWX Charts", options: ["Medium level charts", "High level charts", "Low level charts"], correct: 0 },
+      { id: 3, question: "Fog, Precipitation and weather which reduce visibility below 5000 m is considered Significant weather for", options: ["All level flights", "High level flights", "Low level flights"], correct: 2 },
+      { id: 4, question: "Briefing and Consultation are generally provided to the aircrew ……. hours prior to the scheduled departure", options: ["3 hr", "5 hr", "6 hr"], correct: 0 },
+      { id: 5, question: "SIGMET information is provided to", options: ["Low level flights", "All level flights", "High level flights"], correct: 1 },
+      { id: 6, question: "For Low Level flights, and those under Visual Flight Rules, briefing is given up to", options: ["FL150 or above in mountains", "FL110 above the sea", "FL 120 or over the plains"], correct: 0 },
+      { id: 7, question: "The height indications in the Flight Documentation in all en-route Met conditions : eg upper winds, turbulence, cloud base/top etc is", options: ["Above aerodrome elevation", "Flight Levels", "As requested by the Pilot"], correct: 1 },
+      { id: 8, question: "The height indications in the Flight Documentation in all aerodrome Met conditions : eg base and top of clouds", options: ["Above aerodrome elevation", "Flight Levels", "As requested by the Pilot"], correct: 0 },
+      { id: 9, question: "For National Flights the Documents provided are -", options: ["National SIGWX charts only", "WAFC upper wind and temp. charts only", "both WAFC upper wind and temp. charts and National SIGWX charts"], correct: 2 },
+      { id: 10, question: "For National Flights the winds and temperatures are provided for LL Flights for altitudes", options: ["600, 1500 and 300 m", "3000 ft, 5000 ft, 10,000 ft", "600, 1000 and 500 m"], correct: 0 },
+    ],
+  },
 ];
