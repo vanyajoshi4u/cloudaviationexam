@@ -143,8 +143,12 @@ const Auth = () => {
 
         if (error) throw error;
 
-        // Profile will be created after email verification on first login
-        // User metadata (full_name, phone) is stored in auth.users metadata
+        // Detect repeated signup (user already exists)
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+          toast.error("An account with this email already exists. Please sign in instead.");
+          setMode("login");
+          return;
+        }
 
         toast.success("Check your email for a verification link!");
       }
