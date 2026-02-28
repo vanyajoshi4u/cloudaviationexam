@@ -18,6 +18,39 @@ Deno.serve(async (req) => {
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
 
     const authHeader = req.headers.get("Authorization");
+    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
+    const body = await req.json();
+    const { action } = body;
+
+    // Handle logout without requiring authentication (token may already be invalidated)
+    if (action === "logout") {
+      let userId: string | null = null;
+
+      // Try to get user from token
+      if (authHeader?.startsWith("Bearer ")) {
+        const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+          global: { headers: { Authorization: authHeader } },
+        });
+        const token = authHeader.replace("Bearer ", "");
+        const { data: { user } } = await userClient.auth.getUser(token);
+        userId = user?.id || null;
+      }
+
+      if (!userId) {
+        // No valid user - sessions already cleared or token expired, that's fine
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      await supabaseAdmin.from("active_sessions").delete().eq("user_id", userId);
+      await supabaseAdmin.from("login_verifications").delete().eq("user_id", userId);
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // All other actions require authentication
     if (!authHeader?.startsWith("Bearer ")) {
       return new Response(JSON.stringify({ error: "No authorization header" }), {
         status: 401,
@@ -25,7 +58,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Validate user with getUser for Lovable Cloud ES256 tokens
     const supabaseUser = createClient(supabaseUrl, supabaseAnonKey, {
       global: { headers: { Authorization: authHeader } },
     });
@@ -38,9 +70,6 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
-    const body = await req.json();
     const { action } = body;
 
     if (action === "check-session") {
@@ -167,13 +196,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    if (action === "logout") {
-      await supabaseAdmin.from("active_sessions").delete().eq("user_id", user.id);
-      await supabaseAdmin.from("login_verifications").delete().eq("user_id", user.id);
-      return new Response(JSON.stringify({ success: true }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+    // logout is handled above (before auth check)
 
     if (action === "heartbeat") {
       await supabaseAdmin
