@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle } from "lucide-react";
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-type AuthMode = "signup" | "login" | "forgot";
+type AuthMode = "signup" | "login" | "forgot" | "awaiting-verification";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -18,6 +18,9 @@ const Auth = () => {
   });
   const [loading, setLoading] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
+  const [pendingUid, setPendingUid] = useState<string | null>(null);
+  const [pendingCredentials, setPendingCredentials] = useState<{ email: string; password: string } | null>(null);
+  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -63,6 +66,52 @@ const Auth = () => {
       }
     };
     checkSession();
+  }, [navigate]);
+
+  // Cleanup polling on unmount
+  useEffect(() => {
+    return () => {
+      if (pollingRef.current) clearInterval(pollingRef.current);
+    };
+  }, []);
+
+  // Start polling when in awaiting-verification mode
+  const startPolling = useCallback((uid: string, credentials: { email: string; password: string }) => {
+    setPendingUid(uid);
+    setPendingCredentials(credentials);
+    setMode("awaiting-verification");
+
+    if (pollingRef.current) clearInterval(pollingRef.current);
+
+    pollingRef.current = setInterval(async () => {
+      try {
+        const { data } = await supabase.functions.invoke("verify-login-token", {
+          body: { action: "check-status", uid },
+        });
+
+        if (data?.verified) {
+          if (pollingRef.current) clearInterval(pollingRef.current);
+          pollingRef.current = null;
+
+          // Auto sign-in with stored credentials
+          const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+            email: credentials.email,
+            password: credentials.password,
+          });
+
+          if (loginError || !loginData.session) {
+            toast.error("Verification confirmed but auto sign-in failed. Please sign in manually.");
+            setMode("login");
+            return;
+          }
+
+          toast.success("Login verified! Signing you in...");
+          navigate("/subscribe", { replace: true });
+        }
+      } catch (e) {
+        console.error("Polling error:", e);
+      }
+    }, 3000);
   }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,9 +183,12 @@ const Auth = () => {
           return;
         }
 
-        // Sign out locally until user verifies via email
+        // Sign out locally and start polling for verification
+        const userId = loginData.user?.id;
         await supabase.auth.signOut({ scope: "local" });
-        toast.success("Verification email sent! Check your inbox to complete login.");
+        if (userId) {
+          startPolling(userId, { email: formData.email.trim(), password: formData.password });
+        }
       } else {
         if (!formData.fullName.trim() || !formData.phone.trim()) {
           toast.error("Please fill in all fields.");
@@ -185,6 +237,7 @@ const Auth = () => {
     signup: { title: "Create Account", subtitle: "Join India's #1 DGCA Question Bank" },
     login: { title: "Welcome Back", subtitle: "Sign in to continue your preparation" },
     forgot: { title: "Reset Password", subtitle: "Enter your email and create a new password" },
+    "awaiting-verification": { title: "Check Your Email", subtitle: "We sent a verification link to your inbox" },
   };
 
   return (
@@ -220,7 +273,35 @@ const Auth = () => {
             {headings[mode].subtitle}
           </p>
 
-          {mode === "forgot" && resetSuccess ? (
+          {mode === "awaiting-verification" ? (
+            <div className="text-center space-y-5 py-4">
+              <div className="relative mx-auto w-fit">
+                <Mail className="w-14 h-14 text-primary" />
+                <div className="absolute inset-0 blur-xl bg-primary/20 rounded-full" />
+              </div>
+              <h3 className="font-display text-xl font-bold text-foreground">Verification Email Sent!</h3>
+              <p className="text-sm text-muted-foreground">
+                We sent a verification link to <span className="text-foreground font-medium">{pendingCredentials?.email}</span>. Click the link in your email to complete login.
+              </p>
+              <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span className="text-xs">Waiting for verification...</span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                You'll be signed in automatically once verified.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  if (pollingRef.current) clearInterval(pollingRef.current);
+                  setMode("login");
+                }}
+                className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
+              >
+                <ArrowLeft className="w-3 h-3" /> Back to Sign In
+              </button>
+            </div>
+          ) : mode === "forgot" && resetSuccess ? (
             <div className="text-center space-y-5 py-4">
               <div className="relative mx-auto w-fit">
                 <CheckCircle className="w-14 h-14 text-primary" />
