@@ -120,9 +120,9 @@ const ResetPassword = () => {
               <p className="text-sm text-muted-foreground">
                 Your password has been changed and all sessions have been cleared. Please log in with your new password.
               </p>
-              <Button onClick={() => navigate("/auth")} className="w-full glow-blue font-display text-sm tracking-wider py-5">
-                <ArrowRight className="w-4 h-4 mr-2" /> Go to Login
-              </Button>
+              <p className="text-xs text-muted-foreground">
+                You can now close this page and log in with your new password.
+              </p>
             </div>
           ) : (
             <>
