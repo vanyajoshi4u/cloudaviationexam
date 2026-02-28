@@ -92,7 +92,16 @@ const Subscribe = () => {
       if (insertError) throw insertError;
 
       setSubmitted(true);
-      toast.success("Payment submitted! We'll verify and activate your account shortly.");
+      toast.success("Payment successful! Your subscription is now active.");
+
+      // Send confirmation email
+      try {
+        await supabase.functions.invoke("send-payment-confirmation", {
+          body: { plan: selectedPlan, amount: plan.price },
+        });
+      } catch (emailErr) {
+        console.error("Email sending failed:", emailErr);
+      }
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");
     } finally {
@@ -119,10 +128,13 @@ const Subscribe = () => {
           <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-primary" />
           </div>
-          <h2 className="font-display text-2xl font-bold text-foreground mb-2">Payment Under Review</h2>
+          <h2 className="font-display text-2xl font-bold text-foreground mb-2">Payment Successful!</h2>
           <p className="text-muted-foreground text-sm">
-            Your payment screenshot has been submitted successfully. Our team will verify your payment and activate your account within 24 hours. You'll receive a confirmation email once approved.
+            Your subscription has been activated. A confirmation email has been sent to your registered email. You can now access all quiz content.
           </p>
+          <Button className="mt-4" onClick={() => window.location.href = "/topics"}>
+            Start Learning
+          </Button>
         </motion.div>
       </div>
     );
