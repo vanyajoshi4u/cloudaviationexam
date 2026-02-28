@@ -152,7 +152,7 @@ const subjectsData: Subject[] = [
     title: "RTR",
     subtopics: [
       {
-        title: "RTR Part 1 (DGCA)",
+        title: "RTR Part 1 Question Bank",
         chapters: [
           "Ch 1 – Broad Guidelines, Syllabus, Radio Telephone Restricted Licence Examination",
           "Ch 2 – Definitions Related with Annex-10",
