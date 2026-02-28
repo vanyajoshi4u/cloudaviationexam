@@ -56,6 +56,18 @@ const Subscribe = () => {
     }
   };
 
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        resolve(result.split(",")[1]); // Remove data:image/...;base64, prefix
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!screenshot) {
@@ -72,6 +84,26 @@ const Subscribe = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
+      // Step 1: Verify referral code matches screenshot using AI
+      toast.info("Verifying referral code from screenshot...");
+      const imageBase64 = await fileToBase64(screenshot);
+
+      const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
+        "verify-referral-code",
+        { body: { imageBase64, referralCode: referralCode.trim() } }
+      );
+
+      if (verifyError) throw new Error("Verification failed. Please try again.");
+
+      if (!verifyData.match) {
+        toast.error(verifyData.message || "Referral code does not match the screenshot.");
+        setLoading(false);
+        return;
+      }
+
+      toast.success("Referral code verified!");
+
+      // Step 2: Upload screenshot
       const fileExt = screenshot.name.split(".").pop();
       const filePath = `${user.id}/${Date.now()}.${fileExt}`;
 
@@ -80,6 +112,7 @@ const Subscribe = () => {
         .upload(filePath, screenshot);
       if (uploadError) throw uploadError;
 
+      // Step 3: Create subscription
       const plan = plans.find((p) => p.id === selectedPlan)!;
       const { error: insertError } = await supabase.from("subscriptions").insert({
         user_id: user.id,
@@ -94,7 +127,7 @@ const Subscribe = () => {
       setSubmitted(true);
       toast.success("Payment successful! Your subscription is now active.");
 
-      // Send confirmation email
+      // Step 4: Send confirmation email
       try {
         await supabase.functions.invoke("send-payment-confirmation", {
           body: { plan: selectedPlan, amount: plan.price },
