@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle } from "lucide-react";
+import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,9 @@ const Auth = () => {
   const [pendingUid, setPendingUid] = useState<string | null>(null);
   const [pendingCredentials, setPendingCredentials] = useState<{ email: string; password: string } | null>(null);
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -352,17 +355,23 @@ const Auth = () => {
               <>
                 <div className="space-y-2">
                   <Label htmlFor="newPassword" className="text-sm text-foreground">New Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input id="newPassword" name="newPassword" type="password" placeholder="Min. 6 characters" value={formData.newPassword} onChange={handleChange} className="pl-10" required minLength={6} />
+                   <div className="relative">
+                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                     <Input id="newPassword" name="newPassword" type={showNewPassword ? "text" : "password"} placeholder="Min. 6 characters" value={formData.newPassword} onChange={handleChange} className="pl-10 pr-10" required minLength={6} />
+                     <button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                       {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                     </button>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="confirmNewPassword" className="text-sm text-foreground">Confirm New Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input id="confirmNewPassword" name="confirmNewPassword" type="password" placeholder="Re-enter password" value={formData.confirmNewPassword} onChange={handleChange} className="pl-10" required minLength={6} />
-                  </div>
+                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                     <Input id="confirmNewPassword" name="confirmNewPassword" type={showConfirmPassword ? "text" : "password"} placeholder="Re-enter password" value={formData.confirmNewPassword} onChange={handleChange} className="pl-10 pr-10" required minLength={6} />
+                     <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                       {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                     </button>
+                   </div>
                 </div>
               </>
             )}
@@ -372,7 +381,10 @@ const Auth = () => {
                 <Label htmlFor="password" className="text-sm text-foreground">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input id="password" name="password" type="password" placeholder="Min. 6 characters" value={formData.password} onChange={handleChange} className="pl-10" required minLength={6} />
+                  <Input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Min. 6 characters" value={formData.password} onChange={handleChange} className="pl-10 pr-10" required minLength={6} />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
             )}
