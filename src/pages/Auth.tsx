@@ -143,13 +143,14 @@ const Auth = () => {
           return;
         }
 
-        // Create active session directly (email verification temporarily disabled)
+        // Send verification email
         await supabase.functions.invoke("send-login-verification", {
-          body: { action: "create-session" },
+          body: { action: "send-verification" },
         });
 
-        toast.success("Login successful!");
-        navigate("/subscribe", { replace: true });
+        // Sign out until user verifies via email
+        await supabase.auth.signOut();
+        toast.success("Verification email sent! Check your inbox to complete login.");
       } else {
         if (!formData.fullName.trim() || !formData.phone.trim()) {
           toast.error("Please fill in all fields.");
