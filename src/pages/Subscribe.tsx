@@ -45,6 +45,16 @@ const Subscribe = () => {
     checkExisting();
   }, []);
 
+  // Redirect already-subscribed users to homepage
+  useEffect(() => {
+    if (alreadySubscribed) {
+      const timer = setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [alreadySubscribed]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
