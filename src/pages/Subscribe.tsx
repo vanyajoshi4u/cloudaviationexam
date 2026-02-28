@@ -88,9 +88,10 @@ const Subscribe = () => {
       toast.info("Verifying referral code from screenshot...");
       const imageBase64 = await fileToBase64(screenshot);
 
+      const plan = plans.find((p) => p.id === selectedPlan)!;
       const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
         "verify-referral-code",
-        { body: { imageBase64, referralCode: referralCode.trim() } }
+        { body: { imageBase64, referralCode: referralCode.trim(), expectedAmount: plan.price } }
       );
 
       if (verifyError) throw new Error("Verification failed. Please try again.");
@@ -113,7 +114,7 @@ const Subscribe = () => {
       if (uploadError) throw uploadError;
 
       // Step 3: Create subscription
-      const plan = plans.find((p) => p.id === selectedPlan)!;
+      
       const { error: insertError } = await supabase.from("subscriptions").insert({
         user_id: user.id,
         plan: selectedPlan,
