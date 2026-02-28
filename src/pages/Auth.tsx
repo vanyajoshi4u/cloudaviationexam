@@ -130,20 +130,8 @@ const Auth = () => {
 
         if (error) throw error;
 
-        if (data.user) {
-          const { error: profileError } = await supabase
-            .from("profiles")
-            .insert({
-              user_id: data.user.id,
-              full_name: formData.fullName.trim(),
-              phone: formData.phone.trim(),
-              email: formData.email.trim(),
-            });
-
-          if (profileError) {
-            console.error("Profile creation error:", profileError);
-          }
-        }
+        // Profile will be created after email verification on first login
+        // User metadata (full_name, phone) is stored in auth.users metadata
 
         toast.success("Check your email for a verification link!");
       }
