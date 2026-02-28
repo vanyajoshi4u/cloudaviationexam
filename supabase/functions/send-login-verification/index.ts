@@ -70,7 +70,6 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const { action } = body;
 
     if (action === "check-session") {
       // Clean up stale sessions first
