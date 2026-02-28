@@ -33,7 +33,12 @@ const TopicSelect = () => {
     <div className="min-h-screen bg-gradient-aviation">
       <div className="container mx-auto px-4 py-8 max-w-lg">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            setTimeout(() => {
+              document.getElementById("subjects")?.scrollIntoView({ behavior: "smooth" });
+            }, 100);
+          }}
           className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" /> Back
