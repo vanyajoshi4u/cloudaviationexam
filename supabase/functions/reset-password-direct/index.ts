@@ -33,24 +33,23 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Find user by email using listUsers with filter
-    const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
-      page: 1,
-      perPage: 50,
-    });
+    // Find user by email efficiently using profiles table
+    const { data: profile, error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .select("user_id")
+      .eq("email", email.toLowerCase().trim())
+      .maybeSingle();
 
-    if (listError) throw listError;
+    if (profileError) throw profileError;
 
-    const user = listData.users.find(
-      (u) => u.email?.toLowerCase() === email.toLowerCase().trim()
-    );
-
-    if (!user) {
+    if (!profile) {
       return new Response(JSON.stringify({ error: "No account found with this email" }), {
         status: 404,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    const user = { id: profile.user_id };
 
     // Update password
     const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(user.id, {
