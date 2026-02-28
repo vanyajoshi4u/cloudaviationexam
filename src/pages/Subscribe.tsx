@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Plane, Upload, CheckCircle, Loader2, Tag } from "lucide-react";
+import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,6 +18,7 @@ const plans = [
 ];
 
 const Subscribe = () => {
+  const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState<Plan>("6_months");
   const [referralCode, setReferralCode] = useState("");
   const [screenshot, setScreenshot] = useState<File | null>(null);
@@ -204,7 +206,20 @@ const Subscribe = () => {
         </div>
 
         <div className="glass-card p-6 sm:p-8">
-          <h2 className="font-display text-2xl font-bold text-center mb-1 text-foreground">Choose Your Plan</h2>
+          <div className="flex items-center mb-4">
+            <button
+              onClick={async () => {
+                await supabase.auth.signOut();
+                navigate("/auth");
+              }}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div className="flex-1 text-center">
+              <h2 className="font-display text-2xl font-bold text-foreground">Choose Your Plan</h2>
+            </div>
+          </div>
           <p className="text-sm text-muted-foreground text-center mb-6">Select a plan and complete payment to access all questions</p>
 
           {/* Plan Selection */}
