@@ -14,6 +14,7 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription }: Protecte
   const [loading, setLoading] = useState(true);
   const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [hasActiveSession, setHasActiveSession] = useState<boolean | null>(null);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -34,6 +35,18 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription }: Protecte
   useEffect(() => {
     const checkAccess = async () => {
       if (!session?.user) return;
+
+      // Check if user has an active verified session
+      const { data: sessions } = await supabase
+        .from("active_sessions")
+        .select("id")
+        .eq("user_id", session.user.id);
+
+      if (!sessions || sessions.length === 0) {
+        setHasActiveSession(false);
+        return;
+      }
+      setHasActiveSession(true);
 
       // Check admin role
       const { data: roles } = await supabase
@@ -77,6 +90,11 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription }: Protecte
   }
 
   if (requireAuth && !session) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  // If logged in but no active verified session, redirect to auth
+  if (requireAuth && session && hasActiveSession === false) {
     return <Navigate to="/auth" replace />;
   }
 

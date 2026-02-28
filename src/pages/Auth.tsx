@@ -25,14 +25,20 @@ const Auth = () => {
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) navigate("/subscribe", { replace: true });
+      if (session) {
+        // Check if user has a verified login (active session in DB)
+        const { data } = await supabase
+          .from("active_sessions")
+          .select("id")
+          .eq("user_id", session.user.id)
+          .limit(1);
+        
+        if (data && data.length > 0) {
+          navigate("/subscribe", { replace: true });
+        }
+      }
     };
     checkSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) navigate("/subscribe", { replace: true });
-    });
-    return () => subscription.unsubscribe();
   }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,12 +69,39 @@ const Auth = () => {
 
     try {
       if (mode === "login") {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data: loginData, error } = await supabase.auth.signInWithPassword({
           email: formData.email.trim(),
           password: formData.password,
         });
         if (error) throw error;
-        toast.success("Logged in successfully!");
+
+        // Check if user already has an active session on another device
+        const { data: sessionCheck, error: sessionError } = await supabase.functions.invoke(
+          "send-login-verification",
+          { body: { action: "check-session" } }
+        );
+
+        if (sessionError) throw new Error("Session check failed");
+
+        if (sessionCheck?.hasActiveSession) {
+          await supabase.auth.signOut();
+          toast.error("You are already logged in on another device. Please log out from the other device first.");
+          setLoading(false);
+          return;
+        }
+
+        // Send verification email
+        toast.info("Sending verification email...");
+        const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
+          "send-login-verification",
+          { body: { action: "send-verification" } }
+        );
+
+        if (verifyError) throw new Error("Failed to send verification email");
+
+        // Sign out until verified via email
+        await supabase.auth.signOut();
+        toast.success("Verification link sent to your email! Please check your inbox to complete login.");
       } else {
         if (!formData.fullName.trim() || !formData.phone.trim()) {
           toast.error("Please fill in all fields.");
