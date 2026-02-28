@@ -153,27 +153,19 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "RTR Part 1 Question Bank",
+        chapters: rtrTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "rtr" as const,
+      },
+      {
+        title: "RTR Part 1 (DGCA)",
         chapters: [
           "Ch 1 – Broad Guidelines, Syllabus, Radio Telephone Restricted Licence Examination",
           "Ch 2 – Definitions Related with Annex-10",
           "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP",
-          ...rtrTopics.map((t) => t.title),
-          
-          
-          
-          
-          
-          
-          
-        ].sort((a, b) => {
-          const getChNum = (s: string) => {
-            const m = s.match(/Ch\s*(\d+)/);
-            return m ? parseInt(m[1]) : 999;
-          };
-          return getChNum(a) - getChNum(b);
-        }),
-        hasQuiz: true,
-        quizSource: "rtr" as const,
+          "Ch 18 – INS – Inertial Navigation System",
+          "Ch 22 – Squelch, Microphones & Headphones",
+        ],
       },
     ],
   },
