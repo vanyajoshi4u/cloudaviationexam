@@ -324,6 +324,11 @@ const Auth = () => {
           </form>
 
           <div className="mt-6 text-center space-y-2">
+            {mode === "login" && (
+              <p className="text-xs text-muted-foreground bg-muted/50 rounded-md p-3">
+                ⚠️ If it's showing "log out from other device", try changing the password and verifying mail.
+              </p>
+            )}
             {mode === "forgot" ? (
               <button type="button" onClick={() => setMode("login")} className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1">
                 <ArrowLeft className="w-3 h-3" /> Back to Sign In
