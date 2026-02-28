@@ -128,25 +128,20 @@ const Auth = () => {
         });
         if (error) throw error;
 
-        // Check if user already has an active session on another device
-        const { data: sessionCheck, error: sessionError } = await supabase.functions.invoke(
+        // Check session and send verification in one call
+        const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
           "send-login-verification",
-          { body: { action: "check-session" } }
+          { body: { action: "check-and-verify" } }
         );
 
-        if (sessionError) throw new Error("Session check failed");
+        if (verifyError) throw new Error("Verification failed");
 
-        if (sessionCheck?.hasActiveSession) {
+        if (verifyResult?.hasActiveSession) {
           await supabase.auth.signOut();
           toast.error("You are already logged in on another device. Please log out from the other device first.");
           setLoading(false);
           return;
         }
-
-        // Send verification email
-        await supabase.functions.invoke("send-login-verification", {
-          body: { action: "send-verification" },
-        });
 
         // Sign out until user verifies via email
         await supabase.auth.signOut();
