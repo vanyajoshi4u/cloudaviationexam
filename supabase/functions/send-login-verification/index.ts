@@ -67,6 +67,22 @@ Deno.serve(async (req) => {
     }
 
     if (action === "send-verification") {
+      // Ensure profile exists (for first login after email verification)
+      const { data: existingProfile } = await supabaseAdmin
+        .from("profiles")
+        .select("id")
+        .eq("user_id", user.id)
+        .single();
+
+      if (!existingProfile) {
+        await supabaseAdmin.from("profiles").insert({
+          user_id: user.id,
+          full_name: user.user_metadata?.full_name || "",
+          phone: user.user_metadata?.phone || "",
+          email: user.email || "",
+        });
+      }
+
       // Clean up old verifications
       await supabaseAdmin
         .from("login_verifications")
