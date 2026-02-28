@@ -34,11 +34,7 @@ const VerifyLogin = () => {
         }
 
         setStatus("success");
-        setMessage("Login verified! Redirecting...");
-
-        setTimeout(() => {
-          navigate("/", { replace: true });
-        }, 1500);
+        setMessage("Your login has been verified successfully. You can close this tab and return to the app.");
       } catch (err: any) {
         setStatus("error");
         setMessage(err.message || "Something went wrong");
