@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 
-interface AuthGuardProps {
+interface ProtectedRouteProps {
   children: React.ReactNode;
-  fallback: React.ReactNode;
+  requireAuth?: boolean;
+  requireSubscription?: boolean;
 }
 
-export type SubscriptionState = "loading" | "no_auth" | "no_subscription" | "pending" | "approved" | "rejected";
-
-const AuthGuard = ({ children, fallback }: AuthGuardProps) => {
+const ProtectedRoute = ({ children, requireAuth, requireSubscription }: ProtectedRouteProps) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [subscriptionState, setSubscriptionState] = useState<SubscriptionState>("loading");
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -31,13 +32,10 @@ const AuthGuard = ({ children, fallback }: AuthGuardProps) => {
   }, []);
 
   useEffect(() => {
-    const checkSubscription = async () => {
-      if (!session?.user) {
-        setSubscriptionState("no_auth");
-        return;
-      }
+    const checkAccess = async () => {
+      if (!session?.user) return;
 
-      // Check if user is admin - admins bypass subscription
+      // Check admin role
       const { data: roles } = await supabase
         .from("user_roles")
         .select("role")
@@ -45,10 +43,12 @@ const AuthGuard = ({ children, fallback }: AuthGuardProps) => {
         .eq("role", "admin");
 
       if (roles && roles.length > 0) {
-        setSubscriptionState("approved");
+        setIsAdmin(true);
+        setSubscriptionStatus("approved");
         return;
       }
 
+      // Check subscription
       const { data } = await supabase
         .from("subscriptions")
         .select("status")
@@ -56,19 +56,19 @@ const AuthGuard = ({ children, fallback }: AuthGuardProps) => {
         .order("created_at", { ascending: false })
         .limit(1);
 
-      if (!data || data.length === 0) {
-        setSubscriptionState("no_subscription");
+      if (data && data.length > 0) {
+        setSubscriptionStatus(data[0].status);
       } else {
-        setSubscriptionState(data[0].status as SubscriptionState);
+        setSubscriptionStatus("none");
       }
     };
 
-    if (!loading) {
-      checkSubscription();
+    if (session) {
+      checkAccess();
     }
-  }, [session, loading]);
+  }, [session]);
 
-  if (loading || subscriptionState === "loading") {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -76,14 +76,24 @@ const AuthGuard = ({ children, fallback }: AuthGuardProps) => {
     );
   }
 
-  if (!session) return <>{fallback}</>;
+  if (requireAuth && !session) {
+    return <Navigate to="/auth" replace />;
+  }
 
-  // If subscription is approved, show the app
-  if (subscriptionState === "approved") return <>{children}</>;
+  if (requireSubscription && session && !isAdmin) {
+    if (subscriptionStatus === null) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      );
+    }
+    if (subscriptionStatus !== "approved") {
+      return <Navigate to="/subscribe" replace />;
+    }
+  }
 
-  // Otherwise, show the subscribe page (no_subscription, pending, rejected)
-  return null; // Will be handled by routing
+  return <>{children}</>;
 };
 
-export { AuthGuard };
-export default AuthGuard;
+export default ProtectedRoute;

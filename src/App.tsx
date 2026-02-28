@@ -4,13 +4,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import AuthGuard from "@/components/AuthGuard";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import TopicSelect from "./pages/TopicSelect";
 import Quiz from "./pages/Quiz";
 import RtrChapter from "./pages/RtrChapter";
+import Subscribe from "./pages/Subscribe";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -22,18 +24,37 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <AuthGuard fallback={<Auth />}>
-                  <Index />
-                </AuthGuard>
-              }
-            />
-            <Route path="/topics/:topicId" element={<TopicSelect />} />
-            <Route path="/rtr-chapter/:chapterId" element={<RtrChapter />} />
-            <Route path="/quiz/:topicId" element={<Quiz />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/subscribe" element={
+              <ProtectedRoute requireAuth>
+                <Subscribe />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin" element={
+              <ProtectedRoute requireAuth>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/" element={
+              <ProtectedRoute requireAuth requireSubscription>
+                <Index />
+              </ProtectedRoute>
+            } />
+            <Route path="/topics/:topicId" element={
+              <ProtectedRoute requireAuth requireSubscription>
+                <TopicSelect />
+              </ProtectedRoute>
+            } />
+            <Route path="/rtr-chapter/:chapterId" element={
+              <ProtectedRoute requireAuth requireSubscription>
+                <RtrChapter />
+              </ProtectedRoute>
+            } />
+            <Route path="/quiz/:topicId" element={
+              <ProtectedRoute requireAuth requireSubscription>
+                <Quiz />
+              </ProtectedRoute>
+            } />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

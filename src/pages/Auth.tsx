@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { toast } from "sonner";
 type AuthMode = "signup" | "login" | "forgot";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [mode, setMode] = useState<AuthMode>("signup");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,6 +20,20 @@ const Auth = () => {
     email: "",
     password: "",
   });
+
+  // Redirect if already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) navigate("/subscribe", { replace: true });
+    };
+    checkSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) navigate("/subscribe", { replace: true });
+    });
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
