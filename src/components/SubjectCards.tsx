@@ -153,7 +153,7 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "RTR Part 1 Question Bank",
-        chapters: [],
+        chapters: ["Question Bank-1"],
         hasQuiz: true,
         quizSource: "rtr" as const,
       },
