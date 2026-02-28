@@ -14,6 +14,7 @@ import Subscribe from "./pages/Subscribe";
 import AdminDashboard from "./pages/AdminDashboard";
 import VerifyLogin from "./pages/VerifyLogin";
 import EmailConfirmed from "./pages/EmailConfirmed";
+import ResetPassword from "./pages/ResetPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/verify-login" element={<VerifyLogin />} />
             <Route path="/email-confirmed" element={<EmailConfirmed />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/subscribe" element={
               <ProtectedRoute requireAuth>
                 <Subscribe />
