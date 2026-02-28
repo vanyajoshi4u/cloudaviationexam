@@ -128,10 +128,16 @@ const Auth = () => {
         });
         if (error) throw error;
 
+        const accessToken = loginData.session?.access_token;
+        if (!accessToken) throw new Error("Login failed - no session");
+
         // Check session and send verification in one call
         const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
           "send-login-verification",
-          { body: { action: "check-and-verify" } }
+          {
+            body: { action: "check-and-verify" },
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
         );
 
         if (verifyError) throw new Error("Verification failed");
