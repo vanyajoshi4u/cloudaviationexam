@@ -153,7 +153,7 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "RTR Part 1 Question Bank",
-        chapters: rtrTopics.map((t) => t.title),
+        chapters: [],
         hasQuiz: true,
         quizSource: "rtr" as const,
       },
