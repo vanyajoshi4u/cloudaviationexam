@@ -141,6 +141,32 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "create-session") {
+      // Ensure profile exists
+      const { data: existingProfile } = await supabaseAdmin
+        .from("profiles")
+        .select("id")
+        .eq("user_id", user.id)
+        .single();
+
+      if (!existingProfile) {
+        await supabaseAdmin.from("profiles").insert({
+          user_id: user.id,
+          full_name: user.user_metadata?.full_name || "",
+          phone: user.user_metadata?.phone || "",
+          email: user.email || "",
+        });
+      }
+
+      // Create active session (remove old ones first)
+      await supabaseAdmin.from("active_sessions").delete().eq("user_id", user.id);
+      await supabaseAdmin.from("active_sessions").insert({ user_id: user.id });
+
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     if (action === "logout") {
       await supabaseAdmin.from("active_sessions").delete().eq("user_id", user.id);
       await supabaseAdmin.from("login_verifications").delete().eq("user_id", user.id);
