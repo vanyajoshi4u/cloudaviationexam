@@ -125,8 +125,8 @@ const Quiz = () => {
             </div>
 
             <div className="flex gap-3 justify-center">
-              <Button variant="outline" onClick={() => navigate("/")}>
-                <ArrowLeft className="w-4 h-4 mr-1" /> Home
+              <Button variant="outline" onClick={() => navigate(`/topics/${topicId}`)}>
+                <ArrowLeft className="w-4 h-4 mr-1" /> Back to Topic
               </Button>
               <Button onClick={restart}>
                 <RotateCcw className="w-4 h-4 mr-1" /> Retry
@@ -274,7 +274,7 @@ const Quiz = () => {
                 Submit Test <Trophy className="w-4 h-4 ml-1" />
               </Button>
             ) : (
-              <Button size="sm" variant="outline" onClick={() => navigate("/")}>
+              <Button size="sm" variant="outline" onClick={() => navigate(`/topics/${topicId}`)}>
                 Finish <CheckCircle2 className="w-4 h-4 ml-1" />
               </Button>
             )
