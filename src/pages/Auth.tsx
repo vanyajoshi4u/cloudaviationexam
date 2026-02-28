@@ -18,6 +18,7 @@ const Auth = () => {
   });
   const [loading, setLoading] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
+  const [showSessionWarning, setShowSessionWarning] = useState(false);
   const [pendingUid, setPendingUid] = useState<string | null>(null);
   const [pendingCredentials, setPendingCredentials] = useState<{ email: string; password: string } | null>(null);
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -181,6 +182,7 @@ const Auth = () => {
 
         if (verifyResult?.hasActiveSession) {
           await supabase.auth.signOut({ scope: "local" });
+          setShowSessionWarning(true);
           toast.error("You are already logged in on another device. Please log out from the other device first.");
           setLoading(false);
           return;
@@ -404,7 +406,7 @@ const Auth = () => {
           </form>
 
           <div className="mt-6 text-center space-y-2">
-            {mode === "login" && (
+            {mode === "login" && showSessionWarning && (
               <p className="text-xs text-muted-foreground bg-muted/50 rounded-md p-3">
                 ⚠️ If it's showing "log out from other device", try changing the password and verifying mail.
               </p>
