@@ -19,6 +19,8 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
   const [showSessionWarning, setShowSessionWarning] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
   const [pendingUid, setPendingUid] = useState<string | null>(null);
   const [pendingCredentials, setPendingCredentials] = useState<{ email: string; password: string } | null>(null);
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -295,6 +297,46 @@ const Auth = () => {
               <p className="text-xs text-muted-foreground">
                 You'll be signed in automatically once verified.
               </p>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={resending || resendCooldown > 0}
+                onClick={async () => {
+                  if (!pendingCredentials || !pendingUid) return;
+                  setResending(true);
+                  try {
+                    const { data: loginData, error } = await supabase.auth.signInWithPassword({
+                      email: pendingCredentials.email,
+                      password: pendingCredentials.password,
+                    });
+                    if (error) throw error;
+                    const accessToken = loginData.session?.access_token;
+                    if (!accessToken) throw new Error("No session");
+
+                    await supabase.functions.invoke("send-login-verification", {
+                      body: { action: "send-verification" },
+                      headers: { Authorization: `Bearer ${accessToken}` },
+                    });
+                    await supabase.auth.signOut({ scope: "local" });
+                    toast.success("New verification email sent!");
+                    setResendCooldown(30);
+                    const timer = setInterval(() => {
+                      setResendCooldown((prev) => {
+                        if (prev <= 1) { clearInterval(timer); return 0; }
+                        return prev - 1;
+                      });
+                    }, 1000);
+                  } catch (e: any) {
+                    toast.error(e.message || "Failed to resend");
+                  } finally {
+                    setResending(false);
+                  }
+                }}
+                className="w-full font-display text-sm tracking-wider py-5"
+              >
+                {resending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Mail className="w-4 h-4 mr-2" />}
+                {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend Verification Email"}
+              </Button>
               <button
                 type="button"
                 onClick={() => {
