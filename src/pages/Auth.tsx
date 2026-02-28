@@ -21,12 +21,30 @@ const Auth = () => {
     password: "",
   });
 
+  // Listen for auth events (password recovery clears active sessions)
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === "PASSWORD_RECOVERY" && session) {
+          // Clear all active sessions so user isn't blocked by "already logged in"
+          try {
+            await supabase.functions.invoke("send-login-verification", {
+              body: { action: "logout" },
+            });
+          } catch (e) {
+            console.error("Failed to clear sessions on password recovery:", e);
+          }
+        }
+      }
+    );
+    return () => subscription.unsubscribe();
+  }, []);
+
   // Redirect if already logged in
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        // Check if user has a verified login (active session in DB)
         const { data } = await supabase
           .from("active_sessions")
           .select("id")
