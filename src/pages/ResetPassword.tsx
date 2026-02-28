@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Plane, Lock, ArrowRight, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -139,16 +141,15 @@ const ResetPassword = () => {
               </div>
               <h2 className="font-display text-2xl font-bold text-foreground">Password Updated!</h2>
               <p className="text-sm text-muted-foreground">
-                Your password has been changed successfully.
+                Your password has been changed successfully. You can now sign in with your new password.
               </p>
-              <div className="bg-muted/50 rounded-lg p-4 space-y-2 text-left">
-                <p className="text-xs text-muted-foreground">
-                  • Go to <span className="text-foreground font-medium">CloudAviation website</span> and log in with your new password
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  • You may close this page now
-                </p>
-              </div>
+              <Button
+                onClick={() => navigate("/auth?mode=login")}
+                className="w-full glow-blue font-display text-sm tracking-wider py-5"
+              >
+                <ArrowRight className="w-4 h-4 mr-2" />
+                Go to Sign In
+              </Button>
             </div>
           ) : (
             <>
