@@ -168,7 +168,7 @@ const Auth = () => {
           email: formData.email.trim(),
           password: formData.password,
           options: {
-            emailRedirectTo: `${window.location.origin}/email-confirmed`,
+            emailRedirectTo: `https://cloudaviationexam.lovable.app/email-confirmed`,
             data: {
               full_name: formData.fullName.trim(),
               phone: formData.phone.trim(),
