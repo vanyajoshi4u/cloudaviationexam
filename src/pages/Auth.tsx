@@ -87,8 +87,27 @@ const Auth = () => {
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      setResetSuccess(true);
-      toast.success("Password updated! You can now sign in.");
+
+      // Auto sign-in with new password
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email.trim(),
+        password: formData.newPassword,
+      });
+      if (signInError) {
+        // If auto sign-in fails, show success and let user sign in manually
+        setResetSuccess(true);
+        toast.success("Password updated! You can now sign in.");
+        setLoading(false);
+        return;
+      }
+
+      // Create active session
+      await supabase.functions.invoke("send-login-verification", {
+        body: { action: "create-session" },
+      });
+
+      toast.success("Password updated & signed in!");
+      navigate("/subscribe", { replace: true });
     } catch (error: any) {
       toast.error(error.message || "Failed to reset password.");
     } finally {
