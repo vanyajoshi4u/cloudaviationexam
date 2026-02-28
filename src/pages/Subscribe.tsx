@@ -246,24 +246,32 @@ const Subscribe = () => {
             {/* Screenshot Upload */}
             <div className="space-y-2">
               <Label className="text-sm text-foreground">Payment Screenshot *</Label>
-              <label
-                htmlFor="screenshot"
-                className={`flex items-center gap-3 p-3 rounded-xl border-2 border-dashed cursor-pointer transition-colors ${
-                  screenshot ? "border-primary bg-primary/5" : "border-border/50 hover:border-border"
-                }`}
-              >
-                <Upload className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                <span className="text-sm text-muted-foreground truncate">
-                  {screenshot ? screenshot.name : "Upload payment screenshot"}
-                </span>
-                <input
-                  id="screenshot"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-              </label>
+              {screenshot ? (
+                <div className="flex items-center gap-3 p-3 rounded-xl border-2 border-primary bg-primary/5">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                  <span className="text-sm text-foreground truncate flex-1">{screenshot.name}</span>
+                  <label htmlFor="screenshot" className="text-xs text-primary cursor-pointer hover:underline flex-shrink-0">
+                    Re-upload
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setScreenshot(null)}
+                    className="text-xs text-destructive hover:underline flex-shrink-0"
+                  >
+                    Remove
+                  </button>
+                  <input id="screenshot" type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                </div>
+              ) : (
+                <label
+                  htmlFor="screenshot"
+                  className="flex items-center gap-3 p-3 rounded-xl border-2 border-dashed border-border/50 hover:border-border cursor-pointer transition-colors"
+                >
+                  <Upload className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                  <span className="text-sm text-muted-foreground">Upload payment screenshot</span>
+                  <input id="screenshot" type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                </label>
+              )}
             </div>
 
             {/* Referral Code */}
