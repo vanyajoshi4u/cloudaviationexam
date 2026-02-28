@@ -114,15 +114,23 @@ const ResetPassword = () => {
 
         <div className="glass-card p-8">
           {success ? (
-            <div className="text-center space-y-4">
-              <CheckCircle className="w-12 h-12 text-primary mx-auto" />
+            <div className="text-center space-y-5 py-4">
+              <div className="relative mx-auto w-fit">
+                <CheckCircle className="w-14 h-14 text-primary" />
+                <div className="absolute inset-0 blur-xl bg-primary/20 rounded-full" />
+              </div>
               <h2 className="font-display text-2xl font-bold text-foreground">Password Updated!</h2>
               <p className="text-sm text-muted-foreground">
-                Your password has been changed and all sessions have been cleared. Please log in with your new password.
+                Your password has been changed successfully and all active sessions have been cleared.
               </p>
-              <p className="text-xs text-muted-foreground">
-                You can now close this page and log in with your new password.
-              </p>
+              <div className="bg-muted/50 rounded-lg p-4 space-y-2 text-left">
+                <p className="text-xs text-muted-foreground">
+                  • You can now <span className="text-foreground font-medium">log in on the website</span> with your new password
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  • You may close this page
+                </p>
+              </div>
             </div>
           ) : (
             <>

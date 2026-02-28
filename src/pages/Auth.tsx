@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft } from "lucide-react";
+import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle, MailCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-type AuthMode = "signup" | "login" | "forgot";
+type AuthMode = "signup" | "login" | "forgot" | "forgot-sent";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ const Auth = () => {
         { redirectTo: `${window.location.origin}/reset-password` }
       );
       if (error) throw error;
-      toast.success("Password reset link sent! Check your email.");
+      setMode("forgot-sent");
     } catch (error: any) {
       toast.error(error.message || "An error occurred");
     } finally {
@@ -159,6 +159,7 @@ const Auth = () => {
     signup: { title: "Create Account", subtitle: "Join India's #1 DGCA Question Bank" },
     login: { title: "Welcome Back", subtitle: "Sign in to continue your preparation" },
     forgot: { title: "Reset Password", subtitle: "Enter your email to receive a reset link" },
+    "forgot-sent": { title: "Check Your Email", subtitle: "We've sent you a password reset link" },
   };
 
   return (
@@ -194,6 +195,41 @@ const Auth = () => {
             {headings[mode].subtitle}
           </p>
 
+          {mode === "forgot-sent" ? (
+            <div className="text-center space-y-5 py-4">
+              <div className="relative mx-auto w-fit">
+                <MailCheck className="w-14 h-14 text-primary" />
+                <div className="absolute inset-0 blur-xl bg-primary/20 rounded-full" />
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm text-foreground font-medium">
+                  A password reset link has been sent to
+                </p>
+                <p className="text-sm text-primary font-semibold break-all">
+                  {formData.email}
+                </p>
+              </div>
+              <div className="bg-muted/50 rounded-lg p-4 text-left space-y-2">
+                <p className="text-xs text-muted-foreground">
+                  • Open your email and click on <span className="text-foreground font-medium">"Reset Password"</span>
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  • You'll be redirected to create a new password
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  • Didn't receive it? Check your spam folder
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setMode("login")}
+                className="w-full font-display text-sm tracking-wider py-5"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" /> Back to Sign In
+              </Button>
+            </div>
+          ) : (
+          <>
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === "signup" && (
               <>
@@ -257,6 +293,8 @@ const Auth = () => {
               </button>
             )}
           </div>
+          </>
+          )}
         </div>
       </motion.div>
     </div>
