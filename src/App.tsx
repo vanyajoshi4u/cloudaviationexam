@@ -12,6 +12,7 @@ import Quiz from "./pages/Quiz";
 import RtrChapter from "./pages/RtrChapter";
 import Subscribe from "./pages/Subscribe";
 import AdminDashboard from "./pages/AdminDashboard";
+import VerifyLogin from "./pages/VerifyLogin";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/auth" element={<Auth />} />
+            <Route path="/verify-login" element={<VerifyLogin />} />
             <Route path="/subscribe" element={
               <ProtectedRoute requireAuth>
                 <Subscribe />

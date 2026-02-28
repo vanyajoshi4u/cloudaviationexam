@@ -69,6 +69,10 @@ const Navbar = () => {
               size="sm"
               className="text-muted-foreground hover:text-foreground"
               onClick={async () => {
+                // Clean up active session before signing out
+                await supabase.functions.invoke("send-login-verification", {
+                  body: { action: "logout" },
+                });
                 await supabase.auth.signOut();
                 toast.success("Logged out");
               }}
@@ -121,6 +125,9 @@ const Navbar = () => {
                   size="sm"
                   className="justify-start text-muted-foreground"
                   onClick={async () => {
+                    await supabase.functions.invoke("send-login-verification", {
+                      body: { action: "logout" },
+                    });
                     await supabase.auth.signOut();
                     toast.success("Logged out");
                     setIsOpen(false);
