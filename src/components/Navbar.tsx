@@ -82,13 +82,22 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-foreground p-2"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile Toggle + Theme */}
+          <div className="md:hidden flex items-center gap-1">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-foreground p-2"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
