@@ -33,17 +33,24 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Find user by email (fast lookup)
-    const { data: userData, error: getUserError } = await supabaseAdmin.auth.admin.getUserByEmail(email.toLowerCase().trim());
-    
-    if (getUserError || !userData) {
+    // Find user by email using listUsers with filter
+    const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
+      page: 1,
+      perPage: 50,
+    });
+
+    if (listError) throw listError;
+
+    const user = listData.users.find(
+      (u) => u.email?.toLowerCase() === email.toLowerCase().trim()
+    );
+
+    if (!user) {
       return new Response(JSON.stringify({ error: "No account found with this email" }), {
         status: 404,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    const user = userData;
 
     // Update password
     const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(user.id, {
