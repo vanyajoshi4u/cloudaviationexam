@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle, MailCheck } from "lucide-react";
+import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-type AuthMode = "signup" | "login" | "forgot" | "forgot-sent";
+type AuthMode = "signup" | "login" | "forgot";
 
 const Auth = () => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<AuthMode>("signup");
   const [loading, setLoading] = useState(false);
+  const [resetSuccess, setResetSuccess] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
     email: "",
     password: "",
+    newPassword: "",
+    confirmNewPassword: "",
   });
 
   // Listen for auth events (password recovery clears active sessions)
@@ -65,16 +68,29 @@ const Auth = () => {
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.email.trim()) {
+      toast.error("Please enter your email address.");
+      return;
+    }
+    if (formData.newPassword.length < 6) {
+      toast.error("Password must be at least 6 characters.");
+      return;
+    }
+    if (formData.newPassword !== formData.confirmNewPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
     setLoading(true);
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(
-        formData.email.trim(),
-        { redirectTo: `${window.location.origin}/reset-password` }
-      );
+      const { data, error } = await supabase.functions.invoke("reset-password-direct", {
+        body: { email: formData.email.trim(), password: formData.newPassword },
+      });
       if (error) throw error;
-      setMode("forgot-sent");
+      if (data?.error) throw new Error(data.error);
+      setResetSuccess(true);
+      toast.success("Password updated! You can now sign in.");
     } catch (error: any) {
-      toast.error(error.message || "An error occurred");
+      toast.error(error.message || "Failed to reset password.");
     } finally {
       setLoading(false);
     }
@@ -162,8 +178,7 @@ const Auth = () => {
   const headings: Record<AuthMode, { title: string; subtitle: string }> = {
     signup: { title: "Create Account", subtitle: "Join India's #1 DGCA Question Bank" },
     login: { title: "Welcome Back", subtitle: "Sign in to continue your preparation" },
-    forgot: { title: "Reset Password", subtitle: "Enter your email to receive a reset link" },
-    "forgot-sent": { title: "Check Your Email", subtitle: "We've sent you a password reset link" },
+    forgot: { title: "Reset Password", subtitle: "Enter your email and create a new password" },
   };
 
   return (
@@ -199,37 +214,21 @@ const Auth = () => {
             {headings[mode].subtitle}
           </p>
 
-          {mode === "forgot-sent" ? (
+          {mode === "forgot" && resetSuccess ? (
             <div className="text-center space-y-5 py-4">
               <div className="relative mx-auto w-fit">
-                <MailCheck className="w-14 h-14 text-primary" />
+                <CheckCircle className="w-14 h-14 text-primary" />
                 <div className="absolute inset-0 blur-xl bg-primary/20 rounded-full" />
               </div>
-              <div className="space-y-2">
-                <p className="text-sm text-foreground font-medium">
-                  A password reset link has been sent to
-                </p>
-                <p className="text-sm text-primary font-semibold break-all">
-                  {formData.email}
-                </p>
-              </div>
-              <div className="bg-muted/50 rounded-lg p-4 text-left space-y-2">
-                <p className="text-xs text-muted-foreground">
-                  • Open your email and click on <span className="text-foreground font-medium">"Reset Password"</span>
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  • You'll be redirected to create a new password
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  • Didn't receive it? Check your spam folder
-                </p>
-              </div>
+              <h3 className="font-display text-xl font-bold text-foreground">Password Updated!</h3>
+              <p className="text-sm text-muted-foreground">
+                Your password has been changed. You can now sign in with your new password.
+              </p>
               <Button
-                variant="outline"
-                onClick={() => setMode("login")}
-                className="w-full font-display text-sm tracking-wider py-5"
+                onClick={() => { setMode("login"); setResetSuccess(false); }}
+                className="w-full glow-blue font-display text-sm tracking-wider py-5"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" /> Back to Sign In
+                <ArrowRight className="w-4 h-4 mr-2" /> Sign In Now
               </Button>
             </div>
           ) : (
@@ -262,6 +261,25 @@ const Auth = () => {
               </div>
             </div>
 
+            {mode === "forgot" && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="newPassword" className="text-sm text-foreground">New Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="newPassword" name="newPassword" type="password" placeholder="Min. 6 characters" value={formData.newPassword} onChange={handleChange} className="pl-10" required minLength={6} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmNewPassword" className="text-sm text-foreground">Confirm New Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="confirmNewPassword" name="confirmNewPassword" type="password" placeholder="Re-enter password" value={formData.confirmNewPassword} onChange={handleChange} className="pl-10" required minLength={6} />
+                  </div>
+                </div>
+              </>
+            )}
+
             {mode !== "forgot" && (
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm text-foreground">Password</Label>
@@ -282,7 +300,7 @@ const Auth = () => {
 
             <Button type="submit" className="w-full glow-blue font-display text-sm tracking-wider py-5" disabled={loading}>
               {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ArrowRight className="w-4 h-4 mr-2" />}
-              {mode === "signup" ? "Create Account" : mode === "login" ? "Sign In" : "Send Reset Link"}
+              {mode === "signup" ? "Create Account" : mode === "login" ? "Sign In" : "Update Password"}
             </Button>
           </form>
 
