@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Lock, ArrowRight, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,27 +8,36 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const ResetPassword = () => {
-  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [isRecovery, setIsRecovery] = useState(false);
+  const [pageState, setPageState] = useState<"loading" | "ready" | "invalid">("loading");
 
   useEffect(() => {
+    // Listen for PASSWORD_RECOVERY event — this fires when Supabase processes the recovery token from the URL
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event) => {
-        if (event === "PASSWORD_RECOVERY") {
-          setIsRecovery(true);
+      (event, session) => {
+        if (event === "PASSWORD_RECOVERY" && session) {
+          setPageState("ready");
         }
       }
     );
 
-    // Also check URL hash for recovery token
-    const hash = window.location.hash;
-    if (hash.includes("type=recovery")) {
-      setIsRecovery(true);
-    }
+    // Fallback: check if there's already an active session (in case event already fired)
+    const checkSession = async () => {
+      // Small delay to let Supabase process the URL hash token
+      await new Promise((r) => setTimeout(r, 1500));
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setPageState("ready");
+      } else {
+        setPageState("invalid");
+      }
+    };
+
+    checkSession();
 
     return () => subscription.unsubscribe();
   }, []);
@@ -52,7 +60,7 @@ const ResetPassword = () => {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
 
-      // Clear active sessions so user isn't blocked
+      // Clear active sessions so user isn't blocked on next login
       try {
         await supabase.functions.invoke("send-login-verification", {
           body: { action: "logout" },
@@ -71,16 +79,26 @@ const ResetPassword = () => {
     }
   };
 
-  if (!isRecovery && !success) {
+  // Loading state
+  if (pageState === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md text-center"
-        >
-          <p className="text-muted-foreground mb-4">Invalid or expired reset link.</p>
-          <Button onClick={() => navigate("/auth")} variant="outline">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center space-y-4">
+          <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
+          <p className="text-sm text-muted-foreground">Verifying reset link...</p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Invalid/expired link
+  if (pageState === "invalid" && !success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md text-center space-y-4">
+          <p className="text-muted-foreground">Invalid or expired reset link.</p>
+          <p className="text-xs text-muted-foreground">Please request a new password reset from the login page.</p>
+          <Button onClick={() => window.location.href = "/auth"} variant="outline">
             Go to Login
           </Button>
         </motion.div>
@@ -121,14 +139,14 @@ const ResetPassword = () => {
               </div>
               <h2 className="font-display text-2xl font-bold text-foreground">Password Updated!</h2>
               <p className="text-sm text-muted-foreground">
-                Your password has been changed successfully and all active sessions have been cleared.
+                Your password has been changed successfully.
               </p>
               <div className="bg-muted/50 rounded-lg p-4 space-y-2 text-left">
                 <p className="text-xs text-muted-foreground">
-                  • You can now <span className="text-foreground font-medium">log in on the website</span> with your new password
+                  • Go to <span className="text-foreground font-medium">CloudAviation website</span> and log in with your new password
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  • You may close this page
+                  • You may close this page now
                 </p>
               </div>
             </div>
