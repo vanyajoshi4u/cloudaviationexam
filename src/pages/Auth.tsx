@@ -90,18 +90,13 @@ const Auth = () => {
           return;
         }
 
-        // Send verification email
-        toast.info("Sending verification email...");
-        const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
-          "send-login-verification",
-          { body: { action: "send-verification" } }
-        );
+        // Create active session directly (email verification temporarily disabled)
+        await supabase.functions.invoke("send-login-verification", {
+          body: { action: "create-session" },
+        });
 
-        if (verifyError) throw new Error("Failed to send verification email");
-
-        // Sign out until verified via email
-        await supabase.auth.signOut();
-        toast.success("Verification link sent to your email! Please check your inbox to complete login.");
+        toast.success("Login successful!");
+        navigate("/subscribe", { replace: true });
       } else {
         if (!formData.fullName.trim() || !formData.phone.trim()) {
           toast.error("Please fill in all fields.");
