@@ -2,12 +2,13 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response("ok", { headers: corsHeaders });
   }
 
   try {
@@ -21,48 +22,116 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_PUBLISHABLE_KEY")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) {
+    const token = authHeader.replace("Bearer ", "");
+    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
+    const userId = claimsData.claims.sub;
+    const userEmail = claimsData.claims.email;
+
     const { plan, amount } = await req.json();
     const planLabel = plan === "12_months" ? "12 Months" : "6 Months";
-    const userEmail = user.email;
 
-    // Use Lovable AI gateway to generate and send email content
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
-    // Send email using Supabase's built-in auth admin
+    // Get profile name
     const adminClient = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Get profile name
     const { data: profile } = await adminClient
       .from("profiles")
       .select("full_name")
-      .eq("user_id", user.id)
+      .eq("user_id", userId)
       .single();
 
     const userName = profile?.full_name || "Student";
 
-    console.log(`Payment confirmation for ${userEmail}: Plan ${planLabel}, Amount ₹${amount}`);
-    console.log(`User: ${userName}, Subscription activated successfully.`);
+    // Send email via Resend
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    if (!RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY is not configured");
+    }
+
+    const emailRes = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "CloudAviation Exams <onboarding@resend.dev>",
+        to: [userEmail],
+        subject: "✈️ Payment Successful – Your Subscription is Active!",
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="text-align: center; margin-bottom: 24px;">
+              <h1 style="color: #0ea5e9; margin: 0;">Cloud<span style="color: #1e293b;">Aviation</span> Exams</h1>
+              <p style="color: #94a3b8; font-size: 12px; letter-spacing: 2px; margin: 4px 0 0;">EXAM PREPARATION</p>
+            </div>
+            
+            <div style="background: #f8fafc; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+              <h2 style="color: #1e293b; margin: 0 0 8px;">Payment Successful! ✅</h2>
+              <p style="color: #64748b; margin: 0 0 16px;">Hi ${userName},</p>
+              <p style="color: #64748b; margin: 0 0 16px;">
+                Your payment of <strong style="color: #0ea5e9;">₹${amount}</strong> for the 
+                <strong>${planLabel}</strong> plan has been confirmed. Your subscription is now active!
+              </p>
+              
+              <div style="background: white; border-radius: 8px; padding: 16px; margin: 16px 0;">
+                <table style="width: 100%; border-collapse: collapse;">
+                  <tr>
+                    <td style="color: #94a3b8; padding: 4px 0; font-size: 14px;">Plan</td>
+                    <td style="color: #1e293b; padding: 4px 0; font-size: 14px; text-align: right; font-weight: 600;">${planLabel}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #94a3b8; padding: 4px 0; font-size: 14px;">Amount</td>
+                    <td style="color: #1e293b; padding: 4px 0; font-size: 14px; text-align: right; font-weight: 600;">₹${amount}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #94a3b8; padding: 4px 0; font-size: 14px;">Status</td>
+                    <td style="color: #22c55e; padding: 4px 0; font-size: 14px; text-align: right; font-weight: 600;">Active</td>
+                  </tr>
+                </table>
+              </div>
+              
+              <p style="color: #64748b; margin: 16px 0 0;">
+                You now have full access to all quiz questions and study materials. Start preparing for your exams today!
+              </p>
+            </div>
+            
+            <div style="text-align: center;">
+              <a href="https://cloudaviationexam.lovable.app/topics" 
+                 style="display: inline-block; background: #0ea5e9; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                Start Learning →
+              </a>
+            </div>
+            
+            <p style="color: #94a3b8; font-size: 12px; text-align: center; margin-top: 24px;">
+              If you have any questions, reply to this email. Happy studying! ✈️
+            </p>
+          </div>
+        `,
+      }),
+    });
+
+    const emailData = await emailRes.json();
+    if (!emailRes.ok) {
+      throw new Error(`Resend API failed [${emailRes.status}]: ${JSON.stringify(emailData)}`);
+    }
+
+    console.log(`Payment confirmation email sent to ${userEmail}:`, emailData);
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: `Confirmation logged for ${userEmail}` 
-      }),
+      JSON.stringify({ success: true, message: `Confirmation email sent to ${userEmail}` }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
