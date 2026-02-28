@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
         try {
           const resend = new Resend(resendApiKey);
           const { error: emailError } = await resend.emails.send({
-            from: "CloudAviation Exam's <noreply@cloudaviationexam.com>",
+            from: "CloudAviation Exam's <onboarding@resend.dev>",
             to: [user.email],
             subject: "Verify Your Login - CloudAviation Exam's",
             html: `
