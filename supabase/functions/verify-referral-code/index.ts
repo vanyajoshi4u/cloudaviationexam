@@ -20,9 +20,9 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageBase64, referralCode } = await req.json();
-    if (!imageBase64 || !referralCode) {
-      return new Response(JSON.stringify({ error: "Missing imageBase64 or referralCode" }), {
+    const { imageBase64, referralCode, expectedAmount } = await req.json();
+    if (!imageBase64 || !referralCode || !expectedAmount) {
+      return new Response(JSON.stringify({ error: "Missing imageBase64, referralCode, or expectedAmount" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -45,14 +45,23 @@ Deno.serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are an OCR assistant. The user will send a payment screenshot image. Your job is to find any referral code, transaction ID, UTR number, or reference number visible in the image. Return ONLY the code/number you find, nothing else. If you find multiple codes, return them separated by commas. If you cannot find any code, return "NOT_FOUND".`,
+            content: `You are an OCR assistant analyzing payment screenshots. Extract TWO things from the image:
+1. The referral code, transaction ID, UTR number, or reference number
+2. The payment amount (in ₹ or INR)
+
+Return your response in this exact JSON format:
+{"referralCode": "THE_CODE_OR_NOT_FOUND", "amount": THE_NUMBER_OR_0}
+
+If you cannot find a referral code, use "NOT_FOUND" for referralCode.
+If you cannot find an amount, use 0 for amount.
+Return ONLY the JSON, nothing else.`,
           },
           {
             role: "user",
             content: [
               {
                 type: "text",
-                text: "Extract the referral code or transaction reference number from this payment screenshot.",
+                text: "Extract the referral code and payment amount from this payment screenshot.",
               },
               {
                 type: "image_url",
@@ -86,23 +95,53 @@ Deno.serve(async (req) => {
     }
 
     const aiData = await aiResponse.json();
-    const extractedText = aiData.choices?.[0]?.message?.content?.trim() || "NOT_FOUND";
+    const rawContent = aiData.choices?.[0]?.message?.content?.trim() || "";
 
-    console.log(`Extracted text: "${extractedText}", User referral code: "${referralCode}"`);
+    console.log(`AI raw response: "${rawContent}", User referral: "${referralCode}", Expected amount: ${expectedAmount}`);
 
-    // Check if the user's referral code appears in the extracted text (case-insensitive)
-    const normalizedExtracted = extractedText.toLowerCase().replace(/[\s-]/g, "");
-    const normalizedInput = referralCode.trim().toLowerCase().replace(/[\s-]/g, "");
+    // Parse AI response JSON
+    let extracted = { referralCode: "NOT_FOUND", amount: 0 };
+    try {
+      const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        extracted = JSON.parse(jsonMatch[0]);
+      }
+    } catch {
+      console.error("Failed to parse AI response as JSON:", rawContent);
+    }
 
-    const match = normalizedExtracted.includes(normalizedInput) || normalizedInput.includes(normalizedExtracted);
-
-    // If extracted is NOT_FOUND, we can't verify - let it through with a warning
-    if (extractedText === "NOT_FOUND") {
+    // Validate referral code
+    if (extracted.referralCode === "NOT_FOUND") {
       return new Response(
         JSON.stringify({
           match: false,
-          extracted: extractedText,
           message: "Could not find a referral code in the screenshot. Please ensure the referral code is visible in your payment screenshot.",
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const normalizedExtracted = extracted.referralCode.toLowerCase().replace(/[\s-]/g, "");
+    const normalizedInput = referralCode.trim().toLowerCase().replace(/[\s-]/g, "");
+    const codeMatch = normalizedExtracted.includes(normalizedInput) || normalizedInput.includes(normalizedExtracted);
+
+    if (!codeMatch) {
+      return new Response(
+        JSON.stringify({
+          match: false,
+          message: `The referral code in your screenshot ("${extracted.referralCode}") does not match the code you entered ("${referralCode}"). Please check and try again.`,
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate amount
+    const extractedAmount = Number(extracted.amount);
+    if (extractedAmount > 0 && extractedAmount !== Number(expectedAmount)) {
+      return new Response(
+        JSON.stringify({
+          match: false,
+          message: `The payment amount in your screenshot (₹${extractedAmount}) does not match the selected plan (₹${expectedAmount}). Please pay the correct amount and upload a new screenshot.`,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
@@ -110,11 +149,8 @@ Deno.serve(async (req) => {
 
     return new Response(
       JSON.stringify({
-        match,
-        extracted: extractedText,
-        message: match
-          ? "Referral code verified successfully!"
-          : `The referral code in your screenshot ("${extractedText}") does not match the code you entered ("${referralCode}"). Please check and try again.`,
+        match: true,
+        message: "Payment screenshot verified successfully!",
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
