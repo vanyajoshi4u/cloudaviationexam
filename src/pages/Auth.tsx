@@ -137,14 +137,14 @@ const Auth = () => {
         if (verifyError) throw new Error("Verification failed");
 
         if (verifyResult?.hasActiveSession) {
-          await supabase.auth.signOut();
+          await supabase.auth.signOut({ scope: "local" });
           toast.error("You are already logged in on another device. Please log out from the other device first.");
           setLoading(false);
           return;
         }
 
-        // Sign out until user verifies via email
-        await supabase.auth.signOut();
+        // Sign out locally until user verifies via email
+        await supabase.auth.signOut({ scope: "local" });
         toast.success("Verification email sent! Check your inbox to complete login.");
       } else {
         if (!formData.fullName.trim() || !formData.phone.trim()) {

@@ -71,69 +71,18 @@ Deno.serve(async (req) => {
       });
     }
 
-    if (action === "check-session" || action === "check-and-verify") {
-      // Clean up stale sessions first
-      await supabaseAdmin.rpc("cleanup_stale_sessions");
-
-      const { data: sessions } = await supabaseAdmin
-        .from("active_sessions")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (sessions && sessions.length > 0) {
-        return new Response(JSON.stringify({
-          hasActiveSession: true,
-          message: "You are already logged in on another device. Please log out from the other device first.",
-        }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+    const queueVerificationEmail = (verificationLink: string) => {
+      if (!resendApiKey || !user.email) {
+        console.warn("Missing RESEND_API_KEY or user email, skipping verification email");
+        return;
       }
 
-      // If check-and-verify, continue to send verification email
-      if (action === "check-and-verify") {
-        // Ensure profile exists
-        const { data: existingProfile } = await supabaseAdmin
-          .from("profiles")
-          .select("id")
-          .eq("user_id", user.id)
-          .single();
-
-        if (!existingProfile) {
-          await supabaseAdmin.from("profiles").insert({
-            user_id: user.id,
-            full_name: user.user_metadata?.full_name || "",
-            phone: user.user_metadata?.phone || "",
-            email: user.email || "",
-          });
-        }
-
-        // Clean up old verifications
-        await supabaseAdmin
-          .from("login_verifications")
-          .delete()
-          .eq("user_id", user.id);
-
-        // Create new verification token
-        const { data: verification, error: verifyInsertError } = await supabaseAdmin
-          .from("login_verifications")
-          .insert({ user_id: user.id })
-          .select("token")
-          .single();
-
-        if (verifyInsertError || !verification) {
-          console.error("Verification insert error:", verifyInsertError);
-          throw new Error("Failed to create verification");
-        }
-
-        const origin = req.headers.get("origin") || "https://cloudaviationexam.lovable.app";
-        const verificationLink = `${origin}/verify-login?token=${verification.token}&uid=${user.id}`;
-
-        // Send email
-        if (resendApiKey) {
+      EdgeRuntime.waitUntil((async () => {
+        try {
           const resend = new Resend(resendApiKey);
           const { error: emailError } = await resend.emails.send({
             from: "CloudAviation Exam's <noreply@cloudaviationexam.com>",
-            to: [user.email!],
+            to: [user.email],
             subject: "Verify Your Login - CloudAviation Exam's",
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
@@ -153,24 +102,17 @@ Deno.serve(async (req) => {
               </div>
             `,
           });
+
           if (emailError) {
             console.error("Email send error:", emailError);
           }
-        } else {
-          console.warn("No RESEND_API_KEY configured, skipping email");
+        } catch (emailSendError) {
+          console.error("Email send exception:", emailSendError);
         }
+      })());
+    };
 
-        return new Response(JSON.stringify({ hasActiveSession: false, success: true, message: "Verification email sent" }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-
-      return new Response(JSON.stringify({ hasActiveSession: false }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    if (action === "send-verification") {
+    const createAndQueueVerification = async () => {
       // Ensure profile exists (for first login after email verification)
       const { data: existingProfile } = await supabaseAdmin
         .from("profiles")
@@ -207,39 +149,41 @@ Deno.serve(async (req) => {
 
       const origin = req.headers.get("origin") || "https://cloudaviationexam.lovable.app";
       const verificationLink = `${origin}/verify-login?token=${verification.token}&uid=${user.id}`;
+      queueVerificationEmail(verificationLink);
+    };
 
-      // Send email
-      if (resendApiKey) {
-        const resend = new Resend(resendApiKey);
-        const { error: emailError } = await resend.emails.send({
-          from: "CloudAviation Exam's <onboarding@resend.dev>",
-          to: [user.email!],
-          subject: "Verify Your Login - CloudAviation Exam's",
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
-              <h2 style="color: #1a1a2e; text-align: center;">✈️ Login Verification</h2>
-              <p style="color: #555; text-align: center;">
-                A login attempt was made to your CloudAviation Exam's account. Click the button below to verify this login.
-              </p>
-              <div style="text-align: center; margin: 30px 0;">
-                <a href="${verificationLink}" 
-                   style="background-color: #0ea5e9; color: white; padding: 12px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                  Verify Login
-                </a>
-              </div>
-              <p style="color: #999; font-size: 12px; text-align: center;">
-                This link expires in 10 minutes. If you didn't attempt to log in, please ignore this email.
-              </p>
-            </div>
-          `,
+    if (action === "check-session" || action === "check-and-verify") {
+      // Clean up stale sessions first
+      await supabaseAdmin.rpc("cleanup_stale_sessions");
+
+      const { data: sessions } = await supabaseAdmin
+        .from("active_sessions")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (sessions && sessions.length > 0) {
+        return new Response(JSON.stringify({
+          hasActiveSession: true,
+          message: "You are already logged in on another device. Please log out from the other device first.",
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
-        if (emailError) {
-          console.error("Email send error:", emailError);
-        }
-      } else {
-        console.warn("No RESEND_API_KEY configured, skipping email");
       }
 
+      if (action === "check-and-verify") {
+        await createAndQueueVerification();
+        return new Response(JSON.stringify({ hasActiveSession: false, success: true, message: "Verification email sent" }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      return new Response(JSON.stringify({ hasActiveSession: false }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "send-verification") {
+      await createAndQueueVerification();
       return new Response(JSON.stringify({ success: true, message: "Verification email sent" }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
