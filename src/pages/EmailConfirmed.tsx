@@ -1,7 +1,18 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Plane, CheckCircle } from "lucide-react";
+import { Plane } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const EmailConfirmed = () => {
+  // Sign out immediately to prevent any auth-based redirects
+  useEffect(() => {
+    supabase.auth.signOut().catch(() => {});
+    // Clear hash tokens from URL
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <motion.div
@@ -22,10 +33,10 @@ const EmailConfirmed = () => {
         </div>
 
         <div className="glass-card p-8">
-          <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+          <div className="text-6xl mb-4">🎉</div>
           <h2 className="font-display text-xl font-bold text-foreground mb-2">Email Verified!</h2>
           <p className="text-sm text-muted-foreground">
-            Your email has been verified successfully. You can close this tab and log in to continue.
+            Your email has been verified successfully. You can now close this tab and log in to your account.
           </p>
         </div>
       </motion.div>
