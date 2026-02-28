@@ -125,17 +125,17 @@ const Subscribe = () => {
       });
       if (insertError) throw insertError;
 
-      setSubmitted(true);
       toast.success("Payment successful! Your subscription is now active.");
 
-      // Step 4: Send confirmation email
-      try {
-        await supabase.functions.invoke("send-payment-confirmation", {
-          body: { plan: selectedPlan, amount: plan.price },
-        });
-      } catch (emailErr) {
-        console.error("Email sending failed:", emailErr);
-      }
+      // Send confirmation email (fire and forget)
+      supabase.functions.invoke("send-payment-confirmation", {
+        body: { plan: selectedPlan, amount: plan.price },
+      }).catch((err) => console.error("Email sending failed:", err));
+
+      // Redirect to homepage after a short delay
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");
     } finally {
