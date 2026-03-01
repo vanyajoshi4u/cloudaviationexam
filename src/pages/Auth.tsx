@@ -297,6 +297,13 @@ const Auth = () => {
               <p className="text-xs text-muted-foreground">
                 You'll be signed in automatically once verified.
               </p>
+              <div className="bg-muted/50 border border-border rounded-lg p-3 text-left space-y-2">
+                <p className="text-xs font-medium text-foreground">⚠️ Can't find the verify link?</p>
+                <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                  <li><span className="font-medium text-foreground">Mobile:</span> In your mailbox, the email may appear as plain text. Tap <span className="font-medium text-foreground">"Show quoted text"</span> to reveal the verify link.</li>
+                  <li><span className="font-medium text-foreground">PC/Mac:</span> The email may show a <span className="font-medium text-foreground">three dots (⋯)</span> link — click on it to reveal the verify link.</li>
+                </ul>
+              </div>
               <Button
                 type="button"
                 variant="outline"
