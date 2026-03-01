@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+const INACTIVITY_TIMEOUT = 1 * 60 * 1000; // 1 minute for testing
 
 export const useInactivityLogout = () => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
