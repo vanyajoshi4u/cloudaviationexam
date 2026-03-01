@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { useInactivityLogout } from "@/hooks/useInactivityLogout";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -19,6 +20,11 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
+const InactivityGuard = ({ children }: { children: React.ReactNode }) => {
+  useInactivityLogout();
+  return <>{children}</>;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -26,43 +32,45 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/verify-login" element={<VerifyLogin />} />
-            <Route path="/email-confirmed" element={<EmailConfirmed />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/subscribe" element={
-              <ProtectedRoute requireAuth>
-                <Subscribe />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin" element={
-              <ProtectedRoute requireAuth>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/" element={
-              <ProtectedRoute requireAuth requireSubscription>
-                <Index />
-              </ProtectedRoute>
-            } />
-            <Route path="/topics/:topicId" element={
-              <ProtectedRoute requireAuth requireSubscription>
-                <TopicSelect />
-              </ProtectedRoute>
-            } />
-            <Route path="/rtr-chapter/:chapterId" element={
-              <ProtectedRoute requireAuth requireSubscription>
-                <RtrChapter />
-              </ProtectedRoute>
-            } />
-            <Route path="/quiz/:topicId" element={
-              <ProtectedRoute requireAuth requireSubscription>
-                <Quiz />
-              </ProtectedRoute>
-            } />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <InactivityGuard>
+            <Routes>
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/verify-login" element={<VerifyLogin />} />
+              <Route path="/email-confirmed" element={<EmailConfirmed />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/subscribe" element={
+                <ProtectedRoute requireAuth>
+                  <Subscribe />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin" element={
+                <ProtectedRoute requireAuth>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <Index />
+                </ProtectedRoute>
+              } />
+              <Route path="/topics/:topicId" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <TopicSelect />
+                </ProtectedRoute>
+              } />
+              <Route path="/rtr-chapter/:chapterId" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <RtrChapter />
+                </ProtectedRoute>
+              } />
+              <Route path="/quiz/:topicId" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <Quiz />
+                </ProtectedRoute>
+              } />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </InactivityGuard>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
