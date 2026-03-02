@@ -35,6 +35,33 @@ export type Database = {
         }
         Relationships: []
       }
+      device_fingerprints: {
+        Row: {
+          device_label: string | null
+          fingerprint: string
+          first_seen_at: string
+          id: string
+          last_seen_at: string
+          user_id: string
+        }
+        Insert: {
+          device_label?: string | null
+          fingerprint: string
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          user_id: string
+        }
+        Update: {
+          device_label?: string | null
+          fingerprint?: string
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       login_verifications: {
         Row: {
           created_at: string
@@ -157,6 +184,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_device_allowed: {
+        Args: { _fingerprint: string; _user_id: string }
+        Returns: boolean
+      }
       cleanup_stale_sessions: { Args: never; Returns: undefined }
       has_active_session: { Args: { _user_id: string }; Returns: boolean }
       has_active_subscription: { Args: { _user_id: string }; Returns: boolean }
