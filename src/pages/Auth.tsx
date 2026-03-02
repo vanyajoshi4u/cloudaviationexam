@@ -28,6 +28,7 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [referralRef, setReferralRef] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -36,6 +37,13 @@ const Auth = () => {
     newPassword: "",
     confirmNewPassword: "",
   });
+
+  // Capture referral code from URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) setReferralRef(ref);
+  }, []);
 
   // Listen for auth events (password recovery clears active sessions)
   useEffect(() => {
@@ -254,6 +262,7 @@ const Auth = () => {
             data: {
               full_name: formData.fullName.trim(),
               phone: formData.phone.trim(),
+              referral_code: referralRef || undefined,
             },
           },
         });
@@ -265,6 +274,24 @@ const Auth = () => {
           toast.error("An account with this email already exists. Please sign in instead.");
           setMode("login");
           return;
+        }
+
+        // Track referral if referral code exists and signup succeeded
+        if (referralRef && data.user?.id) {
+          // Look up referrer by code
+          const { data: referrerData } = await (supabase
+            .from("referral_codes" as any)
+            .select("user_id")
+            .eq("code", referralRef)
+            .maybeSingle() as any);
+
+          if (referrerData) {
+            await (supabase.from("referral_tracking" as any).insert({
+              referrer_user_id: referrerData.user_id,
+              referred_user_id: data.user.id,
+              referral_code: referralRef,
+            }) as any); // Ignore if already tracked
+          }
         }
 
         toast.success("Check your email for a verification link!");
