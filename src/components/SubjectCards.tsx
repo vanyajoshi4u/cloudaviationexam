@@ -255,11 +255,11 @@ const SubjectCards = () => {
       if (roles && roles.length > 0) { setHasRtr2Access(true); return; }
       const { data: subs } = await supabase
         .from("subscriptions")
-        .select("plan, status, expires_at")
+        .select("plan, status, expires_at, amount")
         .eq("user_id", user.id)
         .eq("plan", "3_months")
         .eq("status", "approved");
-      setHasRtr2Access(subs?.some(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? false);
+      setHasRtr2Access(subs?.some(s => s.amount === 799 && s.expires_at && new Date(s.expires_at) > new Date()) ?? false);
     };
     checkRtr2Access();
   }, []);
