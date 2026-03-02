@@ -16,7 +16,8 @@ const TopicSelect = () => {
 
   const isOxford = oxfordMetTopics.some((t) => t.id === topicId);
   const isRtr = rtrTopics.some((t) => t.id === topicId);
-  const subtitle = isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const isRtrBank = rtrQuestionBank1Topic.id === topicId;
+  const subtitle = isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (
