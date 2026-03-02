@@ -257,7 +257,7 @@ const RtrPart2Exam = () => {
           <div className="flex-1 relative min-h-0">
             <div className="absolute inset-0 flex flex-col">
               <div className="bg-accent/10 border-b border-border/30 px-3 py-1.5 flex-shrink-0">
-                <h2 className="text-[11px] font-bold uppercase tracking-widest text-accent text-center">
+                <h2 className="text-[11px] font-bold uppercase tracking-widest text-foreground text-center">
                   Airway / Aerodrome Charts Section
                 </h2>
               </div>
