@@ -3,10 +3,19 @@ export interface RtrScenario {
   flightInfo: {
     aircraftId: string;
     aircraftType: string;
+    rtCallSign: string;
+    registration: string;
     departure: string;
-    route: string;
     destination: string;
-    otherInfo: string;
+    atsRoute: string;
+    standNo: string;
+    runwayInUse: string;
+    taxiway: string;
+    flightLevel: string;
+    alternateAirdrome: string;
+    pob: string;
+    endurance: string;
+    exerciseStartTime: string;
   };
   frequencies: {
     description: string;
@@ -26,12 +35,21 @@ const sampleScenarios: RtrScenario[] = [
   {
     id: 1,
     flightInfo: {
-      aircraftId: "VT-AZA",
-      aircraftType: "ATR",
-      departure: "VABB (Mumbai)",
-      route: "WION BPL A791 FL180 IFR",
-      destination: "VEJS (Jaisalmer)",
-      otherInfo: "Chartered flight",
+      aircraftId: "AIC-887",
+      aircraftType: "B777-300ER",
+      rtCallSign: "Air India-887",
+      registration: "VT-AED",
+      departure: "VIDP-DELHI",
+      destination: "VECC-KOLKATTA",
+      atsRoute: "V10 ALI G452 LKN GGY R460 TEPAL CEA",
+      standNo: "11",
+      runwayInUse: "09",
+      taxiway: "C, D",
+      flightLevel: "360",
+      alternateAirdrome: "VEGT-Guhwati",
+      pob: "152",
+      endurance: "0500 Hrs",
+      exerciseStartTime: "1105 UTC",
     },
     frequencies: [
       { description: "ATIS", frequency: "123.450 MHz" },
@@ -53,10 +71,19 @@ const sampleScenarios: RtrScenario[] = [
     flightInfo: {
       aircraftId: "VT-KLM",
       aircraftType: "B737",
+      rtCallSign: "Indigo-KLM",
+      registration: "VT-KLM",
       departure: "VIDP (Delhi)",
-      route: "DCT JDH W15 FL240 IFR",
       destination: "VOGO (Goa)",
-      otherInfo: "Scheduled commercial flight",
+      atsRoute: "DCT JDH W15 FL240 IFR",
+      standNo: "5",
+      runwayInUse: "28",
+      taxiway: "A, B",
+      flightLevel: "240",
+      alternateAirdrome: "VABB-Mumbai",
+      pob: "180",
+      endurance: "0430 Hrs",
+      exerciseStartTime: "0800 UTC",
     },
     frequencies: [
       { description: "ATIS", frequency: "126.400 MHz" },
@@ -78,10 +105,19 @@ const sampleScenarios: RtrScenario[] = [
     flightInfo: {
       aircraftId: "VT-SPA",
       aircraftType: "A320",
+      rtCallSign: "SpiceJet-SPA",
+      registration: "VT-SPA",
       departure: "VOBL (Bengaluru)",
-      route: "G450 HYD R460 FL350 IFR",
       destination: "VEPY (Bagdogra)",
-      otherInfo: "Medical emergency on board",
+      atsRoute: "G450 HYD R460 FL350 IFR",
+      standNo: "22",
+      runwayInUse: "09",
+      taxiway: "E, F",
+      flightLevel: "350",
+      alternateAirdrome: "VECC-Kolkata",
+      pob: "174",
+      endurance: "0530 Hrs",
+      exerciseStartTime: "0630 UTC",
     },
     frequencies: [
       { description: "ATIS", frequency: "127.850 MHz" },
@@ -103,10 +139,19 @@ const sampleScenarios: RtrScenario[] = [
     flightInfo: {
       aircraftId: "VT-RJN",
       aircraftType: "C172",
+      rtCallSign: "VT-RJN",
+      registration: "VT-RJN",
       departure: "VIJP (Jaipur)",
-      route: "VFR via Ajmer, Udaipur FL065",
       destination: "VAUD (Ahmedabad)",
-      otherInfo: "Training flight, student pilot",
+      atsRoute: "VFR via Ajmer, Udaipur FL065",
+      standNo: "GA-3",
+      runwayInUse: "27",
+      taxiway: "A",
+      flightLevel: "065",
+      alternateAirdrome: "VAUD-Ahmedabad",
+      pob: "2",
+      endurance: "0400 Hrs",
+      exerciseStartTime: "0500 UTC",
     },
     frequencies: [
       { description: "ATIS", frequency: "124.200 MHz" },
@@ -128,10 +173,19 @@ const sampleScenarios: RtrScenario[] = [
     flightInfo: {
       aircraftId: "VT-EXP",
       aircraftType: "B777",
+      rtCallSign: "Air India-EXP",
+      registration: "VT-EXP",
       departure: "VOCI (Kochi)",
-      route: "A474 BOM W45 FL390 IFR",
       destination: "OMDB (Dubai)",
-      otherInfo: "International flight, overwater",
+      atsRoute: "A474 BOM W45 FL390 IFR",
+      standNo: "8",
+      runwayInUse: "27",
+      taxiway: "B, C",
+      flightLevel: "390",
+      alternateAirdrome: "OMSJ-Sharjah",
+      pob: "310",
+      endurance: "0700 Hrs",
+      exerciseStartTime: "0300 UTC",
     },
     frequencies: [
       { description: "ATIS", frequency: "126.750 MHz" },
@@ -153,10 +207,19 @@ const sampleScenarios: RtrScenario[] = [
     flightInfo: {
       aircraftId: "VT-NGP",
       aircraftType: "Q400",
+      rtCallSign: "IndiGo-NGP",
+      registration: "VT-NGP",
       departure: "VANP (Nagpur)",
-      route: "R460 HYD A201 FL200 IFR",
       destination: "VOHS (Hyderabad)",
-      otherInfo: "Thunderstorm activity en route",
+      atsRoute: "R460 HYD A201 FL200 IFR",
+      standNo: "14",
+      runwayInUse: "14",
+      taxiway: "D",
+      flightLevel: "200",
+      alternateAirdrome: "VOBL-Bengaluru",
+      pob: "78",
+      endurance: "0330 Hrs",
+      exerciseStartTime: "0930 UTC",
     },
     frequencies: [
       { description: "ATIS", frequency: "125.100 MHz" },
