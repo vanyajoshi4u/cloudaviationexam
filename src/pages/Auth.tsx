@@ -175,7 +175,7 @@ const Auth = () => {
         const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
           "send-login-verification",
           {
-            body: { action: "check-and-verify" },
+            body: { action: "check-and-verify", origin: window.location.origin },
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
@@ -321,7 +321,7 @@ const Auth = () => {
                     if (!accessToken) throw new Error("No session");
 
                     await supabase.functions.invoke("send-login-verification", {
-                      body: { action: "send-verification" },
+                      body: { action: "send-verification", origin: window.location.origin },
                       headers: { Authorization: `Bearer ${accessToken}` },
                     });
                     await supabase.auth.signOut({ scope: "local" });

@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
   try {
     const authHeader = req.headers.get("Authorization");
     const body = await req.json();
-    const { action } = body;
+    const { action, origin: clientOrigin } = body;
 
     // Handle logout without requiring authentication
     if (action === "logout") {
@@ -180,7 +180,7 @@ Deno.serve(async (req) => {
         throw new Error("Failed to create verification");
       }
 
-      const origin = req.headers.get("origin") || "https://cloudaviationexam.lovable.app";
+      const origin = clientOrigin || req.headers.get("origin") || "https://cloudaviationexam.lovable.app";
       const verificationLink = `${origin}/verify-login?token=${verifications[0].token}&uid=${user.id}`;
       sendVerificationEmail(verificationLink);
     };
