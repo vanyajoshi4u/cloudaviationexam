@@ -119,6 +119,27 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_limits: {
+        Row: {
+          id: string
+          key: string
+          request_count: number
+          window_start: string
+        }
+        Insert: {
+          id?: string
+          key: string
+          request_count?: number
+          window_start?: string
+        }
+        Update: {
+          id?: string
+          key?: string
+          request_count?: number
+          window_start?: string
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           amount: number
@@ -191,6 +212,7 @@ export type Database = {
         Args: { _fingerprint: string; _user_id: string }
         Returns: boolean
       }
+      cleanup_rate_limits: { Args: never; Returns: undefined }
       cleanup_stale_sessions: { Args: never; Returns: undefined }
       has_active_session: { Args: { _user_id: string }; Returns: boolean }
       has_active_subscription: { Args: { _user_id: string }; Returns: boolean }

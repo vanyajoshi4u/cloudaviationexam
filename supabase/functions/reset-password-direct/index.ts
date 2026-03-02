@@ -14,12 +14,24 @@ async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs = 1
   }
 }
 
+import { checkRateLimit, rateLimitResponse, getClientIP } from "../_shared/rate-limiter.ts";
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Rate limit: 5 password resets per 15 minutes per IP
+    const ip = getClientIP(req);
+    const rateCheck = await checkRateLimit({
+      action: "reset-pwd",
+      identifier: ip,
+      maxRequests: 5,
+      windowSeconds: 900,
+    });
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
+
     const { email, password } = await req.json();
     console.log("Reset password request for:", email);
 

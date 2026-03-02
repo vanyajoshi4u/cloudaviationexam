@@ -35,12 +35,24 @@ async function isScreenshotDuplicate(hash: string): Promise<boolean> {
   return data && data.length > 0;
 }
 
+import { checkRateLimit, rateLimitResponse, getClientIP } from "../_shared/rate-limiter.ts";
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   try {
+    // Rate limit: 5 payment verifications per 15 minutes per IP
+    const ip = getClientIP(req);
+    const rateCheck = await checkRateLimit({
+      action: "verify-payment",
+      identifier: ip,
+      maxRequests: 5,
+      windowSeconds: 900,
+    });
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
+
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
       return new Response(JSON.stringify({ error: "No authorization header" }), {
