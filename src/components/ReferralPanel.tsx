@@ -54,9 +54,11 @@ const ReferralPanel = () => {
     init();
   }, []);
 
+  const BASE_URL = "https://cloudaviationexam.lovable.app";
+
   const handleCopy = async () => {
     if (!referralCode) return;
-    const link = `${window.location.origin}/auth?ref=${referralCode}`;
+    const link = `${BASE_URL}/auth?ref=${referralCode}`;
     await navigator.clipboard.writeText(link);
     setCopied(true);
     toast.success("Referral link copied!");
@@ -65,7 +67,7 @@ const ReferralPanel = () => {
 
   const handleShare = async () => {
     if (!referralCode) return;
-    const link = `${window.location.origin}/auth?ref=${referralCode}`;
+    const link = `${BASE_URL}/auth?ref=${referralCode}`;
     if (navigator.share) {
       await navigator.share({
         title: "CloudAviation Exams",
@@ -151,7 +153,7 @@ const ReferralPanel = () => {
         transition={{ delay: 0.4, duration: 0.4 }}
       >
         <div className="flex-1 bg-muted/60 border border-border/50 rounded-xl px-3 py-2.5 text-xs font-mono text-foreground truncate">
-          {window.location.origin}/auth?ref={referralCode}
+          {BASE_URL}/auth?ref={referralCode}
         </div>
         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Button variant="outline" size="sm" onClick={handleCopy} className="flex-shrink-0 rounded-xl h-10 w-10 p-0">
