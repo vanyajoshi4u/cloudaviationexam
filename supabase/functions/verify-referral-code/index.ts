@@ -1,10 +1,39 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.95.3";
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
+
+const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+// Compute SHA-256 hash of image data
+async function hashImage(base64Data: string): Promise<string> {
+  const binaryStr = atob(base64Data);
+  const bytes = new Uint8Array(binaryStr.length);
+  for (let i = 0; i < binaryStr.length; i++) {
+    bytes[i] = binaryStr.charCodeAt(i);
+  }
+  const hashBuffer = await crypto.subtle.digest("SHA-256", bytes);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Check if screenshot hash already exists
+async function isScreenshotDuplicate(hash: string): Promise<boolean> {
+  const res = await fetch(
+    `${supabaseUrl}/rest/v1/subscriptions?screenshot_hash=eq.${hash}&select=id&limit=1`,
+    {
+      headers: {
+        apikey: serviceRoleKey,
+        Authorization: `Bearer ${serviceRoleKey}`,
+      },
+    }
+  );
+  if (!res.ok) return false;
+  const data = await res.json();
+  return data && data.length > 0;
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -26,6 +55,19 @@ Deno.serve(async (req) => {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
+    }
+
+    // Check for duplicate screenshot
+    const screenshotHash = await hashImage(imageBase64);
+    const isDuplicate = await isScreenshotDuplicate(screenshotHash);
+    if (isDuplicate) {
+      return new Response(
+        JSON.stringify({
+          match: false,
+          message: "This payment screenshot has already been used. Each payment screenshot can only be used once. Please make a new payment and upload a fresh screenshot.",
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
@@ -168,6 +210,7 @@ Return ONLY the JSON, nothing else.`,
       JSON.stringify({
         match: true,
         message: "Payment screenshot verified successfully!",
+        screenshotHash,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
