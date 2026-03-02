@@ -354,7 +354,7 @@ const RtrPart2Exam = () => {
           </div>
 
           {/* Timer */}
-          <div className="border-b border-border/30 p-3 flex justify-center">
+          <div className="border-y border-accent/30 bg-accent/5 p-3 flex justify-center">
             <div className={`font-mono text-3xl sm:text-4xl font-black tracking-wider ${isTimeLow ? "text-destructive animate-pulse" : "text-foreground"}`}>
               {formatTime(timeLeft)}
             </div>
