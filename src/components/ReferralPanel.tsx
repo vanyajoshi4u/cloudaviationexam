@@ -54,7 +54,7 @@ const ReferralPanel = () => {
     init();
   }, []);
 
-  const BASE_URL = "https://cloudaviationexam.lovable.app";
+  const BASE_URL = "https://cloudaviationexams.com";
 
   const handleCopy = async () => {
     if (!referralCode) return;
