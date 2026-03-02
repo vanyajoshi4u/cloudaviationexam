@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { getFingerprint, getDeviceLabel } from "@/lib/fingerprint";
 
 type AuthMode = "signup" | "login" | "forgot" | "awaiting-verification";
 
@@ -109,6 +110,34 @@ const Auth = () => {
             toast.error("Verification confirmed but auto sign-in failed. Please sign in manually.");
             setMode("login");
             return;
+          }
+
+          // Device fingerprint check & registration
+          try {
+            const fp = await getFingerprint();
+            const userId = loginData.user?.id;
+            if (userId) {
+              const { data: allowed } = await supabase.rpc("check_device_allowed", {
+                _user_id: userId,
+                _fingerprint: fp,
+              });
+
+              if (!allowed) {
+                await supabase.auth.signOut({ scope: "local" });
+                toast.error("Device limit reached (max 3). Please contact support or remove a trusted device.");
+                setMode("login");
+                return;
+              }
+
+              // Upsert device fingerprint
+              const label = getDeviceLabel();
+              await supabase.from("device_fingerprints").upsert(
+                { user_id: userId, fingerprint: fp, device_label: label, last_seen_at: new Date().toISOString() },
+                { onConflict: "user_id,fingerprint" }
+              );
+            }
+          } catch (fpError) {
+            console.error("Fingerprint check failed, allowing login:", fpError);
           }
 
           toast.success("Login verified! Signing you in...");
