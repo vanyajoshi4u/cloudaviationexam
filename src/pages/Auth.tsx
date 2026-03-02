@@ -212,9 +212,10 @@ const Auth = () => {
         if (verifyError) throw new Error("Verification failed");
 
         if (verifyResult?.hasActiveSession) {
-          await supabase.auth.signOut({ scope: "local" });
+          // Keep the session temporarily for force-logout capability
+          setPendingCredentials({ email: formData.email.trim(), password: formData.password });
           setShowSessionWarning(true);
-          toast.error("You are already logged in on another device. Please log out from the other device first.");
+          toast.error("You are already logged in on another device.");
           setLoading(false);
           return;
         }
@@ -491,9 +492,53 @@ const Auth = () => {
 
           <div className="mt-6 text-center space-y-2">
             {mode === "login" && showSessionWarning && (
-              <p className="text-xs text-muted-foreground bg-muted/50 rounded-md p-3">
-                ⚠️ If it's showing "log out from other device", try changing the password and verifying mail.
-              </p>
+              <div className="bg-muted/50 rounded-md p-3 space-y-2">
+                <p className="text-xs text-muted-foreground">
+                  ⚠️ You are already logged in on another device.
+                </p>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  className="w-full text-xs"
+                  disabled={loading}
+                  onClick={async () => {
+                    if (!pendingCredentials) {
+                      toast.error("Please enter your credentials and try signing in first.");
+                      return;
+                    }
+                    setLoading(true);
+                    try {
+                      // Sign in to get a token
+                      const { data: loginData, error } = await supabase.auth.signInWithPassword({
+                        email: pendingCredentials.email,
+                        password: pendingCredentials.password,
+                      });
+                      if (error) throw error;
+                      const accessToken = loginData.session?.access_token;
+                      if (!accessToken) throw new Error("No session");
+
+                      // Force logout all other sessions
+                      const { error: fnError } = await supabase.functions.invoke("send-login-verification", {
+                        body: { action: "force-logout" },
+                        headers: { Authorization: `Bearer ${accessToken}` },
+                      });
+                      if (fnError) throw fnError;
+
+                      await supabase.auth.signOut({ scope: "local" });
+                      setShowSessionWarning(false);
+                      toast.success("All other sessions cleared! Please sign in again.");
+                    } catch (e: any) {
+                      toast.error(e.message || "Failed to force logout");
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                >
+                  {loading ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : null}
+                  Force Logout All Other Devices
+                </Button>
+              </div>
             )}
             {mode === "forgot" ? (
               <button type="button" onClick={() => setMode("login")} className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1">

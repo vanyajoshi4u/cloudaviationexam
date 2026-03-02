@@ -81,6 +81,32 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Force logout: clears all sessions for an authenticated user so they can re-login
+    if (action === "force-logout") {
+      if (!authHeader?.startsWith("Bearer ")) {
+        return new Response(JSON.stringify({ error: "No authorization header" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const token = authHeader.replace("Bearer ", "");
+      const user = await getUser(token);
+      if (!user?.id) {
+        return new Response(JSON.stringify({ error: "Not authenticated" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // Clear all sessions and verifications
+      await dbQuery(`active_sessions?user_id=eq.${user.id}`, { method: "DELETE" });
+      await dbQuery(`login_verifications?user_id=eq.${user.id}`, { method: "DELETE" });
+
+      return new Response(JSON.stringify({ success: true, message: "All sessions cleared. You can now log in." }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // All other actions require authentication
     if (!authHeader?.startsWith("Bearer ")) {
       return new Response(JSON.stringify({ error: "No authorization header" }), {
