@@ -135,43 +135,66 @@ const RtrPart2Exam = () => {
   // Pre-exam start screen
   if (!examStarted) {
     return (
-      <div className="min-h-screen bg-gradient-aviation">
-        <div className="container mx-auto px-4 py-8 max-w-lg">
+      <div className="min-h-screen bg-gradient-aviation flex flex-col">
+        <div className="container mx-auto px-4 pt-6 max-w-lg">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center px-4 pb-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-card p-6 sm:p-8 text-center"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="glass-card p-8 sm:p-10 text-center max-w-lg w-full"
           >
-            <Timer className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h1 className="font-display text-xl sm:text-2xl font-bold mb-2">{paper.title}</h1>
-            <p className="text-sm text-muted-foreground mb-1">RTR Part 2 (DGCA) Practice</p>
-            <div className="glass-panel px-4 py-3 rounded-xl my-6 text-sm space-y-2 text-left">
-              <div className="flex items-center gap-2">
-                <Timer className="w-4 h-4 text-primary" />
-                <span>Duration: <strong>30 minutes</strong></span>
+            {/* Stopwatch icon */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center mx-auto mb-5"
+            >
+              <Timer className="w-8 h-8 text-primary" />
+            </motion.div>
+
+            <h1 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-1.5">{paper.title}</h1>
+            <p className="text-sm text-muted-foreground mb-8">RTR Part 2 (DGCA) Practice</p>
+
+            {/* Info block */}
+            <div className="glass-panel px-5 py-4 rounded-xl mb-6 text-sm space-y-3 text-left">
+              <div className="flex items-center gap-3">
+                <Timer className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-foreground">Duration: <strong className="text-foreground">30 minutes</strong></span>
               </div>
-              <div className="flex items-center gap-2">
-                <ChevronRight className="w-4 h-4 text-primary" />
-                <span>Total Scenarios: <strong>6</strong></span>
+              <div className="flex items-center gap-3">
+                <ChevronRight className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-foreground">Total Scenarios: <strong className="text-foreground">{scenarios.length}</strong></span>
               </div>
-              <div className="flex items-center gap-2">
-                <Mic className="w-4 h-4 text-destructive" />
-                <span>PTT button available for practice</span>
+              <div className="flex items-center gap-3">
+                <Mic className="w-4 h-4 text-destructive flex-shrink-0" />
+                <span className="text-foreground">PTT button available for practice</span>
               </div>
             </div>
-            <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20 mb-6 text-left">
-              <AlertTriangle className="w-4 h-4 text-destructive flex-shrink-0" />
-              <p className="text-xs text-destructive">
+
+            {/* Warning */}
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-destructive/8 border border-destructive/15 mb-8 text-left">
+              <AlertTriangle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
+              <p className="text-xs sm:text-sm text-destructive leading-relaxed">
                 Once started, the timer cannot be paused. You can only end the test by clicking "End Test".
               </p>
             </div>
-            <Button size="lg" onClick={startExam} className="w-full">
+
+            {/* Start button */}
+            <Button
+              size="lg"
+              onClick={startExam}
+              className="w-full h-12 text-base font-semibold tracking-wide glow-blue"
+            >
               Start Examination
             </Button>
           </motion.div>
