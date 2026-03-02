@@ -180,8 +180,8 @@ Deno.serve(async (req) => {
         throw new Error("Failed to create verification");
       }
 
-      // Always use the published domain to avoid auth-bridge interception on preview URLs
-      const origin = "https://cloudaviationexam.lovable.app";
+      // Always use the published custom domain to avoid auth-bridge interception
+      const origin = "https://cloudaviationexams.com";
       const verificationLink = `${origin}/verify-login?token=${verifications[0].token}&uid=${user.id}`;
       sendVerificationEmail(verificationLink);
     };
