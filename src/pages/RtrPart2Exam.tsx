@@ -2,8 +2,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight } from "lucide-react";
+import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock } from "lucide-react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 
 const EXAM_DURATION = 30 * 60;
 
@@ -24,6 +26,32 @@ const RtrPart2Exam = () => {
   const [examEnded, setExamEnded] = useState(false);
   const [pttPressed, setPttPressed] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
+  const [showUpgrade, setShowUpgrade] = useState(false);
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { setHasRtr2Access(false); return; }
+
+      // Check admin
+      const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin");
+      if (roles && roles.length > 0) { setHasRtr2Access(true); return; }
+
+      // Check for active 3_months subscription
+      const { data: subs } = await supabase
+        .from("subscriptions")
+        .select("plan, status, expires_at")
+        .eq("user_id", user.id)
+        .eq("plan", "3_months")
+        .eq("status", "approved");
+
+      const hasAccess = subs?.some(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? false;
+      setHasRtr2Access(hasAccess);
+    };
+    checkAccess();
+  }, []);
 
   const startExam = useCallback(() => {
     setExamStarted(true);
@@ -61,6 +89,38 @@ const RtrPart2Exam = () => {
           <h1 className="text-2xl font-bold mb-4">Paper not found</h1>
           <Button onClick={() => navigate("/")}>Go Home</Button>
         </div>
+      </div>
+    );
+  }
+
+  // Access gate: loading or no access
+  if (hasRtr2Access === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!hasRtr2Access) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-md">
+          <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
+            <Lock className="w-8 h-8 text-primary" />
+          </div>
+          <h2 className="font-display text-2xl font-bold text-foreground mb-2">RTR Part-2 Access Required</h2>
+          <p className="text-muted-foreground text-sm mb-4">
+            The RTR Part-2 (DGCA) Practice Simulator requires a separate ₹350 plan for 3 months access. Your current subscription does not include this module.
+          </p>
+          <Button onClick={() => setShowUpgrade(true)} className="font-display">
+            Upgrade Now – ₹350
+          </Button>
+          <Button variant="ghost" className="mt-2 w-full" onClick={() => navigate("/")}>
+            Go Back
+          </Button>
+          <RtrUpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} onSuccess={() => setHasRtr2Access(true)} />
+        </motion.div>
       </div>
     );
   }
