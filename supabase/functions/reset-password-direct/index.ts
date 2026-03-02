@@ -40,8 +40,11 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-    // Step 1: Find user by email using profiles table
-    console.log("Step 1: Looking up profile...");
+    // Step 1: Find user by email using generate_link (works even if no profile exists)
+    console.log("Step 1: Looking up user...");
+    let userId: string | null = null;
+
+    // Try profiles table first (fast)
     const profileRes = await fetchWithTimeout(
       `${supabaseUrl}/rest/v1/profiles?email=eq.${encodeURIComponent(email.toLowerCase().trim())}&select=user_id&limit=1`,
       {
@@ -52,23 +55,52 @@ Deno.serve(async (req) => {
       }
     );
 
-    if (!profileRes.ok) {
-      const errText = await profileRes.text();
-      console.error("Profile lookup failed:", errText);
-      throw new Error(`Profile lookup failed: ${errText}`);
+    if (profileRes.ok) {
+      const profiles = await profileRes.json();
+      if (profiles && profiles.length > 0) {
+        userId = profiles[0].user_id;
+        console.log("Found via profiles table");
+      }
+    } else {
+      await profileRes.text();
     }
 
-    const profiles = await profileRes.json();
-    console.log("Profile lookup result:", profiles?.length, "profiles found");
+    // Fallback: use Auth Admin generate_link to find user by email
+    if (!userId) {
+      console.log("Trying auth admin generate_link...");
+      const linkRes = await fetchWithTimeout(
+        `${supabaseUrl}/auth/v1/admin/generate_link`,
+        {
+          method: "POST",
+          headers: {
+            "apikey": serviceRoleKey,
+            "Authorization": `Bearer ${serviceRoleKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "recovery",
+            email: email.toLowerCase().trim(),
+          }),
+        }
+      );
 
-    if (!profiles || profiles.length === 0) {
+      if (linkRes.ok) {
+        const linkData = await linkRes.json();
+        userId = linkData.id || linkData.user?.id || null;
+        console.log("Found via generate_link:", !!userId);
+      } else {
+        const errText = await linkRes.text();
+        console.log("generate_link response:", linkRes.status, errText);
+      }
+    }
+
+    if (!userId) {
       return new Response(JSON.stringify({ error: "No account found with this email" }), {
         status: 404,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const userId = profiles[0].user_id;
     console.log("Step 2: Updating password for user:", userId);
 
     // Step 2: Update password via Auth Admin API
@@ -93,7 +125,7 @@ Deno.serve(async (req) => {
 
     console.log("Step 3: Clearing active sessions...");
 
-    // Step 3: Clear active sessions (fire and forget - don't block on this)
+    // Step 3: Clear active sessions (fire and forget)
     fetchWithTimeout(
       `${supabaseUrl}/rest/v1/active_sessions?user_id=eq.${userId}`,
       {
