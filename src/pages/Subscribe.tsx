@@ -304,6 +304,9 @@ const Subscribe = () => {
                   maxLength={50}
                 />
               </div>
+              <p className="text-xs text-muted-foreground">
+                Add transaction number / UTR number / Reference number for which payment has been done.
+              </p>
             </div>
 
             <Button type="submit" className="w-full glow-blue font-display text-sm tracking-wider py-5" disabled={loading}>
