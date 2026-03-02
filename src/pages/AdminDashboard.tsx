@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut } from "lucide-react";
+import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut, ScrollText } from "lucide-react";
 
 interface Subscription {
   id: string;
@@ -24,6 +24,9 @@ const AdminDashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState<"subscriptions" | "audit">("subscriptions");
+  const [auditLogs, setAuditLogs] = useState<any[]>([]);
+  const [auditLoading, setAuditLoading] = useState(false);
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -104,7 +107,30 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchAuditLogs = async () => {
+    setAuditLoading(true);
+    const { data, error } = await supabase
+      .from("audit_logs" as any)
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(100);
+    if (!error && data) setAuditLogs(data);
+    setAuditLoading(false);
+  };
+
   const filtered = filter === "all" ? subscriptions : subscriptions.filter((s) => s.status === filter);
+
+  const actionColors: Record<string, string> = {
+    login_verified: "text-green-500",
+    login_blocked_session: "text-yellow-500",
+    login_blocked_device: "text-yellow-500",
+    logout: "text-muted-foreground",
+    force_logout: "text-orange-500",
+    password_reset: "text-destructive",
+    payment_duplicate_blocked: "text-destructive",
+    payment_submitted: "text-green-500",
+    rate_limited: "text-destructive",
+  };
 
   if (!isAdmin && !loading) {
     return (
@@ -131,110 +157,181 @@ const AdminDashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 sm:px-6 py-6">
-        {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          {[
-            { label: "Total", count: subscriptions.length, color: "text-foreground" },
-            { label: "Pending", count: subscriptions.filter((s) => s.status === "pending").length, color: "text-yellow-500" },
-            { label: "Approved", count: subscriptions.filter((s) => s.status === "approved").length, color: "text-green-500" },
-            { label: "Rejected", count: subscriptions.filter((s) => s.status === "rejected").length, color: "text-destructive" },
-          ].map((stat) => (
-            <div key={stat.label} className="glass-card p-4 text-center">
-              <p className={`font-display text-2xl font-bold ${stat.color}`}>{stat.count}</p>
-              <p className="text-xs text-muted-foreground">{stat.label}</p>
+        {/* Tab Switcher */}
+        <div className="flex gap-2 mb-6">
+          <Button
+            variant={activeTab === "subscriptions" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setActiveTab("subscriptions")}
+            className="text-xs"
+          >
+            <ShieldCheck className="w-3 h-3 mr-1" /> Subscriptions
+          </Button>
+          <Button
+            variant={activeTab === "audit" ? "default" : "outline"}
+            size="sm"
+            onClick={() => { setActiveTab("audit"); if (auditLogs.length === 0) fetchAuditLogs(); }}
+            className="text-xs"
+          >
+            <ScrollText className="w-3 h-3 mr-1" /> Audit Logs
+          </Button>
+        </div>
+
+        {activeTab === "subscriptions" ? (
+          <>
+            {/* Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+              {[
+                { label: "Total", count: subscriptions.length, color: "text-foreground" },
+                { label: "Pending", count: subscriptions.filter((s) => s.status === "pending").length, color: "text-yellow-500" },
+                { label: "Approved", count: subscriptions.filter((s) => s.status === "approved").length, color: "text-green-500" },
+                { label: "Rejected", count: subscriptions.filter((s) => s.status === "rejected").length, color: "text-destructive" },
+              ].map((stat) => (
+                <div key={stat.label} className="glass-card p-4 text-center">
+                  <p className={`font-display text-2xl font-bold ${stat.color}`}>{stat.count}</p>
+                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Filter */}
-        <div className="flex gap-2 mb-4 flex-wrap">
-          {["all", "pending", "approved", "rejected"].map((f) => (
-            <Button
-              key={f}
-              variant={filter === f ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilter(f)}
-              className="capitalize text-xs"
-            >
-              {f}
-            </Button>
-          ))}
-        </div>
+            {/* Filter */}
+            <div className="flex gap-2 mb-4 flex-wrap">
+              {["all", "pending", "approved", "rejected"].map((f) => (
+                <Button
+                  key={f}
+                  variant={filter === f ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setFilter(f)}
+                  className="capitalize text-xs"
+                >
+                  {f}
+                </Button>
+              ))}
+            </div>
 
-        {loading ? (
-          <div className="flex justify-center py-12">
-            <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          </div>
-        ) : filtered.length === 0 ? (
-          <p className="text-center text-muted-foreground py-12">No subscriptions found.</p>
-        ) : (
-          <div className="space-y-3">
-            {filtered.map((sub) => (
-              <div key={sub.id} className="glass-card p-4 sm:p-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="font-display font-semibold text-foreground truncate">
-                        {sub.profiles?.full_name || "Unknown User"}
-                      </p>
-                      <Badge
-                        variant={sub.status === "approved" ? "default" : sub.status === "rejected" ? "destructive" : "secondary"}
-                        className="text-[10px]"
-                      >
-                        {sub.status === "pending" && <Clock className="w-3 h-3 mr-1" />}
-                        {sub.status === "approved" && <CheckCircle className="w-3 h-3 mr-1" />}
-                        {sub.status === "rejected" && <XCircle className="w-3 h-3 mr-1" />}
-                        {sub.status}
-                      </Badge>
-                    </div>
-                    <div className="text-xs text-muted-foreground space-y-0.5">
-                      <p>{sub.profiles?.email} · {sub.profiles?.phone}</p>
-                      <p>
-                        Plan: <span className="text-foreground">{sub.plan === "6_months" ? "6 Months" : "12 Months"}</span>
-                        {" · "}₹{sub.amount}
-                        {" · "}Referral: <span className="text-primary">{sub.referral_code}</span>
-                      </p>
-                      <p>Submitted: {new Date(sub.created_at).toLocaleDateString()}</p>
-                      {sub.expires_at && <p>Expires: {new Date(sub.expires_at).toLocaleDateString()}</p>}
-                    </div>
-                  </div>
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
+              </div>
+            ) : filtered.length === 0 ? (
+              <p className="text-center text-muted-foreground py-12">No subscriptions found.</p>
+            ) : (
+              <div className="space-y-3">
+                {filtered.map((sub) => (
+                  <div key={sub.id} className="glass-card p-4 sm:p-5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="font-display font-semibold text-foreground truncate">
+                            {sub.profiles?.full_name || "Unknown User"}
+                          </p>
+                          <Badge
+                            variant={sub.status === "approved" ? "default" : sub.status === "rejected" ? "destructive" : "secondary"}
+                            className="text-[10px]"
+                          >
+                            {sub.status === "pending" && <Clock className="w-3 h-3 mr-1" />}
+                            {sub.status === "approved" && <CheckCircle className="w-3 h-3 mr-1" />}
+                            {sub.status === "rejected" && <XCircle className="w-3 h-3 mr-1" />}
+                            {sub.status}
+                          </Badge>
+                        </div>
+                        <div className="text-xs text-muted-foreground space-y-0.5">
+                          <p>{sub.profiles?.email} · {sub.profiles?.phone}</p>
+                          <p>
+                            Plan: <span className="text-foreground">{sub.plan === "6_months" ? "6 Months" : "12 Months"}</span>
+                            {" · "}₹{sub.amount}
+                            {" · "}Referral: <span className="text-primary">{sub.referral_code}</span>
+                          </p>
+                          <p>Submitted: {new Date(sub.created_at).toLocaleDateString()}</p>
+                          {sub.expires_at && <p>Expires: {new Date(sub.expires_at).toLocaleDateString()}</p>}
+                        </div>
+                      </div>
 
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => getScreenshotUrl(sub.payment_screenshot_url)}
-                      className="text-xs"
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" /> Screenshot
-                    </Button>
-                    {sub.status === "pending" && (
-                      <>
+                      <div className="flex items-center gap-2 flex-shrink-0">
                         <Button
+                          variant="outline"
                           size="sm"
-                          onClick={() => handleAction(sub.id, "approved", sub.plan)}
-                          disabled={actionLoading === sub.id}
-                          className="text-xs bg-green-600 hover:bg-green-700"
-                        >
-                          {actionLoading === sub.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <CheckCircle className="w-3 h-3 mr-1" />}
-                          Approve
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => handleAction(sub.id, "rejected", sub.plan)}
-                          disabled={actionLoading === sub.id}
+                          onClick={() => getScreenshotUrl(sub.payment_screenshot_url)}
                           className="text-xs"
                         >
-                          <XCircle className="w-3 h-3 mr-1" /> Reject
+                          <ExternalLink className="w-3 h-3 mr-1" /> Screenshot
                         </Button>
-                      </>
-                    )}
+                        {sub.status === "pending" && (
+                          <>
+                            <Button
+                              size="sm"
+                              onClick={() => handleAction(sub.id, "approved", sub.plan)}
+                              disabled={actionLoading === sub.id}
+                              className="text-xs bg-green-600 hover:bg-green-700"
+                            >
+                              {actionLoading === sub.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <CheckCircle className="w-3 h-3 mr-1" />}
+                              Approve
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => handleAction(sub.id, "rejected", sub.plan)}
+                              disabled={actionLoading === sub.id}
+                              className="text-xs"
+                            >
+                              <XCircle className="w-3 h-3 mr-1" /> Reject
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+            )}
+          </>
+        ) : (
+          /* Audit Logs Tab */
+          <>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-display text-sm font-bold text-foreground">Recent Security Events</h2>
+              <Button variant="outline" size="sm" onClick={fetchAuditLogs} disabled={auditLoading} className="text-xs">
+                {auditLoading ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : null}
+                Refresh
+              </Button>
+            </div>
+
+            {auditLoading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
+              </div>
+            ) : auditLogs.length === 0 ? (
+              <p className="text-center text-muted-foreground py-12">No audit logs yet.</p>
+            ) : (
+              <div className="space-y-2">
+                {auditLogs.map((log: any) => (
+                  <div key={log.id} className="glass-card p-3 sm:p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className={`text-xs font-bold uppercase ${actionColors[log.action] || "text-foreground"}`}>
+                            {log.action.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-muted-foreground">
+                          {log.user_id ? `User: ${log.user_id.slice(0, 8)}...` : "Anonymous"}
+                          {log.ip_address ? ` · IP: ${log.ip_address}` : ""}
+                        </p>
+                        {log.details && Object.keys(log.details).length > 0 && (
+                          <p className="text-[10px] text-muted-foreground mt-0.5 font-mono">
+                            {JSON.stringify(log.details).slice(0, 100)}
+                          </p>
+                        )}
+                      </div>
+                      <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+                        {new Date(log.created_at).toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </main>
     </div>
