@@ -36,6 +36,7 @@ async function isScreenshotDuplicate(hash: string): Promise<boolean> {
 }
 
 import { checkRateLimit, rateLimitResponse, getClientIP } from "../_shared/rate-limiter.ts";
+import { logAudit } from "../_shared/audit-logger.ts";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -73,6 +74,7 @@ Deno.serve(async (req) => {
     const screenshotHash = await hashImage(imageBase64);
     const isDuplicate = await isScreenshotDuplicate(screenshotHash);
     if (isDuplicate) {
+      logAudit({ action: "payment_duplicate_blocked", ip_address: ip, details: { screenshotHash } });
       return new Response(
         JSON.stringify({
           match: false,
