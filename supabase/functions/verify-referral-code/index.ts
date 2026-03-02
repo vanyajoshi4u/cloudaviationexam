@@ -45,15 +45,17 @@ Deno.serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are an OCR assistant analyzing payment screenshots. Extract TWO things from the image:
+            content: `You are an OCR assistant analyzing payment screenshots. Extract THREE things from the image:
 1. The referral code, transaction ID, UTR number, or reference number
 2. The payment amount (in ₹ or INR)
+3. The recipient/payee name (the person or account the payment was sent TO)
 
 Return your response in this exact JSON format:
-{"referralCode": "THE_CODE_OR_NOT_FOUND", "amount": THE_NUMBER_OR_0}
+{"referralCode": "THE_CODE_OR_NOT_FOUND", "amount": THE_NUMBER_OR_0, "recipientName": "THE_NAME_OR_NOT_FOUND"}
 
 If you cannot find a referral code, use "NOT_FOUND" for referralCode.
 If you cannot find an amount, use 0 for amount.
+If you cannot find a recipient name, use "NOT_FOUND" for recipientName.
 Return ONLY the JSON, nothing else.`,
           },
           {
@@ -61,7 +63,7 @@ Return ONLY the JSON, nothing else.`,
             content: [
               {
                 type: "text",
-                text: "Extract the referral code and payment amount from this payment screenshot.",
+                text: "Extract the referral code, payment amount, and recipient name from this payment screenshot.",
               },
               {
                 type: "image_url",
@@ -100,7 +102,7 @@ Return ONLY the JSON, nothing else.`,
     console.log(`AI raw response: "${rawContent}", User referral: "${referralCode}", Expected amount: ${expectedAmount}`);
 
     // Parse AI response JSON
-    let extracted = { referralCode: "NOT_FOUND", amount: 0 };
+    let extracted = { referralCode: "NOT_FOUND", amount: 0, recipientName: "NOT_FOUND" };
     try {
       const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
@@ -108,6 +110,21 @@ Return ONLY the JSON, nothing else.`,
       }
     } catch {
       console.error("Failed to parse AI response as JSON:", rawContent);
+    }
+
+    // Validate recipient name - must be TANISHKA AGARWAL
+    const validNames = ["tanishka agarwal"];
+    const extractedName = (extracted.recipientName || "NOT_FOUND").toLowerCase().trim();
+    const nameMatch = extractedName !== "not_found" && validNames.some(n => extractedName.includes(n) || n.includes(extractedName));
+
+    if (!nameMatch) {
+      return new Response(
+        JSON.stringify({
+          match: false,
+          message: "The payment recipient name does not match. Payment must be made to TANISHKA AGARWAL. Please pay to the correct account and upload a new screenshot.",
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // Validate referral code
