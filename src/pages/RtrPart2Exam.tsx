@@ -312,7 +312,6 @@ const RtrPart2Exam = () => {
             </div>
           </div>
         </div>
-        </div>
 
         {/* ── RIGHT COLUMN: Flight Info + Timer + Frequencies + PTT ── */}
         <div className="w-[320px] lg:w-[360px] flex-shrink-0 flex flex-col min-h-0 overflow-y-auto">
