@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import VerifyLogin from "./pages/VerifyLogin";
 import EmailConfirmed from "./pages/EmailConfirmed";
 import ResetPassword from "./pages/ResetPassword";
+import RtrPart2Exam from "./pages/RtrPart2Exam";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -66,6 +67,11 @@ const App = () => (
               <Route path="/quiz/:topicId" element={
                 <ProtectedRoute requireAuth requireSubscription>
                   <Quiz />
+                </ProtectedRoute>
+              } />
+              <Route path="/rtr2-exam/:paperId" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <RtrPart2Exam />
                 </ProtectedRoute>
               } />
               <Route path="*" element={<NotFound />} />
