@@ -250,7 +250,7 @@ const RtrPart2Exam = () => {
       {/* ── Main Content: 2-column layout ── */}
       <div className="flex-1 flex min-h-0">
         {/* ── LEFT COLUMN: Chart + Questions ── */}
-        <div className="flex-1 flex flex-col min-w-0 border-r border-border/30 overflow-y-auto">
+        <div className="flex-1 flex flex-col min-w-0 border-r border-border/30">
           {/* Airway / Aerodrome Chart Section */}
           <div className="flex-1 relative min-h-0">
             <div className="absolute inset-0 flex flex-col">
@@ -259,7 +259,7 @@ const RtrPart2Exam = () => {
                   Airway / Aerodrome Charts Section
                 </h2>
               </div>
-              <div className="flex-1 flex items-center justify-center bg-[hsl(var(--muted))] relative overflow-hidden p-4">
+              <div className="flex-1 flex items-center justify-center bg-[hsl(var(--muted))] relative overflow-hidden">
                 <div className="text-center text-muted-foreground/50 p-4">
                   <svg className="w-16 h-16 mx-auto mb-2 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -267,26 +267,19 @@ const RtrPart2Exam = () => {
                   <p className="text-xs font-medium">Airway Chart</p>
                   <p className="text-[10px]">Map will be added here</p>
                 </div>
+                {/* Airport Layout inset (bottom-left) */}
+                <div className="absolute bottom-2 left-2 w-28 h-24 sm:w-36 sm:h-28 border-2 border-border/50 rounded bg-[hsl(var(--card))] flex items-center justify-center">
+                  <div className="text-center text-muted-foreground/40">
+                    <p className="text-[9px] font-bold uppercase">Airport Layout</p>
+                    <p className="text-[8px]">(To be added)</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Airport Layout (only for Paper 1) */}
-          {paperId === "rtr2-paper-1" && (
-            <div className="flex-shrink-0 border-t border-border/30">
-              <div className="bg-primary/10 border-b border-primary/20 px-3 py-1.5">
-                <h2 className="text-[11px] font-bold uppercase tracking-widest text-primary text-center">
-                  Airport Layout
-                </h2>
-              </div>
-              <div className="p-2 bg-[hsl(var(--muted))]">
-                <VidpAirportLayout />
-              </div>
-            </div>
-          )}
-
-          {/* Questions Section */}
-          <div className="flex-shrink-0 border-t border-border/30">
+          {/* Questions Section (bottom of left column) */}
+          <div className="flex-shrink-0 border-t border-border/30 max-h-[40%] overflow-y-auto">
             <div className="bg-green-500/10 border-b border-green-500/20 px-3 py-1.5">
               <h2 className="text-[11px] font-bold uppercase tracking-widest text-green-500 text-center">
                 Questions
