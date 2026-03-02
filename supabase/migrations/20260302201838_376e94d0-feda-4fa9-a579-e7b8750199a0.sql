@@ -1,0 +1,1 @@
+ALTER TABLE public.subscriptions ADD CONSTRAINT subscriptions_referral_code_unique UNIQUE (referral_code);
