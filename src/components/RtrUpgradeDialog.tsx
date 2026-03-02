@@ -44,7 +44,7 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!screenshot) { toast.error("Please upload your payment screenshot"); return; }
-    if (!referralCode.trim()) { toast.error("Please enter a referral code"); return; }
+    if (!referralCode.trim()) { toast.error("Please enter your UTR code"); return; }
 
     setLoading(true);
     try {
@@ -141,14 +141,14 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
 
           {/* Referral Code */}
           <div className="space-y-2">
-            <Label htmlFor="upgrade-referral" className="text-sm text-foreground">Referral Code *</Label>
+            <Label htmlFor="upgrade-referral" className="text-sm text-foreground">UTR Code *</Label>
             <div className="relative">
               <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 id="upgrade-referral"
                 value={referralCode}
                 onChange={(e) => setReferralCode(e.target.value)}
-                placeholder="Enter your referral code"
+                placeholder="Enter your UTR code"
                 className="pl-10"
                 required
                 maxLength={50}
