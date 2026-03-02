@@ -354,48 +354,34 @@ const RtrPart2Exam = () => {
           </div>
 
           {/* Timer */}
-          <div className="border-b border-border/30">
-            <div className="bg-accent/15 px-3 py-1.5">
-              <h2 className="text-[11px] font-bold uppercase tracking-widest text-accent text-center">
-                Timer
-              </h2>
-            </div>
-            <div className="p-4 flex flex-col items-center">
-              <div className={`font-mono text-4xl sm:text-5xl font-black tracking-wider ${isTimeLow ? "text-destructive animate-pulse" : "text-foreground"}`}>
-                {formatTime(timeLeft)}
-              </div>
+          <div className="border-b border-border/30 p-3 flex justify-center">
+            <div className={`font-mono text-3xl sm:text-4xl font-black tracking-wider ${isTimeLow ? "text-destructive animate-pulse" : "text-foreground"}`}>
+              {formatTime(timeLeft)}
             </div>
           </div>
 
           {/* Frequencies & Squawk */}
-          <div className="border-b border-border/30">
-            <div className="bg-accent/15 px-3 py-1.5">
-              <h2 className="text-[11px] font-bold uppercase tracking-widest text-accent text-center">
-                Frequencies & Squawk
-              </h2>
-            </div>
-            <div className="p-2">
-              <table className="w-full text-[11px] sm:text-xs">
-                <thead>
-                  <tr className="bg-primary/10">
-                    <th className="text-left py-1 px-2 font-bold text-foreground">Description</th>
-                    <th className="text-right py-1 px-2 font-bold text-foreground">Frequency</th>
+          <div className="border-b border-border/30 p-2">
+            <table className="w-full text-[11px] sm:text-xs">
+              <thead>
+                <tr className="bg-primary/10">
+                  <th className="text-left py-1 px-2 font-bold text-foreground">Description</th>
+                  <th className="text-right py-1 px-2 font-bold text-foreground">Frequency</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scenario.frequencies.map((f, i) => (
+                  <tr key={i} className="border-b border-border/15">
+                    <td className="py-1 px-2 text-foreground">{f.description}</td>
+                    <td className="py-1 px-2 text-right font-mono font-semibold text-primary">{f.frequency}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {scenario.frequencies.map((f, i) => (
-                    <tr key={i} className="border-b border-border/15">
-                      <td className="py-1 px-2 text-foreground">{f.description}</td>
-                      <td className="py-1 px-2 text-right font-mono font-semibold text-primary">{f.frequency}</td>
-                    </tr>
-                  ))}
-                  <tr className="bg-accent/20">
-                    <td className="py-1.5 px-2 font-bold text-foreground">SQUAWK</td>
-                    <td className="py-1.5 px-2 text-right font-mono font-black text-destructive text-sm">{scenario.squawk}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                ))}
+                <tr className="bg-accent/20">
+                  <td className="py-1.5 px-2 font-bold text-foreground">SQUAWK</td>
+                  <td className="py-1.5 px-2 text-right font-mono font-black text-destructive text-sm">{scenario.squawk}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           {/* PTT Button */}
