@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock } from "lucide-react";
+import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
@@ -28,6 +28,7 @@ const RtrPart2Exam = () => {
   const [examEnded, setExamEnded] = useState(false);
   const [pttPressed, setPttPressed] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [showAirportLayout, setShowAirportLayout] = useState(false);
 
   const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
@@ -262,13 +263,16 @@ const RtrPart2Exam = () => {
               </div>
               <div className="flex-1 bg-[hsl(var(--muted))] relative overflow-auto">
                 <img src={airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
-                {/* Airport Layout inset (bottom-left) */}
-                <div className="absolute bottom-2 left-2 w-28 h-24 sm:w-36 sm:h-28 border-2 border-border/50 rounded bg-[hsl(var(--card))] flex items-center justify-center">
-                  <div className="text-center text-muted-foreground/40">
-                    <p className="text-[9px] font-bold uppercase">Airport Layout</p>
-                    <p className="text-[8px]">(To be added)</p>
+                {/* Airport Layout inset (bottom-left) - clickable */}
+                <button
+                  onClick={() => setShowAirportLayout(true)}
+                  className="absolute bottom-2 left-2 w-32 h-28 sm:w-40 sm:h-32 border-2 border-border/50 rounded bg-[hsl(var(--card))] cursor-pointer hover:border-primary/50 transition-all hover:shadow-lg overflow-hidden"
+                  title="Click to enlarge Airport Layout"
+                >
+                  <div className="w-full h-full p-1">
+                    <VidpAirportLayout />
                   </div>
-                </div>
+                </button>
               </div>
             </div>
           </div>
@@ -454,6 +458,21 @@ const RtrPart2Exam = () => {
           </div>
         </div>
       </div>
+
+      {/* Airport Layout Fullscreen Modal */}
+      {showAirportLayout && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={() => setShowAirportLayout(false)}>
+          <div className="relative bg-[hsl(var(--card))] rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-auto p-4" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowAirportLayout(false)}
+              className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/80 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <VidpAirportLayout />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
