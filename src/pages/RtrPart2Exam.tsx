@@ -1,111 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { rtrPart2Papers, RtrScenario } from "@/data/rtrPart2Scenarios";
+import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronRight, Mic, Timer, AlertTriangle, Trophy } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
-const EXAM_DURATION = 30 * 60; // 30 minutes in seconds
+const EXAM_DURATION = 30 * 60;
 
 const formatTime = (seconds: number) => {
   const m = Math.floor(seconds / 60).toString().padStart(2, "0");
   const s = (seconds % 60).toString().padStart(2, "0");
   return `${m}:${s}`;
-};
-
-const FlightInfoPanel = ({ scenario }: { scenario: RtrScenario }) => (
-  <div className="glass-card p-4 border-l-4 border-l-primary">
-    <h3 className="text-xs font-bold uppercase tracking-wider text-primary mb-3">
-      Flight Information
-    </h3>
-    <div className="space-y-1.5 text-xs sm:text-sm">
-      <div><span className="text-muted-foreground">Aircraft ID:</span> <span className="font-semibold text-foreground">{scenario.flightInfo.aircraftId}</span></div>
-      <div><span className="text-muted-foreground">Type of A/C:</span> <span className="font-semibold text-foreground">{scenario.flightInfo.aircraftType}</span></div>
-      <div><span className="text-muted-foreground">Departure:</span> <span className="font-semibold text-foreground">{scenario.flightInfo.departure}</span></div>
-      <div><span className="text-muted-foreground">Route:</span> <span className="font-semibold text-foreground">{scenario.flightInfo.route}</span></div>
-      <div><span className="text-muted-foreground">Destination:</span> <span className="font-semibold text-foreground">{scenario.flightInfo.destination}</span></div>
-      <div><span className="text-muted-foreground">Other Info:</span> <span className="font-semibold text-foreground">{scenario.flightInfo.otherInfo}</span></div>
-    </div>
-  </div>
-);
-
-const FrequenciesPanel = ({ scenario }: { scenario: RtrScenario }) => (
-  <div className="glass-card p-4 border-l-4 border-l-accent">
-    <h3 className="text-xs font-bold uppercase tracking-wider text-accent mb-3">
-      Frequencies & Squawk
-    </h3>
-    <div className="overflow-x-auto">
-      <table className="w-full text-xs sm:text-sm">
-        <thead>
-          <tr className="border-b border-border/40">
-            <th className="text-left py-1.5 text-muted-foreground font-medium">Description</th>
-            <th className="text-right py-1.5 text-muted-foreground font-medium">Frequency</th>
-          </tr>
-        </thead>
-        <tbody>
-          {scenario.frequencies.map((f, i) => (
-            <tr key={i} className="border-b border-border/20">
-              <td className="py-1.5 text-foreground">{f.description}</td>
-              <td className="py-1.5 text-right font-mono font-semibold text-primary">{f.frequency}</td>
-            </tr>
-          ))}
-          <tr className="bg-destructive/10">
-            <td className="py-1.5 font-bold text-foreground">SQUAWK</td>
-            <td className="py-1.5 text-right font-mono font-bold text-destructive text-base">{scenario.squawk}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-);
-
-const QuestionsPanel = ({ scenario }: { scenario: RtrScenario }) => (
-  <div className="glass-card p-4 border-l-4 border-l-green-500">
-    <h3 className="text-xs font-bold uppercase tracking-wider text-green-500 mb-3">
-      Questions / Scenarios
-    </h3>
-    <div className="space-y-3">
-      {scenario.questions.map((q, i) => (
-        <div key={i} className="flex items-start gap-2">
-          <span className="text-xs font-bold text-primary bg-primary/10 rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">
-            {i + 1}
-          </span>
-          <p className="text-sm text-foreground leading-relaxed">{q}</p>
-        </div>
-      ))}
-    </div>
-    <div className="mt-4 pt-3 border-t border-border/30">
-      <p className="text-xs text-muted-foreground italic">
-        Write your RT phraseology response for each question above.
-      </p>
-    </div>
-  </div>
-);
-
-const PttButton = () => {
-  const [pressed, setPressed] = useState(false);
-
-  return (
-    <button
-      onMouseDown={() => setPressed(true)}
-      onMouseUp={() => setPressed(false)}
-      onMouseLeave={() => setPressed(false)}
-      onTouchStart={() => setPressed(true)}
-      onTouchEnd={() => setPressed(false)}
-      className={`
-        w-full py-4 rounded-xl font-bold text-sm uppercase tracking-widest
-        transition-all duration-150 select-none
-        flex items-center justify-center gap-2
-        ${pressed
-          ? "bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)] scale-95"
-          : "bg-red-500 text-white hover:bg-red-600 shadow-lg hover:shadow-red-500/30"
-        }
-      `}
-    >
-      <Mic className={`w-5 h-5 ${pressed ? "animate-pulse" : ""}`} />
-      {pressed ? "TRANSMITTING..." : "PUSH TO TALK"}
-    </button>
-  );
 };
 
 const RtrPart2Exam = () => {
@@ -117,6 +22,7 @@ const RtrPart2Exam = () => {
   const [timeLeft, setTimeLeft] = useState(EXAM_DURATION);
   const [currentScenario, setCurrentScenario] = useState(0);
   const [examEnded, setExamEnded] = useState(false);
+  const [pttPressed, setPttPressed] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startExam = useCallback(() => {
@@ -143,7 +49,9 @@ const RtrPart2Exam = () => {
         return prev - 1;
       });
     }, 1000);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [examStarted, examEnded]);
 
   if (!paper) {
@@ -159,7 +67,7 @@ const RtrPart2Exam = () => {
 
   const scenarios = paper.scenarios;
   const scenario = scenarios[currentScenario];
-  const isTimeLow = timeLeft < 300; // less than 5 min
+  const isTimeLow = timeLeft < 300;
 
   // Pre-exam start screen
   if (!examStarted) {
@@ -190,7 +98,7 @@ const RtrPart2Exam = () => {
                 <span>Total Scenarios: <strong>6</strong></span>
               </div>
               <div className="flex items-center gap-2">
-                <Mic className="w-4 h-4 text-red-500" />
+                <Mic className="w-4 h-4 text-destructive" />
                 <span>PTT button available for practice</span>
               </div>
             </div>
@@ -247,100 +155,234 @@ const RtrPart2Exam = () => {
     );
   }
 
-  // Live exam screen
+  // ─── LIVE EXAM SCREEN (single-screen layout matching reference) ───
   return (
-    <div className="min-h-screen bg-gradient-aviation">
-      <div className="container mx-auto px-4 py-4 max-w-4xl">
-        {/* Top bar: timer + end test */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className={`glass-panel px-4 py-2 rounded-xl flex items-center gap-2 ${isTimeLow ? "border-destructive/50 animate-pulse" : ""}`}>
-              <Timer className={`w-4 h-4 ${isTimeLow ? "text-destructive" : "text-primary"}`} />
-              <span className={`font-mono text-lg font-bold ${isTimeLow ? "text-destructive" : "text-foreground"}`}>
-                {formatTime(timeLeft)}
-              </span>
-            </div>
-            <span className="text-xs text-muted-foreground hidden sm:block">
-              Scenario {currentScenario + 1} of {scenarios.length}
-            </span>
+    <div className="h-screen bg-[hsl(var(--background))] flex flex-col overflow-hidden">
+      {/* ── Title Bar ── */}
+      <div className="bg-[hsl(var(--card))] border-b border-border/40 px-3 py-2 flex items-center justify-between flex-shrink-0">
+        <h1 className="font-display text-xs sm:text-sm font-bold tracking-wide uppercase text-foreground">
+          RTR Part 2 — {paper.title} — Scenario {currentScenario + 1} of {scenarios.length}
+        </h1>
+        <div className="flex items-center gap-2">
+          {/* Scenario dots */}
+          <div className="hidden sm:flex gap-1">
+            {scenarios.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentScenario(idx)}
+                className={`w-6 h-6 rounded text-[10px] font-bold border transition-all ${
+                  idx === currentScenario
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "border-border/50 text-muted-foreground hover:border-primary/50"
+                }`}
+              >
+                {idx + 1}
+              </button>
+            ))}
           </div>
-          <Button variant="destructive" size="sm" onClick={endExam}>
+          <Button variant="destructive" size="sm" onClick={endExam} className="text-xs h-7 px-3">
             End Test
           </Button>
         </div>
+      </div>
 
-        {/* Title */}
-        <div className="mb-4">
-          <h1 className="font-display text-base sm:text-lg font-bold">{paper.title}</h1>
-          <p className="text-xs text-muted-foreground">RTR Part 2 (DGCA) — Live Examination</p>
-        </div>
+      {/* ── Main Content: 2-column layout ── */}
+      <div className="flex-1 flex min-h-0">
+        {/* ── LEFT COLUMN: Chart + Questions ── */}
+        <div className="flex-1 flex flex-col min-w-0 border-r border-border/30">
+          {/* Airway / Aerodrome Chart Section */}
+          <div className="flex-1 relative min-h-0">
+            <div className="absolute inset-0 flex flex-col">
+              <div className="bg-accent/10 border-b border-border/30 px-3 py-1.5 flex-shrink-0">
+                <h2 className="text-[11px] font-bold uppercase tracking-widest text-accent text-center">
+                  Airway / Aerodrome Charts Section
+                </h2>
+              </div>
+              <div className="flex-1 flex items-center justify-center bg-[hsl(var(--muted))] relative overflow-hidden">
+                {/* Placeholder for chart — maps will be added later */}
+                <div className="text-center text-muted-foreground/50 p-4">
+                  <svg className="w-16 h-16 mx-auto mb-2 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  <p className="text-xs font-medium">Airway Chart</p>
+                  <p className="text-[10px]">Map will be added here</p>
+                </div>
+                {/* Airport Layout inset (bottom-left) */}
+                <div className="absolute bottom-2 left-2 w-28 h-24 sm:w-36 sm:h-28 border-2 border-border/50 rounded bg-[hsl(var(--card))] flex items-center justify-center">
+                  <div className="text-center text-muted-foreground/40">
+                    <p className="text-[9px] font-bold uppercase">Airport Layout</p>
+                    <p className="text-[8px]">(To be added)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        {/* Scenario content */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentScenario}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div className="glass-card p-3 sm:p-4 mb-4 text-center">
-              <h2 className="font-display text-sm sm:text-base font-bold text-primary">
-                Scenario {currentScenario + 1}
+          {/* Questions Section (bottom of left column) */}
+          <div className="flex-shrink-0 border-t border-border/30 max-h-[40%] overflow-y-auto">
+            <div className="bg-green-500/10 border-b border-green-500/20 px-3 py-1.5">
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-green-500 text-center">
+                Questions
               </h2>
             </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-              <FlightInfoPanel scenario={scenario} />
-              <FrequenciesPanel scenario={scenario} />
+            <div className="p-3 space-y-2">
+              {scenario.questions.map((q, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="text-[11px] font-bold text-primary bg-primary/10 rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    {i + 1}
+                  </span>
+                  <p className="text-xs sm:text-sm text-foreground leading-relaxed">{q}</p>
+                </div>
+              ))}
+              <p className="text-[10px] text-muted-foreground italic pt-1 border-t border-border/20">
+                Write your RT phraseology response for each question.
+              </p>
             </div>
-
-            <QuestionsPanel scenario={scenario} />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* PTT Button */}
-        <div className="mt-4">
-          <PttButton />
+          </div>
         </div>
 
-        {/* Scenario navigation */}
-        <div className="flex items-center justify-between mt-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentScenario((i) => i - 1)}
-            disabled={currentScenario === 0}
-          >
-            Previous Scenario
-          </Button>
+        {/* ── RIGHT COLUMN: Flight Info + Timer + Frequencies + PTT ── */}
+        <div className="w-[320px] lg:w-[360px] flex-shrink-0 flex flex-col min-h-0 overflow-y-auto">
+          {/* Flight Information */}
+          <div className="border-b border-border/30">
+            <div className="bg-primary/15 px-3 py-1.5">
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-primary text-center">
+                Flight Information
+              </h2>
+            </div>
+            <div className="p-3 space-y-1.5 text-xs">
+              {[
+                ["Aircraft Identification", scenario.flightInfo.aircraftId],
+                ["Type of A/C", scenario.flightInfo.aircraftType],
+                ["Departure Aerodrome", scenario.flightInfo.departure],
+                ["Route", scenario.flightInfo.route],
+                ["Destination Aerodrome", scenario.flightInfo.destination],
+                ["Other Information", scenario.flightInfo.otherInfo],
+              ].map(([label, value]) => (
+                <div key={label} className="flex gap-1">
+                  <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
+                  <span className="font-semibold text-foreground">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          {currentScenario < scenarios.length - 1 ? (
-            <Button size="sm" onClick={() => setCurrentScenario((i) => i + 1)}>
-              Next Scenario <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
-          ) : (
-            <Button size="sm" variant="destructive" onClick={endExam}>
-              Finish & End Test
-            </Button>
-          )}
-        </div>
+          {/* Timer */}
+          <div className="border-b border-border/30">
+            <div className="bg-accent/15 px-3 py-1.5">
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-accent text-center">
+                Timer
+              </h2>
+            </div>
+            <div className="p-4 flex flex-col items-center">
+              <div className={`font-mono text-4xl sm:text-5xl font-black tracking-wider ${isTimeLow ? "text-destructive animate-pulse" : "text-foreground"}`}>
+                {formatTime(timeLeft)}
+              </div>
+            </div>
+          </div>
 
-        {/* Scenario dots */}
-        <div className="flex justify-center gap-2 mt-4">
-          {scenarios.map((_, idx) => (
+          {/* Frequencies & Squawk */}
+          <div className="border-b border-border/30">
+            <div className="bg-accent/15 px-3 py-1.5">
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-accent text-center">
+                Frequencies & Squawk
+              </h2>
+            </div>
+            <div className="p-2">
+              <table className="w-full text-[11px] sm:text-xs">
+                <thead>
+                  <tr className="bg-primary/10">
+                    <th className="text-left py-1 px-2 font-bold text-foreground">Description</th>
+                    <th className="text-right py-1 px-2 font-bold text-foreground">Frequency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {scenario.frequencies.map((f, i) => (
+                    <tr key={i} className="border-b border-border/15">
+                      <td className="py-1 px-2 text-foreground">{f.description}</td>
+                      <td className="py-1 px-2 text-right font-mono font-semibold text-primary">{f.frequency}</td>
+                    </tr>
+                  ))}
+                  <tr className="bg-accent/20">
+                    <td className="py-1.5 px-2 font-bold text-foreground">SQUAWK</td>
+                    <td className="py-1.5 px-2 text-right font-mono font-black text-destructive text-sm">{scenario.squawk}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* PTT Button */}
+          <div className="p-3 border-b border-border/30">
             <button
-              key={idx}
-              onClick={() => setCurrentScenario(idx)}
-              className={`w-8 h-8 rounded-lg text-xs font-medium border transition-all ${
-                idx === currentScenario
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border/40 text-muted-foreground hover:border-primary/40"
-              }`}
+              onMouseDown={() => setPttPressed(true)}
+              onMouseUp={() => setPttPressed(false)}
+              onMouseLeave={() => setPttPressed(false)}
+              onTouchStart={() => setPttPressed(true)}
+              onTouchEnd={() => setPttPressed(false)}
+              className={`
+                w-full py-3 rounded-lg font-bold text-xs uppercase tracking-widest
+                transition-all duration-100 select-none
+                flex items-center justify-center gap-2
+                ${pttPressed
+                  ? "bg-destructive text-destructive-foreground shadow-[0_0_20px_hsl(var(--destructive)/0.5)] scale-95"
+                  : "bg-destructive/90 text-destructive-foreground hover:bg-destructive shadow-lg"
+                }
+              `}
             >
-              {idx + 1}
+              <Mic className={`w-4 h-4 ${pttPressed ? "animate-pulse" : ""}`} />
+              {pttPressed ? "TRANSMITTING..." : "PUSH TO TALK"}
             </button>
-          ))}
+          </div>
+
+          {/* Scenario Navigation */}
+          <div className="p-3 mt-auto flex-shrink-0">
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 text-xs h-8"
+                onClick={() => setCurrentScenario((i) => i - 1)}
+                disabled={currentScenario === 0}
+              >
+                ← Previous
+              </Button>
+              {currentScenario < scenarios.length - 1 ? (
+                <Button
+                  size="sm"
+                  className="flex-1 text-xs h-8"
+                  onClick={() => setCurrentScenario((i) => i + 1)}
+                >
+                  Next Scenario →
+                </Button>
+              ) : (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="flex-1 text-xs h-8"
+                  onClick={endExam}
+                >
+                  Finish Test
+                </Button>
+              )}
+            </div>
+            {/* Mobile scenario dots */}
+            <div className="flex sm:hidden justify-center gap-1.5 mt-2">
+              {scenarios.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentScenario(idx)}
+                  className={`w-6 h-6 rounded text-[10px] font-bold border transition-all ${
+                    idx === currentScenario
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "border-border/50 text-muted-foreground"
+                  }`}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
