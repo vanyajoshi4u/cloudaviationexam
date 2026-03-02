@@ -286,7 +286,7 @@ const RtrPart2Exam = () => {
             </div>
             <div className="p-3 space-y-2">
               {scenario.scenarioContext && (
-                <p className="text-xs sm:text-sm text-accent font-semibold italic pb-2 border-b border-border/20">
+                <p className="text-xs sm:text-sm text-foreground font-semibold italic pb-2 border-b border-border/20">
                   {scenario.scenarioContext}
                 </p>
               )}
