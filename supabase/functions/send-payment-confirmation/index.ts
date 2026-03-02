@@ -68,7 +68,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "CloudAviation Exams <onboarding@resend.dev>",
+        from: "CloudAviation Exam's <noreply@cloudaviationexams.com>",
         to: [userEmail],
         subject: "✈️ Payment Successful – Your Subscription is Active!",
         html: `
