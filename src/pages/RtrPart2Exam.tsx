@@ -6,6 +6,7 @@ import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock } from
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
+import VidpAirportLayout from "@/components/VidpAirportLayout";
 
 const EXAM_DURATION = 30 * 60;
 
@@ -258,22 +259,18 @@ const RtrPart2Exam = () => {
                   Airway / Aerodrome Charts Section
                 </h2>
               </div>
-              <div className="flex-1 flex items-center justify-center bg-[hsl(var(--muted))] relative overflow-hidden">
-                {/* Placeholder for chart — maps will be added later */}
-                <div className="text-center text-muted-foreground/50 p-4">
-                  <svg className="w-16 h-16 mx-auto mb-2 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                  </svg>
-                  <p className="text-xs font-medium">Airway Chart</p>
-                  <p className="text-[10px]">Map will be added here</p>
-                </div>
-                {/* Airport Layout inset (bottom-left) */}
-                <div className="absolute bottom-2 left-2 w-28 h-24 sm:w-36 sm:h-28 border-2 border-border/50 rounded bg-[hsl(var(--card))] flex items-center justify-center">
-                  <div className="text-center text-muted-foreground/40">
-                    <p className="text-[9px] font-bold uppercase">Airport Layout</p>
-                    <p className="text-[8px]">(To be added)</p>
+              <div className="flex-1 flex items-center justify-center bg-[hsl(var(--muted))] relative overflow-hidden p-4">
+                {paperId === "rtr2-paper-1" ? (
+                  <VidpAirportLayout />
+                ) : (
+                  <div className="text-center text-muted-foreground/50 p-4">
+                    <svg className="w-16 h-16 mx-auto mb-2 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                    <p className="text-xs font-medium">Airway Chart</p>
+                    <p className="text-[10px]">Map will be added here</p>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
