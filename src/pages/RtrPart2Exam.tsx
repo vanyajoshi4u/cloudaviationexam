@@ -286,10 +286,15 @@ const RtrPart2Exam = () => {
               </h2>
             </div>
             <div className="p-3 space-y-2">
+              {scenario.scenarioContext && (
+                <p className="text-xs sm:text-sm text-accent font-semibold italic pb-2 border-b border-border/20">
+                  {scenario.scenarioContext}
+                </p>
+              )}
               {scenario.questions.map((q, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="text-[11px] font-bold text-primary bg-primary/10 rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    {i + 1}
+                    {String.fromCharCode(97 + i)}
                   </span>
                   <p className="text-xs sm:text-sm text-foreground leading-relaxed">{q}</p>
                 </div>
