@@ -1,11 +1,13 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, ChevronDown, ChevronRight, Library } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronRight, Library, Lock } from "lucide-react";
 import { icJoshiTopics } from "@/data/icJoshiQuestions";
 import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
+import { supabase } from "@/integrations/supabase/client";
+import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 
 interface SubTopic {
   title: string;
@@ -242,6 +244,25 @@ const SubjectCards = () => {
   const navigate = useNavigate();
   const [openSubject, setOpenSubject] = useState<string | null>(null);
   const [openSubtopic, setOpenSubtopic] = useState<string | null>(null);
+  const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
+  const [showUpgrade, setShowUpgrade] = useState(false);
+
+  useEffect(() => {
+    const checkRtr2Access = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { setHasRtr2Access(false); return; }
+      const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin");
+      if (roles && roles.length > 0) { setHasRtr2Access(true); return; }
+      const { data: subs } = await supabase
+        .from("subscriptions")
+        .select("plan, status, expires_at")
+        .eq("user_id", user.id)
+        .eq("plan", "3_months")
+        .eq("status", "approved");
+      setHasRtr2Access(subs?.some(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? false);
+    };
+    checkRtr2Access();
+  }, []);
 
   const toggleSubject = (title: string) => {
     setOpenSubject(openSubject === title ? null : title);
@@ -373,13 +394,21 @@ const contentPageMap: Record<string, string> = {
                                   <button
                                     key={chapter}
                                     onClick={() => {
-                                      if (contentLink) navigate(contentLink);
-                                      else if (quizTopic) navigate(`/topics/${quizTopic.id}`);
+                                      if (contentLink) {
+                                        if (contentLink.startsWith("/rtr2-exam/") && !hasRtr2Access) {
+                                          setShowUpgrade(true);
+                                          return;
+                                        }
+                                        navigate(contentLink);
+                                      } else if (quizTopic) navigate(`/topics/${quizTopic.id}`);
                                     }}
                                     className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${isClickable ? "cursor-pointer" : "cursor-default"}`}
                                   >
                                     {chapter}
-                                    {contentLink && (
+                                    {contentLink?.startsWith("/rtr2-exam/") && !hasRtr2Access && (
+                                      <Lock className="inline w-3 h-3 ml-1.5 text-muted-foreground" />
+                                    )}
+                                    {contentLink && !contentLink.startsWith("/rtr2-exam/") && (
                                       <span className="ml-2 text-[10px] text-primary/60">(Notes)</span>
                                     )}
                                     {quizTopic && !contentLink && (
@@ -418,6 +447,7 @@ const contentPageMap: Record<string, string> = {
           })}
         </motion.div>
       </div>
+      <RtrUpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} onSuccess={() => setHasRtr2Access(true)} />
     </section>
   );
 };
