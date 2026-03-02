@@ -313,11 +313,20 @@ const RtrPart2Exam = () => {
             <div className="p-3 space-y-1.5 text-xs">
               {[
                 ["Aircraft Identification", scenario.flightInfo.aircraftId],
-                ["Type of A/C", scenario.flightInfo.aircraftType],
+                ["Type of Aircraft", scenario.flightInfo.aircraftType],
+                ["RT Call Sign", scenario.flightInfo.rtCallSign],
+                ["Registration", scenario.flightInfo.registration],
                 ["Departure Aerodrome", scenario.flightInfo.departure],
-                ["Route", scenario.flightInfo.route],
                 ["Destination Aerodrome", scenario.flightInfo.destination],
-                ["Other Information", scenario.flightInfo.otherInfo],
+                ["ATS Route", scenario.flightInfo.atsRoute],
+                ["Stand No", scenario.flightInfo.standNo],
+                ["Runway in Use", scenario.flightInfo.runwayInUse],
+                ["Taxiway", scenario.flightInfo.taxiway],
+                ["Flight Level", scenario.flightInfo.flightLevel],
+                ["Alternate Airdrome", scenario.flightInfo.alternateAirdrome],
+                ["POB - Persons on Board", scenario.flightInfo.pob],
+                ["Endurance", scenario.flightInfo.endurance],
+                ["Exercise Start Time", scenario.flightInfo.exerciseStartTime],
               ].map(([label, value]) => (
                 <div key={label} className="flex gap-1">
                   <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
