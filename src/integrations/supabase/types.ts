@@ -167,6 +167,60 @@ export type Database = {
         }
         Relationships: []
       }
+      referral_codes: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      referral_tracking: {
+        Row: {
+          id: string
+          purchased: boolean
+          purchased_at: string | null
+          referral_code: string
+          referred_user_id: string
+          referrer_user_id: string
+          reward_claimed: boolean
+          signed_up_at: string
+        }
+        Insert: {
+          id?: string
+          purchased?: boolean
+          purchased_at?: string | null
+          referral_code: string
+          referred_user_id: string
+          referrer_user_id: string
+          reward_claimed?: boolean
+          signed_up_at?: string
+        }
+        Update: {
+          id?: string
+          purchased?: boolean
+          purchased_at?: string | null
+          referral_code?: string
+          referred_user_id?: string
+          referrer_user_id?: string
+          reward_claimed?: boolean
+          signed_up_at?: string
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           amount: number
@@ -244,6 +298,7 @@ export type Database = {
       }
       cleanup_rate_limits: { Args: never; Returns: undefined }
       cleanup_stale_sessions: { Args: never; Returns: undefined }
+      generate_referral_code: { Args: never; Returns: string }
       has_active_session: { Args: { _user_id: string }; Returns: boolean }
       has_active_subscription: { Args: { _user_id: string }; Returns: boolean }
       has_role: {

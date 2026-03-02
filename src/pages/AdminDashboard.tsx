@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut, ScrollText } from "lucide-react";
+import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut, ScrollText, Gift, Users } from "lucide-react";
 
 interface Subscription {
   id: string;
@@ -24,9 +24,11 @@ const AdminDashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState<"subscriptions" | "audit">("subscriptions");
+  const [activeTab, setActiveTab] = useState<"subscriptions" | "audit" | "referrals">("subscriptions");
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [auditLoading, setAuditLoading] = useState(false);
+  const [referrals, setReferrals] = useState<any[]>([]);
+  const [referralsLoading, setReferralsLoading] = useState(false);
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -118,6 +120,42 @@ const AdminDashboard = () => {
     setAuditLoading(false);
   };
 
+  const fetchReferrals = async () => {
+    setReferralsLoading(true);
+    // Get all referral codes with their tracking data
+    const { data: codes } = await (supabase
+      .from("referral_codes" as any)
+      .select("*") as any);
+
+    if (codes && codes.length > 0) {
+      const userIds = codes.map((c: any) => c.user_id);
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("user_id, full_name, email")
+        .in("user_id", userIds);
+
+      const { data: tracking } = await (supabase
+        .from("referral_tracking" as any)
+        .select("*") as any);
+
+      const profileMap = new Map(profiles?.map(p => [p.user_id, p]));
+      const enriched = codes.map(c => {
+        const userTracking = tracking?.filter(t => t.referrer_user_id === c.user_id) || [];
+        const purchasedCount = userTracking.filter(t => t.purchased).length;
+        return {
+          ...c,
+          profile: profileMap.get(c.user_id),
+          totalReferrals: userTracking.length,
+          purchasedReferrals: purchasedCount,
+          rewardEligible: purchasedCount >= 5,
+          rewardClaimed: userTracking.some(t => t.reward_claimed),
+        };
+      });
+      setReferrals(enriched);
+    }
+    setReferralsLoading(false);
+  };
+
   const filtered = filter === "all" ? subscriptions : subscriptions.filter((s) => s.status === filter);
 
   const actionColors: Record<string, string> = {
@@ -174,6 +212,14 @@ const AdminDashboard = () => {
             className="text-xs"
           >
             <ScrollText className="w-3 h-3 mr-1" /> Audit Logs
+          </Button>
+          <Button
+            variant={activeTab === "referrals" ? "default" : "outline"}
+            size="sm"
+            onClick={() => { setActiveTab("referrals"); if (referrals.length === 0) fetchReferrals(); }}
+            className="text-xs"
+          >
+            <Gift className="w-3 h-3 mr-1" /> Referrals
           </Button>
         </div>
 
@@ -285,7 +331,7 @@ const AdminDashboard = () => {
               </div>
             )}
           </>
-        ) : (
+        ) : activeTab === "audit" ? (
           /* Audit Logs Tab */
           <>
             <div className="flex items-center justify-between mb-4">
@@ -332,7 +378,56 @@ const AdminDashboard = () => {
               </div>
             )}
           </>
-        )}
+        ) : activeTab === "referrals" ? (
+          <>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-display text-sm font-bold text-foreground">Referral Program</h2>
+              <Button variant="outline" size="sm" onClick={fetchReferrals} disabled={referralsLoading} className="text-xs">
+                {referralsLoading ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : null}
+                Refresh
+              </Button>
+            </div>
+
+            {referralsLoading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
+              </div>
+            ) : referrals.length === 0 ? (
+              <p className="text-center text-muted-foreground py-12">No referral codes generated yet.</p>
+            ) : (
+              <div className="space-y-3">
+                {referrals.map((ref: any) => (
+                  <div key={ref.id} className="glass-card p-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="font-display font-semibold text-foreground">
+                            {ref.profile?.full_name || "Unknown"}
+                          </p>
+                          <Badge variant="outline" className="text-[10px] font-mono">
+                            {ref.code}
+                          </Badge>
+                          {ref.rewardEligible && (
+                            <Badge className="text-[10px] bg-primary">
+                              <Gift className="w-3 h-3 mr-1" /> ₹200 Eligible
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {ref.profile?.email} · Signups: {ref.totalReferrals} · Purchased: {ref.purchasedReferrals}/5
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-sm font-bold text-foreground">{ref.purchasedReferrals}/5</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        ) : null}
       </main>
     </div>
   );
