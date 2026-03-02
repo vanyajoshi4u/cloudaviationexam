@@ -10,11 +10,12 @@ import { toast } from "sonner";
 // QR code image - place your PhonePe QR at public/payment-qr.png
 const paymentQR = "/payment-qr.png";
 
-type Plan = "6_months" | "12_months";
+type Plan = "3_months" | "6_months" | "12_months";
 
 const plans = [
-  { id: "6_months" as Plan, label: "6 Months", price: 119, badge: "" },
-  { id: "12_months" as Plan, label: "12 Months", price: 250, badge: "Best Value" },
+  { id: "3_months" as Plan, label: "3 Months", price: 350, badge: "RTR Part-2 Simulator", highlight: "Includes RTR Part-2 (DGCA) Practice Simulator access for 3 months" },
+  { id: "6_months" as Plan, label: "6 Months", price: 119, badge: "", highlight: "" },
+  { id: "12_months" as Plan, label: "12 Months", price: 250, badge: "Best Value", highlight: "" },
 ];
 
 const Subscribe = () => {
@@ -223,7 +224,7 @@ const Subscribe = () => {
           <p className="text-sm text-muted-foreground text-center mb-6">Select a plan and complete payment to access all questions</p>
 
           {/* Plan Selection */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-3 gap-3 mb-6">
             {plans.map((plan) => (
               <button
                 key={plan.id}
@@ -242,6 +243,9 @@ const Subscribe = () => {
                 )}
                 <p className="font-display text-sm font-semibold text-foreground">{plan.label}</p>
                 <p className="font-display text-2xl font-bold text-primary mt-1">₹{plan.price}</p>
+                {plan.highlight && (
+                  <p className="text-[10px] text-primary/80 mt-1 leading-tight">{plan.highlight}</p>
+                )}
               </button>
             ))}
           </div>
