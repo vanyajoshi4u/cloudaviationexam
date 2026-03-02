@@ -210,11 +210,17 @@ const Auth = () => {
           return;
         }
 
+        if (formData.password.length < 6) {
+          toast.error("Password must be at least 6 characters.");
+          setLoading(false);
+          return;
+        }
+
         const { data, error } = await supabase.auth.signUp({
           email: formData.email.trim(),
           password: formData.password,
           options: {
-            emailRedirectTo: `https://cloudaviationexam.lovable.app/email-confirmed`,
+            emailRedirectTo: `https://cloudaviationexams.com/email-confirmed`,
             data: {
               full_name: formData.fullName.trim(),
               phone: formData.phone.trim(),
