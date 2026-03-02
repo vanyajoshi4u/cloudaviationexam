@@ -48,15 +48,39 @@ async function rpc(fnName: string) {
   });
 }
 
+import { checkRateLimit, rateLimitResponse, getClientIP } from "../_shared/rate-limiter.ts";
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   try {
+    const ip = getClientIP(req);
     const authHeader = req.headers.get("Authorization");
     const body = await req.json();
     const { action, origin: clientOrigin } = body;
+
+    // Rate limit based on action type
+    if (action === "check-and-verify" || action === "send-verification") {
+      // 10 verification emails per 15 minutes per IP
+      const rateCheck = await checkRateLimit({
+        action: "login-verify",
+        identifier: ip,
+        maxRequests: 10,
+        windowSeconds: 900,
+      });
+      if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
+    } else if (action === "force-logout") {
+      // 5 force-logouts per 15 minutes per IP
+      const rateCheck = await checkRateLimit({
+        action: "force-logout",
+        identifier: ip,
+        maxRequests: 5,
+        windowSeconds: 900,
+      });
+      if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
+    }
 
     // Handle logout without requiring authentication
     if (action === "logout") {
