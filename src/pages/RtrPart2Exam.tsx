@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import VidpAirportLayout from "@/components/VidpAirportLayout";
@@ -241,36 +241,47 @@ const RtrPart2Exam = () => {
     );
   }
 
-  // ─── LIVE EXAM SCREEN (single-screen layout matching reference) ───
+  // ─── LIVE EXAM SCREEN ───
+  const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.04 } } };
+  const fadeUp = { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } } };
+
   return (
-    <div className="h-screen bg-[hsl(var(--background))] flex flex-col overflow-hidden">
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* ── Title Bar ── */}
-      <div className="bg-[hsl(var(--card))] border-b border-border/40 px-3 py-2 flex items-center justify-between flex-shrink-0">
+      <motion.div
+        initial={{ y: -40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="bg-card border-b border-border/40 px-3 py-2 flex items-center justify-between flex-shrink-0"
+      >
         <h1 className="font-display text-xs sm:text-sm font-bold tracking-wide uppercase text-foreground">
           RTR Part 2 — {paper.title} — Scenario {currentScenario + 1} of {scenarios.length}
         </h1>
         <div className="flex items-center gap-2">
-          {/* Scenario dots */}
           <div className="hidden sm:flex gap-1">
             {scenarios.map((_, idx) => (
-              <button
+              <motion.button
                 key={idx}
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setCurrentScenario(idx)}
-                className={`w-6 h-6 rounded text-[10px] font-bold border transition-all ${
+                className={`w-7 h-7 rounded-md text-[10px] font-bold border transition-all duration-200 ${
                   idx === currentScenario
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "border-border/50 text-muted-foreground hover:border-primary/50"
+                    ? "bg-primary text-primary-foreground border-primary shadow-[0_0_10px_hsl(var(--primary)/0.4)]"
+                    : "border-border/50 text-muted-foreground hover:border-primary/50 hover:text-foreground"
                 }`}
               >
                 {idx + 1}
-              </button>
+              </motion.button>
             ))}
           </div>
-          <Button variant="destructive" size="sm" onClick={endExam} className="text-xs h-7 px-3">
-            End Test
-          </Button>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button variant="destructive" size="sm" onClick={endExam} className="text-xs h-7 px-3">
+              End Test
+            </Button>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* ── Main Content: 2-column layout ── */}
       <div className="flex-1 flex min-h-0">
@@ -284,52 +295,74 @@ const RtrPart2Exam = () => {
                   Airway / Aerodrome Charts Section
                 </h2>
               </div>
-              <div className="flex-1 bg-[hsl(var(--muted))] relative overflow-auto">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+                className="flex-1 bg-muted relative overflow-auto"
+              >
                 <img src={airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
-                {/* Airport Layout inset (bottom-left) - clickable */}
-                <button
+                <motion.button
                   onClick={() => setShowAirportLayout(true)}
-                  className="absolute bottom-2 left-2 w-32 h-28 sm:w-40 sm:h-32 border-2 border-border/50 rounded bg-[hsl(var(--card))] cursor-pointer hover:border-primary/50 transition-all hover:shadow-lg overflow-hidden"
+                  whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary))" }}
+                  whileTap={{ scale: 0.97 }}
+                  className="absolute bottom-2 left-2 w-32 h-28 sm:w-40 sm:h-32 border-2 border-border/50 rounded-lg bg-card cursor-pointer transition-shadow hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)] overflow-hidden"
                   title="Click to enlarge Airport Layout"
                 >
                   <div className="w-full h-full p-1">
                     <VidpAirportLayout />
                   </div>
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
             </div>
           </div>
 
-          {/* Questions Section (bottom of left column) */}
+          {/* Questions Section */}
           <div className="flex-shrink-0 border-t border-border/30 max-h-[40%] overflow-y-auto">
-            <div className="bg-green-500/10 border-b border-green-500/20 px-3 py-1.5">
-              <h2 className="text-[11px] font-bold uppercase tracking-widest text-green-500 text-center">
+            <div className="bg-primary/8 border-b border-primary/15 px-3 py-1.5">
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-primary text-center">
                 Questions
               </h2>
             </div>
-            <div className="p-3 space-y-2">
-              {scenario.scenarioContext && (
-                <p className="text-xs sm:text-sm text-foreground font-semibold italic pb-2 border-b border-border/20">
-                  {scenario.scenarioContext}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentScenario}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="p-3 space-y-2"
+              >
+                {scenario.scenarioContext && (
+                  <p className="text-xs sm:text-sm text-accent font-semibold italic pb-2 border-b border-border/20">
+                    {scenario.scenarioContext}
+                  </p>
+                )}
+                <motion.div variants={stagger} initial="hidden" animate="visible" className="space-y-2">
+                  {scenario.questions.map((q, i) => (
+                    <motion.div key={i} variants={fadeUp} className="flex items-start gap-2">
+                      <span className="text-[11px] font-bold text-primary bg-primary/10 rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        {String.fromCharCode(97 + i)}
+                      </span>
+                      <p className="text-xs sm:text-sm text-foreground leading-relaxed">{q}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
+                <p className="text-[10px] text-muted-foreground italic pt-1 border-t border-border/20">
+                  Write your RT phraseology response for each question.
                 </p>
-              )}
-              {scenario.questions.map((q, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <span className="text-[11px] font-bold text-primary bg-primary/10 rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    {String.fromCharCode(97 + i)}
-                  </span>
-                  <p className="text-xs sm:text-sm text-foreground leading-relaxed">{q}</p>
-                </div>
-              ))}
-              <p className="text-[10px] text-muted-foreground italic pt-1 border-t border-border/20">
-                Write your RT phraseology response for each question.
-              </p>
-            </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: Flight Info + Timer + Frequencies + PTT ── */}
-        <div className="w-[320px] lg:w-[360px] flex-shrink-0 flex flex-col min-h-0 overflow-y-auto">
+        {/* ── RIGHT COLUMN ── */}
+        <motion.div
+          initial={{ x: 40, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+          className="w-[320px] lg:w-[360px] flex-shrink-0 flex flex-col min-h-0 overflow-y-auto"
+        >
           {/* Flight Information */}
           <div className="border-b border-border/30">
             <div className="bg-primary/15 px-3 py-1.5">
@@ -337,51 +370,70 @@ const RtrPart2Exam = () => {
                 Flight Information
               </h2>
             </div>
-            <div className="p-3 space-y-1 text-xs">
-              {[
-                ["Aircraft Identification", scenario.flightInfo.aircraftId],
-                ["Type of Aircraft", scenario.flightInfo.aircraftType],
-                ["RT Call Sign", scenario.flightInfo.rtCallSign],
-                ["Registration", scenario.flightInfo.registration],
-                ["Departure Aerodrome", scenario.flightInfo.departure],
-                ["Destination Aerodrome", scenario.flightInfo.destination],
-                ["ATS Route", scenario.flightInfo.atsRoute],
-              ].map(([label, value]) => (
-                <div key={label} className="flex gap-1">
-                  <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
-                  <span className="font-semibold text-foreground">{value}</span>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentScenario}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="p-3 space-y-1 text-xs"
+              >
+                {[
+                  ["Aircraft Identification", scenario.flightInfo.aircraftId],
+                  ["Type of Aircraft", scenario.flightInfo.aircraftType],
+                  ["RT Call Sign", scenario.flightInfo.rtCallSign],
+                  ["Registration", scenario.flightInfo.registration],
+                  ["Departure Aerodrome", scenario.flightInfo.departure],
+                  ["Destination Aerodrome", scenario.flightInfo.destination],
+                  ["ATS Route", scenario.flightInfo.atsRoute],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex gap-1">
+                    <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
+                    <span className="font-semibold text-foreground">{value}</span>
+                  </div>
+                ))}
+                <div className="flex gap-3 flex-wrap">
+                  <div className="flex gap-1"><span className="text-muted-foreground">Stand —</span><span className="font-semibold text-foreground">{scenario.flightInfo.standNo}</span></div>
+                  <div className="flex gap-1"><span className="text-muted-foreground">RWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.runwayInUse}</span></div>
+                  <div className="flex gap-1"><span className="text-muted-foreground">TWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.taxiway}</span></div>
                 </div>
-              ))}
-              {/* Stand No, Runway, Taxiway in one row */}
-              <div className="flex gap-3 flex-wrap">
-                <div className="flex gap-1"><span className="text-muted-foreground">Stand —</span><span className="font-semibold text-foreground">{scenario.flightInfo.standNo}</span></div>
-                <div className="flex gap-1"><span className="text-muted-foreground">RWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.runwayInUse}</span></div>
-                <div className="flex gap-1"><span className="text-muted-foreground">TWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.taxiway}</span></div>
-              </div>
-              {/* Flight Level, Alternate, POB in one row */}
-              <div className="flex gap-3 flex-wrap">
-                <div className="flex gap-1"><span className="text-muted-foreground">FL —</span><span className="font-semibold text-foreground">{scenario.flightInfo.flightLevel}</span></div>
-                <div className="flex gap-1"><span className="text-muted-foreground">POB —</span><span className="font-semibold text-foreground">{scenario.flightInfo.pob}</span></div>
-              </div>
-              {[
-                ["Alternate Airdrome", scenario.flightInfo.alternateAirdrome],
-                ["Endurance", scenario.flightInfo.endurance],
-                ["Exercise Start Time", scenario.flightInfo.exerciseStartTime],
-              ].map(([label, value]) => (
-                <div key={label} className="flex gap-1">
-                  <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
-                  <span className="font-semibold text-foreground">{value}</span>
+                <div className="flex gap-3 flex-wrap">
+                  <div className="flex gap-1"><span className="text-muted-foreground">FL —</span><span className="font-semibold text-foreground">{scenario.flightInfo.flightLevel}</span></div>
+                  <div className="flex gap-1"><span className="text-muted-foreground">POB —</span><span className="font-semibold text-foreground">{scenario.flightInfo.pob}</span></div>
                 </div>
-              ))}
-            </div>
+                {[
+                  ["Alternate Airdrome", scenario.flightInfo.alternateAirdrome],
+                  ["Endurance", scenario.flightInfo.endurance],
+                  ["Exercise Start Time", scenario.flightInfo.exerciseStartTime],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex gap-1">
+                    <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
+                    <span className="font-semibold text-foreground">{value}</span>
+                  </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           {/* Timer */}
-          <div className="border-y border-accent/30 bg-accent/5 p-3 flex justify-center">
-            <div className={`font-mono text-3xl sm:text-4xl font-black tracking-wider ${isTimeLow ? "text-destructive animate-pulse" : "text-foreground"}`}>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="border-y border-accent/30 bg-accent/5 p-3 flex justify-center"
+          >
+            <motion.div
+              key={timeLeft}
+              initial={{ scale: 1.02 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.15 }}
+              className={`font-mono text-3xl sm:text-4xl font-black tracking-wider ${isTimeLow ? "text-destructive" : "text-foreground"}`}
+              style={isTimeLow ? { animation: "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite" } : undefined}
+            >
               {formatTime(timeLeft)}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Frequencies & Squawk */}
           <div className="border-b border-border/30 p-2">
@@ -394,107 +446,150 @@ const RtrPart2Exam = () => {
               </thead>
               <tbody>
                 {scenario.frequencies.map((f, i) => (
-                  <tr key={i} className="border-b border-border/15">
+                  <motion.tr
+                    key={i}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.35 + i * 0.04, duration: 0.25 }}
+                    className="border-b border-border/15"
+                  >
                     <td className="py-1 px-2 text-foreground">{f.description}</td>
                     <td className="py-1 px-2 text-right font-mono font-semibold text-primary">{f.frequency}</td>
-                  </tr>
+                  </motion.tr>
                 ))}
-                <tr className="bg-accent/20">
+                <motion.tr
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.3 }}
+                  className="bg-accent/20"
+                >
                   <td className="py-1.5 px-2 font-bold text-foreground">SQUAWK</td>
                   <td className="py-1.5 px-2 text-right font-mono font-black text-destructive text-sm">{scenario.squawk}</td>
-                </tr>
+                </motion.tr>
               </tbody>
             </table>
           </div>
 
           {/* PTT Button */}
           <div className="p-3 border-b border-border/30">
-            <button
+            <motion.button
               onMouseDown={() => setPttPressed(true)}
               onMouseUp={() => setPttPressed(false)}
               onMouseLeave={() => setPttPressed(false)}
               onTouchStart={() => setPttPressed(true)}
               onTouchEnd={() => setPttPressed(false)}
+              whileTap={{ scale: 0.95 }}
+              animate={pttPressed ? {
+                boxShadow: "0 0 30px hsl(var(--destructive) / 0.6), 0 0 60px hsl(var(--destructive) / 0.2)",
+              } : {
+                boxShadow: "0 4px 14px hsl(var(--destructive) / 0.3)",
+              }}
+              transition={{ duration: 0.1 }}
               className={`
-                w-full py-3 rounded-lg font-bold text-xs uppercase tracking-widest
-                transition-all duration-100 select-none
-                flex items-center justify-center gap-2
+                w-full py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest
+                select-none flex items-center justify-center gap-2
+                transition-colors duration-100
                 ${pttPressed
-                  ? "bg-destructive text-destructive-foreground shadow-[0_0_20px_hsl(var(--destructive)/0.5)] scale-95"
-                  : "bg-destructive/90 text-destructive-foreground hover:bg-destructive shadow-lg"
+                  ? "bg-destructive text-destructive-foreground"
+                  : "bg-destructive/90 text-destructive-foreground hover:bg-destructive"
                 }
               `}
             >
               <Mic className={`w-4 h-4 ${pttPressed ? "animate-pulse" : ""}`} />
               {pttPressed ? "TRANSMITTING..." : "PUSH TO TALK"}
-            </button>
+            </motion.button>
           </div>
 
           {/* Scenario Navigation */}
           <div className="p-3 mt-auto flex-shrink-0">
             <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 text-xs h-8"
-                onClick={() => setCurrentScenario((i) => i - 1)}
-                disabled={currentScenario === 0}
-              >
-                ← Previous
-              </Button>
+              <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full text-xs h-9"
+                  onClick={() => setCurrentScenario((i) => i - 1)}
+                  disabled={currentScenario === 0}
+                >
+                  ← Previous
+                </Button>
+              </motion.div>
               {currentScenario < scenarios.length - 1 ? (
-                <Button
-                  size="sm"
-                  className="flex-1 text-xs h-8"
-                  onClick={() => setCurrentScenario((i) => i + 1)}
-                >
-                  Next Scenario →
-                </Button>
+                <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                  <Button
+                    size="sm"
+                    className="w-full text-xs h-9"
+                    onClick={() => setCurrentScenario((i) => i + 1)}
+                  >
+                    Next Scenario →
+                  </Button>
+                </motion.div>
               ) : (
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="flex-1 text-xs h-8"
-                  onClick={endExam}
-                >
-                  Finish Test
-                </Button>
+                <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="w-full text-xs h-9"
+                    onClick={endExam}
+                  >
+                    Finish Test
+                  </Button>
+                </motion.div>
               )}
             </div>
             {/* Mobile scenario dots */}
             <div className="flex sm:hidden justify-center gap-1.5 mt-2">
               {scenarios.map((_, idx) => (
-                <button
+                <motion.button
                   key={idx}
+                  whileTap={{ scale: 0.85 }}
                   onClick={() => setCurrentScenario(idx)}
-                  className={`w-6 h-6 rounded text-[10px] font-bold border transition-all ${
+                  className={`w-6 h-6 rounded text-[10px] font-bold border transition-all duration-200 ${
                     idx === currentScenario
-                      ? "bg-primary text-primary-foreground border-primary"
+                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_8px_hsl(var(--primary)/0.4)]"
                       : "border-border/50 text-muted-foreground"
                   }`}
                 >
                   {idx + 1}
-                </button>
+                </motion.button>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Airport Layout Fullscreen Modal */}
-      {showAirportLayout && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={() => setShowAirportLayout(false)}>
-          <div className="relative bg-[hsl(var(--card))] rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-auto p-4" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => setShowAirportLayout(false)}
-              className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/80 transition-colors"
+      <AnimatePresence>
+        {showAirportLayout && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setShowAirportLayout(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative bg-card rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-auto p-4 border border-border/50"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X className="w-4 h-4" />
-            </button>
-            <VidpAirportLayout />
-          </div>
-        </div>
-      )}
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setShowAirportLayout(false)}
+                className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center transition-colors hover:bg-destructive/80"
+              >
+                <X className="w-4 h-4" />
+              </motion.button>
+              <VidpAirportLayout />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
