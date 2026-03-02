@@ -70,7 +70,7 @@ const paper1Scenarios: RtrScenario[] = [
   },
   {
     id: 2,
-    scenarioContext: "",
+    scenarioContext: "AIC 887 at Stand No 11 Security Check completed. Give your necessary flight details to Delhi Surface Movement Control (SMC).",
     flightInfo: {
       aircraftId: "AIC-887",
       aircraftType: "B777-300ER",
@@ -98,7 +98,6 @@ const paper1Scenarios: RtrScenario[] = [
     ],
     squawk: "7700",
     questions: [
-      "AIC 887 at Stand No 11 Security Check completed. Give your necessary flight details to Delhi Surface Movement Control (SMC).",
       "Obtain permission for Pushback and Startup.",
       "After start up take action for taxi as per Taxi route given to you.",
       "During taxiing, your P1 observed that taxiway edge light intensity is too high. Request ATC to reduce intensity of Taxiway edge light.",
