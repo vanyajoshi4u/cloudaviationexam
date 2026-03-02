@@ -12,9 +12,12 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children, requireAuth, requireSubscription }: ProtectedRouteProps) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [hasActiveSession, setHasActiveSession] = useState<boolean | null>(null);
+  const [accessResult, setAccessResult] = useState<{
+    checked: boolean;
+    valid: boolean;
+    reason?: string;
+    role?: string;
+  }>({ checked: false, valid: false });
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -33,22 +36,50 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription }: Protecte
   }, []);
 
   useEffect(() => {
-    const checkAccess = async () => {
-      if (!session?.user) return;
+    const validateAccess = async () => {
+      if (!session?.access_token) {
+        setAccessResult({ checked: true, valid: false, reason: "no_auth" });
+        return;
+      }
 
-      // Check if user has an active verified session
+      try {
+        const { data, error } = await supabase.functions.invoke("validate-subscription", {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        });
+
+        if (error) {
+          console.error("Server validation error:", error);
+          // Fallback to client-side check on edge function failure
+          await fallbackClientCheck(session);
+          return;
+        }
+
+        setAccessResult({
+          checked: true,
+          valid: data?.valid ?? false,
+          reason: data?.reason,
+          role: data?.role,
+        });
+      } catch (e) {
+        console.error("Validation fetch error:", e);
+        await fallbackClientCheck(session);
+      }
+    };
+
+    const fallbackClientCheck = async (session: Session) => {
+      // Check active session
       const { data: sessions } = await supabase
         .from("active_sessions")
         .select("id")
-        .eq("user_id", session.user.id);
+        .eq("user_id", session.user.id)
+        .limit(1);
 
       if (!sessions || sessions.length === 0) {
-        setHasActiveSession(false);
+        setAccessResult({ checked: true, valid: false, reason: "no_session" });
         return;
       }
-      setHasActiveSession(true);
 
-      // Check admin role
+      // Check admin
       const { data: roles } = await supabase
         .from("user_roles")
         .select("role")
@@ -56,32 +87,33 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription }: Protecte
         .eq("role", "admin");
 
       if (roles && roles.length > 0) {
-        setIsAdmin(true);
-        setSubscriptionStatus("approved");
+        setAccessResult({ checked: true, valid: true, role: "admin" });
         return;
       }
 
       // Check subscription
-      const { data } = await supabase
+      const { data: subs } = await supabase
         .from("subscriptions")
         .select("status")
         .eq("user_id", session.user.id)
         .order("created_at", { ascending: false })
         .limit(1);
 
-      if (data && data.length > 0) {
-        setSubscriptionStatus(data[0].status);
+      if (subs && subs.length > 0 && subs[0].status === "approved") {
+        setAccessResult({ checked: true, valid: true });
       } else {
-        setSubscriptionStatus("none");
+        setAccessResult({ checked: true, valid: false, reason: subs?.[0]?.status || "no_subscription" });
       }
     };
 
-    if (session) {
-      checkAccess();
+    if (!loading && session) {
+      validateAccess();
+    } else if (!loading && !session) {
+      setAccessResult({ checked: true, valid: false, reason: "no_auth" });
     }
-  }, [session]);
+  }, [session, loading]);
 
-  if (loading) {
+  if (loading || !accessResult.checked) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -93,20 +125,12 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription }: Protecte
     return <Navigate to="/auth" replace />;
   }
 
-  // If logged in but no active verified session, redirect to auth
-  if (requireAuth && session && hasActiveSession === false) {
+  if (requireAuth && session && accessResult.reason === "no_session") {
     return <Navigate to="/auth" replace />;
   }
 
-  if (requireSubscription && session && !isAdmin) {
-    if (subscriptionStatus === null) {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-background">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        </div>
-      );
-    }
-    if (subscriptionStatus !== "approved") {
+  if (requireSubscription && session && accessResult.role !== "admin") {
+    if (!accessResult.valid) {
       return <Navigate to="/subscribe" replace />;
     }
   }
