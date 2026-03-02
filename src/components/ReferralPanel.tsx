@@ -15,9 +15,9 @@ const ReferralPanel = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { setLoading(false); return; }
 
-      // Check if user has an active subscription
-      const { data: hasSub } = await supabase.rpc("has_active_subscription", { _user_id: user.id });
-      if (!hasSub) { setLoading(false); return; }
+      // TODO: Re-enable subscription check after preview
+      // const { data: hasSub } = await supabase.rpc("has_active_subscription", { _user_id: user.id });
+      // if (!hasSub) { setLoading(false); return; }
 
       // Get or create referral code
       let { data: codeRow } = await (supabase
