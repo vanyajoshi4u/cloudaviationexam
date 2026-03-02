@@ -7,9 +7,10 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAuth?: boolean;
   requireSubscription?: boolean;
+  requireAdmin?: boolean;
 }
 
-const ProtectedRoute = ({ children, requireAuth, requireSubscription }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, requireAuth, requireSubscription, requireAdmin }: ProtectedRouteProps) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [accessResult, setAccessResult] = useState<{
@@ -127,6 +128,10 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription }: Protecte
 
   if (requireAuth && session && accessResult.reason === "no_session") {
     return <Navigate to="/auth" replace />;
+  }
+
+  if (requireAdmin && accessResult.role !== "admin") {
+    return <Navigate to="/" replace />;
   }
 
   if (requireSubscription && session && accessResult.role !== "admin") {
