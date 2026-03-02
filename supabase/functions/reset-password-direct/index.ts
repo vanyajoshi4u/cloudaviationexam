@@ -15,6 +15,7 @@ async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs = 1
 }
 
 import { checkRateLimit, rateLimitResponse, getClientIP } from "../_shared/rate-limiter.ts";
+import { logAudit } from "../_shared/audit-logger.ts";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -150,6 +151,7 @@ Deno.serve(async (req) => {
     ).catch((e) => console.error("Session cleanup failed (non-critical):", e));
 
     console.log("Password reset complete!");
+    logAudit({ user_id: userId!, action: "password_reset", ip_address: ip, details: { email } });
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

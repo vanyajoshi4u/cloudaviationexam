@@ -35,6 +35,33 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          details: Json | null
+          id: string
+          ip_address: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       device_fingerprints: {
         Row: {
           device_label: string | null
@@ -146,6 +173,7 @@ export type Database = {
           approved_at: string | null
           created_at: string
           expires_at: string | null
+          expiry_notified: boolean | null
           id: string
           payment_screenshot_url: string
           plan: Database["public"]["Enums"]["subscription_plan"]
@@ -160,6 +188,7 @@ export type Database = {
           approved_at?: string | null
           created_at?: string
           expires_at?: string | null
+          expiry_notified?: boolean | null
           id?: string
           payment_screenshot_url: string
           plan: Database["public"]["Enums"]["subscription_plan"]
@@ -174,6 +203,7 @@ export type Database = {
           approved_at?: string | null
           created_at?: string
           expires_at?: string | null
+          expiry_notified?: boolean | null
           id?: string
           payment_screenshot_url?: string
           plan?: Database["public"]["Enums"]["subscription_plan"]

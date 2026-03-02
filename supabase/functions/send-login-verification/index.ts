@@ -49,6 +49,7 @@ async function rpc(fnName: string) {
 }
 
 import { checkRateLimit, rateLimitResponse, getClientIP } from "../_shared/rate-limiter.ts";
+import { logAudit } from "../_shared/audit-logger.ts";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -100,6 +101,7 @@ Deno.serve(async (req) => {
 
       await dbQuery(`active_sessions?user_id=eq.${userId}`, { method: "DELETE" });
       await dbQuery(`login_verifications?user_id=eq.${userId}`, { method: "DELETE" });
+      logAudit({ user_id: userId, action: "logout", ip_address: ip });
       return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -126,6 +128,7 @@ Deno.serve(async (req) => {
       await dbQuery(`active_sessions?user_id=eq.${user.id}`, { method: "DELETE" });
       await dbQuery(`login_verifications?user_id=eq.${user.id}`, { method: "DELETE" });
 
+      logAudit({ user_id: user.id, action: "force_logout", ip_address: ip });
       return new Response(JSON.stringify({ success: true, message: "All sessions cleared. You can now log in." }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -244,6 +247,7 @@ Deno.serve(async (req) => {
       );
 
       if (sessions && sessions.length > 0) {
+        logAudit({ user_id: user.id, action: "login_blocked_session", ip_address: ip });
         return new Response(JSON.stringify({
           hasActiveSession: true,
           message: "You are already logged in on another device. Please log out from the other device first.",
