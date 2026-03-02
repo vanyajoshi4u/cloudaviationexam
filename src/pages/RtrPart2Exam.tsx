@@ -314,7 +314,7 @@ const RtrPart2Exam = () => {
                 Flight Information
               </h2>
             </div>
-            <div className="p-3 space-y-1.5 text-xs">
+            <div className="p-3 space-y-1 text-xs">
               {[
                 ["Aircraft Identification", scenario.flightInfo.aircraftId],
                 ["Type of Aircraft", scenario.flightInfo.aircraftType],
@@ -323,12 +323,25 @@ const RtrPart2Exam = () => {
                 ["Departure Aerodrome", scenario.flightInfo.departure],
                 ["Destination Aerodrome", scenario.flightInfo.destination],
                 ["ATS Route", scenario.flightInfo.atsRoute],
-                ["Stand No", scenario.flightInfo.standNo],
-                ["Runway in Use", scenario.flightInfo.runwayInUse],
-                ["Taxiway", scenario.flightInfo.taxiway],
-                ["Flight Level", scenario.flightInfo.flightLevel],
+              ].map(([label, value]) => (
+                <div key={label} className="flex gap-1">
+                  <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
+                  <span className="font-semibold text-foreground">{value}</span>
+                </div>
+              ))}
+              {/* Stand No, Runway, Taxiway in one row */}
+              <div className="flex gap-3 flex-wrap">
+                <div className="flex gap-1"><span className="text-muted-foreground">Stand —</span><span className="font-semibold text-foreground">{scenario.flightInfo.standNo}</span></div>
+                <div className="flex gap-1"><span className="text-muted-foreground">RWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.runwayInUse}</span></div>
+                <div className="flex gap-1"><span className="text-muted-foreground">TWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.taxiway}</span></div>
+              </div>
+              {/* Flight Level, Alternate, POB in one row */}
+              <div className="flex gap-3 flex-wrap">
+                <div className="flex gap-1"><span className="text-muted-foreground">FL —</span><span className="font-semibold text-foreground">{scenario.flightInfo.flightLevel}</span></div>
+                <div className="flex gap-1"><span className="text-muted-foreground">POB —</span><span className="font-semibold text-foreground">{scenario.flightInfo.pob}</span></div>
+              </div>
+              {[
                 ["Alternate Airdrome", scenario.flightInfo.alternateAirdrome],
-                ["POB - Persons on Board", scenario.flightInfo.pob],
                 ["Endurance", scenario.flightInfo.endurance],
                 ["Exercise Start Time", scenario.flightInfo.exerciseStartTime],
               ].map(([label, value]) => (
