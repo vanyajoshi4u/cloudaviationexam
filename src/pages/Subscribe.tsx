@@ -115,6 +115,7 @@ const Subscribe = () => {
         return;
       }
 
+      const screenshotHash = verifyData.screenshotHash || null;
       toast.success("Referral code verified!");
 
       // Step 2: Upload screenshot
@@ -134,8 +135,9 @@ const Subscribe = () => {
         amount: plan.price,
         referral_code: referralCode.trim(),
         payment_screenshot_url: filePath,
+        screenshot_hash: screenshotHash,
         status: "pending",
-      });
+      } as any);
       if (insertError) throw insertError;
 
       toast.success("Payment successful! Your subscription is now active.");

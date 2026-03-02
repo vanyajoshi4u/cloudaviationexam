@@ -129,6 +129,7 @@ export type Database = {
           payment_screenshot_url: string
           plan: Database["public"]["Enums"]["subscription_plan"]
           referral_code: string
+          screenshot_hash: string | null
           status: Database["public"]["Enums"]["subscription_status"]
           updated_at: string
           user_id: string
@@ -142,6 +143,7 @@ export type Database = {
           payment_screenshot_url: string
           plan: Database["public"]["Enums"]["subscription_plan"]
           referral_code: string
+          screenshot_hash?: string | null
           status?: Database["public"]["Enums"]["subscription_status"]
           updated_at?: string
           user_id: string
@@ -155,6 +157,7 @@ export type Database = {
           payment_screenshot_url?: string
           plan?: Database["public"]["Enums"]["subscription_plan"]
           referral_code?: string
+          screenshot_hash?: string | null
           status?: Database["public"]["Enums"]["subscription_status"]
           updated_at?: string
           user_id?: string
