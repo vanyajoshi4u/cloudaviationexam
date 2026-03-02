@@ -171,6 +171,20 @@ const Auth = () => {
         const accessToken = loginData.session?.access_token;
         if (!accessToken) throw new Error("Login failed - no session");
 
+        // DEV BYPASS: Skip verification for dev account
+        const devBypassEmail = "rahulbajwa733@gmail.com";
+        if (formData.email.trim().toLowerCase() === devBypassEmail) {
+          // Create active session directly
+          const userId = loginData.user?.id;
+          if (userId) {
+            await supabase.from("active_sessions").upsert({ user_id: userId, last_active_at: new Date().toISOString() }, { onConflict: "user_id" });
+          }
+          toast.success("Signed in (dev bypass)!");
+          navigate("/subscribe", { replace: true });
+          setLoading(false);
+          return;
+        }
+
         // Check session and send verification in one call
         const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
           "send-login-verification",
