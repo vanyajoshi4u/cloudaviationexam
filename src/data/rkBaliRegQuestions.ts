@@ -893,7 +893,7 @@ export const rkBaliRegTopics: QuizTopic[] = [
   },
   {
     id: "rkbali-reg-ch22",
-    title: "Ch 22 – Security (Annex 17)",
+    title: "Ch 22 – Security - Safeguarding International Civil Aviation against Acts of Unlawful Interference",
     questions: [
       { id: 22201, question: "The ICAO Annex 17 comprises rules in order to establish security measures for passengers:", options: ["Checked baggage, cargo and other goods, access control and airport design", "Cabin baggage, checked baggage, cargo and other goods, access control and airport design", "And baggage"], correct: 1 },
       { id: 22202, question: "A State shall take adequate measures for the safety of passengers and crew of an aircraft which is subjected to an act of unlawful interference:", options: ["Until their journey can be continued", "During a period of investigation", "And arrange for them to return to their country of origin"], correct: 0 },
@@ -909,7 +909,7 @@ export const rkBaliRegTopics: QuizTopic[] = [
   },
   {
     id: "rkbali-reg-ch23",
-    title: "Ch 23 – Human Factors (Introduction)",
+    title: "Ch 23 – Human Performance and Limitations",
     questions: [
       { id: 22301, question: "As a cause of accidents, the human factor:", options: ["Is cited in approximately 73% of aviation accidents", "Has increased accidents exponentially since 1970", "Has been generally due to high workload in the cockpit"], correct: 0 },
       { id: 22302, question: "The rate of accidents in commercial aviation:", options: ["Is approximately 52 accidents per million airport movements", "Has worsened considerably since 1970", "Is approximately 1 accident per million airport movements"], correct: 2 },
@@ -944,7 +944,7 @@ export const rkBaliRegTopics: QuizTopic[] = [
   },
   {
     id: "rkbali-reg-ch25",
-    title: "Ch 25 – Aviation Psychology",
+    title: "Ch 25 – Aviation Psychology and Human Factors",
     questions: [
       { id: 22501, question: "Stress occurs:", options: ["With inexperienced pilots when the situational demands exceed their individual capabilities", "While monitoring the progress of motor programmes", "While concentrating on routine procedures"], correct: 0 },
       { id: 22502, question: "Divided attention is the ability:", options: ["To overcome mental blocks", "To execute several mental activities at almost the same time", "To train or practice regularly"], correct: 1 },
@@ -1014,7 +1014,7 @@ export const rkBaliRegTopics: QuizTopic[] = [
   },
   {
     id: "rkbali-reg-ch26",
-    title: "Ch 26 – Aviation Physiology",
+    title: "Ch 26 – Aviation Physiology and Human Factors",
     questions: [
       { id: 22601, question: "A flight crew has completed a two-day stay at a hospital. What must he/she do before flying?", options: ["Do his class I medical from an authorized agency", "Take clearance from DGCA before flying", "Seek advice from the authority and Aviation Medicine Specialist"], correct: 2 },
       { id: 22602, question: "Linear deceleration:", options: ["Causes sensory illusions on the pitch axis", "Can create the illusion of being in a nose up attitude", "Application of full power during a missed approach can lead to this illusion"], correct: 0 },
@@ -1125,7 +1125,7 @@ export const rkBaliRegTopics: QuizTopic[] = [
   },
   {
     id: "rkbali-reg-ch27",
-    title: "Ch 27 – Additional Practice (Human Factors)",
+    title: "Ch 27 – Additional Practice Questions: Human Factors",
     questions: [
       { id: 22801, question: "The atmosphere contains the following gases:", options: ["78% nitrogen, 21% oxygen, 0.03% carbon dioxide, rest rare gases", "78% helium, 21% oxygen, 0.03% carbon dioxide, rest rare gases", "78% nitrogen, 21% oxygen, 1% carbon monoxide, rest rare gases"], correct: 0 },
       { id: 22802, question: "The volume percentage of oxygen in the atmosphere is 21% which:", options: ["Is constant for all altitudes conventional airplanes can reach", "Decreases with increasing altitude", "Increases with increasing altitude"], correct: 0 },
