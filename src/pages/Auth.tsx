@@ -360,6 +360,9 @@ const Auth = () => {
               <p className="text-xs text-muted-foreground">
                 You'll be signed in automatically once verified.
               </p>
+              <div className="bg-amber-500/15 border-2 border-amber-500/50 rounded-lg p-3 text-left">
+                <p className="text-xs font-bold text-amber-600 dark:text-amber-400">⏳ Important: A separate verification email will be sent to you. Please wait 100–120 seconds to receive it, then click the link to verify.</p>
+              </div>
               <div className="bg-muted/50 border border-border rounded-lg p-3 text-left space-y-2">
                 <p className="text-xs font-medium text-foreground">⚠️ Can't find the verify link?</p>
                 <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
