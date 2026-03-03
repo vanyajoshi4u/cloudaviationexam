@@ -68,7 +68,7 @@ const Hero = () => {
             <span className="text-gradient-gold">Bank</span>
             <br />
             <span className="inline-flex items-center gap-2 mt-3 text-base sm:text-xl md:text-2xl font-semibold">
-              <span className="text-muted-foreground">and</span>
+              <span className="text-muted-foreground">with</span>
               <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                 RTR Part-2 DGCA Simulator
               </span>
