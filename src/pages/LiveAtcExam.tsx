@@ -636,6 +636,33 @@ const LiveAtcExam = () => {
             </AnimatePresence>
           </div>
 
+          {/* ATIS/METAR Information */}
+          <div className="border-b border-border/30">
+            <div className="bg-amber-500/10 px-3 py-1.5">
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400 text-center">
+                ATIS/METAR Information "{scenario.atisInfo.designator}"
+              </h2>
+            </div>
+            <div className="p-2 space-y-0.5 text-[11px]">
+              {[
+                ["Time of Observation", scenario.atisInfo.timeOfObservation],
+                ["Runway in Use", scenario.atisInfo.runwayInUse],
+                ["Wind", scenario.atisInfo.wind],
+                ["Visibility", scenario.atisInfo.visibility],
+                ["Clouds", scenario.atisInfo.clouds],
+                ["Temperature", scenario.atisInfo.temperature],
+                ["Dewpoint", scenario.atisInfo.dewpoint],
+                ["QNH", scenario.atisInfo.qnh],
+                ...(scenario.atisInfo.remarks ? [["Remarks", scenario.atisInfo.remarks]] : []),
+              ].map(([label, value]) => (
+                <div key={label} className="flex gap-1">
+                  <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
+                  <span className="font-semibold text-foreground">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Timer */}
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
