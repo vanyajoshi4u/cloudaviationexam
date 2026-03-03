@@ -336,7 +336,13 @@ const SubjectCards = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="flex flex-col gap-2"
         >
-          {subjectsData.map((subject) => {
+          {subjectsData.filter((subject) => {
+            // Hide Live ATC subject for users without Live ATC access
+            if (subject.title === "RTR Part 2 (DGCA) Practice with Live ATC" && !hasLiveAtcAccess) {
+              return false;
+            }
+            return true;
+          }).map((subject) => {
             const isSubjectOpen = openSubject === subject.title;
 
             return (
