@@ -101,15 +101,17 @@ Deno.serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are an OCR assistant analyzing payment screenshots. Extract THREE things from the image:
-1. The referral code, transaction ID, UTR number, or reference number
-2. The payment amount (in ₹ or INR)
-3. The recipient/payee name (the person or account the payment was sent TO)
+            content: `You are an OCR assistant analyzing payment screenshots. Extract FOUR things from the image:
+1. The UTR number (a 12-digit numeric code, e.g. 532318140034)
+2. The Transaction ID (usually starts with "T" followed by digits, e.g. T2603031617537445458455)
+3. The payment amount (in ₹ or INR)
+4. The recipient/payee name (the person or account the payment was sent TO)
 
 Return your response in this exact JSON format:
-{"referralCode": "THE_CODE_OR_NOT_FOUND", "amount": THE_NUMBER_OR_0, "recipientName": "THE_NAME_OR_NOT_FOUND"}
+{"utr": "THE_UTR_OR_NOT_FOUND", "transactionId": "THE_TRANSACTION_ID_OR_NOT_FOUND", "amount": THE_NUMBER_OR_0, "recipientName": "THE_NAME_OR_NOT_FOUND"}
 
-If you cannot find a referral code, use "NOT_FOUND" for referralCode.
+If you cannot find a UTR number, use "NOT_FOUND" for utr.
+If you cannot find a Transaction ID, use "NOT_FOUND" for transactionId.
 If you cannot find an amount, use 0 for amount.
 If you cannot find a recipient name, use "NOT_FOUND" for recipientName.
 Return ONLY the JSON, nothing else.`,
@@ -119,7 +121,7 @@ Return ONLY the JSON, nothing else.`,
             content: [
               {
                 type: "text",
-                text: "Extract the referral code, payment amount, and recipient name from this payment screenshot.",
+                text: "Extract the UTR number, Transaction ID, payment amount, and recipient name from this payment screenshot.",
               },
               {
                 type: "image_url",
@@ -158,7 +160,7 @@ Return ONLY the JSON, nothing else.`,
     console.log(`AI raw response: "${rawContent}", User referral: "${referralCode}", Expected amount: ${expectedAmount}`);
 
     // Parse AI response JSON
-    let extracted = { referralCode: "NOT_FOUND", amount: 0, recipientName: "NOT_FOUND" };
+    let extracted = { utr: "NOT_FOUND", transactionId: "NOT_FOUND", amount: 0, recipientName: "NOT_FOUND" };
     try {
       const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
@@ -168,7 +170,7 @@ Return ONLY the JSON, nothing else.`,
       console.error("Failed to parse AI response as JSON:", rawContent);
     }
 
-    // Validate recipient name - must be TANISHKA AGARWAL
+    // Validate recipient name - must be TANISHKA AGARWAL or RAHUL
     const validNames = ["tanishka agarwal", "rahul"];
     const extractedName = (extracted.recipientName || "NOT_FOUND").toLowerCase().trim();
     const nameMatch = extractedName !== "not_found" && validNames.some(n => extractedName.includes(n) || n.includes(extractedName));
@@ -183,26 +185,30 @@ Return ONLY the JSON, nothing else.`,
       );
     }
 
-    // Validate referral code
-    if (extracted.referralCode === "NOT_FOUND") {
-      return new Response(
-        JSON.stringify({
-          match: false,
-          message: "Could not find a referral code in the screenshot. Please ensure the referral code is visible in your payment screenshot.",
-        }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    const normalizedExtracted = extracted.referralCode.toLowerCase().replace(/[\s-]/g, "");
+    // Validate UTR or Transaction ID - user can enter either one
     const normalizedInput = referralCode.trim().toLowerCase().replace(/[\s-]/g, "");
-    const codeMatch = normalizedExtracted.includes(normalizedInput) || normalizedInput.includes(normalizedExtracted);
+    const extractedUtr = (extracted.utr || "NOT_FOUND").toLowerCase().replace(/[\s-]/g, "");
+    const extractedTxnId = (extracted.transactionId || "NOT_FOUND").toLowerCase().replace(/[\s-]/g, "");
 
-    if (!codeMatch) {
+    const utrMatch = extractedUtr !== "not_found" && (extractedUtr.includes(normalizedInput) || normalizedInput.includes(extractedUtr));
+    const txnMatch = extractedTxnId !== "not_found" && (extractedTxnId.includes(normalizedInput) || normalizedInput.includes(extractedTxnId));
+
+    if (!utrMatch && !txnMatch) {
+      // Check if neither was found at all
+      if (extractedUtr === "not_found" && extractedTxnId === "not_found") {
+        return new Response(
+          JSON.stringify({
+            match: false,
+            message: "Could not find a UTR number or Transaction ID in the screenshot. Please ensure it is visible in your payment screenshot.",
+          }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      const foundCode = extractedUtr !== "not_found" ? extracted.utr : extracted.transactionId;
       return new Response(
         JSON.stringify({
           match: false,
-          message: `The referral code in your screenshot ("${extracted.referralCode}") does not match the code you entered ("${referralCode}"). Please check and try again.`,
+          message: `The code in your screenshot ("${foundCode}") does not match what you entered ("${referralCode}"). You can enter either the 12-digit UTR number or the Transaction ID starting with T.`,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
