@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Upload, CheckCircle, Loader2, Tag } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Upload, CheckCircle, Loader2, Tag, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,26 @@ const LiveAtcUpgradeDialog = ({ open, onOpenChange, onSuccess }: LiveAtcUpgradeD
   const [referralCode, setReferralCode] = useState("");
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [has999Plan, setHas999Plan] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const check = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { setHas999Plan(false); return; }
+      const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin");
+      if (roles && roles.length > 0) { setHas999Plan(true); return; }
+      const { data: subs } = await supabase
+        .from("subscriptions")
+        .select("plan, status, expires_at")
+        .eq("user_id", user.id)
+        .eq("status", "approved")
+        .eq("plan", "3_months");
+      const hasActive = subs?.some(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? false;
+      setHas999Plan(hasActive);
+    };
+    check();
+  }, [open]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -102,9 +122,22 @@ const LiveAtcUpgradeDialog = ({ open, onOpenChange, onSuccess }: LiveAtcUpgradeD
         <DialogHeader>
           <DialogTitle className="font-display text-xl">Upgrade to Live ATC Practice</DialogTitle>
           <DialogDescription>
-            Upgrade to RTR Part-2 Practice with Live ATC Simulator for ₹499 (3 months access). Pay below to unlock it.
+            {has999Plan === false
+              ? "You need an active ₹999 RTR Part-2 plan before you can add Live ATC."
+              : "Add Live ATC Simulator to your ₹999 plan for ₹499 (3 months access). Pay below to unlock it."}
           </DialogDescription>
         </DialogHeader>
+
+        {has999Plan === false ? (
+          <div className="flex flex-col items-center gap-3 py-6">
+            <AlertTriangle className="w-10 h-10 text-yellow-500" />
+            <p className="text-sm text-muted-foreground text-center">
+              Live ATC is an add-on for the ₹999 RTR Part-2 plan. Please subscribe to the ₹999 plan first.
+            </p>
+            <Button variant="outline" onClick={() => onOpenChange(false)}>Close</Button>
+          </div>
+        ) : (
+        <>
 
         {/* QR Code */}
         <div className="my-2">
@@ -158,6 +191,8 @@ const LiveAtcUpgradeDialog = ({ open, onOpenChange, onSuccess }: LiveAtcUpgradeD
             Submit Payment
           </Button>
         </form>
+        </>
+        )}
       </DialogContent>
     </Dialog>
   );
