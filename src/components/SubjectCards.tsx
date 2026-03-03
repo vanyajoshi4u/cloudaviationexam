@@ -288,7 +288,7 @@ const SubjectCards = () => {
         .eq("status", "approved");
       const activeSubs = subs?.filter(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? [];
       const hasRtr2 = activeSubs.some(s => s.plan === "3_months");
-      const hasLiveAtc = activeSubs.some(s => s.plan === "live_atc_3_months" || s.plan === "3_months");
+      const hasLiveAtc = activeSubs.some(s => s.plan === "live_atc_3_months");
       setHasRtr2Access(hasRtr2);
       setHasLiveAtcAccess(hasLiveAtc);
     };
