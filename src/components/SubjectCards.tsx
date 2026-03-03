@@ -337,9 +337,9 @@ const SubjectCards = () => {
           className="flex flex-col gap-2"
         >
           {subjectsData.filter((subject) => {
-            // Hide Live ATC subject for users without Live ATC access
-            if (subject.title === "RTR Part 2 (DGCA) Practice with Live ATC" && !hasLiveAtcAccess) {
-              return false;
+            // Live ATC is an add-on only for ₹999 (3_months) users or those who already have it
+            if (subject.title === "RTR Part 2 (DGCA) Practice with Live ATC") {
+              return hasRtr2Access || hasLiveAtcAccess;
             }
             return true;
           }).map((subject) => {
