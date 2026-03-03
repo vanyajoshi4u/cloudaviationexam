@@ -1,3 +1,17 @@
+export interface AtisInfo {
+  designator: string;
+  timeOfObservation: string;
+  runwayInUse: string;
+  wind: string;
+  visibility: string;
+  weather?: string;
+  clouds: string;
+  temperature: string;
+  dewpoint: string;
+  qnh: string;
+  remarks?: string;
+}
+
 export interface RtrScenario {
   id: number;
   scenarioContext: string;
@@ -18,6 +32,7 @@ export interface RtrScenario {
     endurance: string;
     exerciseStartTime: string;
   };
+  atisInfo: AtisInfo;
   frequencies: {
     description: string;
     frequency: string;
@@ -52,6 +67,18 @@ const paper1Scenarios: RtrScenario[] = [
       pob: "152",
       endurance: "0500 Hrs",
       exerciseStartTime: "1105 UTC",
+    },
+    atisInfo: {
+      designator: "K",
+      timeOfObservation: "1100 UTC",
+      runwayInUse: "09",
+      wind: "340°/03 Knots",
+      visibility: "3000 Metres",
+      clouds: "SCT 1500 FT, BKN 2500 FT",
+      temperature: "12°C",
+      dewpoint: "08°C",
+      qnh: "1016 hPa",
+      remarks: "No significant weather",
     },
     frequencies: [
       { description: "DELHI SMC", frequency: "118.55 MHz" },
@@ -88,6 +115,17 @@ const paper1Scenarios: RtrScenario[] = [
       endurance: "0500 Hrs",
       exerciseStartTime: "1105 UTC",
     },
+    atisInfo: {
+      designator: "K",
+      timeOfObservation: "1100 UTC",
+      runwayInUse: "09",
+      wind: "340°/03 Knots",
+      visibility: "3000 Metres",
+      clouds: "SCT 1500 FT, BKN 2500 FT",
+      temperature: "12°C",
+      dewpoint: "08°C",
+      qnh: "1016 hPa",
+    },
     frequencies: [
       { description: "DELHI SMC", frequency: "118.55 MHz" },
       { description: "DELHI CONTROL TOWER", frequency: "118.10 MHz" },
@@ -123,6 +161,17 @@ const paper1Scenarios: RtrScenario[] = [
       pob: "152",
       endurance: "0500 Hrs",
       exerciseStartTime: "1105 UTC",
+    },
+    atisInfo: {
+      designator: "K",
+      timeOfObservation: "1100 UTC",
+      runwayInUse: "09",
+      wind: "340°/03 Knots",
+      visibility: "3000 Metres",
+      clouds: "SCT 1500 FT, BKN 2500 FT",
+      temperature: "12°C",
+      dewpoint: "08°C",
+      qnh: "1016 hPa",
     },
     frequencies: [
       { description: "DELHI SMC", frequency: "118.55 MHz" },
@@ -161,6 +210,17 @@ const paper1Scenarios: RtrScenario[] = [
       endurance: "0500 Hrs",
       exerciseStartTime: "1105 UTC",
     },
+    atisInfo: {
+      designator: "K",
+      timeOfObservation: "1100 UTC",
+      runwayInUse: "09",
+      wind: "340°/03 Knots",
+      visibility: "3000 Metres",
+      clouds: "SCT 1500 FT, BKN 2500 FT",
+      temperature: "12°C",
+      dewpoint: "08°C",
+      qnh: "1016 hPa",
+    },
     frequencies: [
       { description: "DELHI SMC", frequency: "118.55 MHz" },
       { description: "DELHI CONTROL TOWER", frequency: "118.10 MHz" },
@@ -195,6 +255,17 @@ const paper1Scenarios: RtrScenario[] = [
       endurance: "0500 Hrs",
       exerciseStartTime: "1105 UTC",
     },
+    atisInfo: {
+      designator: "K",
+      timeOfObservation: "1100 UTC",
+      runwayInUse: "09",
+      wind: "340°/03 Knots",
+      visibility: "3000 Metres",
+      clouds: "SCT 1500 FT, BKN 2500 FT",
+      temperature: "12°C",
+      dewpoint: "08°C",
+      qnh: "1016 hPa",
+    },
     frequencies: [
       { description: "DELHI SMC", frequency: "118.55 MHz" },
       { description: "DELHI CONTROL TOWER", frequency: "118.10 MHz" },
@@ -228,6 +299,17 @@ const paper1Scenarios: RtrScenario[] = [
       pob: "152",
       endurance: "0500 Hrs",
       exerciseStartTime: "1105 UTC",
+    },
+    atisInfo: {
+      designator: "K",
+      timeOfObservation: "1100 UTC",
+      runwayInUse: "09",
+      wind: "340°/03 Knots",
+      visibility: "3000 Metres",
+      clouds: "SCT 1500 FT, BKN 2500 FT",
+      temperature: "12°C",
+      dewpoint: "08°C",
+      qnh: "1016 hPa",
     },
     frequencies: [
       { description: "DELHI SMC", frequency: "118.55 MHz" },
