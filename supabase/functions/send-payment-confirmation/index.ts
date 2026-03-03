@@ -109,7 +109,7 @@ Deno.serve(async (req) => {
             </div>
             
             <div style="text-align: center;">
-              <a href="https://cloudaviationexam.lovable.app/topics" 
+              <a href="https://cloudaviationexams.com/topics" 
                  style="display: inline-block; background: #0ea5e9; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600;">
                 Start Learning →
               </a>
