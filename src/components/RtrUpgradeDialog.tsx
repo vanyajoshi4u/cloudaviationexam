@@ -56,7 +56,7 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
 
       const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
         "verify-referral-code",
-        { body: { imageBase64, referralCode: referralCode.trim(), expectedAmount: 799 } }
+        { body: { imageBase64, referralCode: referralCode.trim(), expectedAmount: 999 } }
       );
       if (verifyError) throw new Error("Verification failed. Please try again.");
       if (!verifyData.match) {
@@ -75,7 +75,7 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
       const { error: insertError } = await supabase.from("subscriptions").insert({
         user_id: user.id,
         plan: "3_months" as const,
-        amount: 799,
+        amount: 999,
         referral_code: referralCode.trim(),
         payment_screenshot_url: filePath,
         status: "pending",
@@ -85,7 +85,7 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
       toast.success("Payment successful! RTR Part-2 access activated.");
 
       supabase.functions.invoke("send-payment-confirmation", {
-        body: { plan: "3_months", amount: 799 },
+        body: { plan: "3_months", amount: 999 },
       }).catch((err) => console.error("Email sending failed:", err));
 
       onOpenChange(false);
@@ -103,7 +103,7 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
         <DialogHeader>
           <DialogTitle className="font-display text-xl">Upgrade to RTR Part-2</DialogTitle>
           <DialogDescription>
-            RTR Part-2 (DGCA) Practice Simulator requires a separate ₹999 plan for 3 months access. Pay below to unlock it.
+            Upgrade to RTR Part-2 (DGCA) Practice Simulator for ₹999 (3 months access). Pay below to unlock it.
           </DialogDescription>
         </DialogHeader>
 
@@ -113,7 +113,7 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
             <img src={paymentQR} alt="Payment QR Code" className="w-40 h-40 object-contain" />
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            Pay <span className="text-primary font-semibold">₹799</span> via PhonePe / UPI
+            Pay <span className="text-primary font-semibold">₹999</span> via PhonePe / UPI
           </p>
         </div>
 
