@@ -169,7 +169,7 @@ Return ONLY the JSON, nothing else.`,
     }
 
     // Validate recipient name - must be TANISHKA AGARWAL
-    const validNames = ["tanishka agarwal"];
+    const validNames = ["tanishka agarwal", "rahul"];
     const extractedName = (extracted.recipientName || "NOT_FOUND").toLowerCase().trim();
     const nameMatch = extractedName !== "not_found" && validNames.some(n => extractedName.includes(n) || n.includes(extractedName));
 
