@@ -42,15 +42,15 @@ const RtrPart2Exam = () => {
       const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin");
       if (roles && roles.length > 0) { setHasRtr2Access(true); return; }
 
-      // Check for active 799 subscription (RTR Part-2 access)
+      // Check for active 3_months/999 subscription (RTR Part-2 access)
       const { data: subs } = await supabase
         .from("subscriptions")
-        .select("plan, status, expires_at, amount")
+        .select("plan, amount, status, expires_at")
         .eq("user_id", user.id)
         .eq("plan", "3_months")
         .eq("status", "approved");
 
-      const hasAccess = subs?.some(s => s.amount === 799 && s.expires_at && new Date(s.expires_at) > new Date()) ?? false;
+      const hasAccess = subs?.some(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? false;
       setHasRtr2Access(hasAccess);
     };
     checkAccess();
