@@ -361,8 +361,10 @@ const RtrPart2Exam = () => {
           initial={{ x: 40, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
-          className="w-[320px] lg:w-[360px] flex-shrink-0 flex flex-col min-h-0 overflow-y-auto"
+          className="w-[320px] lg:w-[360px] flex-shrink-0 flex flex-col min-h-0"
         >
+          {/* Scrollable: Flight Info + ATIS */}
+          <div className="flex-1 min-h-0 overflow-y-auto">
           {/* Flight Information */}
           <div className="border-b border-border/30">
             <div className="bg-primary/15 px-3 py-1.5">
@@ -443,7 +445,9 @@ const RtrPart2Exam = () => {
             </div>
           </div>
 
-          {/* Timer */}
+          </div>
+
+          {/* Fixed bottom: Timer + Frequencies + PTT + Nav */}
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
