@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft } from "lucide-react";
+import UpiQrCode from "@/components/UpiQrCode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-// QR code image - place your PhonePe QR at public/payment-qr.png
-const paymentQR = "/payment-qr.png";
 
 type Plan = "3_months" | "6_months" | "12_months";
 
@@ -252,15 +251,9 @@ const Subscribe = () => {
             ))}
           </div>
 
-          {/* QR Code */}
-          <div className="text-center mb-6">
-            <p className="text-sm font-medium text-foreground mb-3">Scan QR Code to Pay</p>
-            <div className="inline-block bg-white p-3 rounded-xl">
-              <img src={paymentQR} alt="PhonePe Payment QR Code" className="w-48 h-48 object-contain" />
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Pay <span className="text-primary font-semibold">₹{plans.find((p) => p.id === selectedPlan)?.price}</span> via PhonePe / UPI
-            </p>
+          {/* Dynamic UPI QR Code */}
+          <div className="mb-6">
+            <UpiQrCode amount={plans.find((p) => p.id === selectedPlan)?.price || 0} />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
