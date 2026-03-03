@@ -3,6 +3,7 @@ export interface SamplePaperQuestion {
   question: string;
   options: string[];
   correct: number;
+  diagram?: string;
 }
 
 export interface SamplePaperTopic {

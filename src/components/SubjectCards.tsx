@@ -7,6 +7,7 @@ import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
 import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
+import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -16,7 +17,7 @@ interface SubTopic {
   chapters: string[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples";
 }
 
 interface Subject {
@@ -93,7 +94,17 @@ const subjectsData: Subject[] = [
           "Ch 25 – Aviation Psychology and Human Factors",
           "Ch 26 – Aviation Physiology and Human Factors",
           "Ch 27 – Additional Practice Questions: Human Factors",
-          "Ch 28 – Sample Question Papers",
+        ],
+      },
+      {
+        title: "Sample Question Papers",
+        hasQuiz: true,
+        quizSource: "rkbali-samples" as const,
+        chapters: [
+          "Sample Paper 1", "Sample Paper 2", "Sample Paper 3", "Sample Paper 4", 
+          "Sample Paper 5", "Sample Paper 6", "Sample Paper 7", "Sample Paper 8", 
+          "Sample Paper 9", "Sample Paper 10", "Sample Paper 11", "Sample Paper 12", 
+          "Sample Paper 13", "Sample Paper 14", "Sample Paper 15", "Sample Paper 16"
         ],
       },
     ],
@@ -410,7 +421,7 @@ const SubjectCards = () => {
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
                               {subtopic.chapters.map((chapter) => {
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapter)
                                   : null;
