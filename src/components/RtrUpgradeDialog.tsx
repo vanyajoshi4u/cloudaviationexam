@@ -103,7 +103,7 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
         <DialogHeader>
           <DialogTitle className="font-display text-xl">Upgrade to RTR Part-2</DialogTitle>
           <DialogDescription>
-            RTR Part-2 (DGCA) Practice Simulator requires a separate ₹799 plan for 3 months access. Pay below to unlock it.
+            RTR Part-2 (DGCA) Practice Simulator requires a separate ₹999 plan for 3 months access. Pay below to unlock it.
           </DialogDescription>
         </DialogHeader>
 

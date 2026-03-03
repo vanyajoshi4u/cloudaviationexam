@@ -114,7 +114,7 @@ const RtrPart2Exam = () => {
           </div>
           <h2 className="font-display text-2xl font-bold text-foreground mb-2">RTR Part-2 Access Required</h2>
           <p className="text-muted-foreground text-sm mb-4">
-            The RTR Part-2 (DGCA) Practice Simulator requires a separate ₹799 plan for 3 months access. Your current subscription does not include this module.
+            The RTR Part-2 (DGCA) Practice Simulator requires a separate ₹999 plan for 3 months access. Your current subscription does not include this module.
           </p>
           <Button onClick={() => setShowUpgrade(true)} className="font-display">
             Upgrade Now – ₹350
