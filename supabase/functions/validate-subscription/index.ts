@@ -78,26 +78,21 @@ Deno.serve(async (req) => {
 
     // Check subscription
     const { data: subs } = await dbQuery(
-      `subscriptions?user_id=eq.${user.id}&status=eq.approved&select=plan,expires_at&order=created_at.desc&limit=1`
+      `subscriptions?user_id=eq.${user.id}&status=eq.approved&select=plan,expires_at&order=created_at.desc`
     );
 
-    if (!subs || subs.length === 0) {
+    const activeSubs = (subs || []).filter((s: any) => s.expires_at && new Date(s.expires_at) > new Date());
+
+    if (activeSubs.length === 0) {
       return new Response(
         JSON.stringify({ valid: false, reason: "no_subscription" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const sub = subs[0];
-    if (sub.expires_at && new Date(sub.expires_at) <= new Date()) {
-      return new Response(
-        JSON.stringify({ valid: false, reason: "expired" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
+    const plans = activeSubs.map((s: any) => s.plan);
     return new Response(
-      JSON.stringify({ valid: true, plan: sub.plan }),
+      JSON.stringify({ valid: true, plan: plans[0], plans }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
