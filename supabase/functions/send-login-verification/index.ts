@@ -159,7 +159,7 @@ Deno.serve(async (req) => {
         return;
       }
 
-      EdgeRuntime.waitUntil((async () => {
+      (globalThis as any).EdgeRuntime?.waitUntil?.((async () => {
         try {
           const res = await fetch("https://api.resend.com/emails", {
             method: "POST",
@@ -304,9 +304,10 @@ Deno.serve(async (req) => {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (error) {
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : "Unknown error";
     console.error("Edge function error:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: msg }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
