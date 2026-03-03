@@ -284,7 +284,7 @@ const AdminDashboard = () => {
                         <div className="text-xs text-muted-foreground space-y-0.5">
                           <p>{sub.profiles?.email} · {sub.profiles?.phone}</p>
                           <p>
-                            Plan: <span className="text-foreground">{sub.plan === "6_months" ? "6 Months" : "12 Months"}</span>
+                            Plan: <span className="text-foreground">{sub.plan === "6_months" ? "6 Months (₹299)" : sub.plan === "12_months" ? "12 Months (₹499)" : sub.plan === "3_months" ? "3 Months (₹999)" : "Live ATC (₹499)"}</span>
                             {" · "}₹{sub.amount}
                             {" · "}Referral: <span className="text-primary">{sub.referral_code}</span>
                           </p>
