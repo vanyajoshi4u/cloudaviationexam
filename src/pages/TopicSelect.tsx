@@ -3,11 +3,12 @@ import { icJoshiTopics } from "@/data/icJoshiQuestions";
 import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
+import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, ...rkBaliRegTopics];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
@@ -17,7 +18,8 @@ const TopicSelect = () => {
   const isOxford = oxfordMetTopics.some((t) => t.id === topicId);
   const isRtr = rtrTopics.some((t) => t.id === topicId);
   const isRtrBank = rtrQuestionBank1Topic.id === topicId;
-  const subtitle = isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const isRkBaliReg = rkBaliRegTopics.some((t) => t.id === topicId);
+  const subtitle = isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (
