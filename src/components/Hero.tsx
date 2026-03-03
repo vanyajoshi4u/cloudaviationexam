@@ -67,8 +67,15 @@ const Hero = () => {
             Question{" "}
             <span className="text-gradient-gold">Bank</span>
             <br />
-            <span className="text-lg sm:text-2xl md:text-3xl text-muted-foreground font-semibold">
-              and RTR Part-2 DGCA Simulator
+            <span className="inline-flex items-center gap-2 mt-3 text-base sm:text-xl md:text-2xl font-semibold">
+              <span className="text-muted-foreground">and</span>
+              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                RTR Part-2 DGCA Simulator
+              </span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              </span>
             </span>
           </motion.h1>
 
