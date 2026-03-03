@@ -31,9 +31,6 @@ const UpiQrCode = ({ amount }: UpiQrCodeProps) => {
       <div className="inline-block bg-white p-4 rounded-xl">
         <QRCodeSVG value={upiLink} size={192} level="H" />
       </div>
-      <p className="text-xs text-muted-foreground mt-2">
-        UPI ID: <span className="font-mono text-foreground">{currentUpi.id}</span>
-      </p>
 
       {upiIndex === 0 && (
         <button
@@ -42,14 +39,14 @@ const UpiQrCode = ({ amount }: UpiQrCodeProps) => {
           className="mt-3 inline-flex items-center gap-1.5 text-xs text-primary hover:underline"
         >
           <AlertTriangle className="w-3 h-3" />
-          Facing bank error? Try backup UPI
+          Facing bank error? Generate new QR
         </button>
       )}
       {upiIndex === 1 && (
         <div className="mt-3 space-y-1">
           <p className="text-[10px] text-amber-500 flex items-center justify-center gap-1">
             <RefreshCw className="w-3 h-3" />
-            Using backup UPI
+            Using backup QR
           </p>
           <button
             type="button"
