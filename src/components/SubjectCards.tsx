@@ -406,11 +406,11 @@ const contentPageMap: Record<string, string> = {
                                  "Ch 18 – INS – Inertial Navigation System": "/rtr-chapter/rtr-ch18",
                                    "Ch 22 – Squelch, Microphones & Headphones": "/rtr-chapter/rtr-ch22",
                                    "Met Instruments": "/rtr-chapter/icj-met-instruments",
-                                   "Paper 1 – Full Practice Set": "/rtr2-exam/rtr2-paper-1",
-                                   "Paper 2 – Full Practice Set": "/rtr2-exam/rtr2-paper-2",
-                                   "Paper 3 – Full Practice Set": "/rtr2-exam/rtr2-paper-3",
-                                   "Paper 4 – Full Practice Set": "/rtr2-exam/rtr2-paper-4",
-                                   "Paper 5 – Full Practice Set": "/rtr2-exam/rtr2-paper-5",
+                                  "Paper 1 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-1" : "/rtr2-exam/rtr2-paper-1",
+                                   "Paper 2 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-2" : "/rtr2-exam/rtr2-paper-2",
+                                   "Paper 3 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-3" : "/rtr2-exam/rtr2-paper-3",
+                                   "Paper 4 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-4" : "/rtr2-exam/rtr2-paper-4",
+                                   "Paper 5 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-5" : "/rtr2-exam/rtr2-paper-5",
                                 };
                                 const contentLink = contentPageMap[chapter];
                                 const isClickable = !!quizTopic || !!contentLink;
@@ -420,7 +420,7 @@ const contentPageMap: Record<string, string> = {
                                     key={chapter}
                                     onClick={() => {
                                       if (contentLink) {
-                                        if (contentLink.startsWith("/rtr2-exam/") && !hasRtr2Access) {
+                                        if ((contentLink.startsWith("/rtr2-exam/") || contentLink.startsWith("/live-atc-exam/")) && !hasRtr2Access) {
                                           setShowUpgrade(true);
                                           return;
                                         }
@@ -430,7 +430,7 @@ const contentPageMap: Record<string, string> = {
                                     className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${isClickable ? "cursor-pointer" : "cursor-default"}`}
                                   >
                                     {chapter}
-                                    {contentLink?.startsWith("/rtr2-exam/") && !hasRtr2Access && (
+                                    {(contentLink?.startsWith("/rtr2-exam/") || contentLink?.startsWith("/live-atc-exam/")) && !hasRtr2Access && (
                                       <Lock className="inline w-3 h-3 ml-1.5 text-muted-foreground" />
                                     )}
                                     {contentLink && !contentLink.startsWith("/rtr2-exam/") && (

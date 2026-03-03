@@ -17,6 +17,7 @@ import VerifyLogin from "./pages/VerifyLogin";
 import EmailConfirmed from "./pages/EmailConfirmed";
 import ResetPassword from "./pages/ResetPassword";
 import RtrPart2Exam from "./pages/RtrPart2Exam";
+import LiveAtcExam from "./pages/LiveAtcExam";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -72,6 +73,11 @@ const App = () => (
               <Route path="/rtr2-exam/:paperId" element={
                 <ProtectedRoute requireAuth requireSubscription>
                   <RtrPart2Exam />
+                </ProtectedRoute>
+              } />
+              <Route path="/live-atc-exam/:paperId" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <LiveAtcExam />
                 </ProtectedRoute>
               } />
               <Route path="*" element={<NotFound />} />
