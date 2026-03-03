@@ -236,6 +236,31 @@ const subjectsData: Subject[] = [
       },
     ],
   },
+  {
+    title: "RTR Part 2 (DGCA) Practice with Live ATC",
+    subtopics: [
+      {
+        title: "Radio Telephony Paper 1",
+        chapters: ["Paper 1 – Full Practice Set"],
+      },
+      {
+        title: "Radio Telephony Paper 2",
+        chapters: ["Paper 2 – Full Practice Set"],
+      },
+      {
+        title: "Radio Telephony Paper 3",
+        chapters: ["Paper 3 – Full Practice Set"],
+      },
+      {
+        title: "Radio Telephony Paper 4",
+        chapters: ["Paper 4 – Full Practice Set"],
+      },
+      {
+        title: "Radio Telephony Paper 5",
+        chapters: ["Paper 5 – Full Practice Set"],
+      },
+    ],
+  },
 ];
 
 const SubjectCards = () => {
