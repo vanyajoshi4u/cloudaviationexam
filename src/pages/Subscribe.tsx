@@ -14,8 +14,8 @@ type Plan = "3_months" | "6_months" | "12_months";
 
 const plans = [
   { id: "3_months" as Plan, label: "3 Months", price: 799, badge: "RTR Part-2 Simulator", highlight: "Includes RTR Part-2 (DGCA) Practice Simulator access for 3 months" },
-  { id: "6_months" as Plan, label: "6 Months", price: 119, badge: "", highlight: "" },
-  { id: "12_months" as Plan, label: "12 Months", price: 250, badge: "Best Value", highlight: "" },
+  { id: "6_months" as Plan, label: "6 Months", price: 299, badge: "", highlight: "" },
+  { id: "12_months" as Plan, label: "12 Months", price: 499, badge: "Best Value", highlight: "" },
 ];
 
 const Subscribe = () => {
