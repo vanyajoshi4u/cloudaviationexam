@@ -8,6 +8,7 @@ import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
+import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
 
 interface SubTopic {
   title: string;
@@ -270,23 +271,28 @@ const SubjectCards = () => {
   const [openSubject, setOpenSubject] = useState<string | null>(null);
   const [openSubtopic, setOpenSubtopic] = useState<string | null>(null);
   const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
+  const [hasLiveAtcAccess, setHasLiveAtcAccess] = useState<boolean | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [showLiveAtcUpgrade, setShowLiveAtcUpgrade] = useState(false);
 
   useEffect(() => {
-    const checkRtr2Access = async () => {
+    const checkAccess = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { setHasRtr2Access(false); return; }
+      if (!user) { setHasRtr2Access(false); setHasLiveAtcAccess(false); return; }
       const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin");
-      if (roles && roles.length > 0) { setHasRtr2Access(true); return; }
+      if (roles && roles.length > 0) { setHasRtr2Access(true); setHasLiveAtcAccess(true); return; }
       const { data: subs } = await supabase
         .from("subscriptions")
         .select("plan, status, expires_at, amount")
         .eq("user_id", user.id)
-        .eq("plan", "3_months")
         .eq("status", "approved");
-      setHasRtr2Access(subs?.some(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? false);
+      const activeSubs = subs?.filter(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? [];
+      const hasRtr2 = activeSubs.some(s => s.plan === "3_months");
+      const hasLiveAtc = activeSubs.some(s => s.plan === "live_atc_3_months" || s.plan === "3_months");
+      setHasRtr2Access(hasRtr2);
+      setHasLiveAtcAccess(hasLiveAtc);
     };
-    checkRtr2Access();
+    checkAccess();
   }, []);
 
   const toggleSubject = (title: string) => {
@@ -420,7 +426,11 @@ const contentPageMap: Record<string, string> = {
                                     key={chapter}
                                     onClick={() => {
                                       if (contentLink) {
-                                        if ((contentLink.startsWith("/rtr2-exam/") || contentLink.startsWith("/live-atc-exam/")) && !hasRtr2Access) {
+                                    if (contentLink.startsWith("/live-atc-exam/") && !hasLiveAtcAccess) {
+                                          setShowLiveAtcUpgrade(true);
+                                          return;
+                                        }
+                                        if (contentLink.startsWith("/rtr2-exam/") && !hasRtr2Access) {
                                           setShowUpgrade(true);
                                           return;
                                         }
@@ -430,7 +440,10 @@ const contentPageMap: Record<string, string> = {
                                     className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${isClickable ? "cursor-pointer" : "cursor-default"}`}
                                   >
                                     {chapter}
-                                    {(contentLink?.startsWith("/rtr2-exam/") || contentLink?.startsWith("/live-atc-exam/")) && !hasRtr2Access && (
+                                    {contentLink?.startsWith("/live-atc-exam/") && !hasLiveAtcAccess && (
+                                      <Lock className="inline w-3 h-3 ml-1.5 text-muted-foreground" />
+                                    )}
+                                    {contentLink?.startsWith("/rtr2-exam/") && !hasRtr2Access && (
                                       <Lock className="inline w-3 h-3 ml-1.5 text-muted-foreground" />
                                     )}
                                     {contentLink && !contentLink.startsWith("/rtr2-exam/") && (
@@ -473,6 +486,7 @@ const contentPageMap: Record<string, string> = {
         </motion.div>
       </div>
       <RtrUpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} onSuccess={() => setHasRtr2Access(true)} />
+      <LiveAtcUpgradeDialog open={showLiveAtcUpgrade} onOpenChange={setShowLiveAtcUpgrade} onSuccess={() => setHasLiveAtcAccess(true)} />
     </section>
   );
 };
