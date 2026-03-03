@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X, User, UserRound, Volume2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
+import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
 import VidpAirportLayout from "@/components/VidpAirportLayout";
 import airwayChartPaper1 from "@/assets/airway-chart-paper1.png";
 import { toast } from "@/hooks/use-toast";
@@ -61,9 +61,11 @@ const LiveAtcExam = () => {
         .from("subscriptions")
         .select("plan, amount, status, expires_at")
         .eq("user_id", user.id)
-        .eq("plan", "3_months")
         .eq("status", "approved");
-      const hasAccess = subs?.some(s => s.expires_at && new Date(s.expires_at) > new Date()) ?? false;
+      const hasAccess = subs?.some(s => 
+        s.expires_at && new Date(s.expires_at) > new Date() && 
+        (s.plan === "live_atc_3_months" || s.plan === "3_months")
+      ) ?? false;
       setHasRtr2Access(hasAccess);
     };
     checkAccess();
@@ -271,9 +273,9 @@ const LiveAtcExam = () => {
           <p className="text-muted-foreground text-sm mb-4">
             The Live ATC Simulator requires a separate ₹999 plan for 3 months access.
           </p>
-          <Button onClick={() => setShowUpgrade(true)} className="font-display">Upgrade Now – ₹350</Button>
+          <Button onClick={() => setShowUpgrade(true)} className="font-display">Upgrade Now – ₹499</Button>
           <Button variant="ghost" className="mt-2 w-full" onClick={() => navigate("/")}>Go Back</Button>
-          <RtrUpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} onSuccess={() => setHasRtr2Access(true)} />
+          <LiveAtcUpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} onSuccess={() => setHasRtr2Access(true)} />
         </motion.div>
       </div>
     );
