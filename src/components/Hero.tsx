@@ -66,6 +66,10 @@ const Hero = () => {
             <br className="hidden sm:block" />
             Question{" "}
             <span className="text-gradient-gold">Bank</span>
+            <br />
+            <span className="text-lg sm:text-2xl md:text-3xl text-muted-foreground font-semibold">
+              and RTR Part-2 DGCA Simulator
+            </span>
           </motion.h1>
 
           {/* Subtitle */}
