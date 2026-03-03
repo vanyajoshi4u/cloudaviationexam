@@ -6,6 +6,7 @@ import { icJoshiTopics } from "@/data/icJoshiQuestions";
 import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
+import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -15,7 +16,7 @@ interface SubTopic {
   chapters: string[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg";
 }
 
 interface Subject {
@@ -61,7 +62,9 @@ const subjectsData: Subject[] = [
     title: "Air Regulations",
     subtopics: [
       {
-        title: "R K Bali",
+      title: "R K Bali",
+        hasQuiz: true,
+        quizSource: "rkbali-reg" as const,
         chapters: [
           "Ch 1 – Definitions And Abbreviations",
           "Ch 2 – International Organisations and Conventions",
@@ -407,7 +410,7 @@ const SubjectCards = () => {
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
                               {subtopic.chapters.map((chapter) => {
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic] : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapter)
                                   : null;
