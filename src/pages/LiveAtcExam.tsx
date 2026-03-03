@@ -64,7 +64,7 @@ const LiveAtcExam = () => {
         .eq("status", "approved");
       const hasAccess = subs?.some(s => 
         s.expires_at && new Date(s.expires_at) > new Date() && 
-        (s.plan === "live_atc_3_months" || s.plan === "3_months")
+        s.plan === "live_atc_3_months"
       ) ?? false;
       setHasRtr2Access(hasAccess);
     };
