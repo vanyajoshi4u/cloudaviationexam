@@ -69,10 +69,7 @@ const LiveAtcExam = () => {
     checkAccess();
   }, []);
 
-  // Scroll chat to bottom
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatLog, currentTranscript]);
+  // Scroll not needed during exam - log shown only at end
 
   const startExam = useCallback(() => {
     setExamStarted(true);
@@ -579,133 +576,144 @@ const LiveAtcExam = () => {
           </div>
         </div>
 
-        {/* RIGHT COLUMN */}
+        {/* RIGHT COLUMN - matches RtrPart2Exam layout */}
         <motion.div
           initial={{ x: 40, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="w-[320px] lg:w-[380px] flex-shrink-0 flex flex-col min-h-0"
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+          className="w-[320px] lg:w-[360px] flex-shrink-0 flex flex-col min-h-0 overflow-y-auto"
         >
-          {/* Flight Info (compact) */}
-          <div className="border-b border-border/30 overflow-y-auto max-h-[30%]">
+          {/* Flight Information */}
+          <div className="border-b border-border/30">
             <div className="bg-primary/15 px-3 py-1.5">
-              <h2 className="text-[11px] font-bold uppercase tracking-widest text-primary text-center">Flight Information</h2>
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-primary text-center">
+                Flight Information
+              </h2>
             </div>
-            <div className="p-2 space-y-0.5 text-[11px]">
-              {[
-                ["Aircraft", scenario.flightInfo.aircraftId],
-                ["Call Sign", scenario.flightInfo.rtCallSign],
-                ["Route", scenario.flightInfo.departure + " → " + scenario.flightInfo.destination],
-              ].map(([l, v]) => (
-                <div key={l} className="flex gap-1">
-                  <span className="text-muted-foreground">{l}:</span>
-                  <span className="font-semibold text-foreground truncate">{v}</span>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentScenario}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="p-3 space-y-1 text-xs"
+              >
+                {[
+                  ["Aircraft Identification", scenario.flightInfo.aircraftId],
+                  ["Type of Aircraft", scenario.flightInfo.aircraftType],
+                  ["RT Call Sign", scenario.flightInfo.rtCallSign],
+                  ["Registration", scenario.flightInfo.registration],
+                  ["Departure Aerodrome", scenario.flightInfo.departure],
+                  ["Destination Aerodrome", scenario.flightInfo.destination],
+                  ["ATS Route", scenario.flightInfo.atsRoute],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex gap-1">
+                    <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
+                    <span className="font-semibold text-foreground">{value}</span>
+                  </div>
+                ))}
+                <div className="flex gap-3 flex-wrap">
+                  <div className="flex gap-1"><span className="text-muted-foreground">Stand —</span><span className="font-semibold text-foreground">{scenario.flightInfo.standNo}</span></div>
+                  <div className="flex gap-1"><span className="text-muted-foreground">RWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.runwayInUse}</span></div>
+                  <div className="flex gap-1"><span className="text-muted-foreground">TWY —</span><span className="font-semibold text-foreground">{scenario.flightInfo.taxiway}</span></div>
                 </div>
-              ))}
-              <div className="flex gap-2 flex-wrap">
-                <span className="text-muted-foreground">RWY: <strong className="text-foreground">{scenario.flightInfo.runwayInUse}</strong></span>
-                <span className="text-muted-foreground">FL: <strong className="text-foreground">{scenario.flightInfo.flightLevel}</strong></span>
-                <span className="text-muted-foreground">SQK: <strong className="text-destructive">{scenario.squawk}</strong></span>
-              </div>
-            </div>
+                <div className="flex gap-3 flex-wrap">
+                  <div className="flex gap-1"><span className="text-muted-foreground">FL —</span><span className="font-semibold text-foreground">{scenario.flightInfo.flightLevel}</span></div>
+                  <div className="flex gap-1"><span className="text-muted-foreground">POB —</span><span className="font-semibold text-foreground">{scenario.flightInfo.pob}</span></div>
+                </div>
+                {[
+                  ["Alternate Airdrome", scenario.flightInfo.alternateAirdrome],
+                  ["Endurance", scenario.flightInfo.endurance],
+                  ["Exercise Start Time", scenario.flightInfo.exerciseStartTime],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex gap-1">
+                    <span className="text-muted-foreground whitespace-nowrap">{label} —</span>
+                    <span className="font-semibold text-foreground">{value}</span>
+                  </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           {/* Timer */}
-          <div className="border-b border-accent/30 bg-accent/5 py-2 flex justify-center flex-shrink-0">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="border-y border-accent/30 bg-accent/5 p-3 flex justify-center"
+          >
             <motion.div
               key={timeLeft}
               initial={{ scale: 1.02 }}
               animate={{ scale: 1 }}
-              className={`font-mono text-2xl font-black tracking-wider ${isTimeLow ? "text-destructive" : "text-foreground"}`}
+              transition={{ duration: 0.15 }}
+              className={`font-mono text-3xl sm:text-4xl font-black tracking-wider ${isTimeLow ? "text-destructive" : "text-foreground"}`}
               style={isTimeLow ? { animation: "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite" } : undefined}
             >
               {formatTime(timeLeft)}
             </motion.div>
-          </div>
+          </motion.div>
 
-          {/* Frequencies */}
-          <div className="border-b border-border/30 p-1.5 flex-shrink-0">
-            <table className="w-full text-[10px]">
+          {/* Frequencies & Squawk */}
+          <div className="border-b border-border/30 p-2">
+            <table className="w-full text-[11px] sm:text-xs">
+              <thead>
+                <tr className="bg-primary/10">
+                  <th className="text-left py-1 px-2 font-bold text-foreground">Description</th>
+                  <th className="text-right py-1 px-2 font-bold text-foreground">Frequency</th>
+                </tr>
+              </thead>
               <tbody>
                 {scenario.frequencies.map((f, i) => (
-                  <tr key={i} className="border-b border-border/10">
-                    <td className="py-0.5 px-1 text-muted-foreground">{f.description}</td>
-                    <td className="py-0.5 px-1 text-right font-mono font-semibold text-primary">{f.frequency}</td>
-                  </tr>
+                  <motion.tr
+                    key={i}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.35 + i * 0.04, duration: 0.25 }}
+                    className="border-b border-border/15"
+                  >
+                    <td className="py-1 px-2 text-foreground">{f.description}</td>
+                    <td className="py-1 px-2 text-right font-mono font-semibold text-primary">{f.frequency}</td>
+                  </motion.tr>
                 ))}
+                <motion.tr
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.3 }}
+                  className="bg-accent/20"
+                >
+                  <td className="py-1.5 px-2 font-bold text-foreground">SQUAWK</td>
+                  <td className="py-1.5 px-2 text-right font-mono font-black text-destructive text-sm">{scenario.squawk}</td>
+                </motion.tr>
               </tbody>
             </table>
           </div>
 
-          {/* Chat Log */}
-          <div className="flex-1 min-h-0 overflow-y-auto border-b border-border/30 bg-muted/30">
-            <div className="bg-green-500/10 border-b border-green-500/20 px-3 py-1">
-              <h2 className="text-[10px] font-bold uppercase tracking-widest text-green-600 dark:text-green-400 text-center flex items-center justify-center gap-1.5">
-                <Volume2 className="w-3 h-3" /> Communication Log
-              </h2>
-            </div>
-            <div className="p-2 space-y-1.5">
-              {chatLog.length === 0 && !currentTranscript && (
-                <p className="text-[10px] text-muted-foreground text-center py-4 italic">
-                  Press & hold PTT to transmit. ATC will respond.
-                </p>
-              )}
-              {chatLog.map((msg, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`text-[11px] p-2 rounded-lg ${
-                    msg.role === "pilot"
-                      ? "bg-blue-500/10 border border-blue-500/20 ml-4"
-                      : "bg-green-500/10 border border-green-500/20 mr-4"
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    {msg.role === "pilot" ? (
-                      <Mic className="w-3 h-3 text-blue-500" />
-                    ) : (
-                      <Volume2 className="w-3 h-3 text-green-500" />
-                    )}
-                    <span className={`font-bold text-[10px] ${msg.role === "pilot" ? "text-blue-600 dark:text-blue-400" : "text-green-600 dark:text-green-400"}`}>
-                      {msg.role === "pilot" ? "TX (Pilot)" : "RX (ATC)"}
-                    </span>
-                    <span className="text-[9px] text-muted-foreground ml-auto">{msg.timestamp}</span>
-                  </div>
-                  <p className={`${msg.role === "pilot" ? "text-blue-700 dark:text-blue-300" : "text-green-700 dark:text-green-300"}`}>
-                    {msg.text}
-                  </p>
-                </motion.div>
-              ))}
-              {currentTranscript && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-[11px] p-2 rounded-lg bg-blue-500/5 border border-blue-500/10 border-dashed ml-4"
-                >
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <Mic className="w-3 h-3 text-blue-500 animate-pulse" />
-                    <span className="font-bold text-[10px] text-blue-500">Listening...</span>
-                  </div>
-                  <p className="text-blue-600 dark:text-blue-300 italic">{currentTranscript}</p>
+          {/* PTT Button */}
+          <div className="p-3 border-b border-border/30">
+            {/* Status indicator */}
+            <div className="text-center mb-2">
+              {isAtcSpeaking && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-500/15 text-green-600 dark:text-green-400 text-[10px] font-bold">
+                  <Volume2 className="w-3 h-3 animate-pulse" /> ATC Speaking...
                 </motion.div>
               )}
               {isProcessing && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-[11px] p-2 rounded-lg bg-green-500/5 border border-green-500/10 mr-4 flex items-center gap-2"
-                >
-                  <div className="w-3 h-3 border-2 border-green-500 border-t-transparent rounded-full animate-spin" />
-                  <span className="text-green-600 dark:text-green-400 text-[10px]">ATC processing...</span>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[10px] font-bold">
+                  <div className="w-3 h-3 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" /> Processing...
                 </motion.div>
               )}
-              <div ref={chatEndRef} />
+              {isListening && currentTranscript && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-blue-600 dark:text-blue-400 italic mt-1 truncate px-2">
+                  "{currentTranscript}"
+                </motion.div>
+              )}
+              {!isAtcSpeaking && !isProcessing && !isListening && (
+                <p className="text-[10px] text-muted-foreground italic">Hold PTT to transmit</p>
+              )}
             </div>
-          </div>
 
-          {/* PTT Button */}
-          <div className="p-3 flex-shrink-0">
             <motion.button
               onMouseDown={handlePttDown}
               onMouseUp={handlePttUp}
@@ -721,7 +729,7 @@ const LiveAtcExam = () => {
               }}
               transition={{ duration: 0.1 }}
               className={`
-                w-full py-3 rounded-xl font-bold text-xs uppercase tracking-widest
+                w-full py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest
                 select-none flex items-center justify-center gap-2
                 transition-colors duration-100
                 ${isProcessing || isAtcSpeaking
@@ -735,37 +743,60 @@ const LiveAtcExam = () => {
               <Mic className={`w-4 h-4 ${pttPressed ? "animate-pulse" : ""}`} />
               {isAtcSpeaking ? "ATC SPEAKING..." : isProcessing ? "PROCESSING..." : pttPressed ? "TRANSMITTING..." : "PUSH TO TALK"}
             </motion.button>
+          </div>
 
-            {/* Navigation */}
-            <div className="flex gap-2 mt-2">
-              <Button variant="outline" size="sm" className="flex-1 text-xs h-8" onClick={() => { setCurrentScenario(i => i - 1); setChatLog([]); }} disabled={currentScenario === 0}>
-                ← Prev
-              </Button>
+          {/* Scenario Navigation */}
+          <div className="p-3 mt-auto flex-shrink-0">
+            <div className="flex gap-2">
+              <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full text-xs h-9"
+                  onClick={() => setCurrentScenario((i) => i - 1)}
+                  disabled={currentScenario === 0}
+                >
+                  ← Previous
+                </Button>
+              </motion.div>
               {currentScenario < scenarios.length - 1 ? (
-                <Button size="sm" className="flex-1 text-xs h-8" onClick={() => { setCurrentScenario(i => i + 1); setChatLog([]); }}>
-                  Next →
-                </Button>
+                <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                  <Button
+                    size="sm"
+                    className="w-full text-xs h-9"
+                    onClick={() => setCurrentScenario((i) => i + 1)}
+                  >
+                    Next Scenario →
+                  </Button>
+                </motion.div>
               ) : (
-                <Button variant="destructive" size="sm" className="flex-1 text-xs h-8" onClick={endExam}>
-                  Finish
-                </Button>
+                <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="w-full text-xs h-9"
+                    onClick={endExam}
+                  >
+                    Finish Test
+                  </Button>
+                </motion.div>
               )}
             </div>
-
             {/* Mobile scenario dots */}
             <div className="flex sm:hidden justify-center gap-1.5 mt-2">
               {scenarios.map((_, idx) => (
-                <button
+                <motion.button
                   key={idx}
-                  onClick={() => { setCurrentScenario(idx); setChatLog([]); }}
-                  className={`w-6 h-6 rounded text-[10px] font-bold border ${
+                  whileTap={{ scale: 0.85 }}
+                  onClick={() => setCurrentScenario(idx)}
+                  className={`w-6 h-6 rounded text-[10px] font-bold border transition-all duration-200 ${
                     idx === currentScenario
-                      ? "bg-primary text-primary-foreground border-primary"
+                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_8px_hsl(var(--primary)/0.4)]"
                       : "border-border/50 text-muted-foreground"
                   }`}
                 >
                   {idx + 1}
-                </button>
+                </motion.button>
               ))}
             </div>
           </div>
