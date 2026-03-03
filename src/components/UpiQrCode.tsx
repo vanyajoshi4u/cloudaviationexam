@@ -28,8 +28,10 @@ const UpiQrCode = ({ amount }: UpiQrCodeProps) => {
       <p className="text-sm font-medium text-foreground mb-3">
         Scan QR Code to Pay ₹{amount}
       </p>
-      <div className="inline-block bg-white p-4 rounded-xl">
-        <QRCodeSVG value={upiLink} size={192} level="H" />
+      <div className="flex justify-center">
+        <div className="bg-white p-4 rounded-xl">
+          <QRCodeSVG value={upiLink} size={192} level="H" />
+        </div>
       </div>
 
       {upiIndex === 0 && (
