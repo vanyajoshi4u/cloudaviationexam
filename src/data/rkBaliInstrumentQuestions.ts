@@ -317,6 +317,16 @@ const altitudeAlertQuestions: MCQuestion[] = [
   { id: 29, question: "'Maintain Vertical Speed' is a:", options: ["Preventive RA", "TA", "Cautionary RA"], correct: 0 },
 ];
 
+// Chapter 8: Power Plant and System Monitoring Instruments
+// All answers verified. Total: 5 MCQs.
+const powerPlantQuestions: MCQuestion[] = [
+  { id: 1, question: "What type of sensor is used to measure the output of a low pressure booster pump:", options: ["bourdon tube", "aneroid capsule", "bellows"], correct: 0 },
+  { id: 2, question: "The two principal types of direct reading pressure gauge are:", options: ["the Bourdon tube type and the capsule operated type.", "capacitance type and bellows.", "manifold pressure type and engine pressure type."], correct: 0 },
+  { id: 3, question: "Which of the following are used to measure temperature?\n1. Thermocouple\n2. Resistance\n3. Reactance\n4. Mercury", options: ["1, 2, 3, 4", "1, 2, & 4", "1, 3, & 4"], correct: 1 },
+  { id: 4, question: "An aircraft has a compensated capacitance fuel contents gauging system and is refueled so that the total fuel contents are 76,000kg at a temperature of 18 degrees C and an S.G. of 0.81. whilst the aircraft is parked the temperature increases to 26 degrees C and the S.G. becomes 0.80. the indicated fuel contents have:", options: ["decreased by 2%", "increased by 1.25%", "remained the same."], correct: 1 },
+  { id: 5, question: "The \"Bourdon tube\" is used to measure:", options: ["fuel flow", "vibrations", "pressure"], correct: 2 },
+];
+
 export const rkBaliInstrumentTopics: Topic[] = [
   { id: "rk-bali-inst-ch2", title: "Ch 2 – Altimeter", questions: altimeterQuestions },
   { id: "rk-bali-inst-ch3", title: "Ch 3 – Air Speed Indicator (ASI)", questions: asiQuestions },
@@ -324,4 +334,5 @@ export const rkBaliInstrumentTopics: Topic[] = [
   { id: "rk-bali-inst-ch5", title: "Ch 5 – Gyroscope", questions: gyroQuestions },
   { id: "rk-bali-inst-ch6", title: "Ch 6 – Inertial Navigation", questions: inertialNavQuestions },
   { id: "rk-bali-inst-ch7", title: "Ch 7 – Altitude Alert Systems", questions: altitudeAlertQuestions },
+  { id: "rk-bali-inst-ch8", title: "Ch 8 – Power Plant and System Monitoring Instruments", questions: powerPlantQuestions },
 ];
