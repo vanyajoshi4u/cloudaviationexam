@@ -77,7 +77,7 @@ const massBalanceQuestions: MCQuestion[] = [
 
 export const rkBaliGenNavMassBalanceTopic: Topic = {
   id: "rkbali-gennav-ch14-mass-balance",
-  title: "Ch 14 – Mass and Balance",
+  title: "Ch 14 – Mass and Balance - Aero Planes",
   questions: massBalanceQuestions,
 };
 
@@ -193,6 +193,6 @@ const flightPlanningQuestions: MCQuestion[] = [
 
 export const rkBaliGenNavFlightPlanningTopic: Topic = {
   id: "rkbali-gennav-ch16-flight-planning",
-  title: "Ch 16 – Flight Planning and Monitoring",
+  title: "Ch 16 – Flight Planning and Monitoring – Aero Planes",
   questions: flightPlanningQuestions,
 };
