@@ -190,9 +190,13 @@ const ilsQuestions: MCQuestion[] = [
 ];
 
 // Chapter 8: Radar
-// Partial – more questions to follow. Total so far: 1 MCQ.
+// Q2-Q9 page not uploaded. Q1, Q10-Q12 extracted. Total so far: 4 MCQs.
+// Answers: Q1:a, Q10:c, Q11:a, Q12:c
 const radarQuestions: MCQuestion[] = [
-  { id: 1, question: "The time between transmission and reception of a single pulse is 300 microseconds. Determine the range of the target.", options: ["45 nm", "90 nm", "45 kms."], correct: 2 },
+  { id: 1, question: "The time between transmission and reception of a single pulse is 300 microseconds. Determine the range of the target.", options: ["45 nm", "90 nm", "45 kms."], correct: 0 },
+  { id: 10, question: "If the pulse width/length in a primary radar was 2 μ sec, the range resolution would be?", options: ["1000m", "300 feet", "984 feet"], correct: 2 },
+  { id: 11, question: "The advantage of CW radar over a pulse system is that:", options: ["there is no minimum range.", "a single antenna can be used for TX and RX.", "is useful for SSR operations."], correct: 0 },
+  { id: 12, question: "Beam Width 3°, Pulse Width 3 μ sec. Two targets 2nm apart will appear as separate targets at what distance from the radar head?", options: ["80NM", "50NM", "40NM"], correct: 2 },
 ];
 
 export const rkBaliRadioNavTopics: QuizTopic[] = [
