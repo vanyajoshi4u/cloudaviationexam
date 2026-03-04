@@ -78,10 +78,38 @@ const projectionQuestions: MCQuestion[] = [
   { id: 52, question: "An aircraft flies a great circle track from A (40°N, 078°W) to B (40°N, 196°W) on a Lambert chart. If d'long is 118° and the angle at A and B is 031°, the mid longitude is:", options: ["068.5°W", "078°W", "137°W"], correct: 2 },
 ];
 
+const earthQuestions: MCQuestion[] = [
+  { id: 1, question: "The distance around the Earth along the Equator and around the meridian and antemeridian is:", options: ["Exactly the same", "Along Equator is more", "Around the Poles (meridian and its antemeridian) is more"], correct: 1 },
+  { id: 2, question: "The Earth rotates about it's:", options: ["Polar diameter", "Equatorial diameter", "Sometimes around the Polar and sometimes around the Equatorial diameter depending upon the season"], correct: 0 },
+  { id: 3, question: "The cardinal points are:", options: ["North, West", "South, East", "All the above"], correct: 2 },
+  { id: 4, question: "Graticule is the network of meridians and parallels on:", options: ["Earth", "Maps", "Both"], correct: 1 },
+  { id: 5, question: "The maximum difference between geocentric and geodetic latitude occurs at about:", options: ["0° north and south (equator)", "90° north and south", "45° north and south"], correct: 2 },
+  { id: 6, question: "The ratio of the ellipticity of the earth is 1/297, if the major axis is 6956 km at the equator, what is the minor axis (poles)?", options: ["6879 km", "6862 km", "6932 km"], correct: 2 },
+  { id: 7, question: "A great circle is any circle on the surface of the Earth whose:", options: ["Radius is the same as that of the Earth", "Plane passes through the center of the Earth", "Both"], correct: 2 },
+  { id: 8, question: "The shortest distance between any two points on the Earth is defined by:", options: ["A straight line joining the two places on a map", "The shorter arc of the great circle joining the two places", "The rhumb line joining the two places"], correct: 1 },
+  { id: 9, question: "A meridian is a:", options: ["Semi great circle", "Line joining places of the same latitude", "Semi great circle joining places of same longitude"], correct: 2 },
+  { id: 10, question: "For measuring latitude, the datum used is:", options: ["Equator", "Prime meridian", "The Pole"], correct: 0 },
+  { id: 11, question: "Latitude is expressed in degrees, minutes and seconds to the North or South of:", options: ["The Pole", "Equator", "Greenwich meridian"], correct: 1 },
+  { id: 12, question: "Place A on 57N 176°W & Place B 60N 177°E. Calculate dlong and approximate heading from B to A?", options: ["351° and 310°", "7° and 130°", "7° and 310°"], correct: 1 },
+  { id: 13, question: "The only line on the Earth which is both Great Circle and rhumb line is:", options: ["Meridians", "Equator", "Both"], correct: 1 },
+  { id: 14, question: "The datum for measuring Longitude is called:", options: ["The Prime Meridian", "The Prime Latitude", "The Equator"], correct: 0 },
+  { id: 15, question: "The maximum Latitude can be as much as:", options: ["90°", "180°", "360°"], correct: 0 },
+  { id: 16, question: "Parallels of Latitude and Meridians of longitude on the Earth:", options: ["Can be distinctly identified when map reading", "Are only imaginary lines and so are not marked on the Earth", "Only global satellites can identify them on the earth"], correct: 1 },
+  { id: 17, question: "Point A is 20°30'N and point B 41°30'S. If an aircraft is traveling from A to B, what is the d'lat?", options: ["21°", "61°", "62°"], correct: 2 },
+  { id: 18, question: "Earth is a:", options: ["Planet", "Satellite", "Asteroid"], correct: 0 },
+  { id: 19, question: "Distance of one NM at equator approximately is:", options: ["6105'", "6076'", "6046'"], correct: 2 },
+];
+
 export const rkBaliGenNavSolarSystemTopic: Topic = {
   id: "rkbali-gennav-ch1-solar-system",
   title: "Ch 1 – The Solar System",
   questions: solarSystemQuestions,
+};
+
+export const rkBaliGenNavEarthTopic: Topic = {
+  id: "rkbali-gennav-ch2-earth",
+  title: "Ch 2 – The Earth",
+  questions: earthQuestions,
 };
 
 export const rkBaliGenNavProjectionsTopic: Topic = {
@@ -92,5 +120,6 @@ export const rkBaliGenNavProjectionsTopic: Topic = {
 
 export const rkBaliGenNavTopics: Topic[] = [
   rkBaliGenNavSolarSystemTopic,
+  rkBaliGenNavEarthTopic,
   rkBaliGenNavProjectionsTopic,
 ];
