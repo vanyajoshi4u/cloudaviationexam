@@ -16,9 +16,14 @@ import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
 
+interface ChapterWithSubs {
+  name: string;
+  subChapters: string[];
+}
+
 interface SubTopic {
   title: string;
-  chapters: string[];
+  chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
   quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met";
@@ -34,29 +39,33 @@ const subjectsData: Subject[] = [
     title: "Air Navigation",
     subtopics: [
       {
-        title: "General Navigation – R K Bali",
-        chapters: [
-          "Ch 1 – The Solar System",
-          "Ch 2 – The Earth",
-          "Ch 3 – Projections",
-          "Ch 4 – Convergency",
-          "Ch 5 – Time",
-          "Ch 6 – Compass and Directions",
-          "Ch 7 – Distances on Earth Surface",
-          "Ch 8 – Magnetism and Compasses",
-          "Ch 9 – Dead Reckoning Navigation (DR)",
-          "Ch 10 – Measurement of DR Elements Pressure",
-          "Ch 11 – Measurement / Determination of Temperature",
-          "Ch 12 – Measurement of Elements",
-          "Ch 13 – In-flight Navigation",
-          "Ch 14 – Mass and Balance - Aero Planes",
-          "Ch 15 – Performance",
-          "Ch 16 – Flight Planning and Monitoring – Aero Planes",
-        ],
-      },
-      {
         title: "General Navigation",
-        chapters: ["Oxford", "Keith William Blue Book", "Redbird"],
+        chapters: [
+          {
+            name: "R K Bali",
+            subChapters: [
+              "Ch 1 – The Solar System",
+              "Ch 2 – The Earth",
+              "Ch 3 – Projections",
+              "Ch 4 – Convergency",
+              "Ch 5 – Time",
+              "Ch 6 – Compass and Directions",
+              "Ch 7 – Distances on Earth Surface",
+              "Ch 8 – Magnetism and Compasses",
+              "Ch 9 – Dead Reckoning Navigation (DR)",
+              "Ch 10 – Measurement of DR Elements Pressure",
+              "Ch 11 – Measurement / Determination of Temperature",
+              "Ch 12 – Measurement of Elements",
+              "Ch 13 – In-flight Navigation",
+              "Ch 14 – Mass and Balance - Aero Planes",
+              "Ch 15 – Performance",
+              "Ch 16 – Flight Planning and Monitoring – Aero Planes",
+            ],
+          },
+          "Oxford",
+          "Keith William Blue Book",
+          "Redbird",
+        ],
       },
       {
         title: "Radio Navigation",
@@ -317,6 +326,7 @@ const SubjectCards = () => {
   const navigate = useNavigate();
   const [openSubject, setOpenSubject] = useState<string | null>(null);
   const [openSubtopic, setOpenSubtopic] = useState<string | null>(null);
+  const [openBook, setOpenBook] = useState<string | null>(null);
   const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
   const [hasLiveAtcAccess, setHasLiveAtcAccess] = useState<boolean | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
@@ -452,9 +462,51 @@ const SubjectCards = () => {
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
                               {subtopic.chapters.map((chapter) => {
+                                // Handle expandable book chapters
+                                if (typeof chapter === "object" && "subChapters" in chapter) {
+                                  const bookChapter = chapter as ChapterWithSubs;
+                                  const isBookOpen = openBook === bookChapter.name;
+                                  return (
+                                    <div key={bookChapter.name}>
+                                      <button
+                                        onClick={() => setOpenBook(isBookOpen ? null : bookChapter.name)}
+                                        className="w-full flex items-center gap-2 text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 text-left"
+                                      >
+                                        <ChevronRight
+                                          className={`w-3 h-3 text-primary/60 transition-transform duration-300 flex-shrink-0 ${
+                                            isBookOpen ? "rotate-90 text-primary" : ""
+                                          }`}
+                                        />
+                                        {bookChapter.name}
+                                      </button>
+                                      <motion.div
+                                        initial={false}
+                                        animate={{
+                                          height: isBookOpen ? "auto" : 0,
+                                          opacity: isBookOpen ? 1 : 0,
+                                        }}
+                                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                                        className="overflow-hidden"
+                                      >
+                                        <div className="pl-8 flex flex-col gap-0.5">
+                                          {bookChapter.subChapters.map((sub) => (
+                                            <span
+                                              key={sub}
+                                              className="text-xs sm:text-sm text-muted-foreground py-1.5 px-3 rounded-md block text-left cursor-default"
+                                            >
+                                              {sub}
+                                            </span>
+                                          ))}
+                                        </div>
+                                      </motion.div>
+                                    </div>
+                                  );
+                                }
+
+                                const chapterName = chapter as string;
                                 const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
-                                  ? topicSource.find((t) => t.title === chapter)
+                                  ? topicSource.find((t) => t.title === chapterName)
                                   : null;
                                 
                                 // Check for content pages (non-quiz chapters)
@@ -471,12 +523,12 @@ const contentPageMap: Record<string, string> = {
                                    "Paper 4 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-4" : "/rtr2-exam/rtr2-paper-4",
                                    "Paper 5 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-5" : "/rtr2-exam/rtr2-paper-5",
                                 };
-                                const contentLink = contentPageMap[chapter];
+                                const contentLink = contentPageMap[chapterName];
                                 const isClickable = !!quizTopic || !!contentLink;
 
                                 return (
                                   <button
-                                    key={chapter}
+                                    key={chapterName}
                                     onClick={() => {
                                       if (contentLink) {
                                     if (contentLink.startsWith("/live-atc-exam/") && !hasLiveAtcAccess) {
@@ -492,7 +544,7 @@ const contentPageMap: Record<string, string> = {
                                     }}
                                     className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${isClickable ? "cursor-pointer" : "cursor-default"}`}
                                   >
-                                    {chapter}
+                                    {chapterName}
                                     {contentLink?.startsWith("/live-atc-exam/") && !hasLiveAtcAccess && (
                                       <Lock className="inline w-3 h-3 ml-1.5 text-muted-foreground" />
                                     )}
