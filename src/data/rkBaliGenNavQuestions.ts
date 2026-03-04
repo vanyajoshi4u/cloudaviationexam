@@ -320,6 +320,11 @@ export const rkBaliGenNavMagnetismTopic: Topic = {
   questions: magnetismQuestions,
 };
 
+import { rkBaliGenNavPressureTopic, rkBaliGenNavTemperatureTopic, rkBaliGenNavInFlightNavTopic } from "./rkBaliGenNavCh10to13";
+import { rkBaliGenNavMassBalanceTopic, rkBaliGenNavPerformanceTopic, rkBaliGenNavFlightPlanningTopic } from "./rkBaliGenNavCh14to16";
+
+export { rkBaliGenNavPressureTopic, rkBaliGenNavTemperatureTopic, rkBaliGenNavInFlightNavTopic, rkBaliGenNavMassBalanceTopic, rkBaliGenNavPerformanceTopic, rkBaliGenNavFlightPlanningTopic };
+
 export const rkBaliGenNavTopics: Topic[] = [
   rkBaliGenNavSolarSystemTopic,
   rkBaliGenNavEarthTopic,
@@ -329,4 +334,10 @@ export const rkBaliGenNavTopics: Topic[] = [
   rkBaliGenNavCompassTopic,
   rkBaliGenNavDistanceTopic,
   rkBaliGenNavMagnetismTopic,
+  rkBaliGenNavPressureTopic,
+  rkBaliGenNavTemperatureTopic,
+  rkBaliGenNavInFlightNavTopic,
+  rkBaliGenNavMassBalanceTopic,
+  rkBaliGenNavPerformanceTopic,
+  rkBaliGenNavFlightPlanningTopic,
 ];

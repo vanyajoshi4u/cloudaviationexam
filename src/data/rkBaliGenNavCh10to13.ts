@@ -1,0 +1,131 @@
+import { MCQuestion, Topic } from "./icJoshiQuestions";
+
+// ========== CH 10 – MEASUREMENT OF DR ELEMENTS PRESSURE ==========
+// Eliminated: Q8-20, Q24-33, Q47-52 (no answers in book)
+const pressureQuestions: MCQuestion[] = [
+  { id: 1, question: "Density varies:", options: ["Inversely with temperature and pressure", "Directly with pressure and inversely with temperature", "Inversely with pressure and directly with temperature"], correct: 1 },
+  { id: 2, question: "If pressure increases whilst temperature increases in the ISA:", options: ["Density will increase.", "Density might increase or decrease.", "Density will remain constant."], correct: 0 },
+  { id: 3, question: "If pressure increases whilst temperature increases in a non-standard atmosphere:", options: ["Density will increase.", "Density will decrease.", "Density might increase or decrease."], correct: 2 },
+  { id: 4, question: "In ISA conditions, with increase in altitude rate of fall of pressure:", options: ["Increases", "Decreases", "Remains same"], correct: 0 },
+  { id: 5, question: "In atmosphere rate of fall of pressure is:", options: ["Linear", "Exponential", "Progressive"], correct: 1 },
+  { id: 6, question: "The ISA temperature and pressure for 18,000 ft are:", options: ["-20.7°C and 506 hPa respectively", "-20.7°C and 595.2 hPa respectively", "-12.7°C and 506 hPa respectively"], correct: 0 },
+  { id: 7, question: "What is the ISA temperature value at FL 330?", options: ["-56.5°C", "-53°C", "-50°C"], correct: 2 },
+  { id: 8, question: "An aircraft is in level flight at FL100 over a mountain range, which extends up to 2400 meters AMSL. If the regional QNH is 998 hPa (use 30 ft/hPa), what is the approximate terrain clearance?", options: ["1681 feet", "450 feet", "7869 feet"], correct: 0 },
+  { id: 9, question: "An aircraft flies an altitude of 3500 feet from A to B, elevation 700 feet QNH 1015 hPa. B Elevation is 1120 feet QNH 992 hPa. Assuming the altimeter sub-scale is not changed, the aircraft will arrive over B at a height of:", options: ["2810 feet", "670 feet", "1690 feet"], correct: 2 },
+  { id: 10, question: "The atmospheric pressure at FL70 in a \"standard + 10\" atmosphere is:", options: ["781.85 hPa", "942.13 hPa", "1013.25 hPa"], correct: 0 },
+  { id: 11, question: "Which of the following cause air density to decrease?", options: ["Increasing humidity, increasing altitude, increasing temperature", "Increasing humidity, decreasing altitude, increasing temperature", "Decreasing humidity, increasing altitude, decreasing temperature"], correct: 0 },
+  { id: 12, question: "If QNH changes from 1013 to 1022 hPa will?", options: ["Increase field elevation", "Decrease field elevation", "Not affect field elevation"], correct: 2 },
+  { id: 13, question: "If QFE changes from 1013 to 1022 hPa will?", options: ["Increase field elevation", "Not affect QNH", "Increase QNH"], correct: 2 },
+  { id: 14, question: "If aerodrome elevation is 4000 ft. amsl, and QNH is 1025 hPa, what is the pressure altitude?", options: ["3540 ft.", "3640 ft.", "3740 ft."], correct: 1 },
+  { id: 15, question: "As altitude increase in the ISA?", options: ["The effects of decreasing pressure outweighs those of decreasing temperature, so aircraft performance decreases.", "The effects of decreasing density outweigh those of decreasing pressure and temperature so aircraft performance decreases", "The effects of increasing TAS: CAS ratio outweigh those of pressure and temperature so aircraft performance decreases."], correct: 0 },
+  { id: 16, question: "If the temperature is 12°C at a pressure altitude of 10000 ft., what is the density altitude?", options: ["11993 ft.", "13993 ft.", "14993 ft."], correct: 0 },
+  { id: 17, question: "If pressure altitude is 0 ft. and ambient temperature is 10°C, what is the density altitude?", options: ["593 ft.", "-593 ft.", "1593 ft."], correct: 1 },
+  { id: 18, question: "If field elevation is 1000 ft. amsl, QNH is 1025 mb, and QFE is 991.67 mb, what is the pressure altitude at the field?", options: ["-640 ft.", "1640 ft.", "640 ft."], correct: 2 },
+  { id: 19, question: "Density altitude is?\n1. The elevation at which the prevailing density occurs in the ISA\n2. The Pressure altitude at which the prevailing temperature occurs in the ISA\n3. The Pressure altitude at which the prevailing density occurs in the ISA", options: ["1", "1 and 2", "1 and 3"], correct: 2 },
+  { id: 20, question: "Pressure altitude 29000 ft, OAT -55°C. Calculate the density altitude?", options: ["28900 ft.", "27500 ft.", "27850 ft."], correct: 1 },
+  { id: 21, question: "What is the true altitude if OAT = +35°C and Pressure Altitude = 5000 feet?", options: ["5550 ft", "4555 ft.", "5320 ft"], correct: 0 },
+  { id: 22, question: "An aircraft with its altimeter setting 1013 lands at an Aerodrome with Elevation of 1240', QNH at Aerodrome = 1008. What will the altimeter read on Ground?", options: ["1375'", "1105'", "1240'"], correct: 0 },
+  { id: 23, question: "An aircraft at FL75 takes off from an Aerodrome with elevation = 1500', QNH at aerodrome = 1023.25. What is the true Vertical distance?", options: ["6300'", "6000'", "5700'"], correct: 0 },
+];
+
+export const rkBaliGenNavPressureTopic: Topic = {
+  id: "rkbali-gennav-ch10-pressure",
+  title: "Ch 10 – Measurement of DR Elements Pressure",
+  questions: pressureQuestions,
+};
+
+// ========== CH 11 – MEASUREMENT / DETERMINATION OF TEMPERATURE ==========
+// Eliminated: Q7-9 (worked examples, no answers), Q38-45
+const temperatureQuestions: MCQuestion[] = [
+  { id: 1, question: "Total Air Temp is always... than Static Air Temp and the difference varies with...", options: ["warmer, altitude", "warmer, TAS", "colder, CAS"], correct: 1 },
+  { id: 2, question: "Cruising at FL390, M.84 is found to give a TAS of 499kt. The ISA deviation at this level will be:", options: ["+19", "+15.5", "-19"], correct: 1 },
+  { id: 3, question: "In An Air Data Computer (ADC), aero plane altitude is calculated from:", options: ["Measurement of outside air temperature (OAT)", "The difference between absolute and dynamic pressure at the fuselage", "Measurement of absolute barometric pressure from a static source on the fuselage"], correct: 2 },
+  { id: 4, question: "M: Mach number   Ts: static temperature   Tt: total temperature. Which of the following statements is correct?", options: ["Ts = Tt / (1+0.2M²)", "Ts = Tt x (0.2M²)", "Ts = Tt x (1+0.2M²)"], correct: 0 },
+  { id: 5, question: "The difference between static air temperature and total air temperature is known as:", options: ["hot ramp radiation", "corrected outside air temperature", "the ram rise"], correct: 2 },
+  { id: 6, question: "An Air Data Computer (ADC):", options: ["transforms air data measurements into electric impulses driving servo motors in instruments", "is an auxiliary system that provides altitude information in the event that the static source is blocked", "measures position error in the static system and transmits this information to ATC to provide correct altitude reporting"], correct: 0 },
+  { id: 7, question: "Total air temp is ___ than ___ by an amount which is proportional to ___.", options: ["Higher, SAT, CAS", "Higher, SAT, TAS", "Higher, SAT, LSS"], correct: 1 },
+  { id: 8, question: "A temperature sensor having a recovery factor of 0.75 indicates 30°C. Static Air Temperature (SAT) is 25°C. How high is the Ram-rise?", options: ["18.8°C", "5°C", "6.7°C"], correct: 2 },
+  { id: 9, question: "If pressure altitude is 30000 ft amsl and mach number is 0.84 what is the ISA TAT?", options: ["-10°C", "10°C", "-12°C"], correct: 1 },
+  { id: 10, question: "If indicated TAT is -10°C, pressure altitude is 30000 ft. amsl, and mach number is 0.84, what is the temperature deviation?", options: ["2°C", "4°C", "-4°C"], correct: 0 },
+  { id: 11, question: "If pressure altitude is 40,000 ft. amsl, indicated TAT is -29°C what is the mach number assuming ISA conditions?", options: ["0.7", "0.75", "0.8"], correct: 1 },
+  { id: 12, question: "If mach number is 0.88 and TAT is -4°C, what is the pressure altitude in the international standard atmosphere?", options: ["22000 ft.", "28000 ft.", "26000 ft."], correct: 0 },
+  { id: 13, question: "If pressure altitude is 30000 ft., indicated TAT is -10°C, mach number is 0.82, what is the density altitude?", options: ["31000 ft.", "30382 ft.", "30674 ft."], correct: 2 },
+  { id: 14, question: "FL 350, Mach 0.80, OAT -55°C. Calculate the values for TAS and local speed of sound (LSS)?", options: ["460 kt, LSS 575 kt.", "465 kt, LSS 575 kt.", "460 kt, LSS 567 kt."], correct: 0 },
+  { id: 15, question: "TAS = 485 kt, OAT = ISA +10°C, FL 410. Calculate the Mach number?", options: ["0.852", "0.833", "0.825"], correct: 1 },
+  { id: 16, question: "TAS 487kt, FL 330, Temperature ISA + 15. Calculate the MACH number?", options: ["0.81", "0.83", "0.79"], correct: 0 },
+  { id: 17, question: "M 0.80, OAT -50°C, FL 330, GS 490 kt, VAR 20°W, Magnetic heading 140°, drift is 11° right. Calculate the true W/V?", options: ["020°/95 kts.", "020°/80 kts.", "025°/90 kts."], correct: 0 },
+  { id: 18, question: "FL250, OAT -15°C, TAS 250 kt. Calculate the Mach No.?", options: ["0.45", "0.40", "0.38"], correct: 1 },
+  { id: 19, question: "IAS 120 kt, FL 80, OAT +20°C. What is the TAS?", options: ["141 kts.", "135 kts.", "144 kts."], correct: 0 },
+  { id: 20, question: "FL120, OAT is ISA standard, CAS is 200 kt, Track is 222°(M), Heading is 215°(M), Variation is 15°W. time to fly 105 NM is 21 MIN. what is the W/V?", options: ["050°(T) / 75 kt.", "050°(T) / 70 kt.", "050°(T) / 50 kt."], correct: 0 },
+  { id: 21, question: "What corrections must be applied to indicated airspeed to produce true airspeed?", options: ["Correction for altitude and wind", "Correction for altitude and temperature", "Correction for heading and altitude"], correct: 1 },
+  { id: 22, question: "EAS is?", options: ["CAS corrected for adiabatic compression.", "IAS corrected for adiabatic compression.", "IAS corrected for pressure sensing errors."], correct: 0 },
+  { id: 23, question: "As pressure altitude increases when climbing at constant IAS?", options: ["CAS will increase.", "CAS will decrease.", "TAS will increase."], correct: 2 },
+  { id: 24, question: "As pressure altitude increases when climbing at constant mach number?", options: ["TAS will decrease then remain constant.", "CAS will decrease then remain constant", "TAS will increase."], correct: 1 },
+  { id: 25, question: "As pressure altitude increases.", options: ["Temperature decreases.", "Temperature decreases then remains constant.", "Temperature increases then remains constant."], correct: 1 },
+  { id: 26, question: "Mach number is the ratio of?", options: ["IAS:TAS.", "CAS:LSS.", "TAS:LSS."], correct: 2 },
+  { id: 27, question: "At a fixed pressure altitude an increase in temperature will?", options: ["Decrease density but increase density altitude.", "Not affect density altitude.", "Increase density but decrease density altitude."], correct: 0 },
+  { id: 28, question: "The Airspeed Indicator measures:", options: ["Differential pressure", "Differential pressure changes", "Static pressure changes"], correct: 0 },
+  { id: 29, question: "Calibrated air speed is:", options: ["IAS plus the pressure error", "IAS plus density error correction", "IAS plus instrument error correction"], correct: 2 },
+  { id: 30, question: "CAS is IAS corrected for:", options: ["position error.", "instrument error.", "density error."], correct: 0 },
+  { id: 31, question: "EAS is:", options: ["IAS corrected for compressibility", "CAS corrected for position error", "CAS corrected for compressibility"], correct: 2 },
+  { id: 32, question: "At any given height or altitude, an aircraft will always lift-off at the same?", options: ["CAS.", "Ground speed.", "EAS."], correct: 2 },
+  { id: 33, question: "CAS is?", options: ["EAS corrected for position error and compressibility error.", "IAS corrected for position error and instrument error.", "IAS corrected for density error and position error."], correct: 1 },
+  { id: 34, question: "When descending through an isothermal layer at a constant Calibrated Airspeed (CAS), the True Airspeed (TAS) will?", options: ["Decrease.", "Remain constant.", "Increase at an exponential rate"], correct: 0 },
+  { id: 35, question: "For a constant Calibrated Airspeed (CAS) and a level flight, a fall in ambient temperature will result in a:", options: ["higher True Air Speed (TAS) due to an increase in air density", "lower True Air Speed (TAS) due to an increase in air density", "higher True Air Speed (TAS) due to a decrease in air density"], correct: 1 },
+  { id: 36, question: "At a constant Mach number, the calibrated airspeed (CAS):", options: ["remains unchanged when the outside temperature increases", "increases when the altitude increases", "decreases when the altitude increases"], correct: 2 },
+  { id: 37, question: "When descending through an isothermal layer at a constant Calibrated Airspeed (CAS), the True Airspeed (TAS) will:", options: ["increase at an exponential rate", "increase at a linear rate", "decrease"], correct: 2 },
+  { id: 38, question: "When descending through an isothermal level the TAS will ......, the CAS ......, and the LSS will .......:", options: ["remain constant, decrease, increase", "Increase, increase, decrease", "remain constant, increase, remain constant"], correct: 0 },
+  { id: 39, question: "When descending through an inversion at constant TAS?", options: ["Mach number increases.", "Mach number remains constant.", "CAS decreases."], correct: 0 },
+  { id: 40, question: "When climbing through an inversion at constant TAS.", options: ["Mach number increases.", "Mach number decreases", "Mach number remains constant."], correct: 1 },
+  { id: 41, question: "When descending through an inversion at constant CAS?", options: ["TAS decreases.", "Mach number increases.", "Mach number remains constant."], correct: 1 },
+  { id: 42, question: "When climbing through an inversion at constant CAS?", options: ["TAS increases.", "Mach number decreases.", "TAS decreases."], correct: 1 },
+  { id: 43, question: "When climbing through an inversion at constant mach number?", options: ["CAS increases.", "TAS increases.", "TAS remains constant"], correct: 0 },
+  { id: 44, question: "When descending through an inversion at constant mach number?", options: ["TAS increases.", "TAS decreases.", "CAS decreases."], correct: 0 },
+  { id: 45, question: "When climbing through an inversion at constant CAS?", options: ["TAS increases.", "TAS remains constant.", "Mach number decreases."], correct: 0 },
+  { id: 46, question: "When descending through an inversion at constant CAS?", options: ["TAS increases.", "TAS decreases.", "Mach number increases."], correct: 2 },
+  { id: 47, question: "When descending through an isothermal layer at constant TAS?", options: ["Mach number increases.", "Mach number decreases.", "Mach number remains constant."], correct: 2 },
+  { id: 48, question: "When climbing through an isothermal layer at constant TAS?", options: ["Mach number increases.", "Mach number decreases.", "Mach number remains constant."], correct: 2 },
+  { id: 49, question: "When descending through an isothermal layer at constant CAS?", options: ["Mach number increases.", "Mach number decreases.", "Mach number remains constant."], correct: 1 },
+];
+
+export const rkBaliGenNavTemperatureTopic: Topic = {
+  id: "rkbali-gennav-ch11-temperature",
+  title: "Ch 11 – Measurement / Determination of Temperature",
+  questions: temperatureQuestions,
+};
+
+// ========== CH 13 – IN-FLIGHT NAVIGATION ==========
+// Eliminated: Q1-6, Q15-24
+const inFlightNavQuestions: MCQuestion[] = [
+  { id: 1, question: "With a TAS of 115 Kts the relative bearing on an ADF change from 090° to 095° in 1½ min. The distance to beacon is:", options: ["12.5 nm", "24.5 nm", "34.5 nm"], correct: 2 },
+  { id: 2, question: "The ADF indicates a wing tip bearing change of 5° in 5 min. TAS is 115 Kts. The distance to beacon is:", options: ["36 nm", "57.5 nm", "115 nm"], correct: 2 },
+  { id: 3, question: "The ADF indicates a wing tip bearing change of 5° in 1.5 min. The time to beacon is:", options: ["18 min", "24 min", "30 min"], correct: 0 },
+  { id: 4, question: "With a TAS of 90 K the relative bearing on an ADF changes from 090° to 100° in 2½ min. the distance & time to beacon is:", options: ["15 nm 22.5 min", "22.5 nm 15 min", "32 nm 18 min"], correct: 1 },
+  { id: 5, question: "The ADF indicates a wing tip bearing change of 15° in 7.5 min. The fuel consumption is 9.6 GPH. TAS is 85 K. The distance to beacon is:", options: ["30 min, 42.5 nm, 4.8 Gal", "32 min, 48 nm, 5.58 Gal", "48 min, 42.5 nm, 4.58 Gal"], correct: 0 },
+  { id: 6, question: "Maintaining a constant heading the ADF reading changes from 045 to 090 in 5 min. TAS is 120. Fuel consumption is 5 GPH. The distance to beacon is:", options: ["5 min, 10 nm, 0.4 Gal", "6.7 min, 13.4 nm, 0.6 Gal", "10 min, 20 nm, 2.5 Gal"], correct: 0 },
+  { id: 7, question: "Maintaining a constant heading the ADF reading changes from 315 to 270 in 7 min. TAS is 120. Fuel consumption is 18 GPH. The distance to beacon is:", options: ["7 min, 14 nm, 2.1 Gal", "7 min, 13 nm, 2.1 Gal", "9.3 min, 18.7 nm, 2.8 Gal"], correct: 1 },
+  { id: 8, question: "At 60 NMs from station you travel approximately ___ NMs for each degree of radial crossed.", options: ["0.5", "1", "5"], correct: 1 },
+  { id: 9, question: "According to the chart the minimum obstruction clearance altitude (MOCA) is 8500ft. The meteorological data gives an outside air temperature of -20°C at FL 85. The QNH, given by a met. station at an elevation of 4000ft, is 1003hPa. What is the minimum pressure altitude which should be flown according to the given MOCA?", options: ["8200ft", "8500ft", "8800ft"], correct: 2 },
+  { id: 10, question: "An aircraft is flying at MACH 0.84 at FL 330. The static air temperature is -48°C and the headwind component 52kt. At 1338UTC the controller requests the pilot to cross the meridian of 030W at 1500UTC. Given the distance to go is 570NM, the reduced MACH No. should be:", options: ["0.78", "0.80", "0.71"], correct: 0 },
+  { id: 11, question: "Flight Planning chart for an aero plane states, that the time to reach the cruising level at a given gross mass is 36 minutes and the distance traveled is 157NM (zero-wind). What will be the distance traveled with an average tailwind component of 60kt?", options: ["193NM", "228NM", "157NM"], correct: 0 },
+  { id: 12, question: "An aero plane flies at an airspeed of 380kt. It flies from A to B and back to A. Distance AB=480NM. When going from A to B, it experiences a headwind component=60kt. The wind remains constant. The duration of the flight will be:", options: ["2h 35min", "3h 00min", "2h 10min"], correct: 0 },
+  { id: 13, question: "A sector distance is 450NM long. The TAS is 460kt. The wind component is 50kt tailwind. What is the still air distance?", options: ["406 Nautical Air Miles (NAM)", "414 Nautical Air Miles (NAM)", "499 Nautical Air Miles (NAM)"], correct: 1 },
+  { id: 14, question: "A descent is planned from 7500ft MSL so as to arrive at 1000ft MSL 6NM from a VORTAC. With a GS of 156 kts and a rate of descent of 800ft/min. The distance from the VORTAC when descent is started is:", options: ["21.1NM", "27.1NM", "30.2NM"], correct: 1 },
+  { id: 15, question: "An aircraft at FL370 is required to commence descent when 100 NM from a DME facility and to cross the station at FL120. If the mean GS during the descent is 396 kt, the minimum rate of descent required is approximately?", options: ["1650 FT/MIN.", "2400 FT/MIN.", "1000 FT/MIN."], correct: 0 },
+  { id: 16, question: "At 0422 an aircraft at FL370, GS 320kt, is on the direct track to VOR 'X' 185 NM distant. The aircraft is required to cross VOR 'X' at FL80. For a mean rate of descent of 1800 FT/MIN at a mean GS of 232 kt, the latest time at which to commence descent is?", options: ["0451.", "0454.", "0445."], correct: 1 },
+  { id: 17, question: "Assuming zero wind, what distance is covered by an aircraft descending 15000 FT with a TAS of 320 kt and maintaining a rate of descent of 3000 FT/MIN?", options: ["16.0 NM.", "26.7 NM.", "19.2 NM."], correct: 1 },
+  { id: 18, question: "What will be the rate of descent when flying down a 7% glide slope, at a groundspeed of 250 knots?", options: ["1575 ft/min.", "1737 ft/min.", "1773 ft/min."], correct: 1 },
+  { id: 19, question: "Aircraft height 2500 FT, ILS GP angle 3°. At what approximate distance from THR can you expect to capture the GP?", options: ["8.3 NM.", "7.0 NM.", "13.1 NM."], correct: 0 },
+  { id: 20, question: "Wing tip bearing change is 10 deg. Elapsed time between bearings is 8 minutes. Rate of fuel consumption is 11.8 GPH. Calculate fuel required to reach the station in Gallons.", options: ["9.4", "11.8", "15.7"], correct: 0 },
+  { id: 21, question: "Convert 40 USG to Kgs and liters. SG 0.72.", options: ["182 kg/ 131 liter", "151 liter/109 kg", "182 liter/131 kg"], correct: 0 },
+  { id: 22, question: "Convert into KMs: NMs: 15, 60. SMs: 17.26, 69.05.", options: ["110, 126.6, 232.4", "60, 69, 126", "170, 195.6, 314.8"], correct: 0 },
+  { id: 23, question: "Convert into litres: USG/Hr: 10, 102. IG/Hr: 8.3, 85.", options: ["102, 85, 336", "8.3, 6.9, 31.4", "85, 102, 322"], correct: 2 },
+  { id: 24, question: "Convert to Kelvin: Celsius: 15, -40. Fahrenheit: 59, -40.", options: ["-15, 5, 258", "59, 15, 332", "-28, -18, 254"], correct: 0 },
+  { id: 25, question: "Convert to metric tons: KGs: 200, 690. Lbs: 441, 1521.", options: ["441, 992, 0.44", "690, 1521, 0.76", "440, 970, 0.44"], correct: 2 },
+];
+
+export const rkBaliGenNavInFlightNavTopic: Topic = {
+  id: "rkbali-gennav-ch13-inflight",
+  title: "Ch 13 – In-Flight Navigation",
+  questions: inFlightNavQuestions,
+};
