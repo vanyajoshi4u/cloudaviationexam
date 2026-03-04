@@ -64,8 +64,18 @@ const projectionQuestions: MCQuestion[] = [
   { id: 38, question: "Maps indicate the details of the topography. Pilots can use this for:", options: ["Contact navigation", "Instrument flying", "Dead reckoning navigation"], correct: 0 },
   { id: 39, question: "Graticule is the network of meridians and parallels on:", options: ["Earth", "Maps", "Both"], correct: 1 },
   { id: 40, question: "The scale of a chart is shown as 1:1 million. This means that:", options: ["1\" on the chart equals 1 million inches on the Earth", "1 c.m. on the chart represents 1 million centimeters on the Earth", "Both"], correct: 2 },
-  { id: 41, question: "On a direct Mercator projection, at latitude 45° North, a certain length represents 86 nm. At latitude 30° North, the same length represents approximately:", options: ["86 nm", "75 nm", "45 nm"], correct: 0 },
-  { id: 42, question: "At 60° N the scale of a direct Mercator chart is 1:3,000,000. What is the scale at the equator?", options: ["1 : 5 000 000", "1 : 6 000 000", "1 : 12 000 000"], correct: 1 },
+  { id: 41, question: "On a polar stereographic chart, parallels of latitude appear as:", options: ["Straight lines", "Ellipses", "Concentric circles"], correct: 2 },
+  { id: 42, question: "On a Lambert chart with a convergency factor of 0.785, the chart convergence between two meridians 20° apart is:", options: ["15.7°", "20°", "10°"], correct: 0 },
+  { id: 43, question: "The departure between two points at latitude 60°N separated by 10° of longitude is:", options: ["300 nm", "600 nm", "520 nm"], correct: 0 },
+  { id: 44, question: "On a Mercator chart, the distance between parallels 50°N and 51°N compared to the distance between 30°N and 31°N is:", options: ["Smaller", "The same", "Larger"], correct: 2 },
+  { id: 45, question: "The scale on a Mercator chart at latitude 60°N compared to the scale at the equator is:", options: ["Half", "The same", "Double"], correct: 2 },
+  { id: 46, question: "On a Lambert chart with standard parallels at 30°N and 60°N, the scale between these parallels is:", options: ["Expanded", "Contracted", "Exactly correct at all points"], correct: 1 },
+  { id: 47, question: "The convergence factor (n) on a Lambert chart with standard parallels 35°N and 65°N is approximately:", options: ["0.500", "0.766", "1.000"], correct: 1 },
+  { id: 48, question: "The chart convergence on a Lambert chart equals:", options: ["d'long × sin (parallel of origin)", "d'long × cos (parallel of origin)", "d'long × tan (parallel of origin)"], correct: 0 },
+  { id: 49, question: "On a direct Mercator projection, at latitude 45° North, a certain length represents 86 nm. At latitude 30° North, the same length represents approximately:", options: ["86 nm", "75 nm", "45 nm"], correct: 0 },
+  { id: 50, question: "At 60° N the scale of a direct Mercator chart is 1:3,000,000. What is the scale at the equator?", options: ["1 : 5 000 000", "1 : 6 000 000", "1 : 12 000 000"], correct: 1 },
+  { id: 51, question: "On a Lambert conformal conic chart, a great circle track between two points:", options: ["Is approximately a straight line", "Is always a curved line concave to the nearest pole", "Is a rhumb line"], correct: 0 },
+  { id: 52, question: "An aircraft flies a great circle track from A (40°N, 078°W) to B (40°N, 196°W) on a Lambert chart. If d'long is 118° and the angle at A and B is 031°, the mid longitude is:", options: ["068.5°W", "078°W", "137°W"], correct: 2 },
 ];
 
 export const rkBaliGenNavSolarSystemTopic: Topic = {
