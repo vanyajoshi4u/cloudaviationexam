@@ -355,7 +355,8 @@ const Subscribe = () => {
 
             {/* Discount Code */}
             <div className="space-y-2 relative">
-              <Label htmlFor="discount" className="text-sm text-foreground">Discount Code</Label>
+              <Label htmlFor="discount" className="text-sm text-foreground">Discount Code <span className="text-muted-foreground font-normal">(Optional)</span></Label>
+              <p className="text-xs text-muted-foreground -mt-1">Have a discount code? Apply it before payment. No code? Just scan the QR and pay directly.</p>
               <div className="flex gap-2">
                 <div className="relative flex-1">
                   <Ticket className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
