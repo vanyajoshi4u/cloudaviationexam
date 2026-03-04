@@ -100,6 +100,19 @@ const earthQuestions: MCQuestion[] = [
   { id: 19, question: "Distance of one NM at equator approximately is:", options: ["6105'", "6076'", "6046'"], correct: 2 },
 ];
 
+const convergencyQuestions: MCQuestion[] = [
+  { id: 1, question: "The angle between the true great-circle track and the true rhumb-line track joining the following points: A (60°S165°W), B (60°S177°E), at the place of departure A, is:", options: ["15.5°", "5.2°", "7.8°"], correct: 2 },
+  { id: 2, question: "The average true course of the great circle is 100°. The true course of the rhumb line at point A is:", options: ["100°", "104°", "107°"], correct: 0 },
+  { id: 3, question: "What is the standard formula for convergency?", options: ["convergency = dlat × cos mean latitude", "convergency = dlat × sin mean latitude", "convergency = dlong × sin mean latitude"], correct: 2 },
+  { id: 4, question: "An aircraft passes position A (60°00'N120°00'W) on route to position B (60°00'N140°30'W). What is the great circle track on departure from A?", options: ["261°", "099°", "279°"], correct: 2 },
+  { id: 5, question: "A great circle track joins position A (59°S141°W) and B (61°S148°W). What is the difference between the great circle track at A and B?", options: ["It increases by 3°", "It decreases by 6°", "It increases by 6°"], correct: 2 },
+  { id: 6, question: "The rhumb line track between position A (45°00'N010°00'W) and position B (48°30'N015°00'W) is approximately:", options: ["225°", "315°", "135°"], correct: 1 },
+  { id: 7, question: "Great circle from P to Q measured at P=095° Southern hemisphere. Conversion angle P‑Q = 7°. What is the rhumb line track P‑Q?", options: ["088", "102", "109"], correct: 0 },
+  { id: 8, question: "The great circle track X‑Y measured at X is 319°, and Y 325°. Consider the following statements:", options: ["Southern hemisphere, rhumb line track is 331°", "Northern hemisphere, rhumb line track is 313°", "Southern hemisphere, rhumb line track is 322°"], correct: 2 },
+  { id: 9, question: "Place A is at 70°00'S 60°00'W and place B 70°00'S 30°00'E. Find initial great circle track.", options: ["270", "132", "312"], correct: 1 },
+  { id: 10, question: "On a Mercator chart GC track from A 25°00'S 10°00'W to B 35°00'S 40°00'W is 242. Find RL track from B to A.", options: ["249.5", "075", "069.5"], correct: 2 },
+];
+
 export const rkBaliGenNavSolarSystemTopic: Topic = {
   id: "rkbali-gennav-ch1-solar-system",
   title: "Ch 1 – The Solar System",
@@ -118,8 +131,15 @@ export const rkBaliGenNavProjectionsTopic: Topic = {
   questions: projectionQuestions,
 };
 
+export const rkBaliGenNavConvergencyTopic: Topic = {
+  id: "rkbali-gennav-ch4-convergency",
+  title: "Ch 4 – Convergency",
+  questions: convergencyQuestions,
+};
+
 export const rkBaliGenNavTopics: Topic[] = [
   rkBaliGenNavSolarSystemTopic,
   rkBaliGenNavEarthTopic,
   rkBaliGenNavProjectionsTopic,
+  rkBaliGenNavConvergencyTopic,
 ];
