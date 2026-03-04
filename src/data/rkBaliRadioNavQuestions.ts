@@ -258,6 +258,26 @@ const radarQuestions: MCQuestion[] = [
   { id: 64, question: "Blind speed in a MTI radar can be reduced by operating the radar at:", options: ["lower frequencies.", "short wave lengths.", "a low prf."], correct: 0 },
 ];
 
+// Chapter 9: Global Navigation Satellite Systems (GNSS)
+// All answers verified. Total: 15 MCQs.
+const gnssQuestions: MCQuestion[] = [
+  { id: 1, question: "Position fixing by satellite is by means of:", options: ["simultaneous bearings from a number of satellites", "range and bearing from each known satellite's position", "simultaneous ranges from a number of satellites."], correct: 2 },
+  { id: 2, question: "The DGPS is:", options: ["the time difference between the transmission of the satellite's coded signal and the time that it is received at the aircraft", "the time difference between the satellite and the aircraft GPS unit transmitting the same code point on the signal", "the correction applied to the 'raw' GPS position to obtain a more precise position."], correct: 2 },
+  { id: 3, question: "The reason that the satellites of GPS and GLONASS do not collide is:", options: ["the GPS orbit is at 55° to the equator while the GLONASS is at 60°", "the GPS satellite orbits are 1200 km higher than the GLONASS orbits", "GLONASS has only three orbital planes while GPS has six orbital planes."], correct: 1 },
+  { id: 4, question: "The GPS can:", options: ["provide two-dimension and three-dimension positions", "only provide position in latitude and longitude", "indicate two-dimension positions or position lines in the horizontal plane."], correct: 0 },
+  { id: 5, question: "The GPS transmission frequency which can be used by civil aircraft is:", options: ["1575.42 MHz in the L-band", "2227.5 MHz in the S-band", "1227.6.5MHz in the L-band."], correct: 0 },
+  { id: 6, question: "The US DoD degrades GPS accuracy:", options: ["to protect US national security", "to protect the DoD copyright", "to prevent 100% reliance on a system which may have to be interrupted for military purposes at a moment's notice."], correct: 2 },
+  { id: 7, question: "The accuracy of range measurement of satellite to GPS receiver is:", options: ["seriously reduced during periods of sunspot activity", "seriously eroded during periods of anomalous propagation in an inversion", "derived from accurate timepieces in the satellite and the aircraft's GPS receiver."], correct: 0 },
+  { id: 8, question: "Satellites used in GNSS, orbit the earth:", options: ["once in twelve hours", "once in eight hours", "once in 24 hours."], correct: 0 },
+  { id: 9, question: "Satellite geometry error is greatest when:", options: ["satellites are closest together", "satellites are spaced well apart", "satellites are nearest the horizon."], correct: 2 },
+  { id: 10, question: "It may be claimed that GNSS has the advantage over other air navigation systems in that it:", options: ["is basically a military-based system made available to civil users with solar-powered satellites which have an infinite life", "has no possible input by the pilot", "is entirely space-based."], correct: 0 },
+  { id: 11, question: "NAVSTAR/GPS operates in the ........ band and the receiver determines position by............", options: ["UHF, range position line", "UHF, secondary radar principles", "SHF, secondary radar principles"], correct: 1 },
+  { id: 12, question: "The orbital height and inclination of the NAVSTAR/GPS constellation are:", options: ["20180 km, 65°", "20180 km, 55°", "19099 km, 65°"], correct: 2 },
+  { id: 13, question: "The model of the earth used for NAVSTAR/GPS is:", options: ["WGS90", "PZ90", "WGS84"], correct: 1 },
+  { id: 14, question: "The minimum number of satellites required for a 3D fix is:", options: ["3", "4", "5"], correct: 1 },
+  { id: 15, question: "The NAVSTAR/GPS operational constellation comprises ........satellites", options: ["12", "21", "24"], correct: 2 },
+];
+
 export const rkBaliRadioNavTopics: QuizTopic[] = [
   { id: "rkbali-radnav-ch1", title: "Ch 1 – Basic Radio Theory", questions: basicRadioTheoryQuestions },
   { id: "rkbali-radnav-ch2", title: "Ch 2 – ADF / NDB", questions: adfNdbQuestions },
@@ -265,4 +285,5 @@ export const rkBaliRadioNavTopics: QuizTopic[] = [
   { id: "rkbali-radnav-ch4", title: "Ch 4 – Very High Frequency Omni Direction Radio Range (VOR)", questions: vorQuestions },
   { id: "rkbali-radnav-ch7", title: "Ch 7 – ILS (Instrument Landing System)", questions: ilsQuestions },
   { id: "rkbali-radnav-ch8", title: "Ch 8 – Radar", questions: radarQuestions },
+  { id: "rkbali-radnav-ch9", title: "Ch 9 – Global Navigation Satellite Systems (GNSS)", questions: gnssQuestions },
 ];
