@@ -12,6 +12,7 @@ import { rtrQuestionBank4Topic } from "@/data/rtrQuestionBank4";
 import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
 import { skMetTopics } from "@/data/skMetQuestions";
+import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -19,6 +20,8 @@ import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
 interface ChapterWithSubs {
   name: string;
   subChapters: string[];
+  hasQuiz?: boolean;
+  quizSource?: SubTopic["quizSource"];
 }
 
 interface SubTopic {
@@ -26,7 +29,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav";
 }
 
 interface Subject {
@@ -43,6 +46,8 @@ const subjectsData: Subject[] = [
         chapters: [
           {
             name: "R K Bali",
+            hasQuiz: true,
+            quizSource: "rkbali-gennav",
             subChapters: [
               "Ch 1 – The Solar System",
               "Ch 2 – The Earth",
@@ -489,14 +494,24 @@ const SubjectCards = () => {
                                         className="overflow-hidden"
                                       >
                                         <div className="pl-8 flex flex-col gap-0.5">
-                                          {bookChapter.subChapters.map((sub) => (
-                                            <span
-                                              key={sub}
-                                              className="text-xs sm:text-sm text-muted-foreground py-1.5 px-3 rounded-md block text-left cursor-default"
-                                            >
-                                              {sub}
-                                            </span>
-                                          ))}
+                                          {bookChapter.subChapters.map((sub) => {
+                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : [];
+                                            const subQuizTopic = bookChapter.hasQuiz ? subTopicSource.find((t) => t.title === sub) : null;
+                                            return (
+                                              <button
+                                                key={sub}
+                                                onClick={() => {
+                                                  if (subQuizTopic) navigate(`/topics/${subQuizTopic.id}`);
+                                                }}
+                                                className={`text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 block text-left ${subQuizTopic ? "cursor-pointer" : "cursor-default"}`}
+                                              >
+                                                {sub}
+                                                {subQuizTopic && (
+                                                  <span className="ml-2 text-[10px] text-primary/60">({subQuizTopic.questions.length} MCQs)</span>
+                                                )}
+                                              </button>
+                                            );
+                                          })}
                                         </div>
                                       </motion.div>
                                     </div>
@@ -504,7 +519,7 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
