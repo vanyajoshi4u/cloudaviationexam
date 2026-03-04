@@ -11,6 +11,7 @@ import { rtrQuestionBank3Topic } from "@/data/rtrQuestionBank3";
 import { rtrQuestionBank4Topic } from "@/data/rtrQuestionBank4";
 import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
+import { skMetTopics } from "@/data/skMetQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -20,7 +21,7 @@ interface SubTopic {
   chapters: string[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met";
 }
 
 interface Subject {
@@ -59,6 +60,12 @@ const subjectsData: Subject[] = [
         chapters: oxfordMetTopics.map((t) => t.title),
         hasQuiz: true,
         quizSource: "oxford",
+      },
+      {
+        title: "Question Bank",
+        chapters: ["Question Bank-1"],
+        hasQuiz: true,
+        quizSource: "sk-met" as const,
       },
     ],
   },
@@ -424,7 +431,7 @@ const SubjectCards = () => {
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
                               {subtopic.chapters.map((chapter) => {
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapter)
                                   : null;
