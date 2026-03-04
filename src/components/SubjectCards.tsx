@@ -8,6 +8,7 @@ import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
 import { rtrQuestionBank2Topic } from "@/data/rtrQuestionBank2";
 import { rtrQuestionBank3Topic } from "@/data/rtrQuestionBank3";
+import { rtrQuestionBank4Topic } from "@/data/rtrQuestionBank4";
 import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
 import { supabase } from "@/integrations/supabase/client";
@@ -175,7 +176,7 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "RTR Part 1 Question Bank",
-        chapters: ["Question Bank-1", "Question Bank-2", "Question Bank-3"],
+        chapters: ["Question Bank-1", "Question Bank-2", "Question Bank-3", "Question Bank-4"],
         hasQuiz: true,
         quizSource: "rtr" as const,
       },
@@ -423,7 +424,7 @@ const SubjectCards = () => {
                           >
                             <div className="pl-9 pb-2 flex flex-col gap-1">
                               {subtopic.chapters.map((chapter) => {
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapter)
                                   : null;
