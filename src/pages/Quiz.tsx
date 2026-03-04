@@ -24,6 +24,12 @@ import cloudsId from "@/assets/clouds-identification.png";
 import stationModelDiagram from "@/assets/station-model-diagram.png";
 import airMassesAppendixA from "@/assets/air-masses-appendix-a.jpg";
 import airMassesAppendixB from "@/assets/air-masses-appendix-b.jpg";
+import edP5 from "@/assets/electronic-display-p5.jpg";
+import edP6 from "@/assets/electronic-display-p6.jpg";
+import edP7 from "@/assets/electronic-display-p7.jpg";
+import edP8 from "@/assets/electronic-display-p8.jpg";
+import edP9 from "@/assets/electronic-display-p9.jpg";
+import edP10 from "@/assets/electronic-display-p10.jpg";
 
 const diagramMap: Record<string, string> = {
   "pressure-annexes": pressureAnnexes,
@@ -34,6 +40,12 @@ const diagramMap: Record<string, string> = {
   "station-model": stationModelDiagram,
   "air-masses-appendix-a": airMassesAppendixA,
   "air-masses-appendix-b": airMassesAppendixB,
+  "ed-p5": edP5,
+  "ed-p6": edP6,
+  "ed-p7": edP7,
+  "ed-p8": edP8,
+  "ed-p9": edP9,
+  "ed-p10": edP10,
 };
 
 const Quiz = () => {
