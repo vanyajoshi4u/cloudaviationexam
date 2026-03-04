@@ -14,6 +14,7 @@ import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
 import { skMetTopics } from "@/data/skMetQuestions";
 import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
+import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -30,7 +31,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav";
 }
 
 interface Subject {
@@ -78,7 +79,8 @@ const subjectsData: Subject[] = [
         chapters: [
           {
             name: "R K Bali",
-            hasQuiz: false,
+            hasQuiz: true,
+            quizSource: "rkbali-radnav" as const,
             subChapters: [
               "Ch 1 – Basic Radio Theory",
               "Ch 2 – ADF / NDB",
@@ -536,7 +538,7 @@ const SubjectCards = () => {
                                       >
                                         <div className="pl-8 flex flex-col gap-0.5">
                                           {bookChapter.subChapters.map((sub) => {
-                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : [];
+                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : [];
                                             const subQuizTopic = bookChapter.hasQuiz ? subTopicSource.find((t) => t.title === sub) : null;
                                             return (
                                               <button
