@@ -154,22 +154,28 @@ const asiQuestions: MCQuestion[] = [
   { id: 102, question: "The yellow arc on an ASI indicates:", options: ["Caution range - smooth air only", "Normal operating range", "Flap operating range"], correct: 0 },
 ];
 
-// Chapter 4: VSI (Q1-20, Q1-7 eliminated → 13 questions)
+// Chapter 4: VSI (Q1-20, 20 questions)
 const vsiQuestions: MCQuestion[] = [
-  // Q1-7 eliminated, starting from Q8 (renumbered as id 1+)
-  { id: 1, question: "If the static vent becomes blocked during climb, the VSI will:", options: ["Indicate an increasing rate of climb", "Indicate a decreasing rate of climb", "Return to zero"], correct: 2 },
-  { id: 2, question: "The vertical speed indicator indications may be in error for some seconds after starting or finishing a climb or descent. The error is a result of:", options: ["A combination of time lag and manoeuvre induced errors", "A combination of time lag and instrument error", "A combination of position error and manoeuvre induced errors"], correct: 0 },
-  { id: 3, question: "If metered orifice in VSI becomes partly blocked, VSI indication will be:", options: ["Too high when climbing and too low when descending", "Too high when climbing or descending", "Too low when climbing or descending"], correct: 2 },
-  { id: 4, question: "If the casing of VSI in a pressurized a/c develops a leak, VSI indications will be:", options: ["The VSI indication will be too low when climbing", "The VSI indication will be too high when descending", "The VSI will return to zero"], correct: 2 },
-  { id: 5, question: "If casing of VSI in an unpressurized a/c develops a leak:", options: ["After some time pressure will equalize in capsule and sealed casing. It will show zero in level, climb and descend", "It will over read", "It will under read"], correct: 0 },
-  { id: 6, question: "If the pitot pipe becomes partly blocked, the VSI will:", options: ["Not be affected", "It will over read", "It will under read"], correct: 0 },
-  { id: 7, question: "Entering ground effect is likely to:", options: ["Increase position errors", "Decrease pitot pressure but increase static pressure", "Decrease static pressure but increase pitot pressure"], correct: 0 },
-  { id: 8, question: "If the static pipe becomes partly blocked:", options: ["The VSI indication will be too low when climbing or descending", "The VSI indication will be too high when descending", "The VSI indication will be too high when accelerating"], correct: 0 },
-  { id: 9, question: "During taxiing, VSI shows 100 ft/min. Pilot should:", options: ["Continue with flight with new reference", "Taxi back and VSI should be repaired", "Continue with flight if engineer is on board"], correct: 1 },
-  { id: 10, question: "A VSI indicates increasing rate of descent by:", options: ["VSI needle moving downwards", "VSI needle moving upwards", "VSI needle stationary"], correct: 0 },
-  { id: 11, question: "A VSI indicates increasing ROD by:", options: ["VSI needle moving downwards", "VSI needle moving upwards", "VSI needle stationary"], correct: 0 },
-  { id: 12, question: "The correct action to be taken when the static vent blocks on an unpressurised aircraft is to:", options: ["Use the standby static source", "Break the VSI glass", "Calculate ROC using mathematically"], correct: 0 },
-  { id: 13, question: "VSI lag is reduced by:", options: ["Two dashpots responding to acceleration", "Two return springs", "Bi-metallic strips"], correct: 0 },
+  { id: 1, question: "IVSI is more useful over normal VSI as its indications are:", options: ["More reliable during steady climb/descend", "More reliable when a/c initiates climb / descend", "Reliable at all times"], correct: 1 },
+  { id: 2, question: "A/C fitted with IVSI will have:", options: ["Climbing indications during turn", "Descend indications during turn", "Will show correct during turns"], correct: 0 },
+  { id: 3, question: "Compared to the VSI what errors are eliminated by the IVSI?", options: ["Lag", "Temperature", "Turning"], correct: 0 },
+  { id: 4, question: "The response time of a vertical speed detector may be increased by adding a:", options: ["Second calibrated port", "Correction based on an accelerometer sensor", "Bimetallic strip"], correct: 1 },
+  { id: 5, question: "The vertical speed indicator of an aircraft flying at a true airspeed of 100kt, in a descent with a slope of 3 degrees, indicates:", options: ["-300ft/min", "-250ft/min", "-500ft/min"], correct: 2 },
+  { id: 6, question: "What does a vertical speed indicator actually measure?", options: ["The rate of temperature change", "The rate of temperature and altitude change", "The rate of pressure change"], correct: 2 },
+  { id: 7, question: "The vertical speed indicator VSI is fed by:", options: ["Differential pressure", "Static pressure", "Dynamic pressure"], correct: 1 },
+  { id: 8, question: "If the static vent becomes blocked during climb, the VSI will:", options: ["Indicate an increasing rate of climb", "Indicate a decreasing rate of climb", "Return to zero"], correct: 2 },
+  { id: 9, question: "The vertical speed indicator indications may be in error for some seconds after starting or finishing a climb or descent. The error is a result of:", options: ["A combination of time lag and manoeuvre induced errors", "A combination of time lag and instrument error", "A combination of position error and manoeuvre induced errors"], correct: 0 },
+  { id: 10, question: "If metered orifice in VSI becomes partly blocked, VSI indication will be:", options: ["Too high when climbing and too low when descending", "Too high when climbing or descending", "Too low when climbing or descending"], correct: 2 },
+  { id: 11, question: "If the casing of VSI in a pressurized a/c develops a leak, VSI indications will be:", options: ["The VSI indication will be too low when climbing", "The VSI indication will be too high when descending", "The VSI will return to zero"], correct: 2 },
+  { id: 12, question: "If casing of VSI in an unpressurized a/c develops a leak:", options: ["After some time pressure will equalize in capsule and sealed casing. It will show zero in level, climb and descend", "It will over read", "It will under read"], correct: 0 },
+  { id: 13, question: "If the pitot pipe becomes partly blocked, the VSI will:", options: ["Not be affected", "It will over read", "It will under read"], correct: 0 },
+  { id: 14, question: "Entering ground effect is likely to:", options: ["Increase position errors", "Decrease pitot pressure but increase static pressure", "Decrease static pressure but increase pitot pressure"], correct: 0 },
+  { id: 15, question: "If the static pipe becomes partly blocked:", options: ["The VSI indication will be too low when climbing or descending", "The VSI indication will be too high when descending", "The VSI indication will be too high when accelerating"], correct: 0 },
+  { id: 16, question: "During taxiing, VSI shows 100 ft/min. Pilot should:", options: ["Continue with flight with new reference", "Taxi back and VSI should be repaired", "Continue with flight if engineer is on board"], correct: 1 },
+  { id: 17, question: "A VSI indicates increasing rate of descent by:", options: ["VSI needle moving downwards", "VSI needle moving upwards", "VSI needle stationary"], correct: 0 },
+  { id: 18, question: "A VSI indicates increasing ROD by:", options: ["VSI needle moving downwards", "VSI needle moving upwards", "VSI needle stationary"], correct: 0 },
+  { id: 19, question: "The correct action to be taken when the static vent blocks on an unpressurised aircraft is to:", options: ["Use the standby static source", "Break the VSI glass", "Calculate ROC using mathematically"], correct: 0 },
+  { id: 20, question: "VSI lag is reduced by:", options: ["Two dashpots responding to acceleration", "Two return springs", "Bi-metallic strips"], correct: 0 },
 ];
 
 // Chapter 5: Gyroscope (Q1-80, Q37-40 eliminated → 76 questions)
