@@ -34,8 +34,29 @@ const subjectsData: Subject[] = [
     title: "Air Navigation",
     subtopics: [
       {
+        title: "General Navigation – R K Bali",
+        chapters: [
+          "Ch 1 – The Solar System",
+          "Ch 2 – The Earth",
+          "Ch 3 – Projections",
+          "Ch 4 – Convergency",
+          "Ch 5 – Time",
+          "Ch 6 – Compass and Directions",
+          "Ch 7 – Distances on Earth Surface",
+          "Ch 8 – Magnetism and Compasses",
+          "Ch 9 – Dead Reckoning Navigation (DR)",
+          "Ch 10 – Measurement of DR Elements Pressure",
+          "Ch 11 – Measurement / Determination of Temperature",
+          "Ch 12 – Measurement of Elements",
+          "Ch 13 – In-flight Navigation",
+          "Ch 14 – Mass and Balance - Aero Planes",
+          "Ch 15 – Performance",
+          "Ch 16 – Flight Planning and Monitoring – Aero Planes",
+        ],
+      },
+      {
         title: "General Navigation",
-        chapters: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
+        chapters: ["Oxford", "Keith William Blue Book", "Redbird"],
       },
       {
         title: "Radio Navigation",
