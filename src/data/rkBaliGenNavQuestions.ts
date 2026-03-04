@@ -1,0 +1,86 @@
+import { MCQuestion, Topic } from "./icJoshiQuestions";
+
+const solarSystemQuestions: MCQuestion[] = [
+  { id: 1, question: "Sun will appear at same latitude:", options: ["Once a year", "Twice a year", "Once a day"], correct: 1 },
+  { id: 2, question: "Seasons are due to the:", options: ["Earth's elliptical orbit around the Sun", "Inclination of the polar axis with the plane of the ecliptic", "Earth's rotation on its polar axis"], correct: 1 },
+  { id: 3, question: "At what approximate date is the earth furthest from the sun (aphelion)?", options: ["Beginning of January", "End of December", "Beginning of July"], correct: 2 },
+  { id: 4, question: "At what approximate date is the earth closest to the sun (perihelion)?", options: ["End of June", "Beginning of July", "Beginning of January"], correct: 2 },
+  { id: 5, question: "What is the highest latitude listed below at which the sun will reach an altitude of 90° above the horizon at some time during the year?", options: ["23°", "45°", "66°"], correct: 0 },
+  { id: 6, question: "Which is the highest latitude listed below at which the sun will rise above the horizon and set every day?", options: ["72°", "68°", "66°"], correct: 2 },
+  { id: 7, question: "The angle between the plane of the ecliptic and the plane of equator is approximately:", options: ["66.5°", "23.5°", "27.5°"], correct: 1 },
+  { id: 8, question: "In its path around the Sun, the axis of the Earth has an inclination:", options: ["of 66° 33' with the plane of the path", "varying between zero and 23° 27' with the plane of the path", "varying with the season of the year"], correct: 0 },
+  { id: 9, question: "The mean sun:", options: ["Is only of interest to users of astronomical navigation", "Moves with constant speed along the celestial equator", "Is the middle position of the sun"], correct: 1 },
+  { id: 10, question: "The direction of the Earth's rotation on its axis is such that:", options: ["Observed from the point above the North Pole, the rotation is counter-clockwise", "Any point on the surface of the Earth will move eastward", "Any point on the surface of the Earth will move westward"], correct: 0 },
+  { id: 11, question: "When the length of the day is measured with reference to the passage of the apparent sun:", options: ["The length of the day will be the same once every month", "The length of the day will vary with the latitude of the observer", "The length of the day will vary in the course of the year"], correct: 2 },
+  { id: 12, question: "All heavenly bodies rise:", options: ["In the East", "In the West", "Some in the East and some in the West depending upon the hemisphere"], correct: 0 },
+  { id: 13, question: "The term Aphelion is used to describe:", options: ["The relative position between the earth and the moon", "The situation when the distance between the sun and the earth is at its longest", "The relationship between the length of the day and the length of the night"], correct: 1 },
+  { id: 14, question: "In which two months of the year is the difference between the transit of apparent Sun and mean Sun across Greenwich meridian greatest?", options: ["January and October", "June and December", "February and November"], correct: 2 },
+  { id: 15, question: "The duration of civil twilight is the time:", options: ["Needed by the sun to move from the apparent height of 0° to the apparent height of 6°", "Between sunset and when the centre of the sun is 12° below the true horizon", "Between sunset and when the centre of the sun is 6° below the true horizon"], correct: 2 },
+  { id: 16, question: "Atmospheric refraction:", options: ["Causes the sunrise to occur earlier and the sunset to occur later", "Causes the sunrise and the sunset to occur earlier", "Causes the sunrise to occur later and the sunset to occur earlier"], correct: 0 },
+  { id: 17, question: "The times given for sunrise, sunset, morning and evening twilight in the air almanac:", options: ["Are given in UTC", "Are given in standard time", "Are given in LMT"], correct: 2 },
+  { id: 18, question: "Civil twilight is defined by:", options: ["Sun upper edge tangential to horizon", "Sun altitude is 6° below the celestial horizon", "Sun altitude is 18° below the celestial horizon"], correct: 1 },
+  { id: 19, question: "What is the reason for seasonal changes in climate?", options: ["Because the Earth's spin axis is inclined to the plane of its orbit round the Sun", "Because the distance between the Earth and the Sun varies over a year", "Because the Earth's orbital speed round the Sun varies according to the time of the year"], correct: 0 },
+  { id: 20, question: "The main reason that day and night, throughout the year, have different duration, is due to the:", options: ["Relative speed of the sun along the ecliptic", "Inclination of the ecliptic to the equator", "Earth's rotation"], correct: 1 },
+];
+
+const projectionQuestions: MCQuestion[] = [
+  { id: 1, question: "Radio Navigation charts (Jeppesen) uses:", options: ["Lamberts conformal conic projection", "Mercator's projection", "IMPP"], correct: 0 },
+  { id: 2, question: "A rhumb line is a straight line. This applies to:", options: ["Mercators", "Lamberts", "IMPP"], correct: 0 },
+  { id: 3, question: "Meridians and parallels intersect at right angles. This applies to:", options: ["Mercators", "Lamberts", "Both"], correct: 2 },
+  { id: 4, question: "On the Mercator's chart:", options: ["Distortion increases away from the Equator", "Distortion increases away from the Pole", "Parallels of latitude are not straight lines"], correct: 0 },
+  { id: 5, question: "The scale on a Lamberts projection is correct only along:", options: ["The standard parallels", "The equator", "The end parallels of latitude and 2 degs. on either side of the central meridian"], correct: 0 },
+  { id: 6, question: "Charts are used only for:", options: ["Flying over seas", "Dead reckoning navigation", "Polar navigation"], correct: 0 },
+  { id: 7, question: "In an orthomorphic projection:", options: ["Meridians and parallels intersect at right angles", "Meridians and parallels are straight lines", "Both the above"], correct: 0 },
+  { id: 8, question: "The chart that is generally used for navigation in polar areas is based on a:", options: ["Lambert's Conformal", "Transverse Mercator", "Stereographical projection"], correct: 2 },
+  { id: 9, question: "On a Lambert conformal conic chart the convergence of the meridians is:", options: ["The same as earth convergency at the parallel of origin", "The same as the scale", "Most accurate at the standard parallels"], correct: 0 },
+  { id: 10, question: "On a Lambert conformal conic projection, with two standard parallels the scale is:", options: ["Correct only along the parallel of origin", "Correct only at the poles", "Correct only along the standard parallels"], correct: 2 },
+  { id: 11, question: "On a Transverse Mercator chart, scale is exactly correct along the:", options: ["Meridian of tangency", "Prime meridian", "Standard latitudes"], correct: 0 },
+  { id: 12, question: "On lamberts conical projection, the given scale is correct at ___ and convergence is correct at ___:", options: ["Latitude of origin, latitude of origin", "Latitude of origin, standard Parallels", "Standard Parallels, latitude of origin"], correct: 2 },
+  { id: 13, question: "While measuring track at Lambert conical projection protractor is to be placed at:", options: ["Latitude of departure", "Latitude of arrival", "Mid way longitude"], correct: 2 },
+  { id: 14, question: "The angular difference, on a Lambert conformal conic chart, between the arrival and departure track is equal to:", options: ["Departure angle", "Map convergence", "Secant of ½ latitude"], correct: 1 },
+  { id: 15, question: "On a Direct Mercator chart, meridians are:", options: ["Parallel, equally spaced, horizontal straight lines", "Converging curved lines", "Parallel, equally spaced, vertical straight lines"], correct: 2 },
+  { id: 16, question: "On which of the following chart projections is it not possible to represent the north or south poles?", options: ["Polar Stereographic", "Direct Mercator", "Lambert's Conical"], correct: 1 },
+  { id: 17, question: "Which one of the following, concerning great circles on a Direct Mercator chart, is correct?", options: ["With the exception of meridians and the equator, they are curves concave to the equator", "Straight lines", "Curves concave to the nearest pole"], correct: 0 },
+  { id: 18, question: "On a Lambert conformal conic chart, the distance between parallels of latitude spaced the same number of degrees apart:", options: ["Increases between and reduces outside of the standard parallels", "Reduces between and expands outside the standard parallels", "Is constant between the standard parallels"], correct: 1 },
+  { id: 19, question: "Which one of the following statements is correct concerning the appearance of great circles, with the exception of meridians, on a polar stereographic chart whose tangency is at the pole?", options: ["The higher the latitude the closer they approximate to a straight line", "The lower the latitude the closer they approximate to a straight line", "Never approximate to straight lines"], correct: 0 },
+  { id: 20, question: "Which one of the following describes the appearance of rhumb lines, except meridians, on a polar stereographic chart?", options: ["Straight lines", "Curves concave to the pole", "Approximately straight lines"], correct: 1 },
+  { id: 21, question: "What is the value of the convergence factor on a polar stereographic chart?", options: ["2.0", "1.5", "1.0"], correct: 2 },
+  { id: 22, question: "On a Direct Mercator, rhumb lines are:", options: ["Straight lines", "Curves concave to the nearest pole", "Curves convex to the nearest pole"], correct: 0 },
+  { id: 23, question: "A perfectly straight line on a Lamberts chart is:", options: ["A parallel of latitude", "A rhumb line", "A meridian of longitude"], correct: 2 },
+  { id: 24, question: "Which of the following statements best describes how scale varies on a Mercator chart?", options: ["It is correct on the standard parallels, but expands outside them, and contracts within them", "Expands directly with the secant of the latitude", "Expands as the secant (½ x co-latitude)"], correct: 1 },
+  { id: 25, question: "On a Lambert Conformal chart the distance between meridians 5° apart along latitude 37° North is 9 cm. The scale of the chart at that parallel approximates:", options: ["1 : 3 500 000", "1 : 5 000 000", "1 : 4 000 000"], correct: 1 },
+  { id: 26, question: "Where is the convergency correct on a Transverse Mercator chart?", options: ["At the datum meridian and the Equator", "Only at the datum meridian", "Only at the Equator and poles"], correct: 1 },
+  { id: 27, question: "In which of the following projections will a plane surface touch the reduced earth at one of the poles?", options: ["Stereographic", "Direct Mercator", "Transverse Mercator"], correct: 0 },
+  { id: 28, question: "The scale on a Lambert's conformal conic chart:", options: ["Is constant", "Is constant along a parallel of latitude", "Is constant along a meridian of longitude"], correct: 1 },
+  { id: 29, question: "The scale is correct on a transverse Mercator chart:", options: ["Along the datum meridian and meridians at 90° to it", "At the prime meridian", "Along the great circle of tangency"], correct: 2 },
+  { id: 30, question: "The nominal scale of a Lambert conformal conic chart is the:", options: ["Scale at the standard parallels", "Scale at the parallel of origin", "Scale at the poles"], correct: 0 },
+  { id: 31, question: "What type of projection is generally used for charts used for navigation in North and south polar areas?", options: ["Lambert's conformal", "Polar stereographical projection", "Direct Mercator"], correct: 1 },
+  { id: 32, question: "On a Lambert Conformal conic chart great circles that are not meridians are:", options: ["Curves concave to the pole of projection", "Straight lines within the standard parallels", "Curves concave to the parallel of origin"], correct: 2 },
+  { id: 33, question: "Parallels of latitude, except the equator, are:", options: ["Rhumb lines", "Complex curves", "Great circles"], correct: 0 },
+  { id: 34, question: "On Jeppesen charts scale is given in following manner:", options: ["Representative fraction", "Graduated scale and statement in words", "All of the above"], correct: 2 },
+  { id: 35, question: "Nautical mile is more than a statute mile. Statute mile is more than a kilometer.", options: ["Both statements are correct", "Only kilometer is more than a nautical mile", "Only statute mile is more than a nautical mile"], correct: 0 },
+  { id: 36, question: "1000 meters equals:", options: ["1 nm", "0.545 nm", "0.545 km"], correct: 1 },
+  { id: 37, question: "Contours are lines drawn on a map or chart joining:", options: ["Places of equal elevation", "Equal pressure", "Equal variation"], correct: 1 },
+  { id: 38, question: "Maps indicate the details of the topography. Pilots can use this for:", options: ["Contact navigation", "Instrument flying", "Dead reckoning navigation"], correct: 0 },
+  { id: 39, question: "Graticule is the network of meridians and parallels on:", options: ["Earth", "Maps", "Both"], correct: 1 },
+  { id: 40, question: "The scale of a chart is shown as 1:1 million. This means that:", options: ["1\" on the chart equals 1 million inches on the Earth", "1 c.m. on the chart represents 1 million centimeters on the Earth", "Both"], correct: 2 },
+  { id: 41, question: "On a direct Mercator projection, at latitude 45° North, a certain length represents 86 nm. At latitude 30° North, the same length represents approximately:", options: ["86 nm", "75 nm", "45 nm"], correct: 0 },
+  { id: 42, question: "At 60° N the scale of a direct Mercator chart is 1:3,000,000. What is the scale at the equator?", options: ["1 : 5 000 000", "1 : 6 000 000", "1 : 12 000 000"], correct: 1 },
+];
+
+export const rkBaliGenNavSolarSystemTopic: Topic = {
+  id: "rkbali-gennav-ch1-solar-system",
+  title: "Ch 1 – The Solar System",
+  questions: solarSystemQuestions,
+};
+
+export const rkBaliGenNavProjectionsTopic: Topic = {
+  id: "rkbali-gennav-ch3-projections",
+  title: "Ch 3 – Projections",
+  questions: projectionQuestions,
+};
+
+export const rkBaliGenNavTopics: Topic[] = [
+  rkBaliGenNavSolarSystemTopic,
+  rkBaliGenNavProjectionsTopic,
+];
