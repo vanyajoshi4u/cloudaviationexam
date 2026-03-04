@@ -126,6 +126,6 @@ const inFlightNavQuestions: MCQuestion[] = [
 
 export const rkBaliGenNavInFlightNavTopic: Topic = {
   id: "rkbali-gennav-ch13-inflight",
-  title: "Ch 13 – In-Flight Navigation",
+  title: "Ch 13 – In-flight Navigation",
   questions: inFlightNavQuestions,
 };
