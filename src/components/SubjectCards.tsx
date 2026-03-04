@@ -13,6 +13,7 @@ import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
 import { skMetTopics } from "@/data/skMetQuestions";
 import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
+import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -29,7 +30,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst";
 }
 
 interface Subject {
@@ -81,7 +82,8 @@ const subjectsData: Subject[] = [
         chapters: [
           {
             name: "R K Bali",
-            hasQuiz: false,
+            hasQuiz: true,
+            quizSource: "rkbali-inst" as const,
             subChapters: [
               "Ch 1 – Air Data Systems (Pressure Instruments)",
               "Ch 2 – Altimeter",
@@ -514,7 +516,7 @@ const SubjectCards = () => {
                                       >
                                         <div className="pl-8 flex flex-col gap-0.5">
                                           {bookChapter.subChapters.map((sub) => {
-                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : [];
+                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : [];
                                             const subQuizTopic = bookChapter.hasQuiz ? subTopicSource.find((t) => t.title === sub) : null;
                                             return (
                                               <button
