@@ -205,5 +205,5 @@ export const rkBaliRadioNavTopics: QuizTopic[] = [
   { id: "rkbali-radnav-ch3", title: "Ch 3 – Track and Drift Questions", questions: trackAndDriftQuestions },
   { id: "rkbali-radnav-ch4", title: "Ch 4 – Very High Frequency Omni Direction Radio Range (VOR)", questions: vorQuestions },
   { id: "rkbali-radnav-ch7", title: "Ch 7 – ILS (Instrument Landing System)", questions: ilsQuestions },
-  { id: "rkbali-radnav-ch8", title: "Ch 8 – Radar", questions: radarQuestions },
+  { id: "rkbali-radnav-ch8", title: "Ch 8 – Radar & GNSS", questions: radarQuestions },
 ];
