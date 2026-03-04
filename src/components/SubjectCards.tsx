@@ -78,7 +78,26 @@ const subjectsData: Subject[] = [
       },
       {
         title: "Instrument Navigation",
-        chapters: ["R K Bali", "Oxford", "Keith William Blue Book", "Redbird"],
+        chapters: [
+          {
+            name: "R K Bali",
+            hasQuiz: false,
+            subChapters: [
+              "Ch 1 – Air Data Systems (Pressure Instruments)",
+              "Ch 2 – Altimeter",
+              "Ch 3 – Air Speed Indicator (ASI)",
+              "Ch 4 – Vertical Speed Indicator (VSI)",
+              "Ch 5 – Gyroscope",
+              "Ch 6 – Inertial Navigation",
+              "Ch 7 – Altitude Alert Systems",
+              "Ch 8 – Power Plant and System Monitoring Instruments",
+              "Ch 9 – Basics of Electronic Displays",
+            ],
+          },
+          "Oxford",
+          "Keith William Blue Book",
+          "Redbird",
+        ],
       },
     ],
   },
