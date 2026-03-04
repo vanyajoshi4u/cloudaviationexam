@@ -190,13 +190,56 @@ const ilsQuestions: MCQuestion[] = [
 ];
 
 // Chapter 8: Radar
-// Q2-Q9 page not uploaded. Q1, Q10-Q12 extracted. Total so far: 4 MCQs.
-// Answers: Q1:a, Q10:c, Q11:a, Q12:c
+// Answers verified: Q1-Q16. Q17-Q47 answers pending (placeholder correct: 0).
 const radarQuestions: MCQuestion[] = [
   { id: 1, question: "The time between transmission and reception of a single pulse is 300 microseconds. Determine the range of the target.", options: ["45 nm", "90 nm", "45 kms."], correct: 0 },
+  { id: 2, question: "Ignoring pulse width and fly back, calculate the maximum range in nautical miles for a primary radar having a PRF of 500 pulses per second.", options: ["162nm", "300nm", "162 kms."], correct: 0 },
+  { id: 3, question: "Ignoring pulse width and fly back, calculate the maximum permissible PRF for a primary radar which is required to give a range of 200 nm.", options: ["370 pps", "405 pps", "150 pps"], correct: 1 },
+  { id: 4, question: "The maximum range of a pulsed radar is governed by which parameter?", options: ["PW", "PRF", "Speed of Propagation"], correct: 1 },
+  { id: 5, question: "Ignoring fly back, the maximum theoretical range of a primary radar with a PRF of 800 pps is:", options: ["101NM.", "202 NM", "50.5 NM"], correct: 0 },
+  { id: 6, question: "A radar with a maximum range of 265 nm will have a maximum theoretical PRF of:", options: ["305 pps", "730 pps", "163pps"], correct: 0 },
+  { id: 7, question: "Given a PRF of 3200 pps, the maximum theoretical radar range is:", options: ["50NM", "75NM", "25NM"], correct: 2 },
+  { id: 8, question: "A primary radar system is required to have a maximum range of 400 nm. Ignoring pulse width and fly back, the maximum PRF that the system could employ is:", options: ["465PPS", "812PPS", "203 PPS."], correct: 2 },
+  { id: 9, question: "The minimum theoretical range of a primary radar with a PW of 3μs is:", options: ["900m", "450m", "300m"], correct: 1 },
   { id: 10, question: "If the pulse width/length in a primary radar was 2 μ sec, the range resolution would be?", options: ["1000m", "300 feet", "984 feet"], correct: 2 },
   { id: 11, question: "The advantage of CW radar over a pulse system is that:", options: ["there is no minimum range.", "a single antenna can be used for TX and RX.", "is useful for SSR operations."], correct: 0 },
   { id: 12, question: "Beam Width 3°, Pulse Width 3 μ sec. Two targets 2nm apart will appear as separate targets at what distance from the radar head?", options: ["80NM", "50NM", "40NM"], correct: 2 },
+  { id: 13, question: "An AWR to be switched on:", options: ["During taxiing by taking precautions for building and hangers.", "Only after take off in take off direction", "At line up point in take off direction."], correct: 2 },
+  { id: 14, question: "Flying at flight level 270, AWR return at range of 40 nm is identifiable when center of beam is tilted −1° and −6°. What is the height of the base and top of the rain bearing clouds. BW of AWR is 3°?", options: ["Base FL30, TOP FL 210", "Base FL30, TOP FL 290", "Base FL90, TOP FL 170"], correct: 2 },
+  { id: 15, question: "An AWR echo at 30 nm when the beam is level. The a/c is lost, when the center of beam is tilted upwards at an angle of 2°. How high above the a/c is the top of the rain. BW is 3°.", options: ["600'", "1500'", "3000'"], correct: 1 },
+  { id: 16, question: "AWR operation on ground is", options: ["Totally prohibited", "Unrestricted in the aerodrome maintenance area.", "Only permitted with certain precautions to safeguard the health of personnel."], correct: 2 },
+  // Q17-Q47: Answers pending – will be updated when answer key is provided
+  { id: 17, question: "When an altimeter is used for SSR it is always referenced to:", options: ["1013.25 hPa", "QFE", "The pressure setting in use"], correct: 0 },
+  { id: 18, question: "Mode 'C' or mode 'S' of SSR is not to be used when indication differ more than", options: ["±100'", "±200'", "None of the above"], correct: 0 },
+  { id: 19, question: "A DME receiver does not lock on to its own transmitter because of:", options: ["It works on the principle of random PRF", "DME is free from ground clutter.", "Transmitter and receiver are working at different frequency."], correct: 0 },
+  { id: 20, question: "No. of a/c required to saturate DME beacon are", options: ["100", "126", "127"], correct: 0 },
+  { id: 21, question: "Max no of a/c that can use a DME stn are", options: ["100", "126", "127"], correct: 0 },
+  { id: 22, question: "An a/c is flying at a height of 20,000 ft over a DME stn it will show.", options: ["Zero", "2,000'", "Appx 6 km"], correct: 0 },
+  { id: 23, question: "Ground Speed indications when using a DME will be reliable/accurate when a/c is flying", options: ["towards/away from ground stn", "a/c is flying 90° to ground stn (max error)", "a/c is flying at height less than 1000' per nm"], correct: 0 },
+  { id: 24, question: "An a/c DME shows 50 nm, accuracy of indicated distance will be", options: ["0.15 nm ±0.5 nm", "0.625 nm ±0.25nm", "0.5 nm ±"], correct: 0 },
+  { id: 25, question: "A letter Z at the end of identification code means:", options: ["DME and VOR are not co-located but serving same stn and at a dist of more than 7 nm", "DME and VOR are co-located and are serving same stn.", "DME and VOR are not co-located, are serving same stn. are within 7 nm from each other."], correct: 0 },
+  { id: 26, question: "In which situation will speed indications on a airborne Distance Measuring Equipment (DME) most closely represent the groundspeed of an aircraft flying at FL400?", options: ["When overhead the station, with no change of heading at transit", "When tracking directly towards the station at a range of 100NM or more", "When passing abeam the station and within 5NM of it"], correct: 0 },
+  { id: 27, question: "The time taken for the transmission of an interrogation pulse by a Distance Measuring Equipment (DME) to travel to the ground transponder and return to the airborne receiver was 2000micro-second. The slant range from the ground transponder was:", options: ["186NM", "296NM", "165NM"], correct: 0 },
+  { id: 28, question: "What is the maximum distance between VOR and DME/TACAN ground installations if they are to have same morse code identifier?", options: ["2000m", "300m", "600m"], correct: 0 },
+  { id: 29, question: "A DME in tracking mode subsequently experiences a reduction in signal strength will switch the equipment in the first instance to:", options: ["standby mode", "memory mode", "signal controlled search"], correct: 0 },
+  { id: 30, question: "Of what use, if any, is a military TACAN station to civil aviation?", options: ["It is of no use to civil aviation", "It can provide DME distance", "It can provide a magnetic bearing"], correct: 0 },
+  { id: 31, question: "A DME that has difficulty obtaining a \"lock-on\":", options: ["stays in search mode but reduces PRF to max. 60PPS after 1500 pulse pairs have been transmitted", "stays in search mode but without a reduction in PRF", "stays in search mode but reduces PRF to max. 60PPS after 100 seconds"], correct: 0 },
+  { id: 32, question: "A VOR and DME are co-located. You want to identify the DME by listening to the Call sign. Having heard the same call sign 4 times in 30 seconds the:", options: ["VOR and DME call signs were the same and broadcast with the same pitch", "DME call sign was not transmitted, the distance information is sufficient proof of correct operation", "DME call sign is the one with the higher pitch that was broadcast only once"], correct: 0 },
+  { id: 33, question: "The aircraft DME receiver cannot lock on to interrogation signals reflected from the ground because:", options: ["DME pulse recurrent rates are varied", "aircraft transmitter and DME ground station are transmitted on different frequencies", "reflections are subject to Doppler frequency shift"], correct: 0 },
+  { id: 34, question: "Distance Measuring Equipment (DME) operates in the:", options: ["UHF band and is a secondary radar system", "SHF band and uses frequency modulation techniques", "UHF band and is a primary radar system"], correct: 0 },
+  { id: 35, question: "The DME (Distance Measuring Equipment) operates within the following frequencies:", options: ["329 to 335MHz", "962 to 1213MHz", "962 to 1213kHz"], correct: 0 },
+  { id: 36, question: "On a DME, display counters rotating throughout their range indicates:", options: ["airborne equipment failure", "the airborne equipment is conducting a frequency search", "the airborne receiver is conducting a range search"], correct: 0 },
+  { id: 37, question: "A DME station is located 1000ft above MSL. An aircraft flying at FL370, 15NM away from the DME station, will have a DME reading of:", options: ["14NM", "16NM", "15NM"], correct: 0 },
+  { id: 38, question: "A DME is located at MSL. An aircraft passing vertically the station at FL360 will obtain a DME range of approximately:", options: ["6NM", "8NM", "7NM"], correct: 0 },
+  { id: 39, question: "During a flight at FL210, a pilot does not receive any DME distance indication from a DME station located approximately 220NM away. The reason for this that the:", options: ["Aero plane is circling around the station", "Aero plane is below the \"line of sight\" altitude", "Altitude is too high"], correct: 0 },
+  { id: 40, question: "For a conventional DME facility \"Beacon Saturation\" will occur whenever the number of simultaneous interrogations exceeds:", options: ["60", "200", "100"], correct: 0 },
+  { id: 41, question: "Which of the following will give the most accurate calculation of aircraft ground speed?", options: ["A DME station sited on the flight route", "A VOR station sited on the flight route", "A DME station sited across the flight route"], correct: 0 },
+  { id: 42, question: "An aircraft will not accept replies from its own transmissions that are reflected from the ground because the:", options: ["the aircraft's registration is embedded onto the signal.", "pulses are transmitted in pairs.", "interrogation and reply frequencies are 63 Mhz apart."], correct: 0 },
+  { id: 43, question: "If an ident signal is received once in 30 seconds on a frequency paired VOR/DME, then:", options: ["the VOR only is operational.", "the TACAN signal is degraded.", "the DME only is operational."], correct: 0 },
+  { id: 44, question: "An aircraft DME receiver rejects pulses meant for other aircraft because:", options: ["the random PRF is unique to each aircraft.", "the transmission and reply frequencies are 63 MHz apart.", "the pulses are unique to each aircraft."], correct: 0 },
+  { id: 45, question: "The DME automatic standby will activate the DME interrogator when:", options: ["there are too many aircraft in the area for it to service.", "a VOR frequency that has a frequency paired DME is selected.", "the DME ident signal is received."], correct: 0 },
+  { id: 46, question: "Airborne DME equipment is able to discriminate between pulses intended for it self and pulses intended for other aircraft because:", options: ["aircraft will only accept unique twin pulses.", "aircraft reject pulses not synchronised with its own random pulse recurrence rate.", "each aircraft has its own frequency allocation."], correct: 0 },
+  { id: 47, question: "An aircraft flying at flight level 250 wishes to interrogate a DME beacon situated 400 ft above mean sea level. What is the maximum range likely to be achieved?", options: ["210 nm.", "198 nm.", "222 nm."], correct: 0 },
 ];
 
 export const rkBaliRadioNavTopics: QuizTopic[] = [
