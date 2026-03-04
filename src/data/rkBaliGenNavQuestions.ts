@@ -297,19 +297,19 @@ export const rkBaliGenNavTimeTopic: Topic = {
 
 export const rkBaliGenNavCompassTopic: Topic = {
   id: "rkbali-gennav-ch6-compass",
-  title: "Ch 6 – Compass and Direction",
+  title: "Ch 6 – Compass and Directions",
   questions: compassDirectionQuestions,
 };
 
 export const rkBaliGenNavDistanceTopic: Topic = {
   id: "rkbali-gennav-ch7-distance",
-  title: "Ch 7 – Distance on Earth Surface",
+  title: "Ch 7 – Distances on Earth Surface",
   questions: distanceQuestions,
 };
 
 export const rkBaliGenNavMagnetismTopic: Topic = {
   id: "rkbali-gennav-ch8-magnetism",
-  title: "Ch 8 – Magnetism and Compass",
+  title: "Ch 8 – Magnetism and Compasses",
   questions: magnetismQuestions,
 };
 
