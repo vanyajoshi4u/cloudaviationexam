@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft, Ticket, PartyPopper } from "lucide-react";
 import UpiQrCode from "@/components/UpiQrCode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,11 @@ const Subscribe = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [applyingDiscount, setApplyingDiscount] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   useEffect(() => {
     const checkExisting = async () => {
@@ -68,6 +73,40 @@ const Subscribe = () => {
     }
   };
 
+  const handleApplyDiscount = async () => {
+    if (!discountCode.trim()) {
+      toast.error("Please enter a discount code");
+      return;
+    }
+    setApplyingDiscount(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      const { data, error } = await supabase.rpc("apply_discount_code", {
+        _code: discountCode.trim().toUpperCase(),
+        _user_id: user.id,
+      });
+
+      if (error) throw error;
+
+      const result = data as unknown as { success: boolean; discount?: number; message: string };
+      if (result.success) {
+        setDiscountApplied(true);
+        setDiscountAmount(result.discount || 69);
+        setShowCelebration(true);
+        toast.success(result.message);
+        setTimeout(() => setShowCelebration(false), 3000);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Failed to apply discount code");
+    } finally {
+      setApplyingDiscount(false);
+    }
+  };
+
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -101,9 +140,10 @@ const Subscribe = () => {
       const imageBase64 = await fileToBase64(screenshot);
 
       const plan = plans.find((p) => p.id === selectedPlan)!;
+      const finalAmount = discountApplied ? plan.price - discountAmount : plan.price;
       const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
         "verify-referral-code",
-        { body: { imageBase64, referralCode: referralCode.trim(), expectedAmount: plan.price } }
+        { body: { imageBase64, referralCode: referralCode.trim(), expectedAmount: finalAmount } }
       );
 
       if (verifyError) throw new Error("Verification failed. Please try again.");
@@ -131,7 +171,7 @@ const Subscribe = () => {
       const { error: insertError } = await supabase.from("subscriptions").insert({
         user_id: user.id,
         plan: selectedPlan,
-        amount: plan.price,
+        amount: finalAmount,
         referral_code: referralCode.trim(),
         payment_screenshot_url: filePath,
         screenshot_hash: screenshotHash,
@@ -143,7 +183,7 @@ const Subscribe = () => {
 
       // Send confirmation email (fire and forget)
       supabase.functions.invoke("send-payment-confirmation", {
-        body: { plan: selectedPlan, amount: plan.price },
+        body: { plan: selectedPlan, amount: finalAmount },
       }).catch((err) => console.error("Email sending failed:", err));
 
       // Redirect to homepage after a short delay
@@ -253,7 +293,12 @@ const Subscribe = () => {
 
           {/* Dynamic UPI QR Code */}
           <div className="mb-6">
-            <UpiQrCode amount={plans.find((p) => p.id === selectedPlan)?.price || 0} />
+            <UpiQrCode amount={discountApplied ? (plans.find((p) => p.id === selectedPlan)?.price || 0) - discountAmount : (plans.find((p) => p.id === selectedPlan)?.price || 0)} />
+            {discountApplied && (
+              <p className="text-center text-xs text-primary mt-2 font-semibold">
+                ₹{discountAmount} discount applied! Pay ₹{(plans.find((p) => p.id === selectedPlan)?.price || 0) - discountAmount} instead of <span className="line-through text-muted-foreground">₹{plans.find((p) => p.id === selectedPlan)?.price}</span>
+              </p>
+            )}
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -306,6 +351,55 @@ const Subscribe = () => {
               <p className="text-xs text-muted-foreground">
                 Add transaction number / UTR number / Reference number for which payment has been done.
               </p>
+            </div>
+
+            {/* Discount Code */}
+            <div className="space-y-2 relative">
+              <Label htmlFor="discount" className="text-sm text-foreground">Discount Code</Label>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Ticket className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="discount"
+                    value={discountCode}
+                    onChange={(e) => setDiscountCode(e.target.value)}
+                    placeholder="Enter discount code"
+                    className="pl-10"
+                    maxLength={20}
+                    disabled={discountApplied}
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant={discountApplied ? "secondary" : "outline"}
+                  onClick={handleApplyDiscount}
+                  disabled={applyingDiscount || discountApplied}
+                  className="flex-shrink-0"
+                >
+                  {applyingDiscount ? <Loader2 className="w-4 h-4 animate-spin" /> : discountApplied ? "Applied ✓" : "Apply"}
+                </Button>
+              </div>
+              {discountApplied && (
+                <p className="text-xs text-primary font-medium">🎉 ₹{discountAmount} discount applied!</p>
+              )}
+
+              {/* Celebration overlay */}
+              <AnimatePresence>
+                {showCelebration && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    className="absolute -top-8 left-1/2 -translate-x-1/2 pointer-events-none"
+                  >
+                    <div className="text-4xl flex gap-2">
+                      <motion.span animate={{ y: [0, -20, 0], rotate: [0, 15, -15, 0] }} transition={{ duration: 0.6 }}>🎉</motion.span>
+                      <motion.span animate={{ y: [0, -25, 0], rotate: [0, -15, 15, 0] }} transition={{ duration: 0.6, delay: 0.1 }}>🎊</motion.span>
+                      <motion.span animate={{ y: [0, -20, 0], rotate: [0, 15, -15, 0] }} transition={{ duration: 0.6, delay: 0.2 }}>🥳</motion.span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <Button type="submit" className="w-full glow-blue font-display text-sm tracking-wider py-5" disabled={loading}>
