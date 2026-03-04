@@ -94,6 +94,31 @@ export const rkBaliGenNavTemperatureTopic: Topic = {
   questions: temperatureQuestions,
 };
 
+// ========== CH 12 – MEASUREMENT OF ELEMENTS ==========
+// Eliminated: Q1-36 (worked problems, no MCQ options)
+const measurementElementsQuestions: MCQuestion[] = [
+  { id: 1, question: "Full TAS 500 kt. Engine failure TAS 400 kt. Total distance 1000 nm. Along track wind component 40 kt. The distance to the engine failure CP will be:", options: ["450 nm", "550 nm", "450 or 550 nm depending on the wind direction"], correct: 2 },
+  { id: 2, question: "The distance to the PNR will be greatest:", options: ["If there is a tailwind component going out", "If there is a headwind component going out", "In still air conditions"], correct: 2 },
+  { id: 3, question: "An engine failure PNR is calculated to enable the pilot to make the correct decision in the event of:", options: ["An engine failing before reaching the mid-point", "An engine failing after reaching the mid-point", "The destination and its alternates closing any time up to the PNR"], correct: 2 },
+  { id: 4, question: "In flight it is discovered that the winds used have been reversed, the effect will be:", options: ["No effect on the distance to the PET but the ETA at it will be affected.", "Change the distance to the PNR", "Give the distance of the PET from the base ahead instead of from the base behind."], correct: 2 },
+  { id: 5, question: "Flight distance 1500 nm, wind component out +40 kt, back −50 kt, TAS 320 kt, endurance − flight time +15%. The distance to the PNR will be:", options: ["786 nm", "750 nm", "738 nm"], correct: 2 },
+  { id: 6, question: "The effect of an increasing strength of wind at 90° to track on the time and distance to the PET will be:", options: ["Distance: none, Time: increase", "Distance: decrease, Time: decrease", "Distance: none, Time: none"], correct: 0 },
+  { id: 7, question: "On a simple flight from A to B, the distance to the PET is 1200 nm. The PNR endurance is equal to the flight time +10%. The distance to the PNR will be:", options: ["1260 nm provided the same winds apply to both PET and PNR calculations.", "1320 nm provided the same winds apply to both PET and PNR calculations.", "1320 nm provided the wind is not at 90° to the track."], correct: 1 },
+  { id: 8, question: "On a flight out to the PET, the GS are found to be less than expected. The PET will be moved along track:", options: ["Into wind", "Into the wind provided the wind change continues throughout the flight.", "Downwind provided the wind change continues throughout the flight."], correct: 1 },
+  { id: 9, question: "For head wind component of 50 Kts calculated DCP is 750 nm for the total route dist of 1200 nm. In actual flight wind component is found to be 50 Kts of tail wind, new position of DCP will be:", options: ["600 nm", "450 nm", "525 nm"], correct: 1 },
+  { id: 10, question: "Aircraft departs point A on track 135 deg at 200K TAS for place B 600 NMs away. W/V is 080/35. Calculate DCP and TCP.", options: ["334/1:52", "334/1:42", "334/2:02"], correct: 0 },
+  { id: 11, question: "If DCP in case of engine failure is 389 NMs on track 040(T) with W/V 230/40, calculate leg distance and TCP for an aircraft with normal TAS of 250 kts and one engine failure TAS of 200 kts.", options: ["999/3:50", "924/3:57", "968/1:20"], correct: 2 },
+  { id: 12, question: "An aircraft fuel consumption is 2000 GPH on four engines with 220 kts TAS and 1800 GPH on three engines the TAS is 200 kts with hwc of 20 kts on out bound. Calculate FOB with 1000 gallons reserve if DPNR is 600 NMs.", options: ["11909 Gallons", "10909 Gallons", "9999 Gallons"], correct: 0 },
+  { id: 13, question: "TAS 480 Kts, W/V 330/80, Track 200, distance 3500 NMs, FC out bound 2850 Kgs/hr, FC home 2680 Kgs/hr, FOB 10000 Kgs, reserve 2000 Kgs. Find PSR.", options: ["683 NMs", "815 NMs", "750 NMs"], correct: 0 },
+  { id: 14, question: "Track 335, TAS 195 Kts, distance 1275 NMs, W/V 260/35, FC 105 GPH. Find:\na) DCP\nb) If TCP is 55 mins before PNR what is FOB excluding reserve.", options: ["667 NMs / 917 Gallons", "727 NMs / 1027 Gallons", "767 NMs / 1053 Gallons"], correct: 0 },
+];
+
+export const rkBaliGenNavMeasurementElementsTopic: Topic = {
+  id: "rkbali-gennav-ch12-measurement-elements",
+  title: "Ch 12 – Measurement of Elements",
+  questions: measurementElementsQuestions,
+};
+
 // ========== CH 13 – IN-FLIGHT NAVIGATION ==========
 // Eliminated: Q1-6, Q15-24
 const inFlightNavQuestions: MCQuestion[] = [
