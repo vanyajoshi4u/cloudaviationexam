@@ -10,9 +10,9 @@ const VidpAirportLayout = () => (
     <rect x="180" y="55" width="180" height="28" rx="2" className="fill-muted stroke-border" strokeWidth="1" />
     <text x="270" y="74" textAnchor="middle" className="fill-foreground" fontSize="11" fontWeight="600">Terminal Building</text>
 
-    {/* Stand 10 */}
+    {/* Stand 5 */}
     <rect x="175" y="100" width="60" height="60" rx="2" className="fill-muted-foreground/20 stroke-border" strokeWidth="1" />
-    <text x="205" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">10</text>
+    <text x="205" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">5</text>
 
     {/* Aircraft icon at center */}
     <g transform="translate(290, 130)">
@@ -20,9 +20,9 @@ const VidpAirportLayout = () => (
       <circle cx="0" cy="-22" r="4" className="fill-foreground" />
     </g>
 
-    {/* Stand 11 */}
+    {/* Stand 6 */}
     <rect x="340" y="100" width="60" height="60" rx="2" className="fill-muted-foreground/20 stroke-border" strokeWidth="1" />
-    <text x="370" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">11</text>
+    <text x="370" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">6</text>
 
     {/* Taxiway C */}
     <line x1="120" y1="230" x2="480" y2="230" className="stroke-primary/40" strokeWidth="20" />
