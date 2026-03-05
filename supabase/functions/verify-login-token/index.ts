@@ -77,6 +77,16 @@ Deno.serve(async (req) => {
     const loginFingerprint = verification.fingerprint;
     const loginDeviceLabel = verification.device_label;
 
+    if (!loginFingerprint || typeof loginFingerprint !== "string" || loginFingerprint.trim().length === 0) {
+      return new Response(JSON.stringify({
+        error: "Device verification missing. Please start login again from your trusted device.",
+        valid: false,
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // SERVER-SIDE: Enforce device fingerprint check before creating session
     if (loginFingerprint) {
       const { data: deviceCheck } = await dbQuery(
@@ -90,7 +100,7 @@ Deno.serve(async (req) => {
       if (deviceCheck === false) {
         // Device limit exceeded - reject verification
         return new Response(JSON.stringify({
-          error: "Device limit reached (max 3). This device is not authorized. Contact support.",
+          error: "This account is locked to one trusted device. This device is not authorized.",
           valid: false,
         }), {
           status: 403,
