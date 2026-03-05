@@ -328,6 +328,119 @@ const paper1Scenarios: RtrScenario[] = [
   },
 ];
 
+const paper2FlightInfo = {
+  aircraftId: "AIC-212",
+  aircraftType: "A320neo",
+  rtCallSign: "Air India-212",
+  registration: "VT-ILP",
+  departure: "VAJB-JABALPUR",
+  destination: "VAID-INDORE",
+  atsRoute: "W17 BPL W43 IDR",
+  standNo: "5",
+  runwayInUse: "09",
+  taxiway: "C, D",
+  flightLevel: "320",
+  alternateAirdrome: "VABP-Bhopal",
+  pob: "180",
+  endurance: "0500 Hrs",
+  exerciseStartTime: "1105 UTC",
+};
+
+const paper2AtisInfo: AtisInfo = {
+  designator: "K",
+  timeOfObservation: "1100 UTC",
+  runwayInUse: "09",
+  wind: "340°/03 Knots",
+  visibility: "3000 Metres",
+  clouds: "SCT 1500 FT, BKN 2500 FT",
+  temperature: "12°C",
+  dewpoint: "08°C",
+  qnh: "1016 hPa",
+  remarks: "No significant weather",
+};
+
+const paper2Frequencies = [
+  { description: "JABALPUR SMC", frequency: "121.90 MHz" },
+  { description: "JABALPUR TWR", frequency: "118.10 MHz" },
+  { description: "JABALPUR APPROACH", frequency: "119.30 MHz" },
+  { description: "MUMBAI AREA CONTROL", frequency: "124.05 MHz" },
+  { description: "INDORE TWR", frequency: "118.70 MHz" },
+  { description: "INDORE APPROACH", frequency: "120.30 MHz" },
+];
+
+const paper2Scenarios: RtrScenario[] = [
+  {
+    id: 1,
+    scenarioContext: "Abbreviate correct phraseology / state meaning.",
+    flightInfo: paper2FlightInfo,
+    atisInfo: paper2AtisInfo,
+    frequencies: paper2Frequencies,
+    squawk: "7700",
+    questions: [
+      "A) \"I request verification of: (clearance, instruction, action, information).\"",
+      "B) \"Ignore.\"",
+      "C) MONITOR.",
+      "D) \"My transmission is ended and I expect a response from you.\"",
+      "E) RECLEARED.",
+    ],
+  },
+  {
+    id: 2,
+    scenarioContext: "You are on taxiway C.",
+    flightInfo: paper2FlightInfo,
+    atisInfo: paper2AtisInfo,
+    frequencies: paper2Frequencies,
+    squawk: "7700",
+    questions: [
+      "You ingested FOD in your left engine. Take action.",
+    ],
+  },
+  {
+    id: 3,
+    scenarioContext: "You are lined up runway 09.",
+    flightInfo: paper2FlightInfo,
+    atisInfo: paper2AtisInfo,
+    frequencies: paper2Frequencies,
+    squawk: "7700",
+    questions: [
+      "Request line up and ATC clearance.",
+    ],
+  },
+  {
+    id: 4,
+    scenarioContext: "You are airborne and passing 2500 feet.",
+    flightInfo: paper2FlightInfo,
+    atisInfo: paper2AtisInfo,
+    frequencies: paper2Frequencies,
+    squawk: "7700",
+    questions: [
+      "One Helicopter passed you at 6 NM. Take action.",
+    ],
+  },
+  {
+    id: 5,
+    scenarioContext: "You are at FL 200.",
+    flightInfo: paper2FlightInfo,
+    atisInfo: paper2AtisInfo,
+    frequencies: paper2Frequencies,
+    squawk: "7700",
+    questions: [
+      "Severe turbulence caused you height loss of 10,000 feet. Take action.",
+    ],
+  },
+  {
+    id: 6,
+    scenarioContext: "You are in flight.",
+    flightInfo: paper2FlightInfo,
+    atisInfo: paper2AtisInfo,
+    frequencies: paper2Frequencies,
+    squawk: "7700",
+    questions: [
+      "Your left engine got fire. Take action.",
+    ],
+  },
+];
+
 const sampleScenarios: RtrScenario[] = paper1Scenarios.map(s => ({
   ...s,
   scenarioContext: "",
@@ -335,7 +448,7 @@ const sampleScenarios: RtrScenario[] = paper1Scenarios.map(s => ({
 
 export const rtrPart2Papers: RtrPart2Paper[] = [
   { id: "rtr2-paper-1", title: "Radio Telephony Paper 1", scenarios: paper1Scenarios },
-  { id: "rtr2-paper-2", title: "Radio Telephony Paper 2", scenarios: sampleScenarios },
+  { id: "rtr2-paper-2", title: "Radio Telephony Paper 2", scenarios: paper2Scenarios },
   { id: "rtr2-paper-3", title: "Radio Telephony Paper 3", scenarios: sampleScenarios },
   { id: "rtr2-paper-4", title: "Radio Telephony Paper 4", scenarios: sampleScenarios },
   { id: "rtr2-paper-5", title: "Radio Telephony Paper 5", scenarios: sampleScenarios },
