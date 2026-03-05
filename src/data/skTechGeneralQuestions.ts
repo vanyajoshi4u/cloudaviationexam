@@ -1,17 +1,13 @@
-interface Question {
+import { MCQuestion, Topic } from "@/data/icJoshiQuestions";
+
+interface RawQuestion {
   id: number;
   question: string;
   options: string[];
   correctAnswer: number;
 }
 
-interface Topic {
-  id: string;
-  title: string;
-  questions: Question[];
-}
-
-const skTechQuestions: Question[] = [
+const skTechQuestionsRaw: RawQuestion[] = [
   {
     id: 1,
     question: "In subsonic flight, which is correct for VMD?",
@@ -2720,6 +2716,13 @@ const skTechQuestions: Question[] = [
     correctAnswer: 0
   }
 ];
+
+const skTechQuestions: MCQuestion[] = skTechQuestionsRaw.map(q => ({
+  id: q.id,
+  question: q.question,
+  options: q.options,
+  correct: q.correctAnswer,
+}));
 
 export const skTechGeneralTopic: Topic = {
   id: "sk-tech-general-qb",
