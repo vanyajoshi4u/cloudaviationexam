@@ -16,7 +16,9 @@ import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
 import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
-import { skTechGeneralTopic } from "@/data/skTechGeneralQuestions";
+import { skTechQB2Topic } from "@/data/skTechQB2Questions";
+import { skTechQB3Topic } from "@/data/skTechQB3Questions";
+import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -205,6 +207,9 @@ const subjectsData: Subject[] = [
         title: "Question Bank",
         chapters: [
           "Question Bank-1",
+          "Question Bank-2",
+          "Question Bank-3",
+          "Question Bank-4",
         ],
         hasQuiz: true,
         quizSource: "redbird-tech",
@@ -551,7 +556,7 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechGeneralTopic] : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic] : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
