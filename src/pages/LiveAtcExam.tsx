@@ -8,6 +8,11 @@ import { supabase } from "@/integrations/supabase/client";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
 import VidpAirportLayout from "@/components/VidpAirportLayout";
 import airwayChartPaper1 from "@/assets/airway-chart-paper1.png";
+import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
+
+const chartImageMap: Record<string, string> = {
+  "rtr2-paper-1": atsRouteDelhiKolkata,
+};
 import { toast } from "@/hooks/use-toast";
 
 const EXAM_DURATION = 30 * 60;
@@ -528,7 +533,7 @@ const LiveAtcExam = () => {
                 </h2>
               </div>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="flex-1 bg-muted relative overflow-auto">
-                <img src={airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
+                <img src={chartImageMap[paperId || ""] || airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
                 <motion.button
                   onClick={() => setShowAirportLayout(true)}
                   whileHover={{ scale: 1.05 }}

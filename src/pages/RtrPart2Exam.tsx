@@ -8,6 +8,12 @@ import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import VidpAirportLayout from "@/components/VidpAirportLayout";
 import airwayChartPaper1 from "@/assets/airway-chart-paper1.png";
+import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
+
+const chartImageMap: Record<string, string> = {
+  "rtr2-paper-1": atsRouteDelhiKolkata,
+};
+
 
 const EXAM_DURATION = 30 * 60;
 
@@ -301,7 +307,7 @@ const RtrPart2Exam = () => {
                 transition={{ duration: 0.6 }}
                 className="flex-1 bg-muted relative overflow-auto"
               >
-                <img src={airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
+                <img src={chartImageMap[paperId || ""] || airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
                 <motion.button
                   onClick={() => setShowAirportLayout(true)}
                   whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary))" }}
