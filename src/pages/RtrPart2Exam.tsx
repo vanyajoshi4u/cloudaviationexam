@@ -9,9 +9,11 @@ import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import VidpAirportLayout from "@/components/VidpAirportLayout";
 import airwayChartPaper1 from "@/assets/airway-chart-paper1.png";
 import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
+import atsRouteJabalpurIndore from "@/assets/ats-route-jabalpur-indore.png";
 
 const chartImageMap: Record<string, string> = {
   "rtr2-paper-1": atsRouteDelhiKolkata,
+  "rtr2-paper-2": atsRouteJabalpurIndore,
 };
 
 
