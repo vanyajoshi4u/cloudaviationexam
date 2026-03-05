@@ -15,6 +15,7 @@ import { skMetTopics } from "@/data/skMetQuestions";
 import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
+import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -31,7 +32,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech";
 }
 
 interface Subject {
@@ -200,34 +201,12 @@ const subjectsData: Subject[] = [
     title: "Technical General",
     subtopics: [
       {
-        title: "Aerodynamics",
+        title: "Redbird",
         chapters: [
-          "Principles of Flight",
-          "Lift, Drag & Thrust",
-          "Stability & Control",
-          "High Speed Aerodynamics",
-          "Stall & Spin",
+          "Question Bank",
         ],
-      },
-      {
-        title: "Aircraft Systems",
-        chapters: [
-          "Hydraulic Systems",
-          "Pneumatic Systems",
-          "Electrical Systems",
-          "Fuel Systems",
-          "Landing Gear & Brakes",
-        ],
-      },
-      {
-        title: "Powerplant",
-        chapters: [
-          "Piston Engines",
-          "Gas Turbine Engines",
-          "Propellers",
-          "Engine Instruments",
-          "Fire Protection",
-        ],
+        hasQuiz: true,
+        quizSource: "redbird-tech",
       },
     ],
   },
@@ -571,7 +550,7 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic] : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
