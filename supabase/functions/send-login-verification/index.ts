@@ -60,11 +60,10 @@ Deno.serve(async (req) => {
     const ip = getClientIP(req);
     const authHeader = req.headers.get("Authorization");
     const body = await req.json();
-    const { action, origin: clientOrigin } = body;
+    const { action, origin: clientOrigin, fingerprint, device_label } = body;
 
     // Rate limit based on action type
     if (action === "check-and-verify" || action === "send-verification") {
-      // 10 verification emails per 15 minutes per IP
       const rateCheck = await checkRateLimit({
         action: "login-verify",
         identifier: ip,
@@ -73,12 +72,12 @@ Deno.serve(async (req) => {
       });
       if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
     } else if (action === "force-logout") {
-      // 5 force-logouts per 15 minutes per IP
+      // Tighter rate limit: 3 force-logouts per 30 minutes per IP
       const rateCheck = await checkRateLimit({
         action: "force-logout",
         identifier: ip,
-        maxRequests: 5,
-        windowSeconds: 900,
+        maxRequests: 3,
+        windowSeconds: 1800,
       });
       if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
     }
@@ -124,9 +123,62 @@ Deno.serve(async (req) => {
         });
       }
 
+      // SERVER-SIDE: Check if the requesting device's fingerprint is already registered for this user
+      // Only allow force-logout from a KNOWN device (prevents strangers with shared credentials)
+      if (fingerprint) {
+        const { data: knownDevices } = await dbQuery(
+          `device_fingerprints?user_id=eq.${user.id}&fingerprint=eq.${encodeURIComponent(fingerprint)}&select=id&limit=1`
+        );
+        if (!knownDevices || knownDevices.length === 0) {
+          // This device is NOT registered - block force-logout
+          logAudit({ user_id: user.id, action: "force_logout_blocked_unknown_device", ip_address: ip, details: { fingerprint } });
+          return new Response(JSON.stringify({ 
+            error: "Force logout is only available from a previously trusted device. Please contact support.",
+            blocked: true 
+          }), {
+            status: 403,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+      }
+
       // Clear all sessions and verifications
       await dbQuery(`active_sessions?user_id=eq.${user.id}`, { method: "DELETE" });
       await dbQuery(`login_verifications?user_id=eq.${user.id}`, { method: "DELETE" });
+
+      // Send alert email to account owner about force-logout
+      const resendApiKey = Deno.env.get("RESEND_API_KEY");
+      if (resendApiKey && user.email) {
+        fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "CloudAviation Exam's <noreply@cloudaviationexams.com>",
+            to: [user.email],
+            subject: "⚠️ Security Alert: All Devices Logged Out",
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #dc2626; text-align: center;">⚠️ Security Alert</h2>
+                <p style="color: #555; text-align: center;">
+                  All devices have been logged out of your CloudAviation Exam's account.
+                </p>
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 16px; margin: 20px 0;">
+                  <p style="color: #991b1b; font-size: 14px; margin: 0;">
+                    <strong>Time:</strong> ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}<br/>
+                    <strong>IP:</strong> ${ip}
+                  </p>
+                </div>
+                <p style="color: #555; font-size: 13px; text-align: center;">
+                  If this wasn't you, please change your password immediately.
+                </p>
+              </div>
+            `,
+          }),
+        }).catch((err) => console.error("Force logout alert email failed:", err));
+      }
 
       logAudit({ user_id: user.id, action: "force_logout", ip_address: ip });
       return new Response(JSON.stringify({ success: true, message: "All sessions cleared. You can now log in." }), {
@@ -223,10 +275,14 @@ Deno.serve(async (req) => {
       // Clean up old verifications
       await dbQuery(`login_verifications?user_id=eq.${user.id}`, { method: "DELETE" });
 
-      // Create new verification token
+      // Create new verification token WITH fingerprint
+      const verificationBody: Record<string, string> = { user_id: user.id };
+      if (fingerprint) verificationBody.fingerprint = fingerprint;
+      if (device_label) verificationBody.device_label = device_label;
+
       const { data: verifications, ok } = await dbQuery("login_verifications", {
         method: "POST",
-        body: JSON.stringify({ user_id: user.id }),
+        body: JSON.stringify(verificationBody),
       });
 
       if (!ok || !verifications?.[0]?.token) {
@@ -254,6 +310,28 @@ Deno.serve(async (req) => {
         }), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
+      }
+
+      // SERVER-SIDE device fingerprint check before even sending verification
+      if (action === "check-and-verify" && fingerprint) {
+        const { data: deviceCheck } = await dbQuery(
+          `rpc/check_device_allowed`,
+          {
+            method: "POST",
+            body: JSON.stringify({ _user_id: user.id, _fingerprint: fingerprint }),
+          }
+        );
+
+        if (deviceCheck === false) {
+          logAudit({ user_id: user.id, action: "login_blocked_device_limit", ip_address: ip, details: { fingerprint } });
+          return new Response(JSON.stringify({
+            hasActiveSession: false,
+            deviceBlocked: true,
+            error: "Device limit reached (max 3). This device is not recognized. Please contact support.",
+          }), {
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
       }
 
       if (action === "check-and-verify") {
