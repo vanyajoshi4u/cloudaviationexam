@@ -12,7 +12,7 @@ import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
 import atsRouteJabalpurIndore from "@/assets/ats-route-jabalpur-indore.png";
 import atsRouteAmritsarDelhi from "@/assets/ats-route-amritsar-delhi.png";
 import atsRouteMumbaiGoa from "@/assets/ats-route-mumbai-goa.png";
-import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png";
+import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png"; // Paper 5
 
 const chartImageMap: Record<string, string> = {
   "rtr2-paper-1": atsRouteDelhiKolkata,
