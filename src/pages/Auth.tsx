@@ -183,14 +183,20 @@ const Auth = () => {
         const accessToken = loginData.session?.access_token;
         if (!accessToken) throw new Error("Login failed - no session");
 
-        // Get device fingerprint before server call
+        // Get device fingerprint before server call (required)
         let fp = "";
         let label = "";
         try {
           fp = await getFingerprint();
           label = getDeviceLabel();
         } catch (fpErr) {
-          console.error("Fingerprint error:", fpErr);
+          await supabase.auth.signOut({ scope: "local" });
+          throw new Error("Device verification failed. Please disable private mode/content blockers and try again.");
+        }
+
+        if (!fp) {
+          await supabase.auth.signOut({ scope: "local" });
+          throw new Error("Device verification failed. Please try again from your trusted browser.");
         }
 
         // Check session and send verification in one call (with fingerprint)
@@ -207,7 +213,7 @@ const Auth = () => {
         // Device limit reached server-side
         if (verifyResult?.deviceBlocked) {
           await supabase.auth.signOut({ scope: "local" });
-          toast.error("Device limit reached (max 3). This device is not recognized. Contact support.");
+          toast.error("This account is locked to one trusted device. Log in from your original device or contact support.");
           setLoading(false);
           return;
         }
@@ -379,8 +385,23 @@ const Auth = () => {
                     const accessToken = loginData.session?.access_token;
                     if (!accessToken) throw new Error("No session");
 
+                    let resendFingerprint = "";
+                    let resendDeviceLabel = "";
+                    try {
+                      resendFingerprint = await getFingerprint();
+                      resendDeviceLabel = getDeviceLabel();
+                    } catch {
+                      await supabase.auth.signOut({ scope: "local" });
+                      throw new Error("Device verification failed while resending. Please try again.");
+                    }
+
                     await supabase.functions.invoke("send-login-verification", {
-                      body: { action: "send-verification", origin: window.location.origin },
+                      body: {
+                        action: "send-verification",
+                        origin: window.location.origin,
+                        fingerprint: resendFingerprint,
+                        device_label: resendDeviceLabel,
+                      },
                       headers: { Authorization: `Bearer ${accessToken}` },
                     });
                     await supabase.auth.signOut({ scope: "local" });
@@ -541,13 +562,20 @@ const Auth = () => {
                       const accessToken = loginData.session?.access_token;
                       if (!accessToken) throw new Error("No session");
 
-                      // Get fingerprint for server-side device verification
+                      // Get fingerprint for server-side device verification (required)
                       let fp = "";
-                      try { fp = await getFingerprint(); } catch (e) { /* allow */ }
+                      let label = "";
+                      try {
+                        fp = await getFingerprint();
+                        label = getDeviceLabel();
+                      } catch {
+                        await supabase.auth.signOut({ scope: "local" });
+                        throw new Error("Device verification failed. Force logout is allowed only from your trusted device.");
+                      }
 
-                      // Force logout all other sessions (server validates device)
+                      // Force logout all other sessions (server validates trusted device)
                       const { data: flResult, error: fnError } = await supabase.functions.invoke("send-login-verification", {
-                        body: { action: "force-logout", fingerprint: fp },
+                        body: { action: "force-logout", fingerprint: fp, device_label: label },
                         headers: { Authorization: `Bearer ${accessToken}` },
                       });
                       if (fnError) throw fnError;

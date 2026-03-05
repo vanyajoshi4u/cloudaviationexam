@@ -61,6 +61,8 @@ Deno.serve(async (req) => {
     const authHeader = req.headers.get("Authorization");
     const body = await req.json();
     const { action, origin: clientOrigin, fingerprint, device_label } = body;
+    const normalizedFingerprint = typeof fingerprint === "string" ? fingerprint.trim() : "";
+    const normalizedDeviceLabel = typeof device_label === "string" ? device_label.trim() : "";
 
     // Rate limit based on action type
     if (action === "check-and-verify" || action === "send-verification") {
@@ -123,23 +125,30 @@ Deno.serve(async (req) => {
         });
       }
 
-      // SERVER-SIDE: Check if the requesting device's fingerprint is already registered for this user
-      // Only allow force-logout from a KNOWN device (prevents strangers with shared credentials)
-      if (fingerprint) {
-        const { data: knownDevices } = await dbQuery(
-          `device_fingerprints?user_id=eq.${user.id}&fingerprint=eq.${encodeURIComponent(fingerprint)}&select=id&limit=1`
-        );
-        if (!knownDevices || knownDevices.length === 0) {
-          // This device is NOT registered - block force-logout
-          logAudit({ user_id: user.id, action: "force_logout_blocked_unknown_device", ip_address: ip, details: { fingerprint } });
-          return new Response(JSON.stringify({ 
-            error: "Force logout is only available from a previously trusted device. Please contact support.",
-            blocked: true 
-          }), {
-            status: 403,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          });
-        }
+      // SERVER-SIDE: Force logout requires a trusted device fingerprint
+      if (!normalizedFingerprint) {
+        return new Response(JSON.stringify({
+          error: "Device verification is required for force logout.",
+          blocked: true,
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { data: knownDevices } = await dbQuery(
+        `device_fingerprints?user_id=eq.${user.id}&fingerprint=eq.${encodeURIComponent(normalizedFingerprint)}&select=id&limit=1`
+      );
+      if (!knownDevices || knownDevices.length === 0) {
+        // This device is NOT registered - block force-logout
+        logAudit({ user_id: user.id, action: "force_logout_blocked_unknown_device", ip_address: ip, details: { fingerprint: normalizedFingerprint } });
+        return new Response(JSON.stringify({ 
+          error: "Force logout is only available from your trusted device. Please contact support.",
+          blocked: true 
+        }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
 
       // Clear all sessions and verifications
@@ -276,9 +285,15 @@ Deno.serve(async (req) => {
       await dbQuery(`login_verifications?user_id=eq.${user.id}`, { method: "DELETE" });
 
       // Create new verification token WITH fingerprint
-      const verificationBody: Record<string, string> = { user_id: user.id };
-      if (fingerprint) verificationBody.fingerprint = fingerprint;
-      if (device_label) verificationBody.device_label = device_label;
+      if (!normalizedFingerprint) {
+        throw new Error("Device verification is required. Please enable browser fingerprinting and try again.");
+      }
+
+      const verificationBody: Record<string, string> = {
+        user_id: user.id,
+        fingerprint: normalizedFingerprint,
+      };
+      if (normalizedDeviceLabel) verificationBody.device_label = normalizedDeviceLabel;
 
       const { data: verifications, ok } = await dbQuery("login_verifications", {
         method: "POST",
@@ -312,23 +327,35 @@ Deno.serve(async (req) => {
         });
       }
 
-      // SERVER-SIDE device fingerprint check before even sending verification
-      if (action === "check-and-verify" && fingerprint) {
+      // SERVER-SIDE strict fingerprint check before sending verification
+      if (action === "check-and-verify") {
+        if (!normalizedFingerprint) {
+          return new Response(JSON.stringify({
+            hasActiveSession: false,
+            deviceBlocked: true,
+            error: "Device verification failed. Please disable private mode/content blockers and try again.",
+          }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
         const { data: deviceCheck } = await dbQuery(
           `rpc/check_device_allowed`,
           {
             method: "POST",
-            body: JSON.stringify({ _user_id: user.id, _fingerprint: fingerprint }),
+            body: JSON.stringify({ _user_id: user.id, _fingerprint: normalizedFingerprint }),
           }
         );
 
         if (deviceCheck === false) {
-          logAudit({ user_id: user.id, action: "login_blocked_device_limit", ip_address: ip, details: { fingerprint } });
+          logAudit({ user_id: user.id, action: "login_blocked_device_limit", ip_address: ip, details: { fingerprint: normalizedFingerprint } });
           return new Response(JSON.stringify({
             hasActiveSession: false,
             deviceBlocked: true,
-            error: "Device limit reached (max 3). This device is not recognized. Please contact support.",
+            error: "This account is locked to one trusted device. Log in from your original device or contact support.",
           }), {
+            status: 403,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
           });
         }
@@ -347,6 +374,33 @@ Deno.serve(async (req) => {
     }
 
     if (action === "send-verification") {
+      if (!normalizedFingerprint) {
+        return new Response(JSON.stringify({
+          error: "Device verification failed. Please try again from your trusted browser.",
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { data: deviceCheck } = await dbQuery(
+        `rpc/check_device_allowed`,
+        {
+          method: "POST",
+          body: JSON.stringify({ _user_id: user.id, _fingerprint: normalizedFingerprint }),
+        }
+      );
+
+      if (deviceCheck === false) {
+        return new Response(JSON.stringify({
+          error: "This account is locked to one trusted device. Log in from your original device or contact support.",
+          deviceBlocked: true,
+        }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
       await createAndQueueVerification();
       return new Response(JSON.stringify({ success: true, message: "Verification email sent" }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
