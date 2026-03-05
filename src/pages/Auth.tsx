@@ -208,15 +208,38 @@ const Auth = () => {
           }
         );
 
-        // Device limit reached server-side (edge function returns 403 so verifyError may be set)
-        if (verifyResult?.deviceBlocked || verifyResult?.error?.includes?.("device limit")) {
+        // Handle device-limit and other server errors, including non-2xx function responses
+        if (verifyResult?.deviceBlocked || verifyResult?.error?.toLowerCase?.().includes?.("device limit")) {
           await supabase.auth.signOut({ scope: "local" });
           toast.error("You are up to the device limit. You have already set up 2 devices. For more info contact cloudaviation4u@gmail.com");
           setLoading(false);
           return;
         }
 
-        if (verifyError) throw new Error(verifyResult?.error || "Verification failed");
+        if (verifyError) {
+          let serverErrorMessage = verifyResult?.error as string | undefined;
+          let serverDeviceBlocked = Boolean(verifyResult?.deviceBlocked);
+
+          const errorContext = (verifyError as any)?.context;
+          if (errorContext) {
+            try {
+              const parsed = await errorContext.json();
+              if (!serverErrorMessage && typeof parsed?.error === "string") serverErrorMessage = parsed.error;
+              if (parsed?.deviceBlocked === true) serverDeviceBlocked = true;
+            } catch {
+              // ignore parse failures and fall back to generic message
+            }
+          }
+
+          if (serverDeviceBlocked || serverErrorMessage?.toLowerCase?.().includes?.("device limit")) {
+            await supabase.auth.signOut({ scope: "local" });
+            toast.error("You are up to the device limit. You have already set up 2 devices. For more info contact cloudaviation4u@gmail.com");
+            setLoading(false);
+            return;
+          }
+
+          throw new Error(serverErrorMessage || "Verification failed");
+        }
 
         if (verifyResult?.hasActiveSession) {
           // Keep the session temporarily for force-logout capability

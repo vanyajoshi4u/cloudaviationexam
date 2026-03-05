@@ -25,9 +25,24 @@ const VerifyLogin = () => {
           body: { token, uid },
         });
 
+        let serverErrorMessage: string | undefined = data?.error;
+        if (error) {
+          const errorContext = (error as any)?.context;
+          if (errorContext) {
+            try {
+              const parsed = await errorContext.json();
+              if (!serverErrorMessage && typeof parsed?.error === "string") {
+                serverErrorMessage = parsed.error;
+              }
+            } catch {
+              // ignore parse failures and fall back
+            }
+          }
+        }
+
         if (error || !data?.valid) {
           setStatus("error");
-          setMessage(data?.error || "Verification failed. The link may have expired.");
+          setMessage(serverErrorMessage || "Verification failed. The link may have expired.");
           return;
         }
 
