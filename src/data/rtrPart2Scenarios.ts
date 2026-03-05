@@ -559,6 +559,123 @@ const paper3Scenarios: RtrScenario[] = [
   },
 ];
 
+const paper4FlightInfo = {
+  aircraftId: "6E-254",
+  aircraftType: "B777-X",
+  rtCallSign: "Ifly-254",
+  registration: "VT-AJU",
+  departure: "VABB-MUMBAI",
+  destination: "VOGO-GOA",
+  atsRoute: "W28 BEDOL Q9 EPKOS KOLHAPUR W56 BELGAUM W163 GOA",
+  standNo: "5",
+  runwayInUse: "09",
+  taxiway: "C, D",
+  flightLevel: "310",
+  alternateAirdrome: "VABM-Belgaum",
+  pob: "180",
+  endurance: "0500 Hrs",
+  exerciseStartTime: "0505 UTC",
+};
+
+const paper4AtisInfo: AtisInfo = {
+  designator: "K",
+  timeOfObservation: "0500 UTC",
+  runwayInUse: "09",
+  wind: "340°/03 Knots",
+  visibility: "3000 Metres",
+  clouds: "SCT 1500 FT, BKN 2500 FT",
+  temperature: "12°C",
+  dewpoint: "08°C",
+  qnh: "1016 hPa",
+  remarks: "No significant weather",
+};
+
+const paper4Frequencies = [
+  { description: "MUMBAI SMC", frequency: "121.90 MHz" },
+  { description: "MUMBAI TWR", frequency: "118.10 MHz" },
+  { description: "MUMBAI APPROACH", frequency: "119.30 MHz" },
+  { description: "MUMBAI AREA CONTROL", frequency: "124.05 MHz" },
+  { description: "GOA APPROACH", frequency: "120.30 MHz" },
+  { description: "GOA TWR", frequency: "118.70 MHz" },
+];
+
+const paper4Scenarios: RtrScenario[] = [
+  {
+    id: 1,
+    scenarioContext: "Translate to RT phraseology.",
+    flightInfo: paper4FlightInfo,
+    atisInfo: paper4AtisInfo,
+    frequencies: paper4Frequencies,
+    squawk: "7700",
+    questions: [
+      "A) CLOUDS FEW020 SCT080 BKN200 — Transmit in RT phraseology.",
+      "B) VISIBILITY 10000M — Transmit in RT phraseology.",
+      "C) \"Annul my last transmission.\"",
+      "D) \"Repeat for emphasis.\"",
+    ],
+  },
+  {
+    id: 2,
+    scenarioContext: "You are on Taxiway C, taxiing out.",
+    flightInfo: paper4FlightInfo,
+    atisInfo: paper4AtisInfo,
+    frequencies: paper4Frequencies,
+    squawk: "7700",
+    questions: [
+      "You see a fire tender on Taxiway C. Take action.",
+      "Ask for ATC clearance and take off Runway 09.",
+      "On take off roll you see a vehicle on the Runway. Take action.",
+    ],
+  },
+  {
+    id: 3,
+    scenarioContext: "You are airborne after take off from Mumbai.",
+    flightInfo: paper4FlightInfo,
+    atisInfo: paper4AtisInfo,
+    frequencies: paper4Frequencies,
+    squawk: "7700",
+    questions: [
+      "A) After take off, ask for further climb. Change frequency. Request level change or further climb.",
+      "B) Relay transmission of other aircraft.",
+    ],
+  },
+  {
+    id: 4,
+    scenarioContext: "You are in flight at your cleared flight level.",
+    flightInfo: paper4FlightInfo,
+    atisInfo: paper4AtisInfo,
+    frequencies: paper4Frequencies,
+    squawk: "7700",
+    questions: [
+      "Unable to maintain cleared FL due to turbulence. Take action.",
+    ],
+  },
+  {
+    id: 5,
+    scenarioContext: "You are in flight en route to Goa.",
+    flightInfo: paper4FlightInfo,
+    atisInfo: paper4AtisInfo,
+    frequencies: paper4Frequencies,
+    squawk: "7700",
+    questions: [
+      "Weather deviation 10 NM from route. Ask permission.",
+      "After deviation, ask to resume normal navigation and take permission.",
+    ],
+  },
+  {
+    id: 6,
+    scenarioContext: "You are 50 NM from Goa.",
+    flightInfo: paper4FlightInfo,
+    atisInfo: paper4AtisInfo,
+    frequencies: paper4Frequencies,
+    squawk: "7700",
+    questions: [
+      "Lightning strike and severe structural damage. Take action to land at Goa.",
+      "Reply to further clearance for landing at Goa.",
+    ],
+  },
+];
+
 const sampleScenarios: RtrScenario[] = paper1Scenarios.map(s => ({
   ...s,
   scenarioContext: "",
@@ -568,6 +685,6 @@ export const rtrPart2Papers: RtrPart2Paper[] = [
   { id: "rtr2-paper-1", title: "Radio Telephony Paper 1", scenarios: paper1Scenarios },
   { id: "rtr2-paper-2", title: "Radio Telephony Paper 2", scenarios: paper2Scenarios },
   { id: "rtr2-paper-3", title: "Radio Telephony Paper 3", scenarios: paper3Scenarios },
-  { id: "rtr2-paper-4", title: "Radio Telephony Paper 4", scenarios: sampleScenarios },
+  { id: "rtr2-paper-4", title: "Radio Telephony Paper 4", scenarios: paper4Scenarios },
   { id: "rtr2-paper-5", title: "Radio Telephony Paper 5", scenarios: sampleScenarios },
 ];
