@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X, User, UserRound, Volume2 } from "lucide-react";
+import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X, User, UserRound, Volume2, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -470,6 +470,16 @@ const LiveAtcExam = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {paperId === "rtr2-paper-2" && (
+              <div className="mb-4">
+                <a href="/rtr-paper2-solution.pdf" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="w-full gap-2 border-primary/30 text-primary hover:bg-primary/10">
+                    <FileText className="w-4 h-4" /> View Solution — Paper 2
+                  </Button>
+                </a>
               </div>
             )}
 
