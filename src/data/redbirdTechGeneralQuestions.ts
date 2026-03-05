@@ -226,6 +226,6 @@ const redbirdTechQuestions: MCQuestion[] = [
 
 export const redbirdTechGeneralTopic: Topic = {
   id: "redbird-tech-general-qb",
-  title: "Question Bank",
+  title: "Question Bank-1",
   questions: redbirdTechQuestions,
 };
