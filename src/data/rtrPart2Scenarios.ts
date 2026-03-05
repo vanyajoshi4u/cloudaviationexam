@@ -335,7 +335,7 @@ const paper2FlightInfo = {
   registration: "VT-ILP",
   departure: "VAJB-JABALPUR",
   destination: "VAID-INDORE",
-  atsRoute: "W17 BPL W43 IDR",
+  atsRoute: "GOLOX A791 BPL Q16 MUBDO",
   standNo: "5",
   runwayInUse: "09",
   taxiway: "C, D",
