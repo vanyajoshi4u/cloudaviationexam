@@ -213,7 +213,7 @@ const Auth = () => {
         // Device limit reached server-side
         if (verifyResult?.deviceBlocked) {
           await supabase.auth.signOut({ scope: "local" });
-          toast.error("Device limit reached (max 2). This device is not authorized. Contact support.");
+          toast.error("You are up to the device limit. You have already set up 2 devices. For more info contact cloudaviation4u@gmail.com");
           setLoading(false);
           return;
         }

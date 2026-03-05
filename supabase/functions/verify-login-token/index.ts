@@ -100,7 +100,7 @@ Deno.serve(async (req) => {
       if (deviceCheck === false) {
         // Device limit exceeded - reject verification
         return new Response(JSON.stringify({
-          error: "Device limit reached (max 2). This device is not authorized. Contact support.",
+          error: "You are up to the device limit. You have already set up 2 devices. For more info contact cloudaviation4u@gmail.com",
           valid: false,
         }), {
           status: 403,
