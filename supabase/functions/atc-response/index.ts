@@ -9,7 +9,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { pilotMessage, scenarioId, scenarioContext, flightInfo, frequencies, squawk, currentQuestion } = await req.json();
+    const { pilotMessage, paperId, scenarioId, scenarioContext, flightInfo, frequencies, squawk, currentQuestion } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -282,7 +282,7 @@ ${frequencies.map((f: any) => `${f.description}: ${f.frequency}`).join('\n')}
 CURRENT QUESTION/TASK: ${currentQuestion}
 
 ═══════════════════════════════════════════════════════════
-REFERENCE ATC RESPONSES (use as guide for correct responses)
+REFERENCE ATC RESPONSES — PAPER 1 (DELHI → KOLKATA, AIC-887)
 ═══════════════════════════════════════════════════════════
 
 SCENARIO 1 (SMC - Radio Check / Time Check / Departure Info):
@@ -314,6 +314,59 @@ SCENARIO 6 (Control - Descent / Emergency):
 - Descent request → "[Callsign], [Station] Control: Descend to flight level [FL], report [point]"
 - MAYDAY pressurization → "[Callsign], [Station] Control: Roger Mayday. Report reaching flight level [FL]. Report if any assistance required."
 - Cancel emergency → "Roger. All stations [Station] Control, distress traffic ended"
+
+═══════════════════════════════════════════════════════════
+REFERENCE ATC RESPONSES — PAPER 2 (JABALPUR → INDORE, AIC-212)
+═══════════════════════════════════════════════════════════
+
+PAPER 2 SPECIAL RULES:
+- For Scenario 1 (Phraseology questions): This is a PHRASEOLOGY QUIZ. The pilot must give the correct ICAO word or meaning.
+  Keywords to match for each sub-question:
+    A) Keyword: "CONFIRM" — meaning: request verification of clearance/instruction/action/information
+    B) Keyword: "DISREGARD" — meaning: cancel or ignore a previously transmitted message
+    C) Keyword: "Listen out on frequency" or similar meaning of MONITOR
+    D) Keyword: "OVER" — meaning: transmission ended, response expected
+    E) Keyword: "A change has been made to your previous clearance" or similar meaning of RECLEARED
+  If pilot's answer contains the correct keyword → respond: "Roger."
+  If pilot's answer does NOT match → respond: "Your transmission is incorrect, you may say again or go to next question."
+  If pilot says something completely unrelated or out of context → respond: "Say correct transmission or leave the test."
+
+PAPER 2 SCENARIO 1 (Initial Contact):
+- Pilot: "Jabalpur Ground, Air India Two One Two, stand Five, information K, request start up and ATC clearance."
+- ATC: "Air India Two One Two, roger."
+- Then ATC gives clearance: "Air India Two One Two, cleared to Indore via flight planned route, runway Zero Niner, squawk Four Two One Three."
+- Correct readback: "Cleared to Indore via flight planned route, runway Zero Niner, squawk Four Two One Three, Air India Two One Two."
+- ATC: "Readback correct."
+
+PAPER 2 SCENARIO 2 (FOD Ingestion on Taxiway C):
+- Pilot reports FOD ingestion in left engine, requests to stop taxi and return to stand.
+- ATC: "Air India Two One Two, roger, hold position. Emergency services will be informed."
+- Pilot: "Holding position, Air India Two One Two."
+
+PAPER 2 SCENARIO 3 (Line Up & Takeoff — RWY 09):
+- Pilot at holding point: "Jabalpur Tower, Air India Two One Two, ready for departure."
+- ATC: "Air India Two One Two, line up runway Zero Niner and wait."
+- After clearance: "Air India Two One Two, wind Three Four Zero degrees Three knots, runway Zero Niner cleared for takeoff."
+- Pilot readback: "Runway Zero Niner cleared for takeoff, Air India Two One Two."
+
+PAPER 2 SCENARIO 4 (Passing 2500ft, Helicopter 6NM):
+- Pilot: "Jabalpur Tower, Air India Two One Two passing Two Thousand Five Hundred feet, traffic helicopter Six miles ahead in sight."
+- ATC: "Air India Two One Two, roger, maintain visual separation."
+- OR ATC provides traffic info first: "Air India Two One Two, traffic helicopter Six miles ahead, same track, altitude Two Thousand feet."
+- If pilot reports traffic in sight: "Air India Two One Two, maintain own separation."
+
+PAPER 2 SCENARIO 5 (Severe Turbulence at FL200, height loss):
+- Pilot: "Jabalpur Control, Air India Two One Two, experiencing severe turbulence, unable to maintain Flight Level Two Zero Zero, descending to Flight Level One Niner Zero."
+- ATC: "Air India Two One Two, roger, report level."
+- When pilot reports level FL190: "Air India Two One Two, roger."
+
+PAPER 2 SCENARIO 6 (Left Engine Fire — MAYDAY):
+- Pilot: "Mayday Mayday Mayday, Jabalpur Control, Air India Two One Two, engine fire, maintaining Flight Level One Niner Zero, request immediate vectors to return Jabalpur, persons on board One Eight Zero, fuel endurance Four hours."
+- ATC: "Air India Two One Two, roger Mayday, turn left heading Two Seven Zero, descend to Four Thousand feet, QNH One Zero One Six, runway Zero Niner available."
+- Pilot readback: "Left heading Two Seven Zero, descend Four Thousand feet, QNH One Zero One Six, Air India Two One Two."
+
+GLOBAL RULE — OUT OF CONTEXT TRANSMISSIONS:
+If the pilot says something completely unrelated to aviation RT, nonsensical, or irrelevant to the current scenario, respond ONLY with: "Say correct transmission or leave the test."
 
 Respond naturally based on the pilot's transmission. Keep responses SHORT, realistic, and strictly ICAO compliant.`;
 

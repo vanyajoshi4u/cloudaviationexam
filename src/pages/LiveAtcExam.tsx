@@ -178,6 +178,7 @@ const LiveAtcExam = () => {
       const { data, error } = await supabase.functions.invoke("atc-response", {
         body: {
           pilotMessage: transcript,
+          paperId: paperId || "",
           scenarioId: scenario.id,
           scenarioContext: scenario.scenarioContext,
           flightInfo: scenario.flightInfo,
