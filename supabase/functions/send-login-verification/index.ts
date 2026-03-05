@@ -78,7 +78,7 @@ Deno.serve(async (req) => {
       const rateCheck = await checkRateLimit({
         action: "force-logout",
         identifier: ip,
-        maxRequests: 3,
+        maxRequests: 10,
         windowSeconds: 1800,
       });
       if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
