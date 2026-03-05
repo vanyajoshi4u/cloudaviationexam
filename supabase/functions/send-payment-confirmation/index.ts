@@ -61,6 +61,15 @@ Deno.serve(async (req) => {
       throw new Error("RESEND_API_KEY is not configured");
     }
 
+    // Get phone from profile
+    const { data: phoneProfile } = await adminClient
+      .from("profiles")
+      .select("phone")
+      .eq("user_id", userId)
+      .single();
+
+    const userPhone = phoneProfile?.phone || "N/A";
+
     const emailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -129,6 +138,56 @@ Deno.serve(async (req) => {
     }
 
     console.log(`Payment confirmation email sent to ${userEmail}:`, emailData);
+
+    // Send admin notification email
+    const adminEmailRes = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "CloudAviation Exam's <noreply@cloudaviationexams.com>",
+        to: ["cloudaviation4u@gmail.com"],
+        subject: `🛒 New Subscription – ${userName} bought ${planLabel}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #1e293b;">New Subscription Purchase 🎉</h2>
+            <div style="background: #f8fafc; border-radius: 12px; padding: 24px;">
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="color: #94a3b8; padding: 8px 0; font-size: 14px;">Name</td>
+                  <td style="color: #1e293b; padding: 8px 0; font-size: 14px; text-align: right; font-weight: 600;">${userName}</td>
+                </tr>
+                <tr>
+                  <td style="color: #94a3b8; padding: 8px 0; font-size: 14px;">Email</td>
+                  <td style="color: #1e293b; padding: 8px 0; font-size: 14px; text-align: right; font-weight: 600;">${userEmail}</td>
+                </tr>
+                <tr>
+                  <td style="color: #94a3b8; padding: 8px 0; font-size: 14px;">Phone</td>
+                  <td style="color: #1e293b; padding: 8px 0; font-size: 14px; text-align: right; font-weight: 600;">${userPhone}</td>
+                </tr>
+                <tr>
+                  <td style="color: #94a3b8; padding: 8px 0; font-size: 14px;">Plan</td>
+                  <td style="color: #1e293b; padding: 8px 0; font-size: 14px; text-align: right; font-weight: 600;">${planLabel}</td>
+                </tr>
+                <tr>
+                  <td style="color: #94a3b8; padding: 8px 0; font-size: 14px;">Amount</td>
+                  <td style="color: #1e293b; padding: 8px 0; font-size: 14px; text-align: right; font-weight: 600;">₹${amount}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        `,
+      }),
+    });
+
+    const adminEmailData = await adminEmailRes.json();
+    if (!adminEmailRes.ok) {
+      console.error("Admin notification email failed:", adminEmailData);
+    } else {
+      console.log("Admin notification email sent:", adminEmailData);
+    }
 
     return new Response(
       JSON.stringify({ success: true, message: `Confirmation email sent to ${userEmail}` }),
