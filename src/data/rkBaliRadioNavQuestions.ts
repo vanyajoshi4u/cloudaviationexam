@@ -1,15 +1,6 @@
-export interface MCQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correct: number;
-}
-
-export interface QuizTopic {
-  id: string;
-  title: string;
-  questions: MCQuestion[];
-}
+import { MCQuestion, Topic } from "@/data/icJoshiQuestions";
+export type { MCQuestion };
+export type QuizTopic = Topic;
 
 // Chapter 1: Basic Radio Theory
 // PDF Q1-2 eliminated (calculation questions). PDF Q3→Q1, ..., Q31→Q29. Total: 29 MCQs.
