@@ -399,13 +399,23 @@ const SubjectCards = () => {
     checkAccess();
   }, []);
 
-  const toggleSubject = (title: string) => {
+  const toggleSubject = (title: string, e: React.MouseEvent) => {
+    const scrollY = window.scrollY;
     setOpenSubject(openSubject === title ? null : title);
     setOpenSubtopic(null);
+    setOpenBook(null);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollY });
+    });
   };
 
-  const toggleSubtopic = (title: string) => {
+  const toggleSubtopic = (title: string, e: React.MouseEvent) => {
+    const scrollY = window.scrollY;
     setOpenSubtopic(openSubtopic === title ? null : title);
+    setOpenBook(null);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollY });
+    });
   };
 
   return (
@@ -453,7 +463,7 @@ const SubjectCards = () => {
               <div key={subject.title} className="glass-card overflow-hidden">
                 {/* Subject Header */}
                 <button
-                  onClick={() => toggleSubject(subject.title)}
+                  onClick={(e) => toggleSubject(subject.title, e)}
                   className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-primary/5 transition-colors duration-200"
                 >
                   <span className="font-display text-sm sm:text-base font-semibold text-foreground">
@@ -484,7 +494,7 @@ const SubjectCards = () => {
                         <div key={subtopic.title} className="mt-1">
                           {/* Subtopic Header */}
                           <button
-                            onClick={() => toggleSubtopic(subtopic.title)}
+                            onClick={(e) => toggleSubtopic(subtopic.title, e)}
                             className="w-full flex items-center gap-2 py-3 px-3 text-left rounded-lg hover:bg-primary/5 transition-colors duration-200"
                           >
                             <ChevronRight
@@ -516,7 +526,7 @@ const SubjectCards = () => {
                                   return (
                                     <div key={bookChapter.name}>
                                       <button
-                                        onClick={() => setOpenBook(isBookOpen ? null : bookChapter.name)}
+                                        onClick={() => { const sy = window.scrollY; setOpenBook(isBookOpen ? null : bookChapter.name); requestAnimationFrame(() => window.scrollTo({ top: sy })); }}
                                         className="w-full flex items-center gap-2 text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 text-left"
                                       >
                                         <ChevronRight
