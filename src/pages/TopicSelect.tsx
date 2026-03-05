@@ -13,11 +13,12 @@ import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
 import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
+import { skTechGeneralTopic } from "@/data/skTechGeneralQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechGeneralTopic];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
@@ -34,7 +35,8 @@ const TopicSelect = () => {
   const isRkBaliInst = rkBaliInstrumentTopics.some((t) => t.id === topicId);
   const isRkBaliRadNav = rkBaliRadioNavTopics.some((t) => t.id === topicId);
   const isRedbirdTech = redbirdTechGeneralTopic.id === topicId;
-  const subtitle = isRedbirdTech ? "Technical General — Question Bank" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const isSkTech = skTechGeneralTopic.id === topicId;
+  const subtitle = isSkTech ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (
