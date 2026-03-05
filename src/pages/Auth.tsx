@@ -208,15 +208,15 @@ const Auth = () => {
           }
         );
 
-        if (verifyError) throw new Error("Verification failed");
-
-        // Device limit reached server-side
-        if (verifyResult?.deviceBlocked) {
+        // Device limit reached server-side (edge function returns 403 so verifyError may be set)
+        if (verifyResult?.deviceBlocked || verifyResult?.error?.includes?.("device limit")) {
           await supabase.auth.signOut({ scope: "local" });
           toast.error("You are up to the device limit. You have already set up 2 devices. For more info contact cloudaviation4u@gmail.com");
           setLoading(false);
           return;
         }
+
+        if (verifyError) throw new Error(verifyResult?.error || "Verification failed");
 
         if (verifyResult?.hasActiveSession) {
           // Keep the session temporarily for force-logout capability
