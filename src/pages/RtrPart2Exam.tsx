@@ -317,13 +317,16 @@ const RtrPart2Exam = () => {
               >
                 <img src={chartImageMap[paperId || ""] || airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
                 <motion.button
+                  drag
+                  dragMomentum={false}
+                  dragElastic={0}
                   onClick={() => setShowAirportLayout(true)}
                   whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary))" }}
                   whileTap={{ scale: 0.97 }}
-                  className="absolute bottom-2 left-2 w-32 h-28 sm:w-40 sm:h-32 border-2 border-border/50 rounded-lg bg-card cursor-pointer transition-shadow hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)] overflow-hidden"
-                  title="Click to enlarge Airport Layout"
+                  className="absolute bottom-2 left-2 w-32 h-28 sm:w-40 sm:h-32 border-2 border-border/50 rounded-lg bg-card cursor-grab active:cursor-grabbing transition-shadow hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)] overflow-hidden z-10"
+                  title="Drag to move · Click to enlarge"
                 >
-                  <div className="w-full h-full p-1">
+                  <div className="w-full h-full p-1 pointer-events-none">
                     <VidpAirportLayout />
                   </div>
                 </motion.button>
