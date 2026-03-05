@@ -227,7 +227,26 @@ const Auth = () => {
               if (!serverErrorMessage && typeof parsed?.error === "string") serverErrorMessage = parsed.error;
               if (parsed?.deviceBlocked === true) serverDeviceBlocked = true;
             } catch {
-              // ignore parse failures and fall back to generic message
+              // ignore parse failures and fall back to other sources
+            }
+          }
+
+          if (!serverErrorMessage && typeof (verifyError as any)?.message === "string") {
+            const rawMessage = (verifyError as any).message as string;
+            const jsonMatch = rawMessage.match(/\{.*\}$/);
+            if (jsonMatch) {
+              try {
+                const parsed = JSON.parse(jsonMatch[0]);
+                if (typeof parsed?.error === "string") serverErrorMessage = parsed.error;
+                if (parsed?.deviceBlocked === true) serverDeviceBlocked = true;
+                if (parsed?.retryAfterSeconds && typeof parsed.retryAfterSeconds === "number") {
+                  const mins = Math.floor(parsed.retryAfterSeconds / 60);
+                  const secs = parsed.retryAfterSeconds % 60;
+                  serverErrorMessage = `${parsed.error} Retry in ${mins}m ${secs}s.`;
+                }
+              } catch {
+                // ignore JSON parse errors
+              }
             }
           }
 

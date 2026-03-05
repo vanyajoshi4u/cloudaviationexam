@@ -65,19 +65,21 @@ Deno.serve(async (req) => {
     const normalizedDeviceLabel = typeof device_label === "string" ? device_label.trim() : "";
 
     // Rate limit based on action type
+    const rateIdentifier = normalizedFingerprint || ip;
+
     if (action === "check-and-verify" || action === "send-verification") {
       const rateCheck = await checkRateLimit({
         action: "login-verify",
-        identifier: ip,
-        maxRequests: 10,
+        identifier: rateIdentifier,
+        maxRequests: 20,
         windowSeconds: 900,
       });
       if (!rateCheck.allowed) return rateLimitResponse(rateCheck, corsHeaders);
     } else if (action === "force-logout") {
-      // Tighter rate limit: 3 force-logouts per 30 minutes per IP
+      // Force-logout guardrail per trusted device
       const rateCheck = await checkRateLimit({
         action: "force-logout",
-        identifier: ip,
+        identifier: rateIdentifier,
         maxRequests: 10,
         windowSeconds: 1800,
       });
