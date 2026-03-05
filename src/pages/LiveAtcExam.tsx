@@ -10,10 +10,12 @@ import VidpAirportLayout from "@/components/VidpAirportLayout";
 import airwayChartPaper1 from "@/assets/airway-chart-paper1.png";
 import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
 import atsRouteJabalpurIndore from "@/assets/ats-route-jabalpur-indore.png";
+import atsRouteAmritsarDelhi from "@/assets/ats-route-amritsar-delhi.png";
 
 const chartImageMap: Record<string, string> = {
   "rtr2-paper-1": atsRouteDelhiKolkata,
   "rtr2-paper-2": atsRouteJabalpurIndore,
+  "rtr2-paper-3": atsRouteAmritsarDelhi,
 };
 import { toast } from "@/hooks/use-toast";
 
