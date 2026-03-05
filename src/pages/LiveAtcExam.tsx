@@ -13,6 +13,8 @@ import atsRouteJabalpurIndore from "@/assets/ats-route-jabalpur-indore.png";
 import atsRouteAmritsarDelhi from "@/assets/ats-route-amritsar-delhi.png";
 import atsRouteMumbaiGoa from "@/assets/ats-route-mumbai-goa.png";
 import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png"; // Paper 5
+import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
+import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
 
 const chartImageMap: Record<string, string> = {
   "rtr2-paper-1": atsRouteDelhiKolkata,
@@ -49,6 +51,8 @@ const LiveAtcExam = () => {
   const [pttPressed, setPttPressed] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [showAirportLayout, setShowAirportLayout] = useState(false);
+  const [visitedScenarios, setVisitedScenarios] = useState<Set<number>>(new Set([0]));
+  const [showSolution, setShowSolution] = useState(false);
 
   const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
@@ -92,7 +96,16 @@ const LiveAtcExam = () => {
     setCurrentScenario(0);
     setExamEnded(false);
     setChatLog([]);
+    setVisitedScenarios(new Set([0]));
+    setShowSolution(false);
   }, []);
+
+  // Track visited scenarios
+  useEffect(() => {
+    if (examStarted && !examEnded) {
+      setVisitedScenarios(prev => new Set([...prev, currentScenario]));
+    }
+  }, [currentScenario, examStarted, examEnded]);
 
   const endExam = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -475,11 +488,38 @@ const LiveAtcExam = () => {
 
             {paperId === "rtr2-paper-2" && (
               <div className="mb-4">
-                <a href="/rtr-paper2-solution.pdf" target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="w-full gap-2 border-primary/30 text-primary hover:bg-primary/10">
-                    <FileText className="w-4 h-4" /> View Solution — Paper 2
-                  </Button>
-                </a>
+                {visitedScenarios.size >= scenarios.length ? (
+                  <>
+                    <Button
+                      variant="outline"
+                      className="w-full gap-2 border-primary/30 text-primary hover:bg-primary/10"
+                      onClick={() => setShowSolution(!showSolution)}
+                    >
+                      <FileText className="w-4 h-4" /> {showSolution ? "Hide Solution" : "View Solution — Paper 2"}
+                    </Button>
+                    <AnimatePresence>
+                      {showSolution && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 space-y-3 overflow-hidden"
+                        >
+                          <img src={paper2SolutionPage1} alt="Paper 2 Solution — Page 1" className="w-full rounded-lg border border-border/50 shadow-md" />
+                          <img src={paper2SolutionPage2} alt="Paper 2 Solution — Page 2" className="w-full rounded-lg border border-border/50 shadow-md" />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-left">
+                    <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-600 dark:text-amber-400">
+                      Solution not visible because you haven't attempted paper properly. Please go through all {scenarios.length} scenarios to unlock the solution.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -487,7 +527,7 @@ const LiveAtcExam = () => {
               <Button variant="outline" onClick={() => navigate("/")}>
                 <ArrowLeft className="w-4 h-4 mr-1" /> Home
               </Button>
-              <Button onClick={() => { setVoiceGender(null); setExamStarted(false); setTimeLeft(EXAM_DURATION); setCurrentScenario(0); setExamEnded(false); setChatLog([]); }}>
+              <Button onClick={() => { setVoiceGender(null); setExamStarted(false); setTimeLeft(EXAM_DURATION); setCurrentScenario(0); setExamEnded(false); setChatLog([]); setVisitedScenarios(new Set([0])); setShowSolution(false); }}>
                 Retry
               </Button>
             </div>
