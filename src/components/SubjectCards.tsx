@@ -205,7 +205,6 @@ const subjectsData: Subject[] = [
         title: "Question Bank",
         chapters: [
           "Question Bank-1",
-          "Question Bank-2",
         ],
         hasQuiz: true,
         quizSource: "redbird-tech",
