@@ -100,7 +100,7 @@ Deno.serve(async (req) => {
       if (deviceCheck === false) {
         // Device limit exceeded - reject verification
         return new Response(JSON.stringify({
-          error: "This account is locked to one trusted device. This device is not authorized.",
+          error: "Device limit reached (max 2). This device is not authorized. Contact support.",
           valid: false,
         }), {
           status: 403,
