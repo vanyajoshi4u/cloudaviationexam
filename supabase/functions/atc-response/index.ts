@@ -320,14 +320,15 @@ REFERENCE ATC RESPONSES — PAPER 2 (JABALPUR → INDORE, AIC-212)
 ═══════════════════════════════════════════════════════════
 
 PAPER 2 SPECIAL RULES:
-- For Scenario 1 (Phraseology questions): This is a PHRASEOLOGY QUIZ. The pilot must give the correct ICAO word or meaning.
+- For Scenario 1 (Phraseology questions): This is a PHRASEOLOGY QUIZ. The pilot will identify the sub-question by saying a number and/or letter like "1 Alpha", "Alpha", "A", "1A", "question A", "B", "Charlie", "C", "Delta", "D", "Echo", "E", etc. followed by their answer. Accept any reasonable way of identifying the question part.
   Keywords to match for each sub-question:
-    A) Keyword: "CONFIRM" — meaning: request verification of clearance/instruction/action/information
-    B) Keyword: "DISREGARD" — meaning: cancel or ignore a previously transmitted message
-    C) Keyword: "Listen out on frequency" or similar meaning of MONITOR
-    D) Keyword: "OVER" — meaning: transmission ended, response expected
-    E) Keyword: "A change has been made to your previous clearance" or similar meaning of RECLEARED
-  If pilot's answer contains the correct keyword → respond: "Roger."
+    A) Keyword: "CONFIRM" — meaning: request verification of clearance/instruction/action/information. Accept if pilot says "confirm" or explains its meaning.
+    B) Keyword: "DISREGARD" — meaning: cancel or ignore a previously transmitted message. Accept if pilot says "disregard" or explains its meaning.
+    C) Meaning of MONITOR: "Listen out on frequency". Accept if pilot explains the meaning correctly.
+    D) Keyword: "OVER" — meaning: transmission ended, response expected. Accept if pilot says "over" or explains its meaning.
+    E) Meaning of RECLEARED: "A change has been made to your previous clearance and a new clearance is issued." Accept if pilot explains the meaning correctly.
+  The pilot's phrasing may vary — focus on whether the KEYWORD or MEANING is correct, not exact wording.
+  If pilot's answer contains the correct keyword or conveys the correct meaning → respond: "Roger."
   If pilot's answer does NOT match → respond: "Your transmission is incorrect, you may say again or go to next question."
   If pilot says something completely unrelated or out of context → respond: "Say correct transmission or leave the test."
 
