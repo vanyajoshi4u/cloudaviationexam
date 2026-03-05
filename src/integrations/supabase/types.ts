@@ -151,7 +151,9 @@ export type Database = {
       login_verifications: {
         Row: {
           created_at: string
+          device_label: string | null
           expires_at: string
+          fingerprint: string | null
           id: string
           token: string
           user_id: string
@@ -159,7 +161,9 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          device_label?: string | null
           expires_at?: string
+          fingerprint?: string | null
           id?: string
           token?: string
           user_id: string
@@ -167,7 +171,9 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          device_label?: string | null
           expires_at?: string
+          fingerprint?: string | null
           id?: string
           token?: string
           user_id?: string

@@ -120,33 +120,8 @@ const Auth = () => {
             return;
           }
 
-          // Device fingerprint check & registration
-          try {
-            const fp = await getFingerprint();
-            const userId = loginData.user?.id;
-            if (userId) {
-              const { data: allowed } = await supabase.rpc("check_device_allowed", {
-                _user_id: userId,
-                _fingerprint: fp,
-              });
-
-              if (!allowed) {
-                await supabase.auth.signOut({ scope: "local" });
-                toast.error("Device limit reached (max 3). Please contact support or remove a trusted device.");
-                setMode("login");
-                return;
-              }
-
-              // Upsert device fingerprint
-              const label = getDeviceLabel();
-              await supabase.from("device_fingerprints").upsert(
-                { user_id: userId, fingerprint: fp, device_label: label, last_seen_at: new Date().toISOString() },
-                { onConflict: "user_id,fingerprint" }
-              );
-            }
-          } catch (fpError) {
-            console.error("Fingerprint check failed, allowing login:", fpError);
-          }
+          // Device fingerprint is now enforced server-side in verify-login-token
+          // No need for client-side check here
 
           toast.success("Login verified! Signing you in...");
           navigate("/subscribe", { replace: true });
@@ -208,16 +183,34 @@ const Auth = () => {
         const accessToken = loginData.session?.access_token;
         if (!accessToken) throw new Error("Login failed - no session");
 
-        // Check session and send verification in one call
+        // Get device fingerprint before server call
+        let fp = "";
+        let label = "";
+        try {
+          fp = await getFingerprint();
+          label = getDeviceLabel();
+        } catch (fpErr) {
+          console.error("Fingerprint error:", fpErr);
+        }
+
+        // Check session and send verification in one call (with fingerprint)
         const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
           "send-login-verification",
           {
-            body: { action: "check-and-verify", origin: window.location.origin },
+            body: { action: "check-and-verify", origin: window.location.origin, fingerprint: fp, device_label: label },
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
 
         if (verifyError) throw new Error("Verification failed");
+
+        // Device limit reached server-side
+        if (verifyResult?.deviceBlocked) {
+          await supabase.auth.signOut({ scope: "local" });
+          toast.error("Device limit reached (max 3). This device is not recognized. Contact support.");
+          setLoading(false);
+          return;
+        }
 
         if (verifyResult?.hasActiveSession) {
           // Keep the session temporarily for force-logout capability
@@ -548,12 +541,22 @@ const Auth = () => {
                       const accessToken = loginData.session?.access_token;
                       if (!accessToken) throw new Error("No session");
 
-                      // Force logout all other sessions
-                      const { error: fnError } = await supabase.functions.invoke("send-login-verification", {
-                        body: { action: "force-logout" },
+                      // Get fingerprint for server-side device verification
+                      let fp = "";
+                      try { fp = await getFingerprint(); } catch (e) { /* allow */ }
+
+                      // Force logout all other sessions (server validates device)
+                      const { data: flResult, error: fnError } = await supabase.functions.invoke("send-login-verification", {
+                        body: { action: "force-logout", fingerprint: fp },
                         headers: { Authorization: `Bearer ${accessToken}` },
                       });
                       if (fnError) throw fnError;
+                      if (flResult?.blocked) {
+                        await supabase.auth.signOut({ scope: "local" });
+                        toast.error(flResult.error || "Force logout blocked. Contact support.");
+                        setLoading(false);
+                        return;
+                      }
 
                       await supabase.auth.signOut({ scope: "local" });
                       setShowSessionWarning(false);
