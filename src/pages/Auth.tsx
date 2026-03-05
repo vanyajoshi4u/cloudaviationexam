@@ -213,7 +213,7 @@ const Auth = () => {
         // Device limit reached server-side
         if (verifyResult?.deviceBlocked) {
           await supabase.auth.signOut({ scope: "local" });
-          toast.error("This account is locked to one trusted device. Log in from your original device or contact support.");
+          toast.error("Device limit reached (max 2). This device is not authorized. Contact support.");
           setLoading(false);
           return;
         }
