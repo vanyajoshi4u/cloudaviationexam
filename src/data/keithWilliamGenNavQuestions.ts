@@ -1,4 +1,4 @@
-import { type Topic } from "./oxfordMetQuestions";
+import { type Topic } from "./icJoshiQuestions";
 import { kwChartTheoryTopic, kwCirclesTopic, kwMagCompassesTopic, kwDescentsTopic, kwScaleTopic } from "./keithWilliamGenNavPart1";
 import { kwInsIrsFmsTopic, kwPsrPetTopic, kwSolarTimeTopic } from "./keithWilliamGenNavPart2";
 
