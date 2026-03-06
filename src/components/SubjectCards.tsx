@@ -113,6 +113,8 @@ const subjectsData: Subject[] = [
           },
           {
             name: "Keith William",
+            hasQuiz: true,
+            quizSource: "kw-gennav" as const,
             subChapters: [
               "CRPS",
               "Chart Theory",
