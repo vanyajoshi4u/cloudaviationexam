@@ -111,7 +111,7 @@ const subjectsData: Subject[] = [
               "Revision Questions",
             ],
           },
-          "Keith William Blue Book",
+          "Keith William",
           "Redbird",
         ],
       },
