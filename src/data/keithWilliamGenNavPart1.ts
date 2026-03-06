@@ -1,4 +1,4 @@
-import { type MCQuestion, type Topic } from "./oxfordMetQuestions";
+import { type MCQuestion, type Topic } from "./icJoshiQuestions";
 
 // CHART THEORY
 const chartTheoryQuestions: MCQuestion[] = [
