@@ -108,6 +108,7 @@ const subjectsData: Subject[] = [
               "Ch 33 – Remote Indicating Magnetic Compass",
               "Ch 34 – Aircraft Magnetism",
               "Ch 35 – Inertial Navigation System",
+              "Revision Questions",
             ],
           },
           "Keith William Blue Book",
