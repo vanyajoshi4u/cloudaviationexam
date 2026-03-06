@@ -355,7 +355,7 @@ Deno.serve(async (req) => {
           return new Response(JSON.stringify({
             hasActiveSession: false,
             deviceBlocked: true,
-            error: "You are up to the device limit. You have already set up 2 devices. For more info contact cloudaviation4u@gmail.com",
+            error: "You are up to the device limit. You have already set up 3 devices. For more info contact cloudaviation4u@gmail.com",
           }), {
             status: 403,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -395,7 +395,7 @@ Deno.serve(async (req) => {
 
       if (deviceCheck === false) {
         return new Response(JSON.stringify({
-          error: "You are up to the device limit. You have already set up 2 devices. For more info contact cloudaviation4u@gmail.com",
+          error: "You are up to the device limit. You have already set up 3 devices. For more info contact cloudaviation4u@gmail.com",
           deviceBlocked: true,
         }), {
           status: 403,
