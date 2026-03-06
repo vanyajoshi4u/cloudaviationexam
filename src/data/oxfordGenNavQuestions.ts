@@ -95,6 +95,43 @@ const ch13Questions: MCQuestion[] = [
   { id: 8, question: "What does symbol 3 represent?", options: ["Lit obstacle", "Lighthouse", "VRP", "Aeronautical ground light"], correct: 3 },
 ];
 
+// Ch 14 – Convergency and Conversion Angle
+const ch14Questions: MCQuestion[] = [
+  { id: 1, question: "The convergency of meridians through M and N (southern hemisphere) is 12°. The rhumb line track from M to N is 249°(T). What is the great circle track from M to N?", options: ["255°(T)", "243°(T)", "261°(T)", "237°(T)"], correct: 1 },
+  { id: 2, question: "The convergency of meridians through M and N (southern hemisphere) is 12°. The rhumb line track from M to N is 249°(T). What is the great circle track from N to M?", options: ["069°(T)", "075°(T)", "063°(T)", "081°(T)"], correct: 1 },
+  { id: 3, question: "The great circle bearing of B (30°00'S) from A (30°00'S 165°00'E) is 100°(T). What is the great circle track from B to A?", options: ["280°(T)", "260°(T)", "270°(T)", "250°(T)"], correct: 1 },
+  { id: 4, question: "The great circle bearing of B (30°00'S) from A (30°00'S 165°00'E) is 100°(T). What is the longitude of B?", options: ["145°W", "155°W", "165°W", "175°W"], correct: 1 },
+  { id: 5, question: "The rhumb line from D (30°00'N 179°00'W) to C is 090°(T). The great circle initial track from C to D is 287°(T). What is the great circle track from D to C?", options: ["083°(T)", "073°(T)", "063°(T)", "093°(T)"], correct: 1 },
+  { id: 6, question: "The great circle track from A to B measures 227°(T) at A and 225°(T) at B. What is the convergency and in which hemisphere?", options: ["2°, Northern Hemisphere", "2°, Southern Hemisphere", "4°, Northern Hemisphere", "4°, Southern Hemisphere"], correct: 0 },
+  { id: 7, question: "In what latitude is the convergency between two meridians equal to twice their convergency in latitude 20°N?", options: ["40°N", "43°N", "45°N", "50°N"], correct: 1 },
+  { id: 8, question: "A and B are in the same hemisphere. The initial GC track from B to A is 268°(T) and from A to B is 092°(T). In which hemisphere are A and B?", options: ["Northern Hemisphere", "Southern Hemisphere", "Either hemisphere", "Cannot be determined"], correct: 1 },
+  { id: 9, question: "C and D are in the same hemisphere. The initial GC track from C to D is 063°(T) and the rhumb line track from D to C is 240°(T). What is the approximate initial GC track from D to C?", options: ["243°(T)", "237°(T)", "240°(T)", "246°(T)"], correct: 1 },
+  { id: 10, question: "Position X 64°00'S 11°50'W, Position Y 64°00'S 05°10'W. What is the convergency between the meridians of X and Y?", options: ["4°", "6°", "8°", "10°"], correct: 1 },
+  { id: 11, question: "Position X 64°00'S 11°50'W, Position Y 64°00'S 05°10'W. What is the approximate initial great circle track from Y to X?", options: ["273°(T)", "267°(T)", "270°(T)", "264°(T)"], correct: 1 },
+  { id: 12, question: "Position X 64°00'S 11°50'W, Position Y 64°00'S 05°10'W. What is the rhumb line track from X to Y?", options: ["270°(T)", "090°(T)", "087°(T)", "093°(T)"], correct: 1 },
+  { id: 13, question: "Calculate the convergency between A (55°30'N 04°35'W) and B (64°00'N 22°37'W). If the rhumb line track from A to B is 313°(T), what is the approximate initial GC track from B to A?", options: ["117°(T)", "125°(T)", "133°(T)", "141°(T)"], correct: 1 },
+  { id: 14, question: "The initial GC track from B to A is 245°(T) and the rhumb line track from A to B is 060°(T). Mean latitude is 53°, longitude of B is 02°15'E. What is the longitude of A?", options: ["005°15'W", "010°15'W", "015°15'W", "007°30'W"], correct: 1 },
+  { id: 15, question: "A and B are in the southern hemisphere, convergency is 8°. Initial GC track from A to B is 094°(T). B is at 23°00'S 20°00'W. What is the position of A?", options: ["23°00'S 030°30'W", "23°00'S 040°30'W", "23°00'S 028°00'W", "23°00'S 035°00'W"], correct: 1 },
+];
+
+// Ch 15 – Departure
+const ch15Questions: MCQuestion[] = [
+  { id: 1, question: "A flight along the parallel of latitude from A (48°00'N 04°00'W) to B (48°00'N 02°27'E). What is the distance?", options: ["259 nm", "387 nm", "300 nm", "210 nm"], correct: 0 },
+  { id: 2, question: "An aircraft flies 1000 nm along a rhumb line track of 090°(T) from C (36°00'N 174°45'E) to D. What is the longitude of D?", options: ["174°39'W", "164°39'W", "154°39'W", "175°21'E"], correct: 1 },
+  { id: 3, question: "Starting from E (50°N): E to F 000°(T) 300nm, F to G 090°(T) 300nm, G to H 180°(T) 300nm. What is the rhumb line bearing and distance of H from E?", options: ["090°(T) at 336 nm", "090°(T) at 300 nm", "080°(T) at 350 nm", "095°(T) at 320 nm"], correct: 0 },
+  { id: 4, question: "What is the track and distance along the parallel of 80°S from 176°15'W to 179°45'E?", options: ["090°(T), 41.7 nm", "270°(T), 41.7 nm", "090°(T), 240 nm", "270°(T), 240 nm"], correct: 1 },
+  { id: 5, question: "In which latitude is a difference in longitude of 44°10' the equivalent of a departure of 2295 nm?", options: ["20°N or S", "30°N or S", "45°N or S", "60°N or S"], correct: 1 },
+  { id: 6, question: "Aircraft leaves J (36°00'S 130°14'E) at 0946 GMT, track 270°, FL100, temp 0°C, M0.81, 35kt tailwind. Position at 1004 GMT?", options: ["36°00'S 126°48'E", "36°00'S 128°00'E", "36°00'S 133°40'E", "36°00'S 124°30'E"], correct: 0 },
+  { id: 7, question: "In which latitude is the departure in nm between two points equal to their difference in longitude in minutes?", options: ["At the Equator", "At 30°N/S", "At 45°N/S", "At 60°N/S"], correct: 0 },
+  { id: 8, question: "In which latitude is the departure in nm equal to half the difference in longitude in minutes?", options: ["At the Equator", "At 30°N/S", "At 45°N/S", "At 60°N/S"], correct: 3 },
+  { id: 9, question: "Aircraft Q (GS 301kt) flies along 46°N through 10° longitude. Aircraft R (GS 364kt) flies between the same meridians in the same time. What is the latitude of R's track?", options: ["25°N/S", "33°N/S", "40°N/S", "28°N/S"], correct: 1 },
+  { id: 10, question: "An aircraft starts at 0410S 17822W, heads true north for 2950 nm, then turns 90° left and maintains a rhumb line track for 314 km. What is its final position?", options: ["5500N 17422W", "4500N 17738E", "5500N 17738E", "4500N 17422W"], correct: 1 },
+  { id: 11, question: "An aircraft at 2700N 17000W travels 3000 km on 180°(T), then 3000 km on 090°(T), then 3000 km on 000°(T), then 3000 km on 270°(T). What is its final position?", options: ["2700N 17000W", "0000N/S 17000W", "2700N 17318W", "2700N 14300W"], correct: 2 },
+  { id: 12, question: "An aircraft departs 0400N 17000W and flies 600 nm South, 600 nm East, 600 nm North, 600 nm West. What is its final position?", options: ["0400N 17000W", "0600S 17000W", "0400N 169°58.1'W", "0400N 170°01.8'W"], correct: 2 },
+  { id: 13, question: "An aircraft flying eastwards along 60°N at GS 240 kt. At what GS must another aircraft fly along the Equator to complete one circuit in the same time?", options: ["600 knots", "240 knots", "480 knots", "120 knots"], correct: 2 },
+  { id: 14, question: "Your position is 5833N 17400W. You fly exactly 6 nm eastwards. What is your new position?", options: ["5833N 17411.5W", "5833N 17355W", "5833N 17340W", "5833N 17348.5W"], correct: 3 },
+];
+
 // Topics
 export const oxfordGenNavCh1Topic: Topic = { id: "oxford-gn-ch1", title: "Ch 1 – Direction, Latitude and Longitude", questions: ch1Questions };
 export const oxfordGenNavCh2Topic: Topic = { id: "oxford-gn-ch2", title: "Ch 2 – Great Circles, Rhumb Lines and Directions on the Earth", questions: ch2Questions };
@@ -103,6 +140,8 @@ export const oxfordGenNavCh10Topic: Topic = { id: "oxford-gn-ch10", title: "Ch 1
 export const oxfordGenNavCh11Topic: Topic = { id: "oxford-gn-ch11", title: "Ch 11 – Navigation Using the 1 in 60 Rule", questions: ch11Questions };
 export const oxfordGenNavCh12Topic: Topic = { id: "oxford-gn-ch12", title: "Ch 12 – Other Applications of the 1 in 60 Rule", questions: ch12Questions };
 export const oxfordGenNavCh13Topic: Topic = { id: "oxford-gn-ch13", title: "Ch 13 – Topographical Maps and Map Reading", questions: ch13Questions };
+export const oxfordGenNavCh14Topic: Topic = { id: "oxford-gn-ch14", title: "Ch 14 – Convergency and Conversion Angle", questions: ch14Questions };
+export const oxfordGenNavCh15Topic: Topic = { id: "oxford-gn-ch15", title: "Ch 15 – Departure", questions: ch15Questions };
 
 export const oxfordGenNavTopics: Topic[] = [
   oxfordGenNavCh1Topic,
@@ -112,4 +151,6 @@ export const oxfordGenNavTopics: Topic[] = [
   oxfordGenNavCh11Topic,
   oxfordGenNavCh12Topic,
   oxfordGenNavCh13Topic,
+  oxfordGenNavCh14Topic,
+  oxfordGenNavCh15Topic,
 ];
