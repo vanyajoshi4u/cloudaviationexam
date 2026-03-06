@@ -17,6 +17,7 @@ import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
+import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
