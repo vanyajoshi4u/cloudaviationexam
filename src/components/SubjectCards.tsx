@@ -603,7 +603,7 @@ const SubjectCards = () => {
                                       >
                                         <div className="pl-8 flex flex-col gap-0.5">
                                           {bookChapter.subChapters.map((sub) => {
-                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : bookChapter.quizSource === "oxford-gennav" ? oxfordGenNavTopics : bookChapter.quizSource === "kw-gennav" ? keithWilliamGenNavTopics : [];
+                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : bookChapter.quizSource === "oxford-gennav" ? oxfordGenNavTopics : bookChapter.quizSource === "kw-gennav" ? keithWilliamGenNavTopics : bookChapter.quizSource === "redbird-gennav" ? redbirdGenNavTopics : bookChapter.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic] : [];
                                             const subQuizTopic = bookChapter.hasQuiz ? subTopicSource.find((t) => t.title === sub) : null;
                                             return (
                                               <button
