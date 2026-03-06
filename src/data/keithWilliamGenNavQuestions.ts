@@ -17,11 +17,13 @@ export const keithWilliamGenNavTopics: Topic[] = [
 ];
 
 export {
+  kwCrpsTopic,
   kwChartTheoryTopic,
   kwCirclesTopic,
   kwMagCompassesTopic,
   kwDescentsTopic,
   kwInsIrsFmsTopic,
+  kwPlottingTopic,
   kwPsrPetTopic,
   kwScaleTopic,
   kwSolarTimeTopic,
