@@ -1,0 +1,103 @@
+import { MCQuestion, Topic } from "./icJoshiQuestions";
+
+/* ───── Charts & Scale ───── */
+const chartsScaleQuestions: MCQuestion[] = [
+  { id: 301, question: "A chart has the scale 1:1,000,000. From A to B on the chart measures 1.5 inches (one inch = 2.54 cm), the distance from A to B in NM is:", options: ["38.1", "20.6", "44.5", "54.2"], correct: 1 },
+  { id: 302, question: "The nominal scale of a Lambert conformal conic chart is the:", options: ["Mean scale between pole and equator", "Mean scale between the parallels of the secant cone", "Scale at the standard parallels", "Scale at the equator"], correct: 2 },
+  { id: 303, question: "The chart that is generally used for navigation in polar areas is:", options: ["Stereographical projection", "Direct Mercator projection", "Gnomonic projection", "Lambert conformal projection"], correct: 0 },
+  { id: 304, question: "A Mercator chart has a scale at the equator = 1:3,704,000. What is the scale at latitude 60°S?", options: ["1:7,408,000", "1:3,208,000", "1:185,200", "1:1,852,000"], correct: 3 },
+  { id: 305, question: "The distance measured between two points on a navigation map is 42 mm. The scale of the chart is 1:1,600,000. The actual distance is approximately:", options: ["370.00 NM", "67.20 NM", "3.69 NM", "36.30 NM"], correct: 3 },
+  { id: 306, question: "The standard parallels of a Lambert's conical orthomorphic projection are 07°40'N and 38°20'N. The constant of the cone for this chart is:", options: ["0.60", "0.39", "0.92", "0.42"], correct: 1 },
+  { id: 307, question: "On a Lambert conformal conic chart the convergence of the meridians:", options: ["Is the same as earth convergency at the parallel of origin", "Is zero throughout the chart", "Varies as the secant of the latitude", "Equals earth convergency at the standard parallels"], correct: 3 },
+  { id: 308, question: "A straight line drawn on a chart measures 4.63 cm and represents 150 NM. The chart scale is:", options: ["1:3,000,000", "1:5,000,000", "1:6,000,000", "1:1,000,000"], correct: 2 },
+  { id: 309, question: "On a direct Mercator projection, the distance measured between two meridians at latitude 60°N is 8 cm. The scale of this chart at latitude 60°N is approximately:", options: ["1:4,750,000", "1:7,000,000", "1:6,000,000", "1:3,500,000"], correct: 3 },
+  { id: 310, question: "On a Mercator chart, the scale:", options: ["Varies as the sine of the latitude", "Is constant throughout the chart", "Varies as 1/cosine of latitude (secant)", "Varies as 1/2 cosine of the co-latitude"], correct: 2 },
+  { id: 311, question: "At latitude 30°N, the scale of a direct Mercator chart is 1:3,000,000. What is the scale at the equator?", options: ["1:6,000,000", "1:3,000,000", "1:3,500,000", "1:1,500,000"], correct: 2 },
+  { id: 312, question: "What is the chart distance between longitudes 179°E and 175°W on a direct Mercator chart with a scale of 1:5,000,000 at the equator?", options: ["106 mm", "133 mm", "167 mm", "72 mm"], correct: 1 },
+  { id: 313, question: "On a Lambert conformal conic chart, with two standard parallels, the convergence factor is 0.78535. At what latitude is earth convergency correctly represented?", options: ["52°05'", "51°45'", "80°39'", "38°15'"], correct: 1 },
+  { id: 314, question: "On a Lambert Conformal Conic chart earth convergency is most accurately represented at the:", options: ["Standard parallels", "Parallel of origin", "Equator", "Poles"], correct: 0 },
+  { id: 315, question: "On a Transverse Mercator chart, scale is exactly correct along the:", options: ["Equator, parallel of origin and prime vertical", "Datum meridian and meridian perpendicular to it", "Prime meridian and the equator", "Meridian of tangency"], correct: 3 },
+  { id: 316, question: "Approximately how many nautical miles correspond to 12 cm on a map with a scale of 1:2,000,000?", options: ["150", "130", "329", "43"], correct: 1 },
+  { id: 317, question: "Transverse Mercator projections are used for:", options: ["Maps of large east/west extent in equatorial areas", "Radio navigation charts in equatorial areas", "Maps of large north/south extent", "Plotting charts in equatorial areas"], correct: 2 },
+  { id: 318, question: "On a Direct Mercator chart at 45°N, a certain length represents 90 NM. The same length at latitude 30°N represents:", options: ["110 NM", "73.5 NM", "78 NM", "45 NM"], correct: 0 },
+  { id: 319, question: "On a transverse Mercator chart, with the exception of the Equator, parallels of latitude appear as:", options: ["Straight lines", "Hyperbolas", "Ellipses", "Parabolas"], correct: 2 },
+  { id: 320, question: "An Oblique Mercator projection is used specifically to produce:", options: ["Radio navigational charts in equatorial regions", "Topographical maps of large east/west extent", "Plotting charts in equatorial regions", "Charts of the great circle route between two points"], correct: 3 },
+  { id: 321, question: "The two standard parallels of a conical Lambert projection are at N10°40' and N41°20'. The cone constant is approximately:", options: ["0.90", "0.44", "0.66", "0.18"], correct: 2 },
+  { id: 322, question: "A straight line on a Lambert Conformal Projection chart for normal flight planning purposes:", options: ["Is a Loxodromic line", "Is approximately a Great Circle", "Is a Rhumb line", "Can only be a parallel of latitude"], correct: 1 },
+  { id: 323, question: "On a Direct Mercator chart, a rhumb line appears as a:", options: ["Straight line", "Small circle concave to the nearer pole", "Spiral curve", "Curve convex to the nearer pole"], correct: 0 },
+  { id: 324, question: "On a Lambert Conformal Conic chart great circles that are not meridians are:", options: ["Curves concave to the parallel of origin", "Straight lines regardless of distance", "Curves concave to the pole of projection", "Straight lines within the standard parallels"], correct: 3 },
+  { id: 325, question: "On a Direct Mercator chart a great circle will be represented by a:", options: ["Complex curve", "Curve convex to the equator", "Curve concave to the equator", "Straight line"], correct: 1 },
+  { id: 326, question: "The parallels on a Lambert Conformal Conic chart are represented by:", options: ["Straight lines", "Parabolic lines", "Hyperbolic lines", "Arcs of concentric circles"], correct: 3 },
+  { id: 327, question: "Parallels of latitude, except the equator, are:", options: ["Great circles", "Rhumb lines", "Both Rhumb lines and Great circles", "Neither Rhumb lines nor Great circles"], correct: 1 },
+  { id: 328, question: "On a Direct Mercator chart, meridians are:", options: ["Inclined equally spaced straight lines that meet at the near pole", "Parallel, unequally spaced, vertical straight lines", "Inclined equally spaced curved lines that meet at the near pole", "Parallel, equally spaced, vertical straight lines"], correct: 3 },
+  { id: 329, question: "What is the value of the convergence factor on a Polar Stereographic chart?", options: ["1.0", "0.866", "0.5", "0.0"], correct: 0 },
+  { id: 330, question: "On a Direct Mercator, rhumb lines are:", options: ["Curves concave to the equator", "Straight lines", "Ellipses", "Curves convex to the equator"], correct: 1 },
+  { id: 331, question: "Contour lines on aeronautical maps and charts connect points:", options: ["Having the same elevation above sea level", "With the same variation", "Having the same longitude", "Of equal latitude"], correct: 0 },
+  { id: 332, question: "On a Polar Stereographic chart, the initial great circle course from A 70°N 060°W to B 70°N 060°E is approximately:", options: ["330°(T)", "150°(T)", "210°(T)", "030°(T)"], correct: 3 },
+  { id: 333, question: "A perfectly straight line on a Lambert's chart is:", options: ["A parallel of latitude", "A rhumb line", "A meridian of longitude", "A great circle"], correct: 2 },
+  { id: 334, question: "Which of the following statements best describes how scale varies on a Mercator chart?", options: ["Correct on standard parallels, expands outside, contracts within", "Expands as the secant of the East/West great circle distance", "Expands as the secant of co-latitude", "Expands directly with the secant of the latitude"], correct: 3 },
+  { id: 335, question: "How do rhumb lines (other than meridians) appear on Polar Stereographic charts?", options: ["As straight lines", "As lines concave to the nearer pole", "As lines convex to the nearer pole", "As ellipses around the pole"], correct: 2 },
+  { id: 336, question: "In which of the following projections will a plane surface touch the reduced earth at one of the Poles?", options: ["Lambert's", "Direct Mercator", "Transverse Mercator", "Stereographic"], correct: 3 },
+  { id: 337, question: "The scale on a Lambert's conformal conic chart:", options: ["Is constant", "Is constant along a parallel of latitude", "Is constant along a meridian of longitude", "Varies slightly as a function of latitude and longitude"], correct: 1 },
+  { id: 338, question: "On a Lambert conformal conic projection, with two standard parallels the scale is:", options: ["Correct only along the parallel of origin", "Correct only at the poles", "Correct only along the standard parallels", "Correct at all points on the chart"], correct: 2 },
+  { id: 339, question: "On which of the following chart projections is it not possible to represent the poles?", options: ["Polar Stereographic", "Transverse Mercator", "Lambert's Conical", "Direct Mercator"], correct: 3 },
+  { id: 340, question: "On a Lambert conformal conic chart, the distance between parallels of latitude spaced the same number of degrees apart:", options: ["Increases between and reduces outside of the standard parallels", "Reduces between, and expands outside, the standard parallels", "Is constant between the standard parallels", "Is constant outside of the standard parallels"], correct: 1 },
+  { id: 341, question: "A direct Mercator graticule is based on a projection that is:", options: ["Conical", "Spherical", "Concentric", "Cylindrical"], correct: 3 },
+  { id: 342, question: "Only chart which is perspective is:", options: ["Polar stereographic", "Lambert", "Simple Mercator", "Transverse Mercator"], correct: 0 },
+  { id: 343, question: "The main use of a Transverse Mercator is for:", options: ["Polar Maritime Plotting charts", "Topographical charts of long thin countries lying North/South", "Topographical charts of long thin countries lying East/West", "Great Circle route strip maps"], correct: 1 },
+  { id: 344, question: "The most likely use for an Oblique Mercator chart is:", options: ["Trans-polar navigation", "Navigation along great arcs", "Global depiction of magnetic variation", "Maps of countries with considerable N/S extent"], correct: 1 },
+  { id: 345, question: "On a chart, the distance along a meridian between latitudes 45°N and 46°N is 6 cm. The scale is approximately:", options: ["1:1,850,000", "1:2,000,000", "1:1,500,000", "1:1,650,000"], correct: 0 },
+  { id: 346, question: "Given: Chart scale is 1:1,850,000. The chart distance between two points is 4 cm. Earth distance is approximately:", options: ["40 nm", "35 nm", "55 nm", "50 nm"], correct: 0 },
+  { id: 347, question: "At 60°N the scale of a direct Mercator chart is 1:3,000,000. What is the scale at the equator?", options: ["1:5,000,000", "1:4,500,000", "1:12,000,000", "1:6,000,000"], correct: 3 },
+];
+
+export const redbirdChartsScaleTopic: Topic = {
+  id: "redbird-gennav-charts-scale",
+  title: "Charts & Scale",
+  questions: chartsScaleQuestions,
+};
+
+/* ───── Time & Twilight ───── */
+const timeTwilightQuestions: MCQuestion[] = [
+  { id: 401, question: "The angle between the plane of the Equator and the plane of the Ecliptic is:", options: ["25.3°", "65.6°", "66.5°", "23.5°"], correct: 3 },
+  { id: 402, question: "The inclination of the earth's axis of rotation with the plane of the ecliptic:", options: ["Is causing the seasons, summer and winter", "Is stable throughout the year", "All 3 answers are correct", "Is causing the variation of length of the daylight during a year"], correct: 2 },
+  { id: 403, question: "What does 5 hours 50 minutes and 20 seconds change of longitude represent?", options: ["81°25'", "35°15'", "80°05'", "87°35'"], correct: 3 },
+  { id: 404, question: "UTC stands for:", options: ["Universal time constant", "Universal Time Coordinated", "Universal Time Coefficient", "Universal Time Compensated"], correct: 1 },
+  { id: 405, question: "At what approximate date is the earth furthest from the sun (aphelion)?", options: ["Beginning of July", "Beginning of January", "End of September", "End of December"], correct: 0 },
+  { id: 406, question: "The term Aphelion is used to describe:", options: ["The situation when apparent sun is passing the plane of the Equator", "The situation when the distance between the sun and the earth is at its longest", "The relationship between the length of the day and the length of the night", "The relative position between the earth and the moon"], correct: 1 },
+  { id: 407, question: "At what approximate date is the earth closest to the sun (perihelion)?", options: ["Beginning of January", "End of June", "Beginning of July", "End of March"], correct: 0 },
+  { id: 408, question: "When the sun's declination is northerly:", options: ["The sun occurs earlier in southern latitudes than northern latitudes", "Midnight sun may be observed at the south pole", "It is winter in the northern hemisphere"], correct: 0 },
+  { id: 409, question: "The International Date Line is located:", options: ["At the 180° E/W meridian, or in the vicinity of this meridian", "At all latitudes on the 180° E/W meridian", "At the Greenwich meridian", "At the apparent sun's anti meridian"], correct: 0 },
+  { id: 410, question: "Seasons are due to the:", options: ["Earth's elliptical orbit around the Sun", "Earth's rotation on its polar axis", "Inclination of the polar axis with the ecliptic plane", "Variable distance between Earth and Sun"], correct: 2 },
+  { id: 411, question: "The duration of civil twilight is the time:", options: ["Between Sunset and when the centre of the sun is 6° below the true horizon", "Between Sunset and when the top of the Sun is 6° below the visual horizon", "Between sunset and when the centre of the Sun is 6° below the visual horizon"], correct: 0 },
+  { id: 412, question: "The main reason that day and night throughout the year have different durations is:", options: ["Relative speed of the sun along the ecliptic", "Inclination of the ecliptic to the equator", "Earth's rotation", "Gravitational effect of the sun and moon"], correct: 1 },
+  { id: 413, question: "How would you define standard time?", options: ["It is local time", "It is local time adjusted to whole or half hours difference from UTC", "It is based on local sunrise and sunset", "It is another term for UTC"], correct: 1 },
+  { id: 414, question: "A time difference of 5 hours 20 minutes and 20 seconds is equivalent to which change of longitude?", options: ["81°30'", "78°15'", "79°10'", "80°05'"], correct: 3 },
+  { id: 415, question: "At what times of the year does the length of the hours of daylight change most rapidly?", options: ["Autumn Equinox and Winter Solstice", "Spring (Vernal) Equinox and Autumn Equinox", "Summer Solstice and Winter Solstice", "Spring (Vernal) Equinox and Summer Solstice"], correct: 1 },
+  { id: 416, question: "In which two months of the year is the difference between the transit of the Apparent Sun and Mean Sun across the Greenwich Meridian the greatest?", options: ["March and September", "June and December", "April and August", "February and November"], correct: 3 },
+  { id: 417, question: "Assuming mid-latitudes (40° to 50°N/S), at which time of year is the relationship between the length of day and night most equal?", options: ["Summer solstice and spring equinox", "Summer solstice and winter solstice", "Spring equinox and autumn equinox", "Winter solstice and autumn equinox"], correct: 2 },
+];
+
+export const redbirdTimeTwilightTopic: Topic = {
+  id: "redbird-gennav-time-twilight",
+  title: "Time & Twilight",
+  questions: timeTwilightQuestions,
+};
+
+/* ───── CP-PNR ───── */
+const cpPnrQuestions: MCQuestion[] = [
+  { id: 501, question: "On a flight, an aircraft achieves a groundspeed 10% higher than planned. The PNR distance will:", options: ["Stay the same", "Increase", "Decrease", "Not be affected"], correct: 0 },
+  { id: 502, question: "In abeam (crosswind) conditions, the PNR distance:", options: ["Increases", "Stays the same", "Has no effect", "Decreases"], correct: 3 },
+  { id: 503, question: "The CP (Critical Point) is exactly half way when:", options: ["GS out = GS home", "In nil wind", "In beam wind", "All are correct"], correct: 3 },
+  { id: 504, question: "The distance to PNR:", options: ["Is maximum in nil wind conditions", "Decreases with increase in the tail wind", "Is affected by wind velocity", "All are correct"], correct: 3 },
+  { id: 505, question: "From the departure point, the distance to the point of equal time is:", options: ["Proportional to the sum of ground speed out and ground speed back", "Inversely proportional to the total distance to go", "Inversely proportional to ground speed back"], correct: 2 },
+  { id: 506, question: "Distance 'A' to 'B' 2346 NM. Groundspeed 'out' 365 kt. Groundspeed 'back' 480 kt. The time from 'A' to the Point of Safe Return is:", options: ["290 MIN", "219 MIN", "197 MIN", "209 MIN"], correct: 2 },
+  { id: 507, question: "Distance 'A' to 'B' 1973 NM. Groundspeed 'out' 430 kt. Groundspeed 'back' 385 kt. Safe endurance 7 HR 20 MIN. The distance from 'A' to the PSR is:", options: ["1490 NM", "1664 NM", "1698 NM", "1422 NM"], correct: 1 },
+  { id: 508, question: "What is the distance to PSR if an aircraft has a TAS of 300 knots and a safe endurance of 6 hours, with a wind component on the outbound leg of 50 knots headwind?", options: ["1458 nm", "1505 nm", "1554 nm", "1400 nm"], correct: 0 },
+];
+
+export const redbirdCpPnrTopic: Topic = {
+  id: "redbird-gennav-cp-pnr",
+  title: "CP-PNR",
+  questions: cpPnrQuestions,
+};
