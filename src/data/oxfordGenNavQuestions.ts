@@ -153,4 +153,5 @@ export const oxfordGenNavTopics: Topic[] = [
   oxfordGenNavCh15Topic,
   ...oxfordGenNavCh16to29Topics,
   ...oxfordGenNavCh30to34Topics,
+  oxfordGenNavRevisionTopic,
 ];
