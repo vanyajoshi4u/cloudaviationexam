@@ -114,6 +114,9 @@ const cpPnrQuestions: MCQuestion[] = [
   { id: 526, question: "Calculate the distance and time to CRITICAL POINT given: distance between airfields 750 NM, track 090, W/V 090/32 kt, TAS(NORMAL)=300 kt, TAS(REDUCED)=190 kt, FOB=4000 KG, RES=1000KG, fuel consumption (reduced)=650kg/hr:", options: ["438 NM, 1 HR 20 MIN", "438 NM, 4 HR 40 MIN", "500 NM, 1 HR 20 MIN", "500 NM, 1 HR 40 MIN"], correct: 0 },
   { id: 527, question: "Calculate the distance and time to POINT OF SAFE RETURN given: distance between airfields 750 NM, track 090, W/V 090/32 kt, TAS(NORMAL)=300 kt, TAS(REDUCED)=190 kt, FOB=4000 KG, RES=1000KG, fuel consumption (normal)=1000kg/hr, fuel consumption (reduced)=650kg/hr:", options: ["400 NM, 1 HR 20 MIN", "400 NM, 1 HR 40 MIN", "445 NM, 1 HR 20 MIN", "445 NM, 1 HR 40 MIN"], correct: 3 },
   { id: 528, question: "Calculate time and distance to POINT OF EQUAL TIME between airfields A & B: distance 600 NM, track 090, wind 120/30kt, TAS(normal)=320 kt, TAS(reduced)=185kt:", options: ["300 nm & 1 hr", "342 nm & 1 hr 10 min", "300 nm & 1 hr 10 min", "342 nm & 1 hr"], correct: 1 },
+  { id: 529, question: "For a distance of 1860 NM between Q and R, a ground speed OUT of 385 kt, a ground speed BACK of 465 kt and an endurance of 8 hr (excluding reserves) the distance from Q to the point of safe return (PSR) is:", options: ["930 NM", "1532 NM", "1685 NM", "1865 NM"], correct: 2 },
+  { id: 530, question: "The distance from A to B is 2368 nautical miles. If outbound groundspeed is 365 knots and homebound groundspeed is 480 knots and safe endurance is 8 hours 30 minutes, what is the time to the PNR?", options: ["290 minutes", "209 minutes", "219 minutes", "190 minutes"], correct: 0 },
+  { id: 531, question: "If abeam winds speed doubles, the distance to CP will:", options: ["Not change", "Increase", "Decrease", "Double"], correct: 0 },
 ];
 
 export const redbirdCpPnrTopic: Topic = {
