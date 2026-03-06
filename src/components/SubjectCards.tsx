@@ -129,7 +129,19 @@ const subjectsData: Subject[] = [
               "Solar System & Time",
             ],
           },
-          "Redbird",
+          {
+            name: "Redbird",
+            hasQuiz: true,
+            quizSource: "redbird-gennav" as const,
+            subChapters: [
+              "Earth Basics & Magnetism",
+              "The 1 in 60 Rule",
+              "Convergency & Departure",
+              "Charts & Scale",
+              "Time & Twilight",
+              "CP-PNR",
+            ],
+          },
         ],
       },
       {
