@@ -15,6 +15,7 @@ import { skMetTopics } from "@/data/skMetQuestions";
 import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
+import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
@@ -35,7 +36,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav";
 }
 
 interface Subject {
@@ -75,6 +76,8 @@ const subjectsData: Subject[] = [
           },
           {
             name: "Oxford",
+            hasQuiz: true,
+            quizSource: "oxford-gennav" as const,
             subChapters: [
               "Ch 1 – Direction, Latitude and Longitude",
               "Ch 2 – Great Circles, Rhumb Lines and Directions on the Earth",
@@ -564,7 +567,7 @@ const SubjectCards = () => {
                                       >
                                         <div className="pl-8 flex flex-col gap-0.5">
                                           {bookChapter.subChapters.map((sub) => {
-                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : [];
+                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : bookChapter.quizSource === "oxford-gennav" ? oxfordGenNavTopics : [];
                                             const subQuizTopic = bookChapter.hasQuiz ? subTopicSource.find((t) => t.title === sub) : null;
                                             return (
                                               <button
