@@ -19,6 +19,7 @@ import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
+import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
