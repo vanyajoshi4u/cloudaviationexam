@@ -36,10 +36,19 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription, requireAdm
     return () => subscription.unsubscribe();
   }, []);
 
+  // Track whether we've already validated successfully to avoid re-validating on token refresh
+  const [hasValidated, setHasValidated] = useState(false);
+
   useEffect(() => {
     const validateAccess = async () => {
       if (!session?.access_token) {
         setAccessResult({ checked: true, valid: false, reason: "no_auth" });
+        setHasValidated(false);
+        return;
+      }
+
+      // If already validated successfully, skip re-validation on token refresh
+      if (hasValidated && accessResult.valid) {
         return;
       }
 
@@ -61,6 +70,7 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription, requireAdm
           reason: data?.reason,
           role: data?.role,
         });
+        if (data?.valid) setHasValidated(true);
       } catch (e) {
         console.error("Validation fetch error:", e);
         await fallbackClientCheck(session);
@@ -89,6 +99,7 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription, requireAdm
 
       if (roles && roles.length > 0) {
         setAccessResult({ checked: true, valid: true, role: "admin" });
+        setHasValidated(true);
         return;
       }
 
@@ -102,6 +113,7 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription, requireAdm
 
       if (subs && subs.length > 0 && subs[0].status === "approved") {
         setAccessResult({ checked: true, valid: true });
+        setHasValidated(true);
       } else {
         setAccessResult({ checked: true, valid: false, reason: subs?.[0]?.status || "no_subscription" });
       }
@@ -111,6 +123,7 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription, requireAdm
       validateAccess();
     } else if (!loading && !session) {
       setAccessResult({ checked: true, valid: false, reason: "no_auth" });
+      setHasValidated(false);
     }
   }, [session, loading]);
 
