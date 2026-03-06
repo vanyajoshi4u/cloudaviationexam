@@ -1,5 +1,6 @@
 import { MCQuestion, Topic } from "./icJoshiQuestions";
 import { oxfordGenNavCh16to29Topics } from "./oxfordGenNavCh16to29";
+import { oxfordGenNavCh30to34Topics } from "./oxfordGenNavCh30to34";
 
 // Ch 1 – Direction, Latitude and Longitude
 const ch1Questions: MCQuestion[] = [
@@ -150,4 +151,5 @@ export const oxfordGenNavTopics: Topic[] = [
   oxfordGenNavCh14Topic,
   oxfordGenNavCh15Topic,
   ...oxfordGenNavCh16to29Topics,
+  ...oxfordGenNavCh30to34Topics,
 ];
