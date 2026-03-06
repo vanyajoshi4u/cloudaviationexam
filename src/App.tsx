@@ -22,6 +22,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
+// Wraps all routes for session keepalive and auto-logout on inactivity
 const InactivityGuard = ({ children }: { children: React.ReactNode }) => {
   useInactivityLogout();
   return <>{children}</>;
