@@ -107,6 +107,7 @@ const subjectsData: Subject[] = [
               "Ch 32 – The Direct Indicating Compass",
               "Ch 33 – Remote Indicating Magnetic Compass",
               "Ch 34 – Aircraft Magnetism",
+              "Ch 35 – Inertial Navigation System",
             ],
           },
           "Keith William Blue Book",
