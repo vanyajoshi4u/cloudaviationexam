@@ -135,7 +135,7 @@ const subjectsData: Subject[] = [
             ],
           },
           "Oxford",
-          "Keith William Blue Book",
+          "Keith William",
           "Redbird",
         ],
       },
