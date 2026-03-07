@@ -635,7 +635,7 @@ const RtrPart2Exam = () => {
               >
                 <X className="w-4 h-4" />
               </motion.button>
-              <VidpAirportLayout />
+              <VidpAirportLayout {...(paperId === "rtr2-paper-6" ? { runwayLeft: "32", runwayRight: "04", title: "VEBS BHUBANESWAR AIRPORT / AERODROME LAYOUT" } : {})} />
             </motion.div>
           </motion.div>
         )}
