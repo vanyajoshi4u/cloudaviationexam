@@ -795,10 +795,130 @@ const paper5Scenarios: RtrScenario[] = [
   },
 ];
 
+const paper6FlightInfo = {
+  aircraftId: "AI-912",
+  aircraftType: "B787-D",
+  rtCallSign: "SpiceJet-541",
+  registration: "VT-PPO",
+  departure: "VEBS-BHUBANESWAR",
+  destination: "VANP-NAGPUR",
+  atsRoute: "W100 KINKI ENTAP",
+  standNo: "5",
+  runwayInUse: "32",
+  taxiway: "C, D",
+  flightLevel: "350",
+  alternateAirdrome: "VARP-Raipur",
+  pob: "180",
+  endurance: "0500 Hrs",
+  exerciseStartTime: "0905 UTC",
+};
+
+const paper6AtisInfo: AtisInfo = {
+  designator: "B",
+  timeOfObservation: "0900 UTC",
+  runwayInUse: "32",
+  wind: "340°/03 Knots",
+  visibility: "3000 Metres",
+  clouds: "SCT 1500 FT, BKN 2500 FT",
+  temperature: "12°C",
+  dewpoint: "08°C",
+  qnh: "1016 hPa",
+  remarks: "No significant weather",
+};
+
+const paper6Frequencies = [
+  { description: "BHUBANESWAR SMC", frequency: "121.90 MHz" },
+  { description: "BHUBANESWAR TWR", frequency: "118.10 MHz" },
+  { description: "BHUBANESWAR APPROACH", frequency: "119.30 MHz" },
+  { description: "KOLKATA AREA CONTROL", frequency: "120.50 MHz" },
+  { description: "NAGPUR APPROACH", frequency: "120.30 MHz" },
+  { description: "NAGPUR TWR", frequency: "118.70 MHz" },
+];
+
+const paper6Scenarios: RtrScenario[] = [
+  {
+    id: 1,
+    scenarioContext: "Transmit this phraseology.",
+    flightInfo: paper6FlightInfo,
+    atisInfo: paper6AtisInfo,
+    frequencies: paper6Frequencies,
+    squawk: "7700",
+    questions: [
+      "A) 080 degrees — Transmit in RT phraseology.",
+      "B) TSRA — Transmit in RT phraseology.",
+      "C) FU — Transmit in RT phraseology.",
+      "D) 1010 QNH — Transmit in RT phraseology.",
+      "E) \"Continue in accordance with the conditions specified\" — Transmit in its literal sense.",
+    ],
+  },
+  {
+    id: 2,
+    scenarioContext: "SpiceJet 541 parked on Stand No 5. Carry out the following RT communication.",
+    flightInfo: paper6FlightInfo,
+    atisInfo: paper6AtisInfo,
+    frequencies: paper6Frequencies,
+    squawk: "7700",
+    questions: [
+      "Request start up.",
+      "Request pushback.",
+      "Ready to taxi.",
+      "You are holding short of runway 32, when wind direction changed. Take action.",
+      "Request takeoff clearance.",
+    ],
+  },
+  {
+    id: 3,
+    scenarioContext: "You are airborne passing 2600 feet.",
+    flightInfo: paper6FlightInfo,
+    atisInfo: paper6AtisInfo,
+    frequencies: paper6Frequencies,
+    squawk: "7700",
+    questions: [
+      "Request further climb.",
+      "B) Relay transmission of other aircraft.",
+    ],
+  },
+  {
+    id: 4,
+    scenarioContext: "You are passing FL340.",
+    flightInfo: paper6FlightInfo,
+    atisInfo: paper6AtisInfo,
+    frequencies: paper6Frequencies,
+    squawk: "7700",
+    questions: [
+      "You get a Resolution Advisory (RA). Take action.",
+    ],
+  },
+  {
+    id: 5,
+    scenarioContext: "You are in cruise phase.",
+    flightInfo: paper6FlightInfo,
+    atisInfo: paper6AtisInfo,
+    frequencies: paper6Frequencies,
+    squawk: "7700",
+    questions: [
+      "You experience severe turbulence. Take action.",
+    ],
+  },
+  {
+    id: 6,
+    scenarioContext: "You are cleared for ILS approach runway 29 at Nagpur.",
+    flightInfo: paper6FlightInfo,
+    atisInfo: paper6AtisInfo,
+    frequencies: paper6Frequencies,
+    squawk: "7700",
+    questions: [
+      "Established on ILS runway 29, request landing clearance.",
+      "After landing, you have vacated the runway and you are at taxiway Z3. No fuel left. Request assistance.",
+    ],
+  },
+];
+
 export const rtrPart2Papers: RtrPart2Paper[] = [
   { id: "rtr2-paper-1", title: "Radio Telephony Paper 1", scenarios: paper1Scenarios },
   { id: "rtr2-paper-2", title: "Radio Telephony Paper 2", scenarios: paper2Scenarios },
   { id: "rtr2-paper-3", title: "Radio Telephony Paper 3", scenarios: paper3Scenarios },
   { id: "rtr2-paper-4", title: "Radio Telephony Paper 4", scenarios: paper4Scenarios },
   { id: "rtr2-paper-5", title: "Radio Telephony Paper 5", scenarios: paper5Scenarios },
+  { id: "rtr2-paper-6", title: "Radio Telephony Paper 6", scenarios: paper6Scenarios },
 ];

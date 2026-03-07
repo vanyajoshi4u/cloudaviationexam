@@ -12,7 +12,8 @@ import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
 import atsRouteJabalpurIndore from "@/assets/ats-route-jabalpur-indore.png";
 import atsRouteAmritsarDelhi from "@/assets/ats-route-amritsar-delhi.png";
 import atsRouteMumbaiGoa from "@/assets/ats-route-mumbai-goa.png";
-import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png"; // Paper 5
+import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png";
+import atsRouteBhubaneswarNagpur from "@/assets/ats-route-bhubaneswar-nagpur.png";
 import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
 import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
 
@@ -22,6 +23,7 @@ const chartImageMap: Record<string, string> = {
   "rtr2-paper-3": atsRouteAmritsarDelhi,
   "rtr2-paper-4": atsRouteMumbaiGoa,
   "rtr2-paper-5": atsRouteRanchiRaipur,
+  "rtr2-paper-6": atsRouteBhubaneswarNagpur,
 };
 import { toast } from "@/hooks/use-toast";
 

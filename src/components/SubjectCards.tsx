@@ -394,6 +394,10 @@ const subjectsData: Subject[] = [
         title: "Radio Telephony Paper 5",
         chapters: ["Paper 5 – Full Practice Set"],
       },
+      {
+        title: "Radio Telephony Paper 6",
+        chapters: ["Paper 6 – Full Practice Set"],
+      },
     ],
   },
   {
@@ -418,6 +422,10 @@ const subjectsData: Subject[] = [
       {
         title: "Radio Telephony Paper 5",
         chapters: ["Paper 5 – Full Practice Set"],
+      },
+      {
+        title: "Radio Telephony Paper 6",
+        chapters: ["Paper 6 – Full Practice Set"],
       },
     ],
   },
@@ -645,6 +653,7 @@ const contentPageMap: Record<string, string> = {
                                    "Paper 3 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-3" : "/rtr2-exam/rtr2-paper-3",
                                    "Paper 4 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-4" : "/rtr2-exam/rtr2-paper-4",
                                    "Paper 5 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-5" : "/rtr2-exam/rtr2-paper-5",
+                                   "Paper 6 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-6" : "/rtr2-exam/rtr2-paper-6",
                                 };
                                 const contentLink = contentPageMap[chapterName];
                                 const isClickable = !!quizTopic || !!contentLink;
