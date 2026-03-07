@@ -498,5 +498,28 @@ export const redbirdDmeSsrTopic: Topic = {
       options: ["9.50 NM", "11.6 NM", "13.6 NM", "10.0 NM"],
       correct: 0,
     },
+    {
+      id: 33,
+      question: "Which one of the following Secondary Surveillance codes indicates an aircraft entering airspace from an area where no SSR code assignment has been made?",
+      options: ["5000", "7000", "2000", "0000"],
+      correct: 2,
+    },
+    {
+      id: 34,
+      question: "A DME in tracking mode subsequently experiences a reduction in signal strength. The equipment will switch in the first instance to:",
+      options: ["Search mode", "Memory mode", "Standby mode", "Signal controlled search"],
+      correct: 1,
+    },
+    {
+      id: 35,
+      question: "DME that has difficulty obtaining a 'lock-on':",
+      options: [
+        "Stays in search mode but reduces PRF to max. 60 PPS after 15000 pulse pairs have been transmitted",
+        "Stays in search mode without a reduction in PRF",
+        "Stays in search mode but reduces PRF to max. 60 PPS after 100 seconds",
+        "Alternates search mode with periods of memory mode lasting 10 seconds",
+      ],
+      correct: 0,
+    },
   ],
 };

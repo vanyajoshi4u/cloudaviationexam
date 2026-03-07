@@ -395,5 +395,11 @@ export const redbirdIlsTopic: Topic = {
       options: ["400 ft/min", "600 ft/min", "450 ft/min", "700 ft/min"],
       correct: 2,
     },
+    {
+      id: 20,
+      question: "The outer marker of an ILS with a 3° glide slope is located 4.6 NM from the threshold. The approximate height of the aircraft when passing over the outer marker is:",
+      options: ["1450 ft", "1400 ft", "1350 ft", "1300 ft"],
+      correct: 0,
+    },
   ],
 };

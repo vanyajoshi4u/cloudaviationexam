@@ -386,5 +386,17 @@ export const redbirdNdbAdfTopic: Topic = {
       options: ["140°", "040°", "220°", "320°"],
       correct: 0,
     },
+    {
+      id: 42,
+      question: "An NDB is on a relative bearing of 316° from an aircraft. Given: Compass heading 270°, Deviation 2°W, Variation 30°E at aircraft, Variation 28°E at station. Calculate the true bearing of the NDB from the aircraft:",
+      options: ["252°", "254°", "072°", "074°"],
+      correct: 1,
+    },
+    {
+      id: 43,
+      question: "Given: W/V (T): 230/20 kt, Var: 6°E, TAS: 80 kt. What relative bearing from an NDB should be maintained in order to achieve an outbound course of 257°(M) from overhead the beacon?",
+      options: ["172°", "188°", "008°", "352°"],
+      correct: 1,
+    },
   ],
 };
