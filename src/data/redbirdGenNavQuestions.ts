@@ -1,7 +1,7 @@
 import { type Topic } from "./icJoshiQuestions";
 import { redbirdEarthBasicsTopic, redbirdOneIn60Topic, redbirdConvergencyTopic } from "./redbirdGenNavPart1";
 import { redbirdChartsScaleTopic, redbirdTimeTwilightTopic, redbirdCpPnrTopic } from "./redbirdGenNavPart2";
-import { redbirdPayloadMassBalanceTopic, redbirdPerformanceTopic } from "./redbirdGenNavPart3";
+import { redbirdPayloadMassBalanceTopic, redbirdPerformanceTopic, redbirdConversionTopic } from "./redbirdGenNavPart3";
 import { redbirdFlightPlanTopic, redbirdDeadReckoningTopic } from "./redbirdGenNavPart4";
 
 export const redbirdGenNavTopics: Topic[] = [
@@ -13,6 +13,7 @@ export const redbirdGenNavTopics: Topic[] = [
   redbirdCpPnrTopic,
   redbirdPayloadMassBalanceTopic,
   redbirdPerformanceTopic,
+  redbirdConversionTopic,
   redbirdFlightPlanTopic,
   redbirdDeadReckoningTopic,
 ];
@@ -26,6 +27,7 @@ export {
   redbirdCpPnrTopic,
   redbirdPayloadMassBalanceTopic,
   redbirdPerformanceTopic,
+  redbirdConversionTopic,
   redbirdFlightPlanTopic,
   redbirdDeadReckoningTopic,
 };
