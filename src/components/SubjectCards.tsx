@@ -19,6 +19,7 @@ import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
+import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
