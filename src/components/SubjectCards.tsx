@@ -171,7 +171,20 @@ const subjectsData: Subject[] = [
           },
           "Oxford",
           "Keith William",
-          "Redbird",
+          {
+            name: "Redbird",
+            hasQuiz: true,
+            quizSource: "redbird-radnav" as const,
+            subChapters: [
+              "Basic Radio & VDF",
+              "NDB & ADF",
+              "VOR",
+              "Radar Basics",
+              "DME & SSR",
+              "Airborne Weather Radar (AWR)",
+              "Instrument Landing System (ILS)",
+            ],
+          },
         ],
       },
       {
