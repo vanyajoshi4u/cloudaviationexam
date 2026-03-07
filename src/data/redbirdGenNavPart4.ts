@@ -42,6 +42,16 @@ const flightPlanQuestions: MCQuestion[] = [
   { id: 838, question: "An aircraft with max certified TOM of 62,000 kg, wake turbulence category is:", options: ["Medium 'M'", "Heavy 'H'", "Light 'L'", "Unclassified 'U'"], correct: 0 },
   { id: 839, question: "A 'current flight plan' is a:", options: ["Filed flight plan", "Flight plan with correct time of departure", "Filed flight plan with amendments and clearance included", "Preliminary flight plan"], correct: 2 },
   { id: 840, question: "A flight level of 32,000 ft in the ATS flight plan is entered as:", options: ["FL320", "F320", "S3200", "32000"], correct: 1 },
+  { id: 841, question: "Navigation plan reads: Trip fuel 110 kg, Flight time 1h 35min, Taxi fuel 8 kg, Block fuel 118 kg. Calculated reserve fuel is 30% of trip fuel. The endurance on the ICAO flight plan should read:", options: ["2h 49min", "1h 35min", "2h 04min", "2h 52min"], correct: 2 },
+  { id: 842, question: "In the event that SELCAL is prescribed by an appropriate authority, the SELCAL code is entered in which section of the ATS flight plan?", options: ["Equipment", "Other Information", "Route", "Aircraft Identification"], correct: 1 },
+  { id: 843, question: "An aircraft has a maximum certificated take-off mass of 137,000 kg but is operating at take-off mass 135,000 kg. In Item 9 of the ATS flight plan its wake turbulence category is:", options: ["Heavy/Medium H/M", "Medium M", "Heavy H", "Medium Plus M+"], correct: 2 },
+  { id: 844, question: "An aircraft departs London at 1000 UTC and arrives at Munich (ICAO-EDDM) at 1215 UTC. In Item 16 of the ATS flight plan, destination and total elapsed time should be entered as:", options: ["EDDM 1415", "EDDM 1215", "EDDM 0215", "EDDM 2H15"], correct: 2 },
+  { id: 845, question: "A cruising speed of 180 knots in a light aircraft should be filled in the flight plan as:", options: ["N0180", "K0210", "K0180", "K0150"], correct: 0 },
+  { id: 846, question: "In the appropriate box of a flight plan form, concerning equipment, the letter to indicate mode A 4096 codes transponder with altitude reporting capability is:", options: ["A", "C", "S", "P"], correct: 1 },
+  { id: 847, question: "A filed flight plan for a controlled flight, the flight plan should be amended if the off-block time is delayed by:", options: ["15 minutes or more", "30 minutes or more", "45 minutes or more", "60 minutes or more"], correct: 1 },
+  { id: 848, question: "A 'current flight plan' is a:", options: ["Filed flight plan", "Flight plan with the correct time of departure", "Filed flight plan with amendments and clearance included", "Preliminary flight plan"], correct: 2 },
+  { id: 849, question: "In the ATS flight plan, a change of speed is considered significant when the change is:", options: ["5% TAS or 0.01 Mach or more", "10% TAS or 0.05 Mach or more", "20 knots or 0.05 Mach or more", "5% TAS or 0.05 Mach or more"], correct: 0 },
+  { id: 850, question: "An aircraft is planned to fly from A to B, distance 250 NM at average GS of 150 kt. It departs A at 1000 UTC. After flying 75 NM, aircraft is 15 MIN behind plan. Using actual GS, revised ETA at B?", options: ["1110 UTC", "1115 UTC", "1044 UTC", "1050 UTC"], correct: 0 },
 ];
 
 export const redbirdFlightPlanTopic: Topic = {
