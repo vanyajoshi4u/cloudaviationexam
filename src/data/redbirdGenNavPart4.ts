@@ -42,6 +42,16 @@ const flightPlanQuestions: MCQuestion[] = [
   { id: 838, question: "An aircraft with max certified TOM of 62,000 kg, wake turbulence category is:", options: ["Medium 'M'", "Heavy 'H'", "Light 'L'", "Unclassified 'U'"], correct: 0 },
   { id: 839, question: "A 'current flight plan' is a:", options: ["Filed flight plan", "Flight plan with correct time of departure", "Filed flight plan with amendments and clearance included", "Preliminary flight plan"], correct: 2 },
   { id: 840, question: "A flight level of 32,000 ft in the ATS flight plan is entered as:", options: ["FL320", "F320", "S3200", "32000"], correct: 1 },
+  { id: 841, question: "Navigation plan reads: Trip fuel 110 kg, Flight time 1h 35min, Taxi fuel 8 kg, Block fuel 118 kg. Calculated reserve fuel is 30% of trip fuel. The endurance on the ICAO flight plan should read:", options: ["2h 49min", "1h 35min", "2h 04min", "2h 52min"], correct: 2 },
+  { id: 842, question: "In the event that SELCAL is prescribed by an appropriate authority, the SELCAL code is entered in which section of the ATS flight plan?", options: ["Equipment", "Other Information", "Route", "Aircraft Identification"], correct: 1 },
+  { id: 843, question: "An aircraft has a maximum certificated take-off mass of 137,000 kg but is operating at take-off mass 135,000 kg. In Item 9 of the ATS flight plan its wake turbulence category is:", options: ["Heavy/Medium H/M", "Medium M", "Heavy H", "Medium Plus M+"], correct: 2 },
+  { id: 844, question: "An aircraft departs London at 1000 UTC and arrives at Munich (ICAO-EDDM) at 1215 UTC. In Item 16 of the ATS flight plan, destination and total elapsed time should be entered as:", options: ["EDDM 1415", "EDDM 1215", "EDDM 0215", "EDDM 2H15"], correct: 2 },
+  { id: 845, question: "A cruising speed of 180 knots in a light aircraft should be filled in the flight plan as:", options: ["N0180", "K0210", "K0180", "K0150"], correct: 0 },
+  { id: 846, question: "In the appropriate box of a flight plan form, concerning equipment, the letter to indicate mode A 4096 codes transponder with altitude reporting capability is:", options: ["A", "C", "S", "P"], correct: 1 },
+  { id: 847, question: "A filed flight plan for a controlled flight, the flight plan should be amended if the off-block time is delayed by:", options: ["15 minutes or more", "30 minutes or more", "45 minutes or more", "60 minutes or more"], correct: 1 },
+  { id: 848, question: "A 'current flight plan' is a:", options: ["Filed flight plan", "Flight plan with the correct time of departure", "Filed flight plan with amendments and clearance included", "Preliminary flight plan"], correct: 2 },
+  { id: 849, question: "In the ATS flight plan, a change of speed is considered significant when the change is:", options: ["5% TAS or 0.01 Mach or more", "10% TAS or 0.05 Mach or more", "20 knots or 0.05 Mach or more", "5% TAS or 0.05 Mach or more"], correct: 0 },
+  { id: 850, question: "An aircraft is planned to fly from A to B, distance 250 NM at average GS of 150 kt. It departs A at 1000 UTC. After flying 75 NM, aircraft is 15 MIN behind plan. Using actual GS, revised ETA at B?", options: ["1110 UTC", "1115 UTC", "1044 UTC", "1050 UTC"], correct: 0 },
 ];
 
 export const redbirdFlightPlanTopic: Topic = {
@@ -141,6 +151,21 @@ const deadReckoningQuestions: MCQuestion[] = [
   { id: 987, question: "After flying 16 min at 100 kt TAS with 20 kt tailwind, you return to departure. You will arrive after:", options: ["24 min", "20 min", "10 min 40 sec", "16 min"], correct: 0 },
   { id: 988, question: "Fuel burn of turbine engine is 220 l/h at fuel density 0.80. If density is 0.75, fuel burn will be:", options: ["235 l/h", "206 l/h", "220 l/h", "176 l/h"], correct: 0 },
   { id: 989, question: "Given: Runway direction 110°(T), Surface W/V 280°(T)/40kt. Calculate crosswind component:", options: ["36 kt", "31 kt", "21 kt", "26 kt"], correct: 1 },
+  { id: 990, question: "Given: Required course 045°(M), Variation 15°E, W/V standard atmosphere. Heading (°M) and GS?", options: ["036° and 151 kt", "052° and 154 kt", "056° and 137 kt", "055° and 147 kt"], correct: 0 },
+  { id: 991, question: "Given: TAS = 220 kt, Magnetic course 212°, W/V 160°(M)/50 kt. Calculate the GS:", options: ["290 kt", "246 kt", "250 kt", "186 kt"], correct: 3 },
+  { id: 992, question: "Given: True Heading = 310°, TAS = 200 kt, GS = 176 kt, Drift angle 7° right. Calculate the W/V:", options: ["360°/33 kt", "090°/33 kt", "270°/33 kt", "180°/33 kt"], correct: 0 },
+  { id: 993, question: "Given: True Heading = 090°, TAS = 180 kt, GS = 180 kt, Drift 5° right. Calculate the W/V:", options: ["360°/15 kt", "190°/15 kt", "010°/15 kt", "180°/15 kt"], correct: 2 },
+  { id: 994, question: "Given: True Heading = 090°, TAS = 200 kt, W/V = 220°/30 kt. Calculate the GS:", options: ["230 kt", "180 kt", "220 kt", "200 kt"], correct: 2 },
+  { id: 995, question: "Given: M0.80, OAT -50°C, FL 350, GS 490 kt, VAR 20°W, Magnetic heading 140°, Drift 1° Right. Calculate the true W/V:", options: ["020°/95 kt", "025°/47 kt", "200°/95 kt", "025°/45 kt"], correct: 2 },
+  { id: 996, question: "How far can an aeroplane fly out from its base and return in one hour? TAS 176 kt, W/V gives headwind component of 10 kt:", options: ["88 NM", "56 NM", "176 NM", "85 NM"], correct: 3 },
+  { id: 997, question: "Given: True HDG = 074°, TAS = 230 kt, Track(T) = 066°, GS = 208 kt. Calculate the W/V:", options: ["180°/35 kt", "180°/30 kt", "185°/35 kt", "180°/40 kt"], correct: 0 },
+  { id: 998, question: "Given: True HDG = 206°, TAS = 140 kt, Track(T) = 207°, GS = 135 kt. Calculate the W/V:", options: ["000°/05 kt", "000°/10 kt", "180°/05 kt", "180°/10 kt"], correct: 0 },
+  { id: 999, question: "Given: True HDG = 035°, TAS = 245 kt, Track(T) = 046°, GS = 220 kt. Calculate the W/V:", options: ["335°/45 kt", "335°/55 kt", "340°/50 kt", "340°/45 kt"], correct: 0 },
+  { id: 1100, question: "For take-off an aircraft requires a headwind component of at least 10 kt and has a crosswind limitation. The angle between wind direction and runway is 30°. Calculate the minimum and maximum allowable wind speeds:", options: ["12 kt and 38 kt", "15 kt and 43 kt", "18 kt and 50 kt", "20 kt and 40 kt"], correct: 3 },
+  { id: 1101, question: "For a landing on runway 23 (227° magnetic), surface W/V reported, VAR 13°E. Calculate the crosswind component:", options: ["26 kt", "15 kt", "20 kt", "22 kt"], correct: 3 },
+  { id: 1102, question: "Given: An aircraft is on final approach to runway 32R (322°), wind velocity reported 350°/20 kt, TAS on approach 95 kt. The aircraft's heading (°M) should be:", options: ["322°", "316°", "328°", "326°"], correct: 2 },
+  { id: 1103, question: "Given: Magnetic heading 255°, VAR 40°W, GS 375 kt, W/V 235°(T)/120 kt. Calculate the drift angle:", options: ["7° right", "7° left", "16° right", "16° left"], correct: 0 },
+  { id: 1104, question: "Given: TAS = 132 kt, True HDG = 257°, W/V = 095°(T)/35 kt. Calculate the drift angle and GS:", options: ["7°R - 155 kt", "7°L - 155 kt", "10°R - 160 kt", "10°L - 160 kt"], correct: 0 },
 ];
 
 export const redbirdDeadReckoningTopic: Topic = {
