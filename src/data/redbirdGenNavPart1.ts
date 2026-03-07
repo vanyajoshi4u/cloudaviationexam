@@ -44,6 +44,14 @@ const earthBasicsQuestions: MCQuestion[] = [
   { id: 40, question: "The horizontal component of the earth's magnetic field:", options: ["Weakens with increasing distance from the magnetic poles", "Weakens with increasing distance from the nearer magnetic pole", "Is approximately the same at all magnetic latitudes less than 60°", "Is approximately the same at magnetic latitudes 50°N and 50°S"], correct: 0 },
   { id: 41, question: "If the total force of the earth's field at a point is T and the horizontal and vertical components H and Z, the value of H is found by the formula:", options: ["H = T sin dip", "H = Z tan dip", "H = T cos dip", "H = T tan dip"], correct: 2 },
   { id: 42, question: "The maximum difference between geocentric and geodetic latitude occurs at about:", options: ["60° North and South", "90° North and South", "0° (equator)", "45° North and South"], correct: 3 },
+  { id: 43, question: "What is the value of magnetic dip at the South Magnetic Pole?", options: ["360°", "180°", "0°", "090°"], correct: 3 },
+  { id: 44, question: "Given: True Track = 350°, Variation = 11°W, Deviation = -5, Drift = 10°R. What is Heading (C)?", options: ["356°C", "078°C", "346°C", "025°C"], correct: 0 },
+  { id: 45, question: "Given: True course 300°, drift 8°R, variation 10°W, deviation -4°. Calculate the compass heading:", options: ["278°", "306°", "322°", "294°"], correct: 1 },
+  { id: 46, question: "Given: The coordinates of the heliport at Issy les Moulineaux are N48°50' E002°16.5'. The coordinates of the antipodes are:", options: ["S41°10' E177°43.5'", "S48°50' E177°43.5'", "S41°10' W177°43.5'", "S48°50' W177°43.5'"], correct: 3 },
+  { id: 47, question: "Consider the following statements on meridians:", options: ["All meridians run in true direction from South to North", "On the southern hemisphere the meridians run towards the south pole", "The distance, in nautical miles, between two selected meridians will be constant", "The relative direction between two selected meridians will be constant"], correct: 0 },
+  { id: 48, question: "With a calculated heading of 246° True, a local magnetic variation of 5°W and a compass deviation of 1°E, the compass heading is:", options: ["252°", "242°", "241°", "250°"], correct: 3 },
+  { id: 49, question: "What is the compass heading if true track is 348°, drift is 17° left, variation is 32°W, and deviation is 4°E?", options: ["009°", "033°", "339°", "337°"], correct: 1 },
+  { id: 50, question: "Given: value for the ellipticity of the Earth is 1/297. Earth's semi-major axis, as measured at the equator, equals 6378.4 km. What is the semi-minor axis (km) of the earth at the axis of the Poles?", options: ["6378.4", "6367.0", "6356.9", "6399.9"], correct: 1 },
 ];
 
 export const redbirdEarthBasicsTopic: Topic = {
