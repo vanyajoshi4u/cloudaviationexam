@@ -18,7 +18,7 @@ import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
 import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
 
 const chartImageMap: Record<string, string> = {
-  "rtr2-paper-1": atsRouteDelhiKolkata,
+  "rtr2-paper-1": atsRouteDelhiLucknow,
   "rtr2-paper-2": atsRouteJabalpurIndore,
   "rtr2-paper-3": atsRouteAmritsarDelhi,
   "rtr2-paper-4": atsRouteMumbaiGoa,

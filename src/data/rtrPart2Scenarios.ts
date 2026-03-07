@@ -321,8 +321,8 @@ const paper1Scenarios: RtrScenario[] = [
     ],
     squawk: "7700",
     questions: [
-      "At GAYA 1255, DHANBAD 1310 ETA CEA 1330 maintaining FL 360. Give Position report to Kolkata Area Control Centre and Request for Descend clearance.",
-      "While descending OVER DHNABAD you experience pressurization failure take action to descend FL 100. Declare emergency to Kolkata Area Control Centre as per RT procedure.",
+      "At ALIGARH 1205, PAVRU 1225 ETA LUCKNOW 1245 maintaining FL 360. Give Position report to Lucknow Approach and Request for Descend clearance.",
+      "While descending OVER PAVRU you experience pressurization failure take action to descend FL 100. Declare emergency to Lucknow Approach as per RT procedure.",
       "At Flight Level 100 cabin pressurization stated working normal, Inform ATC regarding cancelling of emergency and your intention.",
     ],
   },

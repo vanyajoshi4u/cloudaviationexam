@@ -16,7 +16,7 @@ import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png";
 import atsRouteBhubaneswarNagpur from "@/assets/ats-route-bhubaneswar-nagpur.png";
 
 const chartImageMap: Record<string, string> = {
-  "rtr2-paper-1": atsRouteDelhiKolkata,
+  "rtr2-paper-1": atsRouteDelhiLucknow,
   "rtr2-paper-2": atsRouteJabalpurIndore,
   "rtr2-paper-3": atsRouteAmritsarDelhi,
   "rtr2-paper-4": atsRouteMumbaiGoa,
