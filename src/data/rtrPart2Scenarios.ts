@@ -282,7 +282,7 @@ const paper1Scenarios: RtrScenario[] = [
   },
   {
     id: 6,
-    scenarioContext: "You have been changed over from Delhi Area Control to Kolkata Area Control",
+    scenarioContext: "You have been changed over from Delhi Area Control to Lucknow Approach",
     flightInfo: {
       aircraftId: "AIC-887",
       aircraftType: "B777-300ER",
