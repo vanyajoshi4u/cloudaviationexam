@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
 import VidpAirportLayout from "@/components/VidpAirportLayout";
 import airwayChartPaper1 from "@/assets/airway-chart-paper1.png";
-import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
+import atsRouteDelhiLucknow from "@/assets/ats-route-delhi-lucknow.png";
 import atsRouteJabalpurIndore from "@/assets/ats-route-jabalpur-indore.png";
 import atsRouteAmritsarDelhi from "@/assets/ats-route-amritsar-delhi.png";
 import atsRouteMumbaiGoa from "@/assets/ats-route-mumbai-goa.png";
