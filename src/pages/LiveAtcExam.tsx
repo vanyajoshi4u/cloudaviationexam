@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
 import VidpAirportLayout from "@/components/VidpAirportLayout";
 import airwayChartPaper1 from "@/assets/airway-chart-paper1.png";
-import atsRouteDelhiKolkata from "@/assets/ats-route-delhi-kolkata.png";
+import atsRouteDelhiLucknow from "@/assets/ats-route-delhi-lucknow.png";
 import atsRouteJabalpurIndore from "@/assets/ats-route-jabalpur-indore.png";
 import atsRouteAmritsarDelhi from "@/assets/ats-route-amritsar-delhi.png";
 import atsRouteMumbaiGoa from "@/assets/ats-route-mumbai-goa.png";
@@ -18,7 +18,7 @@ import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
 import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
 
 const chartImageMap: Record<string, string> = {
-  "rtr2-paper-1": atsRouteDelhiKolkata,
+  "rtr2-paper-1": atsRouteDelhiLucknow,
   "rtr2-paper-2": atsRouteJabalpurIndore,
   "rtr2-paper-3": atsRouteAmritsarDelhi,
   "rtr2-paper-4": atsRouteMumbaiGoa,
