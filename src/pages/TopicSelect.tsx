@@ -20,6 +20,7 @@ import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
+import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
