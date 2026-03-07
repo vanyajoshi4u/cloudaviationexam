@@ -798,11 +798,11 @@ const paper5Scenarios: RtrScenario[] = [
 const paper6FlightInfo = {
   aircraftId: "AI-912",
   aircraftType: "B787-D",
-  rtCallSign: "SpiceJet-541",
+  rtCallSign: "Air India-912",
   registration: "VT-PPO",
   departure: "VEBS-BHUBANESWAR",
   destination: "VANP-NAGPUR",
-  atsRoute: "W100 KINKI ENTAP",
+  atsRoute: "W113W OPASA N895 SADEV RUXAL",
   standNo: "5",
   runwayInUse: "32",
   taxiway: "C, D",
