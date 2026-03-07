@@ -439,7 +439,7 @@ export const redbirdDmeSsrTopic: Topic = {
     {
       id: 26,
       question: "Which of the following Secondary Surveillance transponder codes indicates transponder malfunction?",
-      options: ["0000", "7600", "4096", "7700"],
+      options: ["0000", "7600", "4096", "9999"],
       correct: 1,
     },
     {
