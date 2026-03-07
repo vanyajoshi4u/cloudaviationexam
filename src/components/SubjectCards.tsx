@@ -19,6 +19,7 @@ import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
+import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
@@ -38,7 +39,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav";
 }
 
 interface Subject {
@@ -170,7 +171,20 @@ const subjectsData: Subject[] = [
           },
           "Oxford",
           "Keith William",
-          "Redbird",
+          {
+            name: "Redbird",
+            hasQuiz: true,
+            quizSource: "redbird-radnav" as const,
+            subChapters: [
+              "Basic Radio & VDF",
+              "NDB & ADF",
+              "VOR",
+              "Radar Basics",
+              "DME & SSR",
+              "Airborne Weather Radar (AWR)",
+              "Instrument Landing System (ILS)",
+            ],
+          },
         ],
       },
       {
@@ -611,7 +625,7 @@ const SubjectCards = () => {
                                       >
                                         <div className="pl-8 flex flex-col gap-0.5">
                                           {bookChapter.subChapters.map((sub) => {
-                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : bookChapter.quizSource === "oxford-gennav" ? oxfordGenNavTopics : bookChapter.quizSource === "kw-gennav" ? keithWilliamGenNavTopics : bookChapter.quizSource === "redbird-gennav" ? redbirdGenNavTopics : bookChapter.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic] : [];
+                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : bookChapter.quizSource === "oxford-gennav" ? oxfordGenNavTopics : bookChapter.quizSource === "kw-gennav" ? keithWilliamGenNavTopics : bookChapter.quizSource === "redbird-gennav" ? redbirdGenNavTopics : bookChapter.quizSource === "redbird-radnav" ? redbirdRadioNavTopics : bookChapter.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic] : [];
                                             const subQuizTopic = bookChapter.hasQuiz ? subTopicSource.find((t) => t.title === sub) : null;
                                             return (
                                               <button
