@@ -1,0 +1,227 @@
+import { type Topic } from "./icJoshiQuestions";
+
+// Redbird Radio Navigation — VOR
+export const redbirdVorTopic: Topic = {
+  id: "redbird-radnav-vor",
+  title: "VOR",
+  questions: [
+    {
+      id: 1,
+      question: "Transmissions from VOR facilities may be adversely affected by:",
+      options: [
+        "Uneven propagation over irregular ground surfaces",
+        "Static interference",
+        "Night effect",
+        "Quadrantal error",
+      ],
+      correct: 0,
+    },
+    {
+      id: 2,
+      question: "If VOR bearing information is used beyond the published protection range, errors could be caused by:",
+      options: [
+        "Noise from precipitation static exceeding the signal strength of the transmitter",
+        "Sky wave interference from the same transmitter",
+        "Interference from other transmitters",
+        "Sky wave interference from distant transmitters on the same frequency",
+      ],
+      correct: 3,
+    },
+    {
+      id: 3,
+      question: "An aircraft is 100 NM from a VOR facility. Using a deviation indicator where 1 dot = 2° deviation, how many dots deviation from the centre line represent the limits of the airway boundary? (Assume airway is 10 NM wide)",
+      options: ["3.0", "1.5", "4.5", "6.0"],
+      correct: 1,
+    },
+    {
+      id: 4,
+      question: "An airway 10 NM wide is to be defined by two VORs each having a resultant accuracy of ±5.5°. In order to ensure accurate track guidance, the maximum distance apart for the transmitters is approximately:",
+      options: ["50 NM", "165 NM", "210 NM", "105 NM"],
+      correct: 3,
+    },
+    {
+      id: 5,
+      question: "An aircraft is required to approach a VOR via the 104° radial. What should be set on the VOR/ILS deviation indicator?",
+      options: [
+        "284° with the TO flag showing",
+        "284° with the FROM flag showing",
+        "104° with the TO flag showing",
+        "104° with the FROM flag showing",
+      ],
+      correct: 0,
+    },
+    {
+      id: 6,
+      question: "An aircraft on a heading of 280°(M) is on a bearing of 090°(M) from a VOR. The bearing you should select on the OBS to centralise the VOR/ILS left/right deviation needle with a 'TO' indication is:",
+      options: ["090°", "100°", "270°", "280°"],
+      correct: 2,
+    },
+    {
+      id: 7,
+      question: "A VOR is sited at position A (45°00'N, 010°00'E). An aircraft is located at position B (44°00'N, 010°00'E). Assuming magnetic variation at A is 10°W and at B is 15°W, the aircraft is on VOR radial:",
+      options: ["195°", "190°", "185°", "180°"],
+      correct: 1,
+    },
+    {
+      id: 8,
+      question: "The VOR system is limited to about 1° of accuracy. 1 degree at 200 NM represents a width of:",
+      options: ["2.0 NM", "2.5 NM", "3.0 NM", "3.5 NM"],
+      correct: 3,
+    },
+    {
+      id: 9,
+      question: "Given: Magnetic heading 280°, VOR radial 090°. What bearing should be selected on the omni-bearing selector in order to centralise the VOR deviation?",
+      options: ["280°", "270°", "100°", "090°"],
+      correct: 1,
+    },
+    {
+      id: 10,
+      question: "A VOR is sited at position 58°00'N 073°00'W where the magnetic variation equals 32°W. An aircraft is located at 56°00'N 073°00'W where the variation equals 28°W. The aircraft is on VOR radial:",
+      options: ["208°", "360°", "212°", "180°"],
+      correct: 2,
+    },
+    {
+      id: 11,
+      question: "The principle used in VOR bearing measurement is:",
+      options: [
+        "Envelope matching",
+        "Phase comparison",
+        "Beat frequency discrimination",
+        "Difference in depth of modulation",
+      ],
+      correct: 1,
+    },
+    {
+      id: 12,
+      question: "Which frequency band is used by VOR transmissions?",
+      options: ["VHF", "UHF", "SHF", "EHF"],
+      correct: 0,
+    },
+    {
+      id: 13,
+      question: "In order to plot a bearing from a VOR station, a pilot needs to know the magnetic variation:",
+      options: [
+        "At the aircraft location",
+        "At the half-way point between the aircraft and the station",
+        "At both the VOR and aircraft",
+        "At the VOR",
+      ],
+      correct: 3,
+    },
+    {
+      id: 14,
+      question: "The two signals transmitted by a conventional VOR ground station are 90° out of phase on magnetic:",
+      options: ["South", "West", "East", "North"],
+      correct: 2,
+    },
+    {
+      id: 15,
+      question: "An aircraft is flying on a heading of 270°(M). The VOR OBS is set to 270° with full left deflection and FROM flag displayed. In which sector is the aircraft from the VOR ground station?",
+      options: ["SW", "NW", "SE", "NE"],
+      correct: 3,
+    },
+    {
+      id: 16,
+      question: "A serviceable VOR shows full deflection on the OBS. What angular deviation does this represent?",
+      options: ["10° or more", "Less than 10°", "1.5° or more", "2.5° or more"],
+      correct: 0,
+    },
+    {
+      id: 17,
+      question: "An aircraft is on radial 120° with a magnetic heading of 300°. The indications on the Course Deviation Indicator (CDI) are:",
+      options: [
+        "Fly right with 'TO' showing",
+        "Fly right with 'FROM' showing",
+        "Fly left with 'FROM' showing",
+        "Fly left with 'TO' showing",
+      ],
+      correct: 0,
+    },
+    {
+      id: 18,
+      question: "Given: CDI for a VOR is selected to 090°. From/To indicator indicates 'TO'. CDI needle is deflected halfway to the right. On what radial is the aircraft?",
+      options: ["085°", "265°", "095°", "275°"],
+      correct: 3,
+    },
+    {
+      id: 19,
+      question: "The frequency range of a VOR receiver is:",
+      options: [
+        "108 to 111.95 MHz",
+        "108 to 117.95 MHz",
+        "118 to 135.95 MHz",
+        "108 to 135.95 MHz",
+      ],
+      correct: 1,
+    },
+    {
+      id: 20,
+      question: "Given: VOR station position N61° E025°, variation 13°E. Estimated position of aircraft N59° E025°, variation 20°E. What VOR radial is the aircraft on?",
+      options: ["347°", "167°", "160°", "193°"],
+      correct: 1,
+    },
+    {
+      id: 21,
+      question: "If an aircraft flies along a VOR radial it will follow a:",
+      options: [
+        "Rhumb line track",
+        "Line of constant bearing",
+        "Great circle track",
+        "Constant magnetic track",
+      ],
+      correct: 0,
+    },
+    {
+      id: 22,
+      question: "An aircraft at 6400 ft will be able to receive a VOR ground station at 100 ft above MSL at an approximate maximum range of:",
+      options: ["90 NM", "100 NM", "110 NM", "120 NM"],
+      correct: 2,
+    },
+    {
+      id: 23,
+      question: "An aircraft at FL 100 should be able to receive a VOR ground station at an approximate maximum range of:",
+      options: ["123 NM", "125 NM", "130 NM", "142 NM"],
+      correct: 0,
+    },
+    {
+      id: 24,
+      question: "The maximum theoretical range at which an aircraft at FL210 may receive signals from a VOR facility sited 340 feet above mean sea level is approximately:",
+      options: ["245 NM", "163 NM", "183 NM", "204 NM"],
+      correct: 3,
+    },
+    {
+      id: 25,
+      question: "Which of the following statements concerning the variable (directional) signal of a conventional VOR is correct?",
+      options: [
+        "It has the characteristics of a 30 Hz amplitude modulation",
+        "It is transmitted as a reference signal",
+        "It rotates at 1800 rpm",
+        "It produces a frequency modulated signal",
+      ],
+      correct: 0,
+    },
+    {
+      id: 26,
+      question: "The maximum theoretical range at which an aircraft at FL230 may receive signals from a VOR facility sited at mean sea level is:",
+      options: ["190 NM", "230 NM", "170 NM", "151 NM"],
+      correct: 0,
+    },
+    {
+      id: 27,
+      question: "Given: Aircraft heading 160°(M), Aircraft is on radial 240° from a VOR, Selected course on HSI is 250°. The HSI indications are:",
+      options: [
+        "Deviation bar behind the aeroplane symbol with the TO flag showing",
+        "Deviation bar ahead of the aeroplane symbol with the FROM flag showing",
+        "Deviation bar behind the aeroplane symbol with the FROM flag showing",
+        "Deviation bar ahead of the aeroplane symbol with the TO flag showing",
+      ],
+      correct: 3,
+    },
+    {
+      id: 28,
+      question: "A pilot receives the following signals from a VOR/DME station: radial 180°, distance = 200 NM. What is the approximate position error?",
+      options: ["±1 NM", "±2 NM", "±7 NM", "±3.5 NM"],
+      correct: 2,
+    },
+  ],
+};
