@@ -329,7 +329,7 @@ const RtrPart2Exam = () => {
                   title="Drag to move · Click to enlarge"
                 >
                   <div className="w-full h-full p-1 pointer-events-none">
-                    <VidpAirportLayout />
+                    <VidpAirportLayout {...(paperId === "rtr2-paper-6" ? { runwayLeft: "32", runwayRight: "04", title: "VEBS BHUBANESWAR AIRPORT / AERODROME LAYOUT" } : {})} />
                   </div>
                 </motion.button>
               </motion.div>
@@ -635,7 +635,7 @@ const RtrPart2Exam = () => {
               >
                 <X className="w-4 h-4" />
               </motion.button>
-              <VidpAirportLayout />
+              <VidpAirportLayout {...(paperId === "rtr2-paper-6" ? { runwayLeft: "32", runwayRight: "04", title: "VEBS BHUBANESWAR AIRPORT / AERODROME LAYOUT" } : {})} />
             </motion.div>
           </motion.div>
         )}

@@ -1,8 +1,14 @@
-const VidpAirportLayout = () => (
+interface VidpAirportLayoutProps {
+  runwayLeft?: string;
+  runwayRight?: string;
+  title?: string;
+}
+
+const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VIDP DELHI AIRPORT / AERODROME LAYOUT" }: VidpAirportLayoutProps) => (
   <svg viewBox="0 0 600 500" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
     {/* Title */}
     <text x="300" y="24" textAnchor="middle" className="fill-foreground" fontSize="14" fontWeight="bold" textDecoration="underline">
-      VIDP DELHI AIRPORT / AERODROME LAYOUT
+      {title}
     </text>
 
     {/* Terminal Building */}
@@ -53,13 +59,13 @@ const VidpAirportLayout = () => (
     <rect x="100" y="420" width="480" height="40" rx="2" className="fill-muted-foreground/15 stroke-border" strokeWidth="1.5" />
     <text x="340" y="445" textAnchor="middle" className="fill-foreground" fontSize="14" fontWeight="bold" letterSpacing="4">RUNWAY</text>
 
-    {/* Runway 09 designation (left) */}
+    {/* Runway left designation */}
     <rect x="100" y="420" width="30" height="40" rx="2" className="fill-primary/20" />
-    <text x="115" y="445" textAnchor="middle" className="fill-primary" fontSize="11" fontWeight="bold">09</text>
+    <text x="115" y="445" textAnchor="middle" className="fill-primary" fontSize="11" fontWeight="bold">{runwayLeft}</text>
 
-    {/* Runway 27 designation (right) */}
+    {/* Runway right designation */}
     <rect x="550" y="420" width="30" height="40" rx="2" className="fill-primary/20" />
-    <text x="565" y="445" textAnchor="middle" className="fill-primary" fontSize="11" fontWeight="bold">27</text>
+    <text x="565" y="445" textAnchor="middle" className="fill-primary" fontSize="11" fontWeight="bold">{runwayRight}</text>
 
     {/* Dashed centerline */}
     <line x1="140" y1="440" x2="540" y2="440" stroke="currentColor" strokeWidth="1" strokeDasharray="8,6" className="stroke-muted-foreground/40" />
