@@ -206,6 +206,18 @@ export const redbirdAwrTopic: Topic = {
       options: ["220°", "310°", "130°", "160°"],
       correct: 3,
     },
+    {
+      id: 22,
+      question: "During a low level flight, 2 parallel roads are crossed at right angles by an aircraft. The time between these roads can be used to check the aircraft:",
+      options: ["Position", "Groundspeed", "Track", "Drift"],
+      correct: 1,
+    },
+    {
+      id: 23,
+      question: "An island appears 30° to the left of the centre line on an airborne weather radar display. The magnetic heading is 276° with magnetic variation 12°W. The true bearing of the aircraft from the island is:",
+      options: ["054°", "318°", "234°", "038°"],
+      correct: 0,
+    },
   ],
 };
 
