@@ -122,10 +122,40 @@ const performanceQuestions: MCQuestion[] = [
   { id: 739, question: "A 'Balanced Field Length' exists where:", options: ["Clearway does not equal the stopway", "Accelerate stop distance equals take-off distance available", "Accelerate stop distance equals all engine TOD", "OEI TOD equals all engine TOD"], correct: 1 },
   { id: 740, question: "If field length limited TOM calculated using Balanced Field Length, additional clearway may allow:", options: ["Greater TOM but with higher V1", "Obstacle clearance limit increased with no V1 effect", "Greater TOM but with lower V1", "Obstacle clearance limit increased with higher V1"], correct: 2 },
   { id: 741, question: "At which minimum height will the second climb segment end?", options: ["400 ft above field elevation", "35 ft above ground", "When gear retraction is completed", "1,500 ft above field elevation"], correct: 0 },
+  { id: 742, question: "Regarding take-off, the take-off decision speed V1:", options: ["Is the airspeed on the ground at which the pilot is assumed to have made a decision to continue or discontinue the take-off", "Is always equal to VEF (Engine Failure speed)", "Is an airspeed at which the aeroplane is airborne but below 35 ft and the pilot is assumed to have made a decision to continue or discontinue the take-off", "Is the airspeed of the aeroplane upon reaching 35 feet above the take-off surface"], correct: 0 },
+  { id: 743, question: "The speed VS is defined as:", options: ["Safety speed for take-off in case of a contaminated runway", "Design stress speed", "Speed for best specific range", "Stalling speed or minimum steady flight speed at which the aeroplane is controllable"], correct: 3 },
+  { id: 744, question: "VX is:", options: ["The speed for best angle of climb", "The speed for best rate of climb", "The speed for best specific range", "The speed for best angle of flight path"], correct: 0 },
+  { id: 745, question: "The speed for best rate of climb is called:", options: ["VX", "VY", "V2", "VO"], correct: 1 },
+  { id: 746, question: "Which of the following distances will increase if you increase V1?", options: ["Take-off distance", "All Engine Take-off distance", "Accelerate Stop Distance", "Take-off run"], correct: 2 },
+  { id: 747, question: "Maximum and minimum values of V1 are limited by:", options: ["V2 and VMCA", "VR and VMCA", "VR and VMCG", "V2 and VMCG"], correct: 2 },
+  { id: 748, question: "The speed VR:", options: ["Must be higher than V2", "Is the speed at which rotation to the lift-off angle of attack is initiated", "Must be higher than VLOF", "Must be equal to or lower than V1"], correct: 1 },
+  { id: 749, question: "The speed V2 is:", options: ["The take-off safety speed", "That speed at which the PIC should decide to continue or not the take-off in the case of an engine failure", "The lowest airspeed required to retract flaps without stall problems", "The lowest safety airspeed at which the aeroplane is under control with aerodynamic surfaces in the case of an engine failure"], correct: 0 },
+  { id: 750, question: "Which statement regarding V1 is correct?", options: ["V1 may not be higher than VMCG", "When determining V1, reverse thrust may only be used on the remaining symmetric engines", "The correction for up-slope on the balanced V1 is negative", "VR may not be lower than V1"], correct: 3 },
+  { id: 751, question: "If the take-off mass of an aeroplane is brake energy limited, a higher uphill slope would:", options: ["Increase the maximum mass for take-off", "Decrease the maximum mass for take-off", "Have no effect on the maximum mass for take-off", "Decrease the required take-off distance"], correct: 0 },
+  { id: 752, question: "Which statement related to a take-off from a wet runway is correct?", options: ["The use of a reduced VR is sufficient to maintain the same safety margins as for a dry runway", "A reduction of screen height is allowed in order to reduce weight penalties", "In case of a reverser inoperative the wet runway performance information can still be used", "Screen height reduction can not be applied because of reduction in obstacle clearance"], correct: 1 },
+  { id: 753, question: "The required Take-off Distance (TOD) and the field length limited Take-off Mass (TOM) are different for the zero flap case and take-off position flap case. What is the result of flap setting in take-off position compared to zero flap position?", options: ["Increased TOD required and decreased field length limited TOM", "Increased TOD required and increased field length limited TOM", "Decreased TOD required and increased field length limited TOM", "Decreased TOD required and decreased field length limited TOM"], correct: 2 },
 ];
 
 export const redbirdPerformanceTopic: Topic = {
   id: "redbird-gennav-performance",
   title: "Performance",
   questions: performanceQuestions,
+};
+
+/* ───── Conversion of Units ───── */
+const conversionQuestions: MCQuestion[] = [
+  { id: 801, question: "Fuel flow per HR is 22 US-GAL, total fuel on board is 83 IMP GAL. What is the endurance?", options: ["4 HR 32 MIN", "3 HR 12 MIN", "3 HR 53 MIN", "2 HR 15 MIN"], correct: 0 },
+  { id: 802, question: "What is the ratio between the litre and the US-GAL?", options: ["1 US-GAL equals 3.78 litres", "1 litre equals 3.78 US-GAL", "1 US-GAL equals 4.55 litres", "1 litre equals 4.55 US-GAL"], correct: 0 },
+  { id: 803, question: "265 US-GAL equals? (Specific gravity 0.80)", options: ["803 kg", "862 kg", "895 kg", "940 kg"], correct: 0 },
+  { id: 804, question: "The performance data of 4 different aircraft is given, which aircraft has the best performance? Specific gravity of fuel is 0.8. A: 34.5 LTR/KM, B: 0.085 GNM/LTR, C: 16.85 KG/GNM, D: 0.20 GNM/IG", options: ["A/C A", "A/C B", "A/C C", "A/C D"], correct: 1 },
+  { id: 805, question: "Given fuel efficiency = 10 kg/NM, S.G. = 0.78, TAS = 360 KT, WINDS = +45 KT. Calculate fuel consumption in kg/hr?", options: ["4050 KG/HR", "1142 KG/HR", "5192 KG/HR", "4000 KG/HR"], correct: 0 },
+  { id: 806, question: "Given 9.32 KG/NM efficiency, TAS = 360 KTS, TWC = +45. What is fuel flow in IMP gallons? (SPG = 0.79)", options: ["1200", "1100", "1020", "1050"], correct: 3 },
+  { id: 807, question: "After flying for 16 min at 100 kt TAS with a 20 kt tail wind component, you have to return to the airfield of departure. You will arrive after:", options: ["24 min", "20 min", "10 min 40 sec", "16 min"], correct: 0 },
+  { id: 808, question: "The fuel burn of an aircraft turbine engine is 220 l/h with a fuel density of 0.80. If the density is 0.75, the fuel burn will be:", options: ["235 l/h", "206 l/h", "220 l/h", "176 l/h"], correct: 0 },
+];
+
+export const redbirdConversionTopic: Topic = {
+  id: "redbird-gennav-conversion",
+  title: "Conversion of Units",
+  questions: conversionQuestions,
 };
