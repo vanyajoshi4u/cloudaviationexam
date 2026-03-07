@@ -178,8 +178,8 @@ const paper1Scenarios: RtrScenario[] = [
       { description: "DELHI CONTROL TOWER", frequency: "118.10 MHz" },
       { description: "DELHI APPROACH", frequency: "121.35 MHz" },
       { description: "DELHI AREA CONTROL", frequency: "119.50 MHz" },
-      { description: "KOLKATA AREA CONTROL", frequency: "120.50 MHz" },
-      { description: "KOLKATA TWR", frequency: "118.25 MHz" },
+      { description: "LUCKNOW APPROACH", frequency: "121.20 MHz" },
+      { description: "LUCKNOW TWR", frequency: "118.75 MHz" },
     ],
     squawk: "7700",
     questions: [
