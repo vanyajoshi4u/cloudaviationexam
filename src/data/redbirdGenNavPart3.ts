@@ -144,14 +144,14 @@ export const redbirdPerformanceTopic: Topic = {
 
 /* ───── Conversion of Units ───── */
 const conversionQuestions: MCQuestion[] = [
-  { id: 801, question: "Fuel flow per HR is 22 US-GAL, total fuel on board is 83 IMP GAL. What is the endurance?", options: ["4 HR 32 MIN", "3 HR 12 MIN", "3 HR 53 MIN", "2 HR 15 MIN"], correct: 0 },
-  { id: 802, question: "What is the ratio between the litre and the US-GAL?", options: ["1 US-GAL equals 3.78 litres", "1 litre equals 3.78 US-GAL", "1 US-GAL equals 4.55 litres", "1 litre equals 4.55 US-GAL"], correct: 0 },
-  { id: 803, question: "265 US-GAL equals? (Specific gravity 0.80)", options: ["803 kg", "862 kg", "895 kg", "940 kg"], correct: 0 },
-  { id: 804, question: "The performance data of 4 different aircraft is given, which aircraft has the best performance? Specific gravity of fuel is 0.8. A: 34.5 LTR/KM, B: 0.085 GNM/LTR, C: 16.85 KG/GNM, D: 0.20 GNM/IG", options: ["A/C A", "A/C B", "A/C C", "A/C D"], correct: 1 },
-  { id: 805, question: "Given fuel efficiency = 10 kg/NM, S.G. = 0.78, TAS = 360 KT, WINDS = +45 KT. Calculate fuel consumption in kg/hr?", options: ["4050 KG/HR", "1142 KG/HR", "5192 KG/HR", "4000 KG/HR"], correct: 0 },
-  { id: 806, question: "Given 9.32 KG/NM efficiency, TAS = 360 KTS, TWC = +45. What is fuel flow in IMP gallons? (SPG = 0.79)", options: ["1200", "1100", "1020", "1050"], correct: 3 },
-  { id: 807, question: "After flying for 16 min at 100 kt TAS with a 20 kt tail wind component, you have to return to the airfield of departure. You will arrive after:", options: ["24 min", "20 min", "10 min 40 sec", "16 min"], correct: 0 },
-  { id: 808, question: "The fuel burn of an aircraft turbine engine is 220 l/h with a fuel density of 0.80. If the density is 0.75, the fuel burn will be:", options: ["235 l/h", "206 l/h", "220 l/h", "176 l/h"], correct: 0 },
+  { id: 1001, question: "Fuel flow per HR is 22 US-GAL, total fuel on board is 83 IMP GAL. What is the endurance?", options: ["4 HR 32 MIN", "3 HR 12 MIN", "3 HR 53 MIN", "2 HR 15 MIN"], correct: 0 },
+  { id: 1002, question: "What is the ratio between the litre and the US-GAL?", options: ["1 US-GAL equals 3.78 litres", "1 litre equals 3.78 US-GAL", "1 US-GAL equals 4.55 litres", "1 litre equals 4.55 US-GAL"], correct: 0 },
+  { id: 1003, question: "265 US-GAL equals? (Specific gravity 0.80)", options: ["803 kg", "862 kg", "895 kg", "940 kg"], correct: 0 },
+  { id: 1004, question: "The performance data of 4 different aircraft is given, which aircraft has the best performance? Specific gravity of fuel is 0.8. A: 34.5 LTR/KM, B: 0.085 GNM/LTR, C: 16.85 KG/GNM, D: 0.20 GNM/IG", options: ["A/C A", "A/C B", "A/C C", "A/C D"], correct: 1 },
+  { id: 1005, question: "Given fuel efficiency = 10 kg/NM, S.G. = 0.78, TAS = 360 KT, WINDS = +45 KT. Calculate fuel consumption in kg/hr?", options: ["4050 KG/HR", "1142 KG/HR", "5192 KG/HR", "4000 KG/HR"], correct: 0 },
+  { id: 1006, question: "Given 9.32 KG/NM efficiency, TAS = 360 KTS, TWC = +45. What is fuel flow in IMP gallons? (SPG = 0.79)", options: ["1200", "1100", "1020", "1050"], correct: 3 },
+  { id: 1007, question: "After flying for 16 min at 100 kt TAS with a 20 kt tail wind component, you have to return to the airfield of departure. You will arrive after:", options: ["24 min", "20 min", "10 min 40 sec", "16 min"], correct: 0 },
+  { id: 1008, question: "The fuel burn of an aircraft turbine engine is 220 l/h with a fuel density of 0.80. If the density is 0.75, the fuel burn will be:", options: ["235 l/h", "206 l/h", "220 l/h", "176 l/h"], correct: 0 },
 ];
 
 export const redbirdConversionTopic: Topic = {

@@ -151,6 +151,21 @@ const deadReckoningQuestions: MCQuestion[] = [
   { id: 987, question: "After flying 16 min at 100 kt TAS with 20 kt tailwind, you return to departure. You will arrive after:", options: ["24 min", "20 min", "10 min 40 sec", "16 min"], correct: 0 },
   { id: 988, question: "Fuel burn of turbine engine is 220 l/h at fuel density 0.80. If density is 0.75, fuel burn will be:", options: ["235 l/h", "206 l/h", "220 l/h", "176 l/h"], correct: 0 },
   { id: 989, question: "Given: Runway direction 110°(T), Surface W/V 280°(T)/40kt. Calculate crosswind component:", options: ["36 kt", "31 kt", "21 kt", "26 kt"], correct: 1 },
+  { id: 990, question: "Given: Required course 045°(M), Variation 15°E, W/V standard atmosphere. Heading (°M) and GS?", options: ["036° and 151 kt", "052° and 154 kt", "056° and 137 kt", "055° and 147 kt"], correct: 0 },
+  { id: 991, question: "Given: TAS = 220 kt, Magnetic course 212°, W/V 160°(M)/50 kt. Calculate the GS:", options: ["290 kt", "246 kt", "250 kt", "186 kt"], correct: 3 },
+  { id: 992, question: "Given: True Heading = 310°, TAS = 200 kt, GS = 176 kt, Drift angle 7° right. Calculate the W/V:", options: ["360°/33 kt", "090°/33 kt", "270°/33 kt", "180°/33 kt"], correct: 0 },
+  { id: 993, question: "Given: True Heading = 090°, TAS = 180 kt, GS = 180 kt, Drift 5° right. Calculate the W/V:", options: ["360°/15 kt", "190°/15 kt", "010°/15 kt", "180°/15 kt"], correct: 2 },
+  { id: 994, question: "Given: True Heading = 090°, TAS = 200 kt, W/V = 220°/30 kt. Calculate the GS:", options: ["230 kt", "180 kt", "220 kt", "200 kt"], correct: 2 },
+  { id: 995, question: "Given: M0.80, OAT -50°C, FL 350, GS 490 kt, VAR 20°W, Magnetic heading 140°, Drift 1° Right. Calculate the true W/V:", options: ["020°/95 kt", "025°/47 kt", "200°/95 kt", "025°/45 kt"], correct: 2 },
+  { id: 996, question: "How far can an aeroplane fly out from its base and return in one hour? TAS 176 kt, W/V gives headwind component of 10 kt:", options: ["88 NM", "56 NM", "176 NM", "85 NM"], correct: 3 },
+  { id: 997, question: "Given: True HDG = 074°, TAS = 230 kt, Track(T) = 066°, GS = 208 kt. Calculate the W/V:", options: ["180°/35 kt", "180°/30 kt", "185°/35 kt", "180°/40 kt"], correct: 0 },
+  { id: 998, question: "Given: True HDG = 206°, TAS = 140 kt, Track(T) = 207°, GS = 135 kt. Calculate the W/V:", options: ["000°/05 kt", "000°/10 kt", "180°/05 kt", "180°/10 kt"], correct: 0 },
+  { id: 999, question: "Given: True HDG = 035°, TAS = 245 kt, Track(T) = 046°, GS = 220 kt. Calculate the W/V:", options: ["335°/45 kt", "335°/55 kt", "340°/50 kt", "340°/45 kt"], correct: 0 },
+  { id: 1100, question: "For take-off an aircraft requires a headwind component of at least 10 kt and has a crosswind limitation. The angle between wind direction and runway is 30°. Calculate the minimum and maximum allowable wind speeds:", options: ["12 kt and 38 kt", "15 kt and 43 kt", "18 kt and 50 kt", "20 kt and 40 kt"], correct: 3 },
+  { id: 1101, question: "For a landing on runway 23 (227° magnetic), surface W/V reported, VAR 13°E. Calculate the crosswind component:", options: ["26 kt", "15 kt", "20 kt", "22 kt"], correct: 3 },
+  { id: 1102, question: "Given: An aircraft is on final approach to runway 32R (322°), wind velocity reported 350°/20 kt, TAS on approach 95 kt. The aircraft's heading (°M) should be:", options: ["322°", "316°", "328°", "326°"], correct: 2 },
+  { id: 1103, question: "Given: Magnetic heading 255°, VAR 40°W, GS 375 kt, W/V 235°(T)/120 kt. Calculate the drift angle:", options: ["7° right", "7° left", "16° right", "16° left"], correct: 0 },
+  { id: 1104, question: "Given: TAS = 132 kt, True HDG = 257°, W/V = 095°(T)/35 kt. Calculate the drift angle and GS:", options: ["7°R - 155 kt", "7°L - 155 kt", "10°R - 160 kt", "10°L - 160 kt"], correct: 0 },
 ];
 
 export const redbirdDeadReckoningTopic: Topic = {
