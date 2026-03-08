@@ -32,6 +32,7 @@ import { cessna172RTopic } from "@/data/cessna172RQuestions";
 import { cessna152Topic } from "@/data/cessna152Questions";
 import { piperArcherTopic } from "@/data/piperArcherQuestions";
 import { da42Topic } from "@/data/da42Questions";
+import { da40Topic } from "@/data/da40Questions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
