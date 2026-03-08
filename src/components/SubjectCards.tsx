@@ -506,6 +506,21 @@ const SubjectCards = () => {
     });
   };
 
+  const normalizeChapterLabel = (value: string) => value.replace(/\s+/g, " ").trim().toLowerCase();
+
+  const getNestedTopicSource = (quizSource?: SubTopic["quizSource"]) => {
+    if (quizSource === "rkbali-gennav") return rkBaliGenNavTopics;
+    if (quizSource === "rkbali-inst") return rkBaliInstrumentTopics;
+    if (quizSource === "rkbali-radnav") return rkBaliRadioNavTopics;
+    if (quizSource === "oxford-gennav") return oxfordGenNavTopics;
+    if (quizSource === "kw-gennav") return keithWilliamGenNavTopics;
+    if (quizSource === "redbird-gennav") return redbirdGenNavTopics;
+    if (quizSource === "redbird-radnav") return redbirdRadioNavTopics;
+    if (quizSource === "redbird-inst") return redbirdInstTopics;
+    if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic];
+    return [];
+  };
+
   return (
     <section id="subjects" className="py-20 sm:py-32 relative" ref={ref}>
       <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -610,11 +625,16 @@ const SubjectCards = () => {
                                 // Handle expandable book chapters
                                 if (typeof chapter === "object" && "subChapters" in chapter) {
                                   const bookChapter = chapter as ChapterWithSubs;
-                                  const isBookOpen = openBook === bookChapter.name;
+                                  const bookKey = `${subject.title}::${subtopic.title}::${bookChapter.name}`;
+                                  const isBookOpen = openBook === bookKey;
                                   return (
-                                    <div key={bookChapter.name}>
+                                    <div key={bookKey}>
                                       <button
-                                        onClick={() => { const sy = window.scrollY; setOpenBook(isBookOpen ? null : bookChapter.name); requestAnimationFrame(() => window.scrollTo({ top: sy })); }}
+                                        onClick={() => {
+                                          const sy = window.scrollY;
+                                          setOpenBook(isBookOpen ? null : bookKey);
+                                          requestAnimationFrame(() => window.scrollTo({ top: sy }));
+                                        }}
                                         className="w-full flex items-center gap-2 text-xs sm:text-sm text-muted-foreground hover:text-primary py-1.5 px-3 rounded-md hover:bg-primary/5 transition-colors duration-200 text-left"
                                       >
                                         <ChevronRight
@@ -635,8 +655,11 @@ const SubjectCards = () => {
                                       >
                                         <div className="pl-8 flex flex-col gap-0.5">
                                           {bookChapter.subChapters.map((sub) => {
-                                            const subTopicSource = bookChapter.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : bookChapter.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : bookChapter.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : bookChapter.quizSource === "oxford-gennav" ? oxfordGenNavTopics : bookChapter.quizSource === "kw-gennav" ? keithWilliamGenNavTopics : bookChapter.quizSource === "redbird-gennav" ? redbirdGenNavTopics : bookChapter.quizSource === "redbird-radnav" ? redbirdRadioNavTopics : bookChapter.quizSource === "redbird-inst" ? redbirdInstTopics : bookChapter.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic] : [];
-                                            const subQuizTopic = bookChapter.hasQuiz ? subTopicSource.find((t) => t.title === sub) : null;
+                                            const subTopicSource = getNestedTopicSource(bookChapter.quizSource);
+                                            const normalizedSub = normalizeChapterLabel(sub);
+                                            const subQuizTopic = bookChapter.hasQuiz
+                                              ? subTopicSource.find((t) => normalizeChapterLabel(t.title) === normalizedSub)
+                                              : null;
                                             return (
                                               <button
                                                 key={sub}
