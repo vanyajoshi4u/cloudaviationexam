@@ -680,7 +680,6 @@ const SubjectCards = () => {
                                     </div>
                                   );
                                 }
-                                }
 
                                 const chapterName = chapter as string;
                                 const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : icJoshiTopics;
