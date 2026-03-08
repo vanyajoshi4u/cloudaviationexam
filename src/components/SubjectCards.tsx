@@ -356,6 +356,14 @@ const subjectsData: Subject[] = [
           "Redbird Question Bank",
         ],
       },
+      {
+        title: "Additional Questions",
+        hasQuiz: true,
+        quizSource: "sk-reg-additional" as const,
+        chapters: [
+          "Additional Questions",
+        ],
+      },
     ],
   },
   {
