@@ -396,6 +396,14 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "piper-archer",
       },
+      {
+        title: "DA 42 (Thielert)",
+        chapters: [
+          "DA 42 (Thielert)",
+        ],
+        hasQuiz: true,
+        quizSource: "da-42",
+      },
     ],
   },
   {
