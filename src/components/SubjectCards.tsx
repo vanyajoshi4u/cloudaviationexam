@@ -28,6 +28,7 @@ import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
+import { skRegAdditionalTopic } from "@/data/skRegQuestions";
 import { cessna172RTopic } from "@/data/cessna172RQuestions";
 import { cessna152Topic } from "@/data/cessna152Questions";
 import { piperArcherTopic } from "@/data/piperArcherQuestions";
