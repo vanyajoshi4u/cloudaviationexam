@@ -370,23 +370,12 @@ const subjectsData: Subject[] = [
     title: "Technical Specific",
     subtopics: [
       {
-        title: "Aircraft Performance",
+        title: "Cessna 172R",
         chapters: [
-          "Takeoff Performance",
-          "Climb & Cruise Performance",
-          "Landing Performance",
-          "Weight & Balance",
-          "Flight Planning",
+          "Cessna 172R",
         ],
-      },
-      {
-        title: "Type-Specific Systems",
-        chapters: [
-          "Airframe & Structures",
-          "Avionics Suite",
-          "Flight Controls",
-          "Pressurization & Air Conditioning",
-        ],
+        hasQuiz: true,
+        quizSource: "cessna-172r",
       },
     ],
   },
