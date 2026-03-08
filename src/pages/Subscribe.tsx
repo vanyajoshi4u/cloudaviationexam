@@ -56,7 +56,7 @@ const Subscribe = () => {
   useEffect(() => {
     if (alreadySubscribed) {
       const timer = setTimeout(() => {
-        window.location.href = "/";
+        navigate("/", { replace: true });
       }, 1500);
       return () => clearTimeout(timer);
     }
