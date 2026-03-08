@@ -153,7 +153,7 @@ export const oxfordRadNavCh16Topic: Topic = {
 // Questions referencing "Appendix A" diagrams use diagram key "oxford-radnav-appendix-a"
 export const oxfordRadNavCh17Topic: Topic = {
   id: "oxford-radnav-ch17",
-  title: "Ch 17 – Electronic Flight Information System (EFIS)",
+  title: "Ch 15 – Electronic Flight Information System (EFIS)",
   questions: [
     {
       id: 1,

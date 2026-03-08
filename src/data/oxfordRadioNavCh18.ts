@@ -261,7 +261,7 @@ export const oxfordRadNavCh18P1Topic: Topic = {
 // Oxford Radio Navigation — Ch 18: GNSS Part 2 (Revision Q154-176)
 export const oxfordRadNavCh18P2Topic: Topic = {
   id: "oxford-radnav-ch18-p2",
-  title: "Ch 18 – GNSS / GPS (Part 2)",
+  title: "Ch 17 – GNSS / GPS (Part 2)",
   questions: [
     {
       id: 1,
