@@ -873,6 +873,9 @@ const contentPageMap: Record<string, string> = {
                                     {quizTopic && !contentLink && (
                                       <span className="ml-2 text-[10px] text-primary/60">({quizTopic.questions.length} MCQs)</span>
                                     )}
+                                    {!quizTopic && !contentLink && subtopic.hasQuiz && (
+                                      <span className="ml-2 text-[10px] text-muted-foreground/70">(No MCQs yet)</span>
+                                    )}
                                   </button>
                                 );
                               })}
