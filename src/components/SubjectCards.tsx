@@ -551,6 +551,10 @@ const subjectsData: Subject[] = [
         title: "Radio Telephony Paper 7",
         chapters: ["Paper 7 – Full Practice Set"],
       },
+      {
+        title: "Radio Telephony Paper 8",
+        chapters: ["Paper 8 – Full Practice Set"],
+      },
     ],
   },
   {
