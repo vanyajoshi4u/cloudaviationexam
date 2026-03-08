@@ -30,6 +30,7 @@ import { cessna172RTopic } from "@/data/cessna172RQuestions";
 import { cessna152Topic } from "@/data/cessna152Questions";
 import { piperArcherTopic } from "@/data/piperArcherQuestions";
 import { da42Topic } from "@/data/da42Questions";
+import { da40Topic } from "@/data/da40Questions";
 import oxfordRadNavAppendixA from "@/assets/oxford-radnav-appendix-a.jpg";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from "lucide-react";
