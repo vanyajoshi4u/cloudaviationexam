@@ -86,7 +86,7 @@ Deno.serve(async (req) => {
 
     // Check subscription
     const { data: subs } = await dbQuery(
-      `subscriptions?user_id=eq.${user.id}&status=eq.approved&select=plan,expires_at&order=created_at.desc`
+      `subscriptions?user_id=eq.${userId}&status=eq.approved&select=plan,expires_at&order=created_at.desc`
     );
 
     const activeSubs = (subs || []).filter((s: any) => s.expires_at && new Date(s.expires_at) > new Date());
