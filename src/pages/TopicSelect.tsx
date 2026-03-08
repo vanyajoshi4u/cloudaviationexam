@@ -48,7 +48,7 @@ const TopicSelect = () => {
   const isOxfordGenNav = oxfordGenNavTopics.some((t) => t.id === topicId);
   const isRedbirdTech = redbirdTechGeneralTopic.id === topicId;
   const isRedbirdGenNav = redbirdGenNavTopics.some((t) => t.id === topicId);
-  const isSkTechQB = skTechQB2Topic.id === topicId || skTechQB3Topic.id === topicId || skTechQB4Topic.id === topicId;
+  const isSkTechQB = skTechQB2Topic.id === topicId || skTechQB3Topic.id === topicId || skTechQB4Topic.id === topicId || skTechQB5Topic.id === topicId;
   const isRedbirdRadNav = redbirdRadioNavTopics.some((t) => t.id === topicId);
   const isRedbirdInst = redbirdInstTopics.some((t) => t.id === topicId);
   const isOxfordInst = oxfordInstNavTopics.some((t) => t.id === topicId);

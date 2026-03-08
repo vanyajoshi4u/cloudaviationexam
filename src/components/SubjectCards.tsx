@@ -358,6 +358,7 @@ const subjectsData: Subject[] = [
           "Question Bank-2",
           "Question Bank-3",
           "Question Bank-4",
+          "Question Bank-5",
         ],
         hasQuiz: true,
         quizSource: "redbird-tech",
