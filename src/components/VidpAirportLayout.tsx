@@ -22,7 +22,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
 
     {/* Stand 5 */}
     <rect x="175" y="100" width="60" height="60" rx="2" className="fill-muted-foreground/20 stroke-border" strokeWidth="1" />
-    <text x="205" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">5</text>
+    <text x="205" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">{standLeft}</text>
 
     {/* Aircraft icon at center */}
     <g transform="translate(290, 130)">
