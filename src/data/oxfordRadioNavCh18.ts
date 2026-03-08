@@ -3,7 +3,7 @@ import { type Topic } from "./icJoshiQuestions";
 // Oxford Radio Navigation — Ch 18: GNSS Part 1 (Revision Q124-153)
 export const oxfordRadNavCh18P1Topic: Topic = {
   id: "oxford-radnav-ch18-p1",
-  title: "Ch 18 – GNSS / GPS (Part 1)",
+  title: "Ch 16 – GNSS / GPS (Part 1)",
   questions: [
     {
       id: 1,
