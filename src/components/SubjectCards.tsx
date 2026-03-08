@@ -181,6 +181,8 @@ const subjectsData: Subject[] = [
               "Ch 3 – Modulation",
               "Ch 4 – Antennae",
               "Ch 5 – Doppler Radar Systems",
+              "Ch 6 – VHF Direction Finder (VDF)",
+              "Ch 7 – NDB and ADF",
             ],
           },
           "Keith William",
