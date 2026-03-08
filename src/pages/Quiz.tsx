@@ -25,6 +25,7 @@ import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
 import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
 import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
+import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import oxfordRadNavAppendixA from "@/assets/oxford-radnav-appendix-a.jpg";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from "lucide-react";
