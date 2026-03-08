@@ -47,14 +47,20 @@ Deno.serve(async (req) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-    const user = await getUser(token);
-
-    if (!user?.id) {
+    
+    // Use getClaims for proper JWT validation
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data: claimsData, error: claimsError } = await supabaseClient.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims?.sub) {
       return new Response(
         JSON.stringify({ valid: false, reason: "invalid_token" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    const userId = claimsData.claims.sub;
 
     // Check active session
     const { data: sessions } = await dbQuery(
