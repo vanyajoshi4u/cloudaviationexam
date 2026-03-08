@@ -680,17 +680,6 @@ const SubjectCards = () => {
                                     </div>
                                   );
                                 }
-                                                {sub}
-                                                {subQuizTopic && (
-                                                  <span className="ml-2 text-[10px] text-primary/60">({subQuizTopic.questions.length} MCQs)</span>
-                                                )}
-                                              </button>
-                                            );
-                                          })}
-                                        </div>
-                                      </motion.div>
-                                    </div>
-                                  );
                                 }
 
                                 const chapterName = chapter as string;
