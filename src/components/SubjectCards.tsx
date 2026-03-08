@@ -170,7 +170,18 @@ const subjectsData: Subject[] = [
               "Ch 9 – Global Navigation Satellite Systems (GNSS)",
             ],
           },
-          "Oxford",
+          {
+            name: "Oxford",
+            hasQuiz: true,
+            quizSource: "oxford-radnav" as const,
+            subChapters: [
+              "Ch 1 – Properties of Radio Waves",
+              "Ch 2 – Radio Propagation Theory",
+              "Ch 3 – Modulation",
+              "Ch 4 – Antennae",
+              "Ch 5 – Doppler Radar Systems",
+            ],
+          },
           "Keith William",
           {
             name: "Redbird",
