@@ -3,7 +3,7 @@ import { type Topic } from "./icJoshiQuestions";
 // Oxford Radio Navigation — Ch 19: Revision (VDF, ADF & VOR recap) Q1-42
 export const oxfordRadNavCh19P1Topic: Topic = {
   id: "oxford-radnav-ch19-p1",
-  title: "Ch 19 – Revision: VDF, ADF & VOR",
+  title: "Ch 18 – Revision: VDF, ADF & VOR",
   questions: [
     { id: 1, question: "When would VDF be used for a position fix?", options: ["When an aircraft declares an emergency on any frequency", "When first talking to an FIR on crossing an international boundary", "When joining controlled airspace from uncontrolled airspace", "When declaring an emergency on 121.500 MHz"], correct: 3 },
     { id: 2, question: "What equipment does an aircraft need when carrying out a VDF let-down?", options: ["VHF radio", "VOR", "VOR/DME", "None"], correct: 0 },
