@@ -414,6 +414,14 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "da-42",
       },
+      {
+        title: "PA-34-220T",
+        chapters: [
+          "PA-34-220T",
+        ],
+        hasQuiz: true,
+        quizSource: "pa-34-220t",
+      },
     ],
   },
   {
