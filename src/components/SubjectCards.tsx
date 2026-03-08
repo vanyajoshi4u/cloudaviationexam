@@ -377,6 +377,14 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "cessna-172r",
       },
+      {
+        title: "Cessna 152",
+        chapters: [
+          "Cessna 152",
+        ],
+        hasQuiz: true,
+        quizSource: "cessna-152",
+      },
     ],
   },
   {
