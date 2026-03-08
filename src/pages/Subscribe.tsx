@@ -56,7 +56,7 @@ const Subscribe = () => {
   useEffect(() => {
     if (alreadySubscribed) {
       const timer = setTimeout(() => {
-        window.location.href = "/";
+        navigate("/", { replace: true });
       }, 1500);
       return () => clearTimeout(timer);
     }
@@ -188,7 +188,7 @@ const Subscribe = () => {
 
       // Redirect to homepage after a short delay
       setTimeout(() => {
-        window.location.href = "/";
+        navigate("/", { replace: true });
       }, 1500);
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");
@@ -220,7 +220,7 @@ const Subscribe = () => {
           <p className="text-muted-foreground text-sm">
             Your subscription has been activated. A confirmation email has been sent to your registered email. You can now access all quiz content.
           </p>
-          <Button className="mt-4" onClick={() => window.location.href = "/topics"}>
+          <Button className="mt-4" onClick={() => navigate("/", { replace: true })}>
             Start Learning
           </Button>
         </motion.div>

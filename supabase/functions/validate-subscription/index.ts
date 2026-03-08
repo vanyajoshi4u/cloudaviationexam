@@ -1,3 +1,5 @@
+import { createClient } from "npm:@supabase/supabase-js@2";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -7,16 +9,6 @@ const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
 const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-async function getUser(token: string) {
-  const res = await fetch(`${supabaseUrl}/auth/v1/user`, {
-    headers: {
-      apikey: supabaseAnonKey,
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (!res.ok) return null;
-  return await res.json();
-}
 
 async function dbQuery(path: string) {
   const res = await fetch(`${supabaseUrl}/rest/v1/${path}`, {
@@ -45,18 +37,24 @@ Deno.serve(async (req) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-    const user = await getUser(token);
-
-    if (!user?.id) {
+    
+    // Use getClaims for proper JWT validation
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data: claimsData, error: claimsError } = await supabaseClient.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims?.sub) {
       return new Response(
         JSON.stringify({ valid: false, reason: "invalid_token" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
+    const userId = claimsData.claims.sub;
+
     // Check active session
     const { data: sessions } = await dbQuery(
-      `active_sessions?user_id=eq.${user.id}&select=id&limit=1`
+      `active_sessions?user_id=eq.${userId}&select=id&limit=1`
     );
     if (!sessions || sessions.length === 0) {
       return new Response(
@@ -67,7 +65,7 @@ Deno.serve(async (req) => {
 
     // Check admin
     const { data: roles } = await dbQuery(
-      `user_roles?user_id=eq.${user.id}&role=eq.admin&select=role&limit=1`
+      `user_roles?user_id=eq.${userId}&role=eq.admin&select=role&limit=1`
     );
     if (roles && roles.length > 0) {
       return new Response(
@@ -78,7 +76,7 @@ Deno.serve(async (req) => {
 
     // Check subscription
     const { data: subs } = await dbQuery(
-      `subscriptions?user_id=eq.${user.id}&status=eq.approved&select=plan,expires_at&order=created_at.desc`
+      `subscriptions?user_id=eq.${userId}&status=eq.approved&select=plan,expires_at&order=created_at.desc`
     );
 
     const activeSubs = (subs || []).filter((s: any) => s.expires_at && new Date(s.expires_at) > new Date());
