@@ -75,7 +75,7 @@ Deno.serve(async (req) => {
 
     // Check admin
     const { data: roles } = await dbQuery(
-      `user_roles?user_id=eq.${user.id}&role=eq.admin&select=role&limit=1`
+      `user_roles?user_id=eq.${userId}&role=eq.admin&select=role&limit=1`
     );
     if (roles && roles.length > 0) {
       return new Response(
