@@ -506,6 +506,21 @@ const SubjectCards = () => {
     });
   };
 
+  const normalizeChapterLabel = (value: string) => value.replace(/\s+/g, " ").trim().toLowerCase();
+
+  const getNestedTopicSource = (quizSource?: SubTopic["quizSource"]) => {
+    if (quizSource === "rkbali-gennav") return rkBaliGenNavTopics;
+    if (quizSource === "rkbali-inst") return rkBaliInstrumentTopics;
+    if (quizSource === "rkbali-radnav") return rkBaliRadioNavTopics;
+    if (quizSource === "oxford-gennav") return oxfordGenNavTopics;
+    if (quizSource === "kw-gennav") return keithWilliamGenNavTopics;
+    if (quizSource === "redbird-gennav") return redbirdGenNavTopics;
+    if (quizSource === "redbird-radnav") return redbirdRadioNavTopics;
+    if (quizSource === "redbird-inst") return redbirdInstTopics;
+    if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic];
+    return [];
+  };
+
   return (
     <section id="subjects" className="py-20 sm:py-32 relative" ref={ref}>
       <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
