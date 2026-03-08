@@ -46,7 +46,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
     {/* Taxiway D (vertical left) */}
     <line x1="145" y1="230" x2="145" y2="420" className="stroke-primary/40" strokeWidth="18" />
     <rect x="200" y="310" width="35" height="20" rx="2" className="fill-card stroke-border" strokeWidth="1" />
-    <text x="217" y="324" textAnchor="middle" className="fill-foreground" fontSize="11" fontWeight="bold">D</text>
+    <text x="217" y="324" textAnchor="middle" className="fill-foreground" fontSize="11" fontWeight="bold">{taxiwayLeft}</text>
 
     {/* Taxiway B (vertical right) */}
     <line x1="400" y1="230" x2="400" y2="420" className="stroke-primary/40" strokeWidth="18" />
