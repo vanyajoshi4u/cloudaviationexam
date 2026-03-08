@@ -407,6 +407,7 @@ const electronicDisplayQuestions: MCQuestion[] = [
 ];
 
 export const rkBaliInstrumentTopics: Topic[] = [
+  { id: "rk-bali-inst-ch1", title: "Ch 1 – Air Data Systems", questions: airDataSystemsQuestions },
   { id: "rk-bali-inst-ch2", title: "Ch 2 – Altimeter", questions: altimeterQuestions },
   { id: "rk-bali-inst-ch3", title: "Ch 3 – Air Speed Indicator (ASI)", questions: asiQuestions },
   { id: "rk-bali-inst-ch4", title: "Ch 4 – Vertical Speed Indicator (VSI)", questions: vsiQuestions },
