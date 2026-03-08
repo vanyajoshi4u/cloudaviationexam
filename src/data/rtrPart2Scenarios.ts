@@ -914,6 +914,147 @@ const paper6Scenarios: RtrScenario[] = [
   },
 ];
 
+// ==================== PAPER 7: Jaipur → Ahmedabad ====================
+
+const paper7FlightInfo = {
+  aircraftId: "AI-305",
+  aircraftType: "A320",
+  rtCallSign: "Air India-305",
+  registration: "VT-ALP",
+  departure: "VIJP-JAIPUR",
+  destination: "VAAH-AHMEDABAD",
+  atsRoute: "As per ATS route chart",
+  standNo: "12",
+  runwayInUse: "27",
+  taxiway: "A, B",
+  flightLevel: "330",
+  alternateAirdrome: "VAUD-Udaipur",
+  pob: "180",
+  endurance: "0500 Hrs",
+  exerciseStartTime: "0830 UTC",
+};
+
+const paper7AtisInfo: AtisInfo = {
+  designator: "D",
+  timeOfObservation: "0800 UTC",
+  runwayInUse: "27",
+  wind: "260°/08 Knots",
+  visibility: "5000 Metres",
+  clouds: "FEW 2000 FT, SCT 3500 FT",
+  temperature: "28°C",
+  dewpoint: "18°C",
+  qnh: "1012 hPa",
+  remarks: "No significant weather",
+};
+
+const paper7Frequencies = [
+  { description: "JAIPUR SMC", frequency: "121.90 MHz" },
+  { description: "JAIPUR TWR", frequency: "118.10 MHz" },
+  { description: "JAIPUR APPROACH", frequency: "119.30 MHz" },
+  { description: "JAIPUR AREA CONTROL", frequency: "124.00 MHz" },
+  { description: "AHMEDABAD APPROACH", frequency: "119.10 MHz" },
+  { description: "AHMEDABAD TWR", frequency: "118.70 MHz" },
+];
+
+const paper7Scenarios: RtrScenario[] = [
+  {
+    id: 1,
+    scenarioContext: "Transmit the correct WORD/PHRASE for each of the following meanings (as per ICAO DOC 9432).",
+    flightInfo: paper7FlightInfo,
+    atisInfo: paper7AtisInfo,
+    frequencies: paper7Frequencies,
+    squawk: "7700",
+    questions: [
+      "A) \"Let me know that you have received and understood this message.\" — Transmit the correct word/phrase.",
+      "B) \"Yes.\" — Transmit the correct word/phrase.",
+      "C) \"Permission for proposed action granted.\" — Transmit the correct word/phrase.",
+      "D) \"I hereby indicate the separation between portions of the message.\" — Transmit the correct word/phrase.",
+      "E) \"I hereby indicate the separation between messages transmitted to different aircraft in a very busy environment.\" — Transmit the correct word/phrase.",
+      "F) \"Annul the previously transmitted clearance.\" — Transmit the correct word/phrase.",
+      "G) \"Examine a system or procedure.\" — Transmit the correct word/phrase.",
+      "H) \"Authorized to proceed under the conditions specified.\" — Transmit the correct word/phrase.",
+      "I) \"I request verification of: clearance, instruction, action, information.\" — Transmit the correct word/phrase.",
+      "J) \"Establish communications with...\" — Transmit the correct word/phrase.",
+      "K) \"True\" or \"Accurate\". — Transmit the correct word/phrase.",
+      "L) \"An error has been made in this transmission. The correct version is...\" — Transmit the correct word/phrase.",
+      "M) \"Ignore.\" — Transmit the correct word/phrase.",
+      "N) \"What is the readability of my transmission?\" — Transmit the correct word/phrase.",
+      "O) \"I repeat for clarity or emphasis.\" — Transmit the correct word/phrase.",
+      "P) \"Continue in accordance with the conditions specified or in its literal sense.\" — Transmit the correct word/phrase.",
+      "Q) \"Listen out on (frequency).\" — Transmit the correct word/phrase.",
+      "R) \"No\" or \"Permission not granted\" or \"That is not correct\" or \"Not capable\". — Transmit the correct word/phrase.",
+      "S) \"This exchange of transmissions is ended and no response is expected.\" — Transmit the correct word/phrase.",
+      "T) \"My transmission is ended and I expect a response from you.\" — Transmit the correct word/phrase.",
+      "U) \"Repeat all, or the specified part, of this message back to me exactly as received.\" — Transmit the correct word/phrase.",
+      "V) \"A change has been made to your last clearance and this new clearance supersedes your previous clearance or part thereof.\" — Transmit the correct word/phrase.",
+      "W) \"Pass me the following information...\" — Transmit the correct word/phrase.",
+      "X) \"I should like to know...\" or \"I wish to obtain...\" — Transmit the correct word/phrase.",
+      "Y) \"I have received all of your last transmission.\" — Transmit the correct word/phrase.",
+      "Z) \"Repeat all, or the following part, of your last transmission.\" — Transmit the correct word/phrase.",
+      "AA) \"Reduce your rate of speech.\" — Transmit the correct word/phrase.",
+      "AB) \"Wait and I will call you.\" — Transmit the correct word/phrase.",
+      "AC) \"I cannot comply with your request, instruction, or clearance.\" — Transmit the correct word/phrase.",
+      "AD) \"I understand your message and will comply with it.\" — Transmit the correct word/phrase.",
+      "AE) As a request: \"Communication is difficult. Please send every word or group of words twice.\" — Transmit the correct word/phrase.",
+    ],
+  },
+  {
+    id: 2,
+    scenarioContext: "AI 305 parked on Stand No 12. Carry out the following RT communication from Jaipur SMC.",
+    flightInfo: paper7FlightInfo,
+    atisInfo: paper7AtisInfo,
+    frequencies: paper7Frequencies,
+    squawk: "7700",
+    questions: [
+      "Request start up, pushback and taxi to holding point runway 27.",
+    ],
+  },
+  {
+    id: 3,
+    scenarioContext: "You are airborne after takeoff from runway 27.",
+    flightInfo: paper7FlightInfo,
+    atisInfo: paper7AtisInfo,
+    frequencies: paper7Frequencies,
+    squawk: "7700",
+    questions: [
+      "After takeoff passing 4000 ft, request climb to FL330 and contact departure.",
+    ],
+  },
+  {
+    id: 4,
+    scenarioContext: "You are climbing through FL200.",
+    flightInfo: paper7FlightInfo,
+    atisInfo: paper7AtisInfo,
+    frequencies: paper7Frequencies,
+    squawk: "7700",
+    questions: [
+      "At FL200 encounter moderate turbulence. Inform ATC and request level change.",
+    ],
+  },
+  {
+    id: 5,
+    scenarioContext: "You are in cruise at FL330.",
+    flightInfo: paper7FlightInfo,
+    atisInfo: paper7AtisInfo,
+    frequencies: paper7Frequencies,
+    squawk: "7700",
+    questions: [
+      "Weather deviation required 15 NM right of track. Request permission.",
+    ],
+  },
+  {
+    id: 6,
+    scenarioContext: "You are in cruise phase.",
+    flightInfo: paper7FlightInfo,
+    atisInfo: paper7AtisInfo,
+    frequencies: paper7Frequencies,
+    squawk: "7700",
+    questions: [
+      "Engine vibration warning during cruise. Inform ATC and request priority landing.",
+    ],
+  },
+];
+
 export const rtrPart2Papers: RtrPart2Paper[] = [
   { id: "rtr2-paper-1", title: "Radio Telephony Paper 1", scenarios: paper1Scenarios },
   { id: "rtr2-paper-2", title: "Radio Telephony Paper 2", scenarios: paper2Scenarios },
@@ -921,4 +1062,5 @@ export const rtrPart2Papers: RtrPart2Paper[] = [
   { id: "rtr2-paper-4", title: "Radio Telephony Paper 4", scenarios: paper4Scenarios },
   { id: "rtr2-paper-5", title: "Radio Telephony Paper 5", scenarios: paper5Scenarios },
   { id: "rtr2-paper-6", title: "Radio Telephony Paper 6", scenarios: paper6Scenarios },
+  { id: "rtr2-paper-7", title: "Radio Telephony Paper 7", scenarios: paper7Scenarios },
 ];
