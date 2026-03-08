@@ -594,6 +594,7 @@ const SubjectCards = () => {
     if (quizSource === "cessna-172r") return [cessna172RTopic];
     if (quizSource === "cessna-152") return [cessna152Topic];
     if (quizSource === "piper-archer") return [piperArcherTopic];
+    if (quizSource === "da-42") return [da42Topic];
     return [];
   };
 
