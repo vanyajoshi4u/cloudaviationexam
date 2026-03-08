@@ -624,6 +624,7 @@ const SubjectCards = () => {
     if (quizSource === "da-40") return [da40Topic];
     if (quizSource === "da-42") return [da42Topic];
     if (quizSource === "pa-34-220t") return [pa34220tTopic];
+    if (quizSource === "tecnam-p2006t") return [tecnamP2006tTopic];
     return [];
   };
 
