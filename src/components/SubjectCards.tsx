@@ -21,6 +21,7 @@ import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
+import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
@@ -40,7 +41,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav";
 }
 
 interface Subject {
@@ -170,7 +171,18 @@ const subjectsData: Subject[] = [
               "Ch 9 – Global Navigation Satellite Systems (GNSS)",
             ],
           },
-          "Oxford",
+          {
+            name: "Oxford",
+            hasQuiz: true,
+            quizSource: "oxford-radnav" as const,
+            subChapters: [
+              "Ch 1 – Properties of Radio Waves",
+              "Ch 2 – Radio Propagation Theory",
+              "Ch 3 – Modulation",
+              "Ch 4 – Antennae",
+              "Ch 5 – Doppler Radar Systems",
+            ],
+          },
           "Keith William",
           {
             name: "Redbird",
@@ -517,6 +529,7 @@ const SubjectCards = () => {
     if (quizSource === "redbird-gennav") return redbirdGenNavTopics;
     if (quizSource === "redbird-radnav") return redbirdRadioNavTopics;
     if (quizSource === "redbird-inst") return redbirdInstTopics;
+    if (quizSource === "oxford-radnav") return oxfordRadioNavTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic];
     return [];
   };
