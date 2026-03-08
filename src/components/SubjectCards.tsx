@@ -183,6 +183,8 @@ const subjectsData: Subject[] = [
               "Ch 5 – Doppler Radar Systems",
               "Ch 6 – VHF Direction Finder (VDF)",
               "Ch 7 – NDB and ADF",
+              "Ch 8 – VOR",
+              "Ch 9 – Instrument Landing System (ILS)",
             ],
           },
           "Keith William",
