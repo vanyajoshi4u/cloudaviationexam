@@ -29,11 +29,12 @@ import { cessna172RTopic } from "@/data/cessna172RQuestions";
 import { cessna152Topic } from "@/data/cessna152Questions";
 import { piperArcherTopic } from "@/data/piperArcherQuestions";
 import { da42Topic } from "@/data/da42Questions";
+import { da40Topic } from "@/data/da40Questions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da42Topic];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
@@ -60,8 +61,9 @@ const TopicSelect = () => {
   const isCessna172R = cessna172RTopic.id === topicId;
   const isCessna152 = cessna152Topic.id === topicId;
   const isPiperArcher = piperArcherTopic.id === topicId;
+  const isDa40 = da40Topic.id === topicId;
   const isDa42 = da42Topic.id === topicId;
-  const subtitle = isDa42 ? "Technical Specific — DA 42 (Thielert)" : isPiperArcher ? "Technical Specific — Piper Archer III DX" : isCessna152 ? "Technical Specific — Cessna 152" : isCessna172R ? "Technical Specific — Cessna 172R" : isRedbirdAirReg ? "Redbird — Air Regulations" : isOxfordInst ? "Oxford — Instrument Navigation" : isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isOxfordGenNav ? "Oxford — General Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const subtitle = isDa40 ? "Technical Specific — DA 40 (Thielert)" : isDa42 ? "Technical Specific — DA 42 (Thielert)" : isPiperArcher ? "Technical Specific — Piper Archer III DX" : isCessna152 ? "Technical Specific — Cessna 152" : isCessna172R ? "Technical Specific — Cessna 172R" : isRedbirdAirReg ? "Redbird — Air Regulations" : isOxfordInst ? "Oxford — Instrument Navigation" : isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isOxfordGenNav ? "Oxford — General Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (
