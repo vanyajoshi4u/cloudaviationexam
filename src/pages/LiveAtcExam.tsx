@@ -930,7 +930,7 @@ const LiveAtcExam = () => {
               >
                 <X className="w-4 h-4" />
               </button>
-              <VidpAirportLayout {...(paperId === "rtr2-paper-6" ? { runwayLeft: "32", runwayRight: "04", title: "VEBS BHUBANESWAR AIRPORT / AERODROME LAYOUT" } : paperId === "rtr2-paper-7" ? { standLeft: "12", standRight: "11", taxiwayLeft: "A", holdingPointLabel: "A", title: "VIJP JAIPUR AIRPORT / AERODROME LAYOUT" } : {})} />
+              <VidpAirportLayout {...(paperId === "rtr2-paper-6" ? { runwayLeft: "32", runwayRight: "04", title: "VEBS BHUBANESWAR AIRPORT / AERODROME LAYOUT" } : paperId === "rtr2-paper-7" ? { standLeft: "12", standRight: "11", taxiwayLeft: "A", holdingPointLabel: "A", title: "VIJP JAIPUR AIRPORT / AERODROME LAYOUT" } : paperId === "rtr2-paper-8" ? { standLeft: "4", standRight: "3", title: "VOHS HYDERABAD AIRPORT / AERODROME LAYOUT" } : {})} />
             </motion.div>
           </motion.div>
         )}
