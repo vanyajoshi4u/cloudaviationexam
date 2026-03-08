@@ -337,6 +337,14 @@ const subjectsData: Subject[] = [
           "Sample Paper 13", "Sample Paper 14", "Sample Paper 15", "Sample Paper 16"
         ],
       },
+      {
+        title: "Redbird Question Bank",
+        hasQuiz: true,
+        quizSource: "redbird-airreg" as const,
+        chapters: [
+          "Redbird Question Bank",
+        ],
+      },
     ],
   },
   {
