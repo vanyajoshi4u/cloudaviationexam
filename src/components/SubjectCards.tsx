@@ -654,6 +654,7 @@ const SubjectCards = () => {
     if (quizSource === "tecnam-p2006t") return [tecnamP2006tTopic];
     if (quizSource === "tecnam-p2008jc") return [tecnamP2008jcTopic];
     if (quizSource === "da-42-austro") return [da42AustroTopic];
+    if (quizSource === "sk-reg-additional") return [skRegAdditionalTopic];
     return [];
   };
 
