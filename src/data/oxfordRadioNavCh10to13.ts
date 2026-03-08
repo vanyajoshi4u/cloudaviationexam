@@ -3,7 +3,7 @@ import { type Topic } from "./icJoshiQuestions";
 // Oxford Radio Navigation — Ch 10-11: MLS & Radar Principles (Revision Q78-98)
 export const oxfordRadNavCh10to11Topic: Topic = {
   id: "oxford-radnav-ch10-11",
-  title: "Ch 10-11 – MLS & Radar Principles",
+  title: "Ch 10 – MLS & Radar Principles",
   questions: [
     {
       id: 1,
