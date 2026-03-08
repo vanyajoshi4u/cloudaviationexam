@@ -7,55 +7,55 @@ import { oxfordInstCh40Questions } from "./oxfordInstNavCh40";
 
 export const oxfordInstCh2Topic: Topic = {
   id: "oxford-inst-ch2",
-  title: "Ch 2 – Pressure Heads",
+  title: "Ch 1 – Pressure Heads",
   questions: oxfordInstCh2Questions,
 };
 
 export const oxfordInstCh3Topic: Topic = {
   id: "oxford-inst-ch3",
-  title: "Ch 3 – Air Temperature Measurement",
+  title: "Ch 2 – Air Temperature Measurement",
   questions: oxfordInstCh3Questions,
 };
 
 export const oxfordInstCh10Topic: Topic = {
   id: "oxford-inst-ch10",
-  title: "Ch 10 – Gyroscopes",
+  title: "Ch 3 – Gyroscopes",
   questions: oxfordInstCh10Questions,
 };
 
 export const oxfordInstCh11Topic: Topic = {
   id: "oxford-inst-ch11",
-  title: "Ch 11 – Directional Gyro Indicator (DGI)",
+  title: "Ch 4 – Directional Gyro Indicator (DGI)",
   questions: oxfordInstCh11Questions,
 };
 
 export const oxfordInstCh12Topic: Topic = {
   id: "oxford-inst-ch12",
-  title: "Ch 12 – Artificial Horizon",
+  title: "Ch 5 – Artificial Horizon",
   questions: oxfordInstCh12Questions,
 };
 
 export const oxfordInstCh22Topic: Topic = {
   id: "oxford-inst-ch22",
-  title: "Ch 22 – EFIS",
+  title: "Ch 6 – EFIS",
   questions: oxfordInstCh22Questions,
 };
 
 export const oxfordInstCh32P1Topic: Topic = {
   id: "oxford-inst-ch32-p1",
-  title: "Ch 32 – AFCS Revision Paper 1",
+  title: "Ch 7 – AFCS Revision Paper 1",
   questions: oxfordInstCh32P1Questions,
 };
 
 export const oxfordInstCh32P2Topic: Topic = {
   id: "oxford-inst-ch32-p2",
-  title: "Ch 32 – AFCS Revision Paper 2",
+  title: "Ch 8 – AFCS Revision Paper 2",
   questions: oxfordInstCh32P2Questions,
 };
 
 export const oxfordInstCh40Topic: Topic = {
   id: "oxford-inst-ch40",
-  title: "Ch 40 – EICAS & ECAM",
+  title: "Ch 9 – EICAS & ECAM",
   questions: oxfordInstCh40Questions,
 };
 
