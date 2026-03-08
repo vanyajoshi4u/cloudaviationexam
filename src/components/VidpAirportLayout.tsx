@@ -2,9 +2,13 @@ interface VidpAirportLayoutProps {
   runwayLeft?: string;
   runwayRight?: string;
   title?: string;
+  standLeft?: string;
+  standRight?: string;
+  taxiwayLeft?: string;
+  holdingPointLabel?: string;
 }
 
-const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VIDP DELHI AIRPORT / AERODROME LAYOUT" }: VidpAirportLayoutProps) => (
+const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VIDP DELHI AIRPORT / AERODROME LAYOUT", standLeft = "5", standRight = "6", taxiwayLeft = "D", holdingPointLabel = "D" }: VidpAirportLayoutProps) => (
   <svg viewBox="0 0 600 500" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
     {/* Title */}
     <text x="300" y="24" textAnchor="middle" className="fill-foreground" fontSize="14" fontWeight="bold" textDecoration="underline">
@@ -18,7 +22,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
 
     {/* Stand 5 */}
     <rect x="175" y="100" width="60" height="60" rx="2" className="fill-muted-foreground/20 stroke-border" strokeWidth="1" />
-    <text x="205" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">5</text>
+    <text x="205" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">{standLeft}</text>
 
     {/* Aircraft icon at center */}
     <g transform="translate(290, 130)">
@@ -28,7 +32,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
 
     {/* Stand 6 */}
     <rect x="340" y="100" width="60" height="60" rx="2" className="fill-muted-foreground/20 stroke-border" strokeWidth="1" />
-    <text x="370" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">6</text>
+    <text x="370" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">{standRight}</text>
 
     {/* Taxiway C */}
     <line x1="120" y1="230" x2="480" y2="230" className="stroke-primary/40" strokeWidth="20" />
@@ -42,7 +46,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
     {/* Taxiway D (vertical left) */}
     <line x1="145" y1="230" x2="145" y2="420" className="stroke-primary/40" strokeWidth="18" />
     <rect x="200" y="310" width="35" height="20" rx="2" className="fill-card stroke-border" strokeWidth="1" />
-    <text x="217" y="324" textAnchor="middle" className="fill-foreground" fontSize="11" fontWeight="bold">D</text>
+    <text x="217" y="324" textAnchor="middle" className="fill-foreground" fontSize="11" fontWeight="bold">{taxiwayLeft}</text>
 
     {/* Taxiway B (vertical right) */}
     <line x1="400" y1="230" x2="400" y2="420" className="stroke-primary/40" strokeWidth="18" />
@@ -51,7 +55,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
 
     {/* Holding Point D label */}
     <rect x="95" y="400" width="30" height="20" rx="2" className="fill-card stroke-border" strokeWidth="1" />
-    <text x="110" y="414" textAnchor="middle" className="fill-foreground" fontSize="10" fontWeight="bold">D</text>
+    <text x="110" y="414" textAnchor="middle" className="fill-foreground" fontSize="10" fontWeight="bold">{holdingPointLabel}</text>
     <rect x="50" y="425" width="75" height="22" rx="2" className="fill-accent/20 stroke-accent" strokeWidth="1" />
     <text x="87" y="440" textAnchor="middle" className="fill-foreground" fontSize="9" fontWeight="600">Holding Point</text>
 
