@@ -26,6 +26,7 @@ import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
+import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
