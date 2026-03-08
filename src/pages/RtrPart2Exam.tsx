@@ -319,7 +319,7 @@ const RtrPart2Exam = () => {
                 transition={{ duration: 0.6 }}
                 className="flex-1 bg-muted relative overflow-auto"
               >
-                <img src={chartImageMap[paperId || ""] || airwayChartPaper1} alt="Airway Chart" className="w-full min-h-full object-cover object-center" />
+                <img src={chartImageMap[paperId || ""] || airwayChartPaper1} alt="Airway Chart" className={`w-full h-full object-contain ${paperId === "rtr2-paper-7" ? "object-top" : "object-center"}`} />
                 <motion.button
                   drag
                   dragMomentum={false}
