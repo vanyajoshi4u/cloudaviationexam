@@ -28,6 +28,7 @@ import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
+import { cessna172RTopic } from "@/data/cessna172RQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -44,7 +45,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r";
 }
 
 interface Subject {
@@ -369,23 +370,12 @@ const subjectsData: Subject[] = [
     title: "Technical Specific",
     subtopics: [
       {
-        title: "Aircraft Performance",
+        title: "Cessna 172R",
         chapters: [
-          "Takeoff Performance",
-          "Climb & Cruise Performance",
-          "Landing Performance",
-          "Weight & Balance",
-          "Flight Planning",
+          "Cessna 172R",
         ],
-      },
-      {
-        title: "Type-Specific Systems",
-        chapters: [
-          "Airframe & Structures",
-          "Avionics Suite",
-          "Flight Controls",
-          "Pressurization & Air Conditioning",
-        ],
+        hasQuiz: true,
+        quizSource: "cessna-172r",
       },
     ],
   },
@@ -574,6 +564,7 @@ const SubjectCards = () => {
     if (quizSource === "oxford-radnav") return oxfordRadioNavTopics;
     if (quizSource === "oxford-inst") return oxfordInstNavTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic];
+    if (quizSource === "cessna-172r") return [cessna172RTopic];
     return [];
   };
 
@@ -738,7 +729,7 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
