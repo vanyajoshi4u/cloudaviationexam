@@ -3,7 +3,7 @@ import { type Topic } from "./icJoshiQuestions";
 // Oxford Radio Navigation — Ch 14: SSR (Revision Q117-123)
 export const oxfordRadNavCh14Topic: Topic = {
   id: "oxford-radnav-ch14",
-  title: "Ch 14 – Secondary Surveillance Radar (SSR)",
+  title: "Ch 12 – Secondary Surveillance Radar (SSR)",
   questions: [
     {
       id: 1,
