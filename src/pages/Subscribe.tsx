@@ -188,7 +188,7 @@ const Subscribe = () => {
 
       // Redirect to homepage after a short delay
       setTimeout(() => {
-        window.location.href = "/";
+        navigate("/", { replace: true });
       }, 1500);
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");
