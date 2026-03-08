@@ -59,6 +59,6 @@ export const kwInstRadioAltTopic: Topic = {
 
 export const kwInstVSITopic: Topic = {
   id: "kw-inst-vsi",
-  title: "Vertical Speed Indicators",
+  title: "Vertical Speed Indicator (VSI)",
   questions: vsiQuestions,
 };

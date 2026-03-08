@@ -61,6 +61,6 @@ const asiQuestions: MCQuestion[] = [
 
 export const kwInstASITopic: Topic = {
   id: "kw-inst-asi",
-  title: "Airspeed Indicators",
+  title: "Air Speed Indicator (ASI)",
   questions: asiQuestions,
 };
