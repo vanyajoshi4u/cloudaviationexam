@@ -1,0 +1,47 @@
+import { type MCQuestion, type Topic } from "./icJoshiQuestions";
+
+// EFIS (50 Questions)
+const efisQuestions: MCQuestion[] = [
+  { id: 1, question: "The Primary Flight Display (PFD) displays information dedicated to?", options: ["Weather", "Plotting", "Primary flight and alarm information", "Navigation system data"], correct: 2 },
+  { id: 2, question: "Decision height is?", options: ["Calculated by the Flight Management Computer", "Displayed on the EADI and set by the pilot using the EFIS control panel", "Displayed on the EADI using the FMC inputs", "Set automatically by the FMS"], correct: 1 },
+  { id: 3, question: "The symbol shown on the EHSI display represents?", options: ["The selected heading and track reference", "A VOR/DME station", "An off-route waypoint", "An active waypoint"], correct: 0 },
+  { id: 4, question: "In addition to attitude and auto-flight modes, what information is also typically displayed on an EADI?", options: ["Engine indications and system information", "Altitude, speed and sometimes heading information", "Speed, attitude, ILS Localiser and Glide Slope information, and sometimes altitude and heading", "Altitude, groundspeed, heading and wind speed and direction"], correct: 2 },
+  { id: 5, question: "Cautionary information on an EHSI is displayed in?", options: ["Cyan", "Red or Magenta", "Yellow or Amber", "White"], correct: 2 },
+  { id: 6, question: "Regarding the Electronic Flight Instruments System (EFIS):\n1. The Navigation Display (ND) displays Flight Director Bars\n2. The Primary Flight Display (PFD) is the main flying instrument\n3. The Flight Mode Annunciator (FMA) is part of the Navigation Display (ND)\n4. The attitude display is the primary display\nThe combination regrouping all of the correct statements is?", options: ["1, 4", "2, 4", "2, 3", "1, 3"], correct: 1 },
+  { id: 7, question: "Below which altitude does the radio altitude indication on an EADI appear within the circular scale as a digital readout?", options: ["Above 2500 ft", "Below 1000 ft", "Below 2500 ft", "Above 1000 ft"], correct: 2 },
+  { id: 8, question: "Which of the following statements about Weather Radar on EHSI is true?", options: ["The Weather Radar display data is available on all modes of the EHSI", "In PLAN mode, the Weather Radar data is inhibited on the EHSI", "The Weather Radar data is only available on the PLAN mode", "Weather Radar is not displayed on EHSI"], correct: 1 },
+  { id: 9, question: "Weather Radar returns show as areas of precipitation in the following colours?", options: ["Green, Magenta, Yellow and Red", "Green, Orange, Yellow and Red", "Green, Yellow, Magenta and Red", "Green, Yellow, Red and Magenta"], correct: 3 },
+  { id: 10, question: "The heading reference used on the EHSI is?", options: ["True", "True or Magnetic", "Magnetic", "Compass"], correct: 2 },
+  { id: 11, question: "On the FMA, engaged automatic flight modes are displayed in?", options: ["Blue", "Green", "Red", "White"], correct: 1 },
+  { id: 12, question: "The EFIS control panel allows selection of?", options: ["Autopilot operating modes and decision height", "Decision height and ND display mode", "ND display mode only", "Autopilot modes only"], correct: 1 },
+  { id: 13, question: "Decision height is displayed on the?", options: ["EADI, and below 2500 ft the display changes to circular shape with a magenta coloured marker", "EHSI with clockwise indication", "Navigation Display in plan mode", "EICAS upper display"], correct: 0 },
+  { id: 14, question: "Which colours are typically used on an EHSI?", options: ["Red and blue", "Black, green and white", "White, magenta, cyan, yellow and green", "Red, blue and yellow only"], correct: 2 },
+  { id: 15, question: "In PLAN mode on the EHSI?", options: ["The actual top-of-descent point is shown", "Weather radar data is displayed", "The aircraft symbol is at the centre", "Heading information is removed"], correct: 3 },
+  { id: 16, question: "The EHSI mode in which weather radar data is NOT available is the?", options: ["Full rose VOR mode", "Centre MAP mode", "Plan mode", "Expanded NAV mode"], correct: 2 },
+  { id: 17, question: "Weather radar display precipitation intensity colours are?", options: ["Yellow, green, blue and red", "Yellow, green, red and magenta", "Green, yellow, red and magenta", "Green, yellow, blue and red"], correct: 2 },
+  { id: 18, question: "The EHSI mode which displays only the flight plan route is the?", options: ["Expanded VOR mode", "Full Rose mode", "Plan mode", "Expanded ADF mode"], correct: 2 },
+  { id: 19, question: "The speed tape on an EADI is located?", options: ["On the left side of the EADI", "On the left side of the EHSI", "At the top of the ADI", "On the right side of the EADI"], correct: 0 },
+  { id: 20, question: "An EFIS installation on a Boeing 737 consists of?", options: ["Four screens and two symbol generators", "Six screens and three symbol generators", "Two screens and one symbol generator", "Four screens and four symbol generators"], correct: 0 },
+  { id: 21, question: "The EFIS system for Boeing Aircraft consists of?", options: ["PFD and ND", "ND and Electronic Attitude Director Indicator", "EHSI and PFD", "EADI and EICAS"], correct: 0 },
+  { id: 22, question: "The WXR display is on?", options: ["The Captain's CRT only", "The Co-pilot's CRT only", "A special screen", "On both the Captain's and the Co-pilot's CRTs"], correct: 3 },
+  { id: 23, question: "Airspeed is shown on?", options: ["Only on the Captain's EHSI", "On both EADIs", "On both EHSIs", "Only on the flight management CRT"], correct: 1 },
+  { id: 24, question: "In addition to a control panel, a complete EFIS also has?", options: ["EADIs and EHSIs", "EHSIs and altitude indicator", "EADIs and EICAS", "EADIs and WXR display tubes"], correct: 0 },
+  { id: 25, question: "What does the EHSI mode selector represent?", options: ["Airspeed and Mach", "Map and Plan", "VOR, ILS, Map and Plan modes", "Only manometric sources"], correct: 2 },
+  { id: 26, question: "Decision height is adjusted and set on the?", options: ["Flight Management Computer", "HSI section of the EFIS control panel", "ADI section of the EFIS control panel", "Mode Control Panel"], correct: 2 },
+  { id: 27, question: "The radio altitude appears on the PFD as?", options: ["600 Kts TAS", "600 ft RA", "6000 ft RA", "600 Kts GS"], correct: 1 },
+  { id: 28, question: "When the selected radio altitude has been reached?", options: ["The amber DH marker appears", "The radio altitude needs re-setting on the EHSI", "There is a failure of the radio altimeter", "An aural warning sounds"], correct: 0 },
+  { id: 29, question: "In the display, the symbols A, C and E respectively are best described as?", options: ["Off-route waypoint, navaid, airport", "Next waypoint, navigation aid, airport", "Active waypoint, VOR, NDB", "Waypoint, airport, navaid"], correct: 1 },
+  { id: 30, question: "The groundspeed is indicated in which colour?", options: ["Magenta", "White", "Green", "Yellow"], correct: 1 },
+  { id: 31, question: "The EHSI modes which display weather radar data are?", options: ["Map and VOR/ILS", "VOR/ILS and Map", "All modes except Plan", "All modes"], correct: 2 },
+  { id: 32, question: "Radio altitude is displayed on the EADI and?", options: ["At 2500 ft and above it is shown as a digital readout", "At 1000 ft and below it changes from a digital display to a circular scale", "Below 2500 ft it appears as a circular scale with digital readout", "It is always displayed digitally"], correct: 2 },
+  { id: 33, question: "The FMC calculated top-of-descent appears as?", options: ["A white arc on the EHSI", "A green arrow on the ND", "A magenta symbol on the EHSI in MAP mode", "An amber marker on the PFD"], correct: 2 },
+  { id: 34, question: "What heading is selected by the heading selector in the diagram?", options: ["109", "115", "120", "125"], correct: 3 },
+  { id: 35, question: "On what track is the aircraft currently flying?", options: ["109", "115", "120", "125"], correct: 1 },
+  { id: 36, question: "Which EHSI mode is displayed showing the flight plan route and waypoints from overhead?", options: ["Map mode", "Centre Map mode", "Plan mode", "Expanded NAV mode"], correct: 2 },
+];
+
+export const kwInstEfisTopic: Topic = {
+  id: "kw-inst-efis",
+  title: "EFIS",
+  questions: efisQuestions,
+};
