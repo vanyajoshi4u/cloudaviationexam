@@ -614,6 +614,7 @@ const SubjectCards = () => {
     if (quizSource === "piper-archer") return [piperArcherTopic];
     if (quizSource === "da-40") return [da40Topic];
     if (quizSource === "da-42") return [da42Topic];
+    if (quizSource === "pa-34-220t") return [pa34220tTopic];
     return [];
   };
 
