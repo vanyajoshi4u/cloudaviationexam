@@ -681,6 +681,7 @@ const SubjectCards = () => {
     if (quizSource === "redbird-inst") return redbirdInstTopics;
     if (quizSource === "oxford-radnav") return oxfordRadioNavTopics;
     if (quizSource === "oxford-inst") return oxfordInstNavTopics;
+    if (quizSource === "kw-inst") return keithWilliamInstTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic];
     if (quizSource === "cessna-172r") return [cessna172RTopic];
     if (quizSource === "cessna-152") return [cessna152Topic];
