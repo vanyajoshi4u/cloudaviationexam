@@ -49,7 +49,8 @@ const TopicSelect = () => {
   const isSkTechQB = skTechQB2Topic.id === topicId || skTechQB3Topic.id === topicId || skTechQB4Topic.id === topicId;
   const isRedbirdRadNav = redbirdRadioNavTopics.some((t) => t.id === topicId);
   const isRedbirdInst = redbirdInstTopics.some((t) => t.id === topicId);
-  const subtitle = isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isOxfordGenNav ? "Oxford — General Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const isOxfordInst = oxfordInstNavTopics.some((t) => t.id === topicId);
+  const subtitle = isOxfordInst ? "Oxford — Instrument Navigation" : isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isOxfordGenNav ? "Oxford — General Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (
