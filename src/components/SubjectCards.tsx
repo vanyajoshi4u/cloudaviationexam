@@ -386,6 +386,14 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "cessna-152",
       },
+      {
+        title: "Piper Archer III DX",
+        chapters: [
+          "Piper Archer III DX",
+        ],
+        hasQuiz: true,
+        quizSource: "piper-archer",
+      },
     ],
   },
   {
