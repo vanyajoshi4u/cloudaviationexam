@@ -31,11 +31,12 @@ import { piperArcherTopic } from "@/data/piperArcherQuestions";
 import { da42Topic } from "@/data/da42Questions";
 import { da40Topic } from "@/data/da40Questions";
 import { pa34220tTopic } from "@/data/pa34220tQuestions";
+import { tecnamP2006tTopic } from "@/data/tecnamP2006tQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
