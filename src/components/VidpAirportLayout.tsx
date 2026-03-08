@@ -32,7 +32,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
 
     {/* Stand 6 */}
     <rect x="340" y="100" width="60" height="60" rx="2" className="fill-muted-foreground/20 stroke-border" strokeWidth="1" />
-    <text x="370" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">6</text>
+    <text x="370" y="135" textAnchor="middle" className="fill-foreground" fontSize="12" fontWeight="bold">{standRight}</text>
 
     {/* Taxiway C */}
     <line x1="120" y1="230" x2="480" y2="230" className="stroke-primary/40" strokeWidth="20" />
