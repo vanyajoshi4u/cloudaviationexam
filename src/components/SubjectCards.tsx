@@ -29,6 +29,7 @@ import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
 import { cessna172RTopic } from "@/data/cessna172RQuestions";
+import { cessna152Topic } from "@/data/cessna152Questions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
