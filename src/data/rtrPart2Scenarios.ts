@@ -1027,6 +1027,119 @@ const paper7Scenarios: RtrScenario[] = [
   },
 ];
 
+const paper8FlightInfo = {
+  aircraftId: "6E412",
+  aircraftType: "A321",
+  rtCallSign: "IndiGo-412",
+  registration: "VT-IND",
+  departure: "VOHS-HYDERABAD",
+  destination: "VOMM-CHENNAI",
+  atsRoute: "(To be assigned by ATC)",
+  standNo: "4",
+  runwayInUse: "09",
+  taxiway: "C, D",
+  flightLevel: "350",
+  alternateAirdrome: "VOBL-Bangalore",
+  pob: "180",
+  endurance: "0500 Hrs",
+  exerciseStartTime: "0930 UTC",
+};
+
+const paper8AtisInfo: AtisInfo = {
+  designator: "M",
+  timeOfObservation: "0900 UTC",
+  runwayInUse: "09",
+  wind: "270°/05 Knots",
+  visibility: "8000 Metres",
+  weather: "FEW020",
+  clouds: "FEW 2000 FT, BKN 10000 FT",
+  temperature: "28°C",
+  dewpoint: "22°C",
+  qnh: "1013 hPa",
+  remarks: "No significant weather",
+};
+
+const paper8Frequencies = [
+  { description: "HYDERABAD SMC", frequency: "121.90 MHz" },
+  { description: "HYDERABAD TWR", frequency: "118.10 MHz" },
+  { description: "HYDERABAD APPROACH", frequency: "119.30 MHz" },
+  { description: "HYDERABAD AREA CONTROL", frequency: "124.00 MHz" },
+  { description: "CHENNAI APPROACH", frequency: "119.10 MHz" },
+  { description: "CHENNAI TWR", frequency: "118.70 MHz" },
+];
+
+const paper8Scenarios: RtrScenario[] = [
+  {
+    id: 1,
+    scenarioContext: "Translate to RT phraseology: VISIBILITY 8000M / FEW020 / BKN100 / QNH 1013",
+    flightInfo: paper8FlightInfo,
+    atisInfo: paper8AtisInfo,
+    frequencies: paper8Frequencies,
+    squawk: "7700",
+    questions: [
+      "A) VISIBILITY 8000M — Transmit in RT phraseology.",
+      "B) FEW020 — Transmit in RT phraseology.",
+      "C) BKN100 — Transmit in RT phraseology.",
+      "D) QNH 1013 — Transmit in RT phraseology.",
+    ],
+  },
+  {
+    id: 2,
+    scenarioContext: "IndiGo 412 parked on Stand No 4. Carry out the following RT communication from Hyderabad SMC.",
+    flightInfo: paper8FlightInfo,
+    atisInfo: paper8AtisInfo,
+    frequencies: paper8Frequencies,
+    squawk: "7700",
+    questions: [
+      "Request start up and taxi clearance.",
+    ],
+  },
+  {
+    id: 3,
+    scenarioContext: "You are holding short runway 09.",
+    flightInfo: paper8FlightInfo,
+    atisInfo: paper8AtisInfo,
+    frequencies: paper8Frequencies,
+    squawk: "7700",
+    questions: [
+      "Holding short runway 09, request takeoff clearance.",
+    ],
+  },
+  {
+    id: 4,
+    scenarioContext: "You are airborne passing FL150.",
+    flightInfo: paper8FlightInfo,
+    atisInfo: paper8AtisInfo,
+    frequencies: paper8Frequencies,
+    squawk: "7700",
+    questions: [
+      "Passing FL150, request further climb to FL350.",
+    ],
+  },
+  {
+    id: 5,
+    scenarioContext: "You are at FL350.",
+    flightInfo: paper8FlightInfo,
+    atisInfo: paper8AtisInfo,
+    frequencies: paper8Frequencies,
+    squawk: "7700",
+    questions: [
+      "Unable to maintain FL350 due turbulence. Inform ATC.",
+    ],
+  },
+  {
+    id: 6,
+    scenarioContext: "You are in cruise phase.",
+    flightInfo: paper8FlightInfo,
+    atisInfo: paper8AtisInfo,
+    frequencies: paper8Frequencies,
+    squawk: "7700",
+    questions: [
+      "Passenger medical emergency. Request priority descent and landing.",
+    ],
+  },
+];
+
 export const rtrPart2Papers: RtrPart2Paper[] = [
   { id: "rtr2-paper-1", title: "Radio Telephony Paper 1", scenarios: paper1Scenarios },
   { id: "rtr2-paper-2", title: "Radio Telephony Paper 2", scenarios: paper2Scenarios },
@@ -1035,4 +1148,5 @@ export const rtrPart2Papers: RtrPart2Paper[] = [
   { id: "rtr2-paper-5", title: "Radio Telephony Paper 5", scenarios: paper5Scenarios },
   { id: "rtr2-paper-6", title: "Radio Telephony Paper 6", scenarios: paper6Scenarios },
   { id: "rtr2-paper-7", title: "Radio Telephony Paper 7", scenarios: paper7Scenarios },
+  { id: "rtr2-paper-8", title: "Radio Telephony Paper 8", scenarios: paper8Scenarios },
 ];
