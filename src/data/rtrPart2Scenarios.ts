@@ -1034,7 +1034,7 @@ const paper8FlightInfo = {
   registration: "VT-IND",
   departure: "VOHS-HYDERABAD",
   destination: "VOMM-CHENNAI",
-  atsRoute: "(To be assigned by ATC)",
+  atsRoute: "V4 SUREK BOPRI RINTO",
   standNo: "4",
   runwayInUse: "09",
   taxiway: "C, D",
