@@ -1,5 +1,29 @@
 import { MCQuestion, Topic } from "./icJoshiQuestions";
 
+// Chapter 1: Air Data Systems (Q1-20, 20 questions)
+const airDataSystemsQuestions: MCQuestion[] = [
+  { id: 1, question: "Which system provides pressure information used by flight instruments?", options: ["Hydraulic system", "Electrical system", "Pilot-static system", "Fuel system"], correct: 2 },
+  { id: 2, question: "The pilot-static system provides information for which instruments?", options: ["Altimeter", "Vertical Speed Indicator", "Airspeed Indicator", "All of the above"], correct: 3 },
+  { id: 3, question: "Impact air pressure is obtained using the:", options: ["Static port", "Pitot tube", "Venturi tube", "Pressure valve"], correct: 1 },
+  { id: 4, question: "Static pressure is usually obtained from:", options: ["Pitot tube", "Wing tip sensor", "Static port on the fuselage", "Cabin pressure valve"], correct: 2 },
+  { id: 5, question: "The pitot tube is normally mounted:", options: ["On the landing gear", "At the tail", "Near the leading edge of the wing", "Inside the cockpit"], correct: 2 },
+  { id: 6, question: "Aircraft used for instrument flying require a heated pitot tube mainly to:", options: ["Increase airspeed readings", "Prevent ice blockage", "Reduce turbulence", "Measure temperature"], correct: 1 },
+  { id: 7, question: "An alternate static source is provided in aircraft to:", options: ["Increase altitude readings", "Provide static pressure if the main port becomes blocked", "Increase airspeed", "Improve navigation"], correct: 1 },
+  { id: 8, question: "When the alternate static source is used, the altimeter usually indicates:", options: ["Lower altitude", "Correct altitude", "Higher-than-actual altitude", "Zero altitude"], correct: 2 },
+  { id: 9, question: "When using the alternate static source, the airspeed indicator usually shows:", options: ["Lower airspeed", "Higher-than-normal airspeed", "Zero airspeed", "Constant airspeed"], correct: 1 },
+  { id: 10, question: "The vertical speed indicator will initially indicate:", options: ["Descent", "No change", "A climb before stabilizing", "Zero"], correct: 2 },
+  { id: 11, question: "An Air Data System converts aerodynamic and thermodynamic measurements into:", options: ["Mechanical signals only", "Electrical signals or digital codes", "Hydraulic signals", "Fuel pressure signals"], correct: 1 },
+  { id: 12, question: "Which of the following is NOT a sensor used in an air data system?", options: ["Pitot tube", "Static port", "Temperature probe", "Fuel pressure sensor"], correct: 3 },
+  { id: 13, question: "Transducers in the air data system convert sensed data into:", options: ["Air pressure", "Mechanical force", "Voltage, synchro outputs, or digital pulses", "Hydraulic pressure"], correct: 2 },
+  { id: 14, question: "Which device performs calculations such as Mach number and true airspeed?", options: ["Transducer", "Sensor", "Computer (CADC)", "Altimeter"], correct: 2 },
+  { id: 15, question: "Air density calculations are mainly used for:", options: ["Navigation", "Cabin temperature", "Engine controls", "Radio communication"], correct: 2 },
+  { id: 16, question: "Mach number is calculated using:", options: ["Temperature and altitude", "Pitot and static pressures", "Density only", "Fuel flow"], correct: 1 },
+  { id: 17, question: "Position error in the air data computer is mainly caused by:", options: ["Engine vibration", "Electrical failure", "Aircraft configuration and external airflow", "Fuel imbalance"], correct: 2 },
+  { id: 18, question: "Scale error is also known as:", options: ["Temperature error", "Pressure error", "Instrument error", "Velocity error"], correct: 2 },
+  { id: 19, question: "Density error in an airspeed indicator occurs when the aircraft flies from:", options: ["Low density to high density air", "High density to low density air", "Cold air to warm air", "Warm air to cold air"], correct: 1 },
+  { id: 20, question: "Compressibility error occurs because:", options: ["Static pressure decreases", "Temperature increases", "Air compresses in the pitot tube increasing total pressure", "Air density decreases"], correct: 2 },
+];
+
 // Chapter 2: Altimeter (Q1-50, 50 questions)
 const altimeterQuestions: MCQuestion[] = [
   { id: 1, question: "A servo altimeter is _____ than a conventional one because it has:", options: ["More accurate, electrical pick off coils", "More accurate, electrical servos", "Less accurate, electrical servos"], correct: 1 },
