@@ -596,7 +596,7 @@ const LiveAtcExam = () => {
                 </h2>
               </div>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="flex-1 bg-muted relative overflow-auto">
-                <img src={chartImageMap[paperId || ""] || airwayChartPaper1} alt="Airway Chart" className="w-full h-full object-contain" />
+                <img src={chartImageMap[paperId || ""] || airwayChartPaper1} alt="Airway Chart" className="w-full min-h-full object-cover object-center" />
                 <motion.button
                   drag
                   dragMomentum={false}
