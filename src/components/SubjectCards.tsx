@@ -17,6 +17,7 @@ import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
 import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
+import { keithWilliamInstTopics } from "@/data/keithWilliamInstQuestions";
 import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
@@ -54,7 +55,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "kw-inst" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional";
 }
 
 interface Subject {
@@ -273,7 +274,21 @@ const subjectsData: Subject[] = [
               "Ch 9 – EICAS & ECAM",
             ],
           },
-          "Keith William",
+          {
+            name: "Keith William",
+            hasQuiz: true,
+            quizSource: "kw-inst" as const,
+            subChapters: [
+              "Pitot Statics",
+              "Barometric Altimeters",
+              "Radio Altimeters",
+              "Vertical Speed Indicator (VSI)",
+              "Air Speed Indicator (ASI)",
+              "Airspeeds",
+              "Mach Meters",
+              "Gyroscopes",
+            ],
+          },
         ],
       },
     ],
@@ -666,6 +681,7 @@ const SubjectCards = () => {
     if (quizSource === "redbird-inst") return redbirdInstTopics;
     if (quizSource === "oxford-radnav") return oxfordRadioNavTopics;
     if (quizSource === "oxford-inst") return oxfordInstNavTopics;
+    if (quizSource === "kw-inst") return keithWilliamInstTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic];
     if (quizSource === "cessna-172r") return [cessna172RTopic];
     if (quizSource === "cessna-152") return [cessna152Topic];
