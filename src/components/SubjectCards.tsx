@@ -631,7 +631,13 @@ const SubjectCards = () => {
     });
   };
 
-  const normalizeChapterLabel = (value: string) => value.replace(/\s+/g, " ").trim().toLowerCase();
+  const normalizeChapterLabel = (value: string) =>
+    value
+      .replace(/\([^)]*\)/g, "")
+      .replace(/[–—]/g, "-")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
 
   const getNestedTopicSource = (quizSource?: SubTopic["quizSource"]) => {
     if (quizSource === "rkbali-gennav") return rkBaliGenNavTopics;
