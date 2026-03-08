@@ -54,7 +54,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional";
 }
 
 interface Subject {
