@@ -59,6 +59,7 @@ const diagramMap: Record<string, string> = {
   "ed-p8": edP8,
   "ed-p9": edP9,
   "ed-p10": edP10,
+  "oxford-radnav-appendix-a": oxfordRadNavAppendixA,
 };
 
 const Quiz = () => {
