@@ -55,7 +55,7 @@ const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VID
 
     {/* Holding Point D label */}
     <rect x="95" y="400" width="30" height="20" rx="2" className="fill-card stroke-border" strokeWidth="1" />
-    <text x="110" y="414" textAnchor="middle" className="fill-foreground" fontSize="10" fontWeight="bold">D</text>
+    <text x="110" y="414" textAnchor="middle" className="fill-foreground" fontSize="10" fontWeight="bold">{holdingPointLabel}</text>
     <rect x="50" y="425" width="75" height="22" rx="2" className="fill-accent/20 stroke-accent" strokeWidth="1" />
     <text x="87" y="440" textAnchor="middle" className="fill-foreground" fontSize="9" fontWeight="600">Holding Point</text>
 

@@ -923,7 +923,7 @@ const paper7FlightInfo = {
   registration: "VT-ALP",
   departure: "VIJP-JAIPUR",
   destination: "VAAH-AHMEDABAD",
-  atsRoute: "As per ATS route chart",
+  atsRoute: "GUDUM Q2 ABDUK GOMTI Q4",
   standNo: "12",
   runwayInUse: "27",
   taxiway: "A, B",

@@ -331,7 +331,7 @@ const RtrPart2Exam = () => {
                   title="Drag to move · Click to enlarge"
                 >
                   <div className="w-full h-full p-1 pointer-events-none">
-                    <VidpAirportLayout {...(paperId === "rtr2-paper-6" ? { runwayLeft: "32", runwayRight: "04", title: "VEBS BHUBANESWAR AIRPORT / AERODROME LAYOUT" } : {})} />
+                    <VidpAirportLayout {...(paperId === "rtr2-paper-6" ? { runwayLeft: "32", runwayRight: "04", title: "VEBS BHUBANESWAR AIRPORT / AERODROME LAYOUT" } : paperId === "rtr2-paper-7" ? { standLeft: "12", standRight: "11", taxiwayLeft: "A", holdingPointLabel: "A", title: "VIJP JAIPUR AIRPORT / AERODROME LAYOUT" } : {})} />
                   </div>
                 </motion.button>
               </motion.div>
