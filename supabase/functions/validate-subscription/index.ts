@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
 
     // Check active session
     const { data: sessions } = await dbQuery(
-      `active_sessions?user_id=eq.${user.id}&select=id&limit=1`
+      `active_sessions?user_id=eq.${userId}&select=id&limit=1`
     );
     if (!sessions || sessions.length === 0) {
       return new Response(
