@@ -432,6 +432,14 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "tecnam-p2006t",
       },
+      {
+        title: "TECHNAM P2008JC",
+        chapters: [
+          "TECHNAM P2008JC",
+        ],
+        hasQuiz: true,
+        quizSource: "tecnam-p2008jc",
+      },
     ],
   },
   {
