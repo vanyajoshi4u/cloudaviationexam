@@ -33,6 +33,7 @@ import { cessna152Topic } from "@/data/cessna152Questions";
 import { piperArcherTopic } from "@/data/piperArcherQuestions";
 import { da42Topic } from "@/data/da42Questions";
 import { da40Topic } from "@/data/da40Questions";
+import { pa34220tTopic } from "@/data/pa34220tQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
 import LiveAtcUpgradeDialog from "@/components/LiveAtcUpgradeDialog";
@@ -49,7 +50,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t";
 }
 
 interface Subject {
@@ -413,6 +414,14 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "da-42",
       },
+      {
+        title: "PA-34-220T",
+        chapters: [
+          "PA-34-220T",
+        ],
+        hasQuiz: true,
+        quizSource: "pa-34-220t",
+      },
     ],
   },
   {
@@ -605,6 +614,7 @@ const SubjectCards = () => {
     if (quizSource === "piper-archer") return [piperArcherTopic];
     if (quizSource === "da-40") return [da40Topic];
     if (quizSource === "da-42") return [da42Topic];
+    if (quizSource === "pa-34-220t") return [pa34220tTopic];
     return [];
   };
 
@@ -769,7 +779,7 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : subtopic.quizSource === "pa-34-220t" ? [pa34220tTopic] : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
