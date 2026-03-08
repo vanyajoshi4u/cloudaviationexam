@@ -34,6 +34,7 @@ import { pa34220tTopic } from "@/data/pa34220tQuestions";
 import { tecnamP2006tTopic } from "@/data/tecnamP2006tQuestions";
 import { tecnamP2008jcTopic } from "@/data/tecnamP2008jcQuestions";
 import { da42AustroTopic } from "@/data/da42AustroQuestions";
+import { skRegAdditionalTopic } from "@/data/skRegQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
