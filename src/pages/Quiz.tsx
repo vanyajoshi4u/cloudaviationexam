@@ -34,6 +34,7 @@ import { da40Topic } from "@/data/da40Questions";
 import { pa34220tTopic } from "@/data/pa34220tQuestions";
 import { tecnamP2006tTopic } from "@/data/tecnamP2006tQuestions";
 import { tecnamP2008jcTopic } from "@/data/tecnamP2008jcQuestions";
+import { da42AustroTopic } from "@/data/da42AustroQuestions";
 import oxfordRadNavAppendixA from "@/assets/oxford-radnav-appendix-a.jpg";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from "lucide-react";
