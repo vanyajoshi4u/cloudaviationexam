@@ -23,6 +23,8 @@ import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
 import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
+import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
+import oxfordRadNavAppendixA from "@/assets/oxford-radnav-appendix-a.jpg";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -57,6 +59,7 @@ const diagramMap: Record<string, string> = {
   "ed-p8": edP8,
   "ed-p9": edP9,
   "ed-p10": edP10,
+  "oxford-radnav-appendix-a": oxfordRadNavAppendixA,
 };
 
 const Quiz = () => {
@@ -65,7 +68,7 @@ const Quiz = () => {
   const navigate = useNavigate();
   const mode = searchParams.get("mode") as "practice" | "test" || "practice";
 
-  const allTopics = useMemo(() => [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics], []);
+  const allTopics = useMemo(() => [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics], []);
   const topic = useMemo(() => allTopics.find((t) => t.id === topicId), [topicId, allTopics]);
 
   const [currentIndex, setCurrentIndex] = useState(0);

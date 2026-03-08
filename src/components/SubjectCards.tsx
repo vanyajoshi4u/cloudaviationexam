@@ -22,6 +22,7 @@ import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
 import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
+import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
@@ -41,7 +42,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst";
 }
 
 interface Subject {
@@ -233,7 +234,22 @@ const subjectsData: Subject[] = [
               "Magnetic Instruments",
             ],
           },
-          "Oxford",
+          {
+            name: "Oxford",
+            hasQuiz: true,
+            quizSource: "oxford-inst" as const,
+            subChapters: [
+              "Ch 2 – Pressure Heads",
+              "Ch 3 – Air Temperature Measurement",
+              "Ch 10 – Gyroscopes",
+              "Ch 11 – Directional Gyro Indicator (DGI)",
+              "Ch 12 – Artificial Horizon",
+              "Ch 22 – EFIS",
+              "Ch 32 – AFCS Revision Paper 1",
+              "Ch 32 – AFCS Revision Paper 2",
+              "Ch 40 – EICAS & ECAM",
+            ],
+          },
           "Keith William",
         ],
       },
@@ -534,6 +550,7 @@ const SubjectCards = () => {
     if (quizSource === "redbird-radnav") return redbirdRadioNavTopics;
     if (quizSource === "redbird-inst") return redbirdInstTopics;
     if (quizSource === "oxford-radnav") return oxfordRadioNavTopics;
+    if (quizSource === "oxford-inst") return oxfordInstNavTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic];
     return [];
   };
