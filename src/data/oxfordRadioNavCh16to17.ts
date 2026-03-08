@@ -3,7 +3,7 @@ import { type Topic } from "./icJoshiQuestions";
 // Oxford Radio Navigation — Ch 16: RNAV & FMS (Revision Q177-192)
 export const oxfordRadNavCh16Topic: Topic = {
   id: "oxford-radnav-ch16",
-  title: "Ch 16 – Area Navigation (RNAV) & FMS",
+  title: "Ch 14 – Area Navigation (RNAV) & FMS",
   questions: [
     {
       id: 1,
@@ -153,7 +153,7 @@ export const oxfordRadNavCh16Topic: Topic = {
 // Questions referencing "Appendix A" diagrams use diagram key "oxford-radnav-appendix-a"
 export const oxfordRadNavCh17Topic: Topic = {
   id: "oxford-radnav-ch17",
-  title: "Ch 17 – Electronic Flight Information System (EFIS)",
+  title: "Ch 15 – Electronic Flight Information System (EFIS)",
   questions: [
     {
       id: 1,
