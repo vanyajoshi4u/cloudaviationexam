@@ -22,6 +22,7 @@ import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
 import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
+import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
