@@ -24,11 +24,12 @@ import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
 import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
 import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
+import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
@@ -47,7 +48,7 @@ const TopicSelect = () => {
   const isOxfordGenNav = oxfordGenNavTopics.some((t) => t.id === topicId);
   const isRedbirdTech = redbirdTechGeneralTopic.id === topicId;
   const isRedbirdGenNav = redbirdGenNavTopics.some((t) => t.id === topicId);
-  const isSkTechQB = skTechQB2Topic.id === topicId || skTechQB3Topic.id === topicId || skTechQB4Topic.id === topicId;
+  const isSkTechQB = skTechQB2Topic.id === topicId || skTechQB3Topic.id === topicId || skTechQB4Topic.id === topicId || skTechQB5Topic.id === topicId;
   const isRedbirdRadNav = redbirdRadioNavTopics.some((t) => t.id === topicId);
   const isRedbirdInst = redbirdInstTopics.some((t) => t.id === topicId);
   const isOxfordInst = oxfordInstNavTopics.some((t) => t.id === topicId);
