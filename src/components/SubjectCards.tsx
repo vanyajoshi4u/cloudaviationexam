@@ -574,6 +574,7 @@ const SubjectCards = () => {
     if (quizSource === "oxford-inst") return oxfordInstNavTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic];
     if (quizSource === "cessna-172r") return [cessna172RTopic];
+    if (quizSource === "cessna-152") return [cessna152Topic];
     return [];
   };
 
