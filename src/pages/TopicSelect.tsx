@@ -25,6 +25,7 @@ import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
 import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
 import { skTechQB5Topic } from "@/data/skTechQB5Questions";
+import { cessna172RTopic } from "@/data/cessna172RQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
