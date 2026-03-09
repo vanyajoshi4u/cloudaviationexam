@@ -107,15 +107,27 @@ const Subscribe = () => {
     }
   };
 
-  const fileToBase64 = (file: File): Promise<string> => {
+  const compressImage = (file: File, maxWidth = 1200, quality = 0.7): Promise<string> => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        resolve(result.split(",")[1]); // Remove data:image/...;base64, prefix
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const canvas = document.createElement("canvas");
+        let { width, height } = img;
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL("image/jpeg", quality);
+        resolve(dataUrl.split(",")[1]); // Return base64 without prefix
       };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+      img.onerror = reject;
+      img.src = url;
     });
   };
 
@@ -137,7 +149,7 @@ const Subscribe = () => {
 
       // Step 1: Verify referral code matches screenshot using AI
       toast.info("Verifying referral code from screenshot...");
-      const imageBase64 = await fileToBase64(screenshot);
+      const imageBase64 = await compressImage(screenshot);
 
       const plan = plans.find((p) => p.id === selectedPlan)!;
       const finalAmount = discountApplied ? plan.price - discountAmount : plan.price;
