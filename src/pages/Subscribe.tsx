@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft, Ticket, PartyPopper } from "lucide-react";
+import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft, Ticket, PartyPopper, Mail } from "lucide-react";
 import UpiQrCode from "@/components/UpiQrCode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -280,7 +280,14 @@ const Subscribe = () => {
               <h2 className="font-display text-2xl font-bold text-foreground">Choose Your Plan</h2>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground text-center mb-6">Select a plan and complete payment to access all questions</p>
+          <p className="text-sm text-muted-foreground text-center mb-4">Select a plan and complete payment to access all questions</p>
+          <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mb-6">
+            <span>For payment related issues, mail</span>
+            <a href="mailto:cloudaviation4u@gmail.com" className="inline-flex items-center gap-1 text-primary hover:underline font-medium">
+              <Mail className="w-3.5 h-3.5" />
+              cloudaviation4u@gmail.com
+            </a>
+          </div>
 
           {/* Plan Selection */}
           <div className="grid grid-cols-3 gap-3 mb-6">
