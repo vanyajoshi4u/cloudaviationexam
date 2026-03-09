@@ -212,7 +212,16 @@ const subjectsData: Subject[] = [
               "Specimen Examination Paper",
             ],
           },
-          "Keith William",
+          {
+            name: "Keith William",
+            hasQuiz: true,
+            quizSource: "kw-radnav" as const,
+            subChapters: [
+              "Basic Principles",
+              "VDF (VHF Direction Finder)",
+              "ADF (Automatic Direction Finder)",
+            ],
+          },
           {
             name: "Redbird",
             hasQuiz: true,
