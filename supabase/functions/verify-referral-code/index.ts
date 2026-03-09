@@ -8,15 +8,20 @@ const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 // Compute SHA-256 hash of image data
-async function hashImage(base64Data: string): Promise<string> {
+async function hashImage(data: Uint8Array): Promise<string> {
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Compute SHA-256 hash from base64 string (legacy support)
+async function hashImageBase64(base64Data: string): Promise<string> {
   const binaryStr = atob(base64Data);
   const bytes = new Uint8Array(binaryStr.length);
   for (let i = 0; i < binaryStr.length; i++) {
     bytes[i] = binaryStr.charCodeAt(i);
   }
-  const hashBuffer = await crypto.subtle.digest("SHA-256", bytes);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+  return hashImage(bytes);
 }
 
 // Check if screenshot hash already exists
@@ -33,6 +38,31 @@ async function isScreenshotDuplicate(hash: string): Promise<boolean> {
   if (!res.ok) return false;
   const data = await res.json();
   return data && data.length > 0;
+}
+
+// Download image from Supabase storage and return as base64
+async function downloadFromStorage(storagePath: string): Promise<{ base64: string; bytes: Uint8Array }> {
+  const url = `${supabaseUrl}/storage/v1/object/payment-screenshots/${storagePath}`;
+  const res = await fetch(url, {
+    headers: {
+      apikey: serviceRoleKey,
+      Authorization: `Bearer ${serviceRoleKey}`,
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to download screenshot from storage: ${res.status}`);
+  }
+  const arrayBuffer = await res.arrayBuffer();
+  const bytes = new Uint8Array(arrayBuffer);
+  // Convert to base64
+  let binary = "";
+  const chunkSize = 8192;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+  const base64 = btoa(binary);
+  return { base64, bytes };
 }
 
 import { checkRateLimit, rateLimitResponse, getClientIP } from "../_shared/rate-limiter.ts";
@@ -62,16 +92,44 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageBase64, referralCode, expectedAmount } = await req.json();
-    if (!imageBase64 || !referralCode || !expectedAmount) {
-      return new Response(JSON.stringify({ error: "Missing imageBase64, referralCode, or expectedAmount" }), {
+    const body = await req.json();
+    const { referralCode, expectedAmount } = body;
+
+    if (!referralCode || !expectedAmount) {
+      return new Response(JSON.stringify({ error: "Missing referralCode or expectedAmount" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Support both: new storagePath approach and legacy imageBase64 approach
+    let imageBase64: string;
+    let imageBytes: Uint8Array;
+
+    if (body.storagePath) {
+      // New approach: download from storage (no large payload in request)
+      console.log("Using storage-based verification for:", body.storagePath);
+      const downloaded = await downloadFromStorage(body.storagePath);
+      imageBase64 = downloaded.base64;
+      imageBytes = downloaded.bytes;
+    } else if (body.imageBase64) {
+      // Legacy approach: base64 in request body
+      console.log("Using legacy base64 verification");
+      imageBase64 = body.imageBase64;
+      const binaryStr = atob(imageBase64);
+      imageBytes = new Uint8Array(binaryStr.length);
+      for (let i = 0; i < binaryStr.length; i++) {
+        imageBytes[i] = binaryStr.charCodeAt(i);
+      }
+    } else {
+      return new Response(JSON.stringify({ error: "Missing storagePath or imageBase64" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
     // Check for duplicate screenshot
-    const screenshotHash = await hashImage(imageBase64);
+    const screenshotHash = await hashImage(imageBytes);
     const isDuplicate = await isScreenshotDuplicate(screenshotHash);
     if (isDuplicate) {
       logAudit({ action: "payment_duplicate_blocked", ip_address: ip, details: { screenshotHash } });
