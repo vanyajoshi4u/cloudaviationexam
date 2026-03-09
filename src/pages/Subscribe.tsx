@@ -149,7 +149,7 @@ const Subscribe = () => {
 
       // Step 1: Verify referral code matches screenshot using AI
       toast.info("Verifying referral code from screenshot...");
-      const imageBase64 = await fileToBase64(screenshot);
+      const imageBase64 = await compressImage(screenshot);
 
       const plan = plans.find((p) => p.id === selectedPlan)!;
       const finalAmount = discountApplied ? plan.price - discountAmount : plan.price;
