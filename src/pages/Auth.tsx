@@ -123,6 +123,13 @@ const Auth = () => {
           // Device fingerprint is now enforced server-side in verify-login-token
           // No need for client-side check here
 
+          // Increment login count for review popup tracking
+          try {
+            await supabase.rpc('increment_login_count' as any, { _user_id: loginData.session.user.id });
+          } catch (e) {
+            console.error("Failed to increment login count:", e);
+          }
+
           toast.success("Login verified! Signing you in...");
           navigate("/subscribe", { replace: true });
         }
