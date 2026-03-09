@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const ReviewPopup = () => {
-  const [open, setOpen] = useState(true); // TEMP: force open for preview
+  const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
   const [review, setReview] = useState("");
