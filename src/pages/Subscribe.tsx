@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft, Ticket, PartyPopper } from "lucide-react";
+import { Plane, Upload, CheckCircle, Loader2, Tag, ArrowLeft, Ticket, PartyPopper, Mail } from "lucide-react";
 import UpiQrCode from "@/components/UpiQrCode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
