@@ -19,6 +19,7 @@ import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { keithWilliamInstTopics } from "@/data/keithWilliamInstQuestions";
+import { keithWilliamRadioNavTopics } from "@/data/keithWilliamRadioNavQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
@@ -40,7 +41,7 @@ import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...keithWilliamRadioNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
@@ -65,6 +66,7 @@ const TopicSelect = () => {
   const isOxfordInst = oxfordInstNavTopics.some((t) => t.id === topicId);
   const isKwInst = keithWilliamInstTopics.some((t) => t.id === topicId);
   const isRedbirdAirReg = redbirdAirRegTopic.id === topicId;
+  const isKwRadNav = keithWilliamRadioNavTopics.some((t) => t.id === topicId);
   const isCessna172R = cessna172RTopic.id === topicId;
   const isCessna152 = cessna152Topic.id === topicId;
   const isPiperArcher = piperArcherTopic.id === topicId;
@@ -74,7 +76,7 @@ const TopicSelect = () => {
   const isTecnamP2006t = tecnamP2006tTopic.id === topicId;
   const isTecnamP2008jc = tecnamP2008jcTopic.id === topicId;
   const isDa42Austro = da42AustroTopic.id === topicId;
-  const subtitle = isDa42Austro ? "Technical Specific — DA42 Austro" : isTecnamP2008jc ? "Technical Specific — TECHNAM P2008JC" : isTecnamP2006t ? "Technical Specific — TECHNAM P2006T" : isPa34220t ? "Technical Specific — PA-34-220T" : isDa40 ? "Technical Specific — DA 40 (Thielert)" : isDa42 ? "Technical Specific — DA 42 (Thielert)" : isPiperArcher ? "Technical Specific — Piper Archer III DX" : isCessna152 ? "Technical Specific — Cessna 152" : isCessna172R ? "Technical Specific — Cessna 172R" : isRedbirdAirReg ? "Redbird — Air Regulations" : isKwInst ? "Keith William — Instrument Navigation" : isOxfordInst ? "Oxford — Instrument Navigation" : isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isOxfordGenNav ? "Oxford — General Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const subtitle = isDa42Austro ? "Technical Specific — DA42 Austro" : isTecnamP2008jc ? "Technical Specific — TECHNAM P2008JC" : isTecnamP2006t ? "Technical Specific — TECHNAM P2006T" : isPa34220t ? "Technical Specific — PA-34-220T" : isDa40 ? "Technical Specific — DA 40 (Thielert)" : isDa42 ? "Technical Specific — DA 42 (Thielert)" : isPiperArcher ? "Technical Specific — Piper Archer III DX" : isCessna152 ? "Technical Specific — Cessna 152" : isCessna172R ? "Technical Specific — Cessna 172R" : isRedbirdAirReg ? "Redbird — Air Regulations" : isKwRadNav ? "Keith William — Radio Navigation" : isKwInst ? "Keith William — Instrument Navigation" : isOxfordInst ? "Oxford — Instrument Navigation" : isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isRkBaliRadNav ? "R K Bali — Radio Navigation" : isRkBaliInst ? "R K Bali — Instrument Navigation" : isOxfordGenNav ? "Oxford — General Navigation" : isRkBaliGenNav ? "R K Bali — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRkBaliSample ? "R K Bali — Sample Papers" : isRkBaliReg ? "R K Bali — Air Regulations" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Oxford — Air Meteorology" : "I C Joshi — Air Meteorology";
 
   if (!topic) {
     return (
