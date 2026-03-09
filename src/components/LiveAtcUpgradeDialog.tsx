@@ -52,14 +52,6 @@ const LiveAtcUpgradeDialog = ({ open, onOpenChange, onSuccess }: LiveAtcUpgradeD
     }
   };
 
-  const fileToBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve((reader.result as string).split(",")[1]);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!screenshot) { toast.error("Please upload your payment screenshot"); return; }
@@ -70,26 +62,45 @@ const LiveAtcUpgradeDialog = ({ open, onOpenChange, onSuccess }: LiveAtcUpgradeD
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      toast.info("Verifying referral code from screenshot...");
-      const imageBase64 = await fileToBase64(screenshot);
+      // 1) Upload first to avoid large verification payload issues
+      toast.info("Uploading payment screenshot...");
+      const fileExt = screenshot.name.split(".").pop();
+      const filePath = `${user.id}/${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage.from("payment-screenshots").upload(filePath, screenshot);
+      if (uploadError) throw new Error("Failed to upload screenshot. Please try again.");
 
-      const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
-        "verify-referral-code",
-        { body: { imageBase64, referralCode: referralCode.trim(), expectedAmount: 499 } }
-      );
-      if (verifyError) throw new Error("Verification failed. Please try again.");
+      // 2) Verify with retry/backoff using storage path
+      toast.info("Verifying payment details...");
+      const invokeWithRetry = async (attempts = 3): Promise<any> => {
+        for (let i = 0; i < attempts; i++) {
+          try {
+            const { data, error } = await supabase.functions.invoke("verify-referral-code", {
+              body: { storagePath: filePath, referralCode: referralCode.trim(), expectedAmount: 499 },
+            });
+            if (error) {
+              if (i === attempts - 1) throw error;
+              await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, i)));
+              continue;
+            }
+            return data;
+          } catch (err) {
+            if (i === attempts - 1) throw err;
+            await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, i)));
+          }
+        }
+      };
+
+      const verifyData = await invokeWithRetry();
+
       if (!verifyData.match) {
-        toast.error(verifyData.message || "Referral code does not match the screenshot.");
+        await supabase.storage.from("payment-screenshots").remove([filePath]).catch(() => null);
+        toast.error(verifyData.message || "Verification failed. Please check your details.");
         setLoading(false);
         return;
       }
 
-      toast.success("Referral code verified!");
-
-      const fileExt = screenshot.name.split(".").pop();
-      const filePath = `${user.id}/${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage.from("payment-screenshots").upload(filePath, screenshot);
-      if (uploadError) throw uploadError;
+      const screenshotHash = verifyData.screenshotHash || null;
+      toast.success("Payment verified!");
 
       const { error: insertError } = await supabase.from("subscriptions").insert({
         user_id: user.id,
@@ -97,6 +108,7 @@ const LiveAtcUpgradeDialog = ({ open, onOpenChange, onSuccess }: LiveAtcUpgradeD
         amount: 499,
         referral_code: referralCode.trim(),
         payment_screenshot_url: filePath,
+        screenshot_hash: screenshotHash,
         status: "pending",
       });
       if (insertError) throw insertError;
