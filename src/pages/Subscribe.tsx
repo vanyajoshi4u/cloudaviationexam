@@ -119,7 +119,11 @@ const Subscribe = () => {
     }
 
     setLoading(true);
+    let filePath = "";
     try {
+      // Check network connectivity early
+      if (!navigator.onLine) throw new Error("You appear to be offline. Please check your internet connection and try again.");
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
@@ -129,7 +133,7 @@ const Subscribe = () => {
       // Step 1: Upload screenshot to storage FIRST (small reliable request)
       toast.info("Uploading payment screenshot...");
       const fileExt = screenshot.name.split(".").pop();
-      const filePath = `${user.id}/${Date.now()}.${fileExt}`;
+      filePath = `${user.id}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from("payment-screenshots")
@@ -147,9 +151,7 @@ const Subscribe = () => {
               { body: { storagePath: filePath, referralCode: referralCode.trim(), expectedAmount: finalAmount } }
             );
             if (error) {
-              // On last attempt, throw
               if (i === attempts - 1) throw error;
-              // Wait before retry (1s, 2s, 4s)
               await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));
               continue;
             }
@@ -163,8 +165,10 @@ const Subscribe = () => {
 
       const verifyData = await invokeWithRetry();
 
-      if (!verifyData.match) {
-        toast.error(verifyData.message || "Verification failed. Please check your details.");
+      if (!verifyData || !verifyData.match) {
+        // Clean up uploaded file on verification failure
+        await supabase.storage.from("payment-screenshots").remove([filePath]).catch(() => null);
+        toast.error(verifyData?.message || "Verification failed. Please check your details and try again.");
         setLoading(false);
         return;
       }
@@ -196,7 +200,16 @@ const Subscribe = () => {
         navigate("/", { replace: true });
       }, 1500);
     } catch (error: any) {
-      toast.error(error.message || "Something went wrong");
+      // Clean up uploaded file on any error
+      if (filePath) {
+        await supabase.storage.from("payment-screenshots").remove([filePath]).catch(() => null);
+      }
+      const msg = error.message || "Something went wrong";
+      if (msg.includes("Load failed") || msg.includes("Failed to fetch") || msg.includes("NetworkError")) {
+        toast.error("Network error. Please check your internet connection and try again.");
+      } else {
+        toast.error(msg);
+      }
     } finally {
       setLoading(false);
     }

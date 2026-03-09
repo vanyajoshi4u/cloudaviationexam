@@ -39,16 +39,19 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
     if (!referralCode.trim()) { toast.error("Please enter your UTR code"); return; }
 
     setLoading(true);
+    let filePath = "";
     try {
+      if (!navigator.onLine) throw new Error("You appear to be offline. Please check your internet connection and try again.");
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
       // 1) Upload first to avoid large verification payload issues
       toast.info("Uploading payment screenshot...");
       const fileExt = screenshot.name.split(".").pop();
-      const filePath = `${user.id}/${Date.now()}.${fileExt}`;
+      filePath = `${user.id}/${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage.from("payment-screenshots").upload(filePath, screenshot);
-      if (uploadError) throw new Error("Failed to upload screenshot. Please try again.");
+      if (uploadError) throw new Error("Failed to upload screenshot. Please check your internet connection and try again.");
 
       // 2) Verify with retry/backoff using storage path
       toast.info("Verifying payment details...");
@@ -73,9 +76,9 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
 
       const verifyData = await invokeWithRetry();
 
-      if (!verifyData.match) {
+      if (!verifyData || !verifyData.match) {
         await supabase.storage.from("payment-screenshots").remove([filePath]).catch(() => null);
-        toast.error(verifyData.message || "Verification failed. Please check your details.");
+        toast.error(verifyData?.message || "Verification failed. Please check your details and try again.");
         setLoading(false);
         return;
       }
@@ -103,7 +106,15 @@ const RtrUpgradeDialog = ({ open, onOpenChange, onSuccess }: RtrUpgradeDialogPro
       onOpenChange(false);
       onSuccess?.();
     } catch (error: any) {
-      toast.error(error.message || "Something went wrong");
+      if (filePath) {
+        await supabase.storage.from("payment-screenshots").remove([filePath]).catch(() => null);
+      }
+      const msg = error.message || "Something went wrong";
+      if (msg.includes("Load failed") || msg.includes("Failed to fetch") || msg.includes("NetworkError")) {
+        toast.error("Network error. Please check your internet connection and try again.");
+      } else {
+        toast.error(msg);
+      }
     } finally {
       setLoading(false);
     }
