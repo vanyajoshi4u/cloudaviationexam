@@ -107,11 +107,10 @@ Deno.serve(async (req) => {
       if (body.imageBase64) {
         console.warn("Blocked legacy base64 request — user needs to refresh browser");
         return new Response(JSON.stringify({
-          error: "Please refresh your browser (Ctrl+Shift+R or clear cache) and try again. An important update is available.",
           match: false,
-          message: "Your app is outdated. Please hard-refresh your browser (Ctrl+Shift+R) or clear your cache, then try again.",
+          message: "Your app is outdated. Please hard-refresh your browser (Ctrl+Shift+R or clear cache) and try again. An important update is available.",
         }), {
-          status: 400,
+          status: 200,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
