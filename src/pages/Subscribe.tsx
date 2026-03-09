@@ -107,30 +107,6 @@ const Subscribe = () => {
     }
   };
 
-  const compressImage = (file: File, maxWidth = 1200, quality = 0.7): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      const url = URL.createObjectURL(file);
-      img.onload = () => {
-        URL.revokeObjectURL(url);
-        const canvas = document.createElement("canvas");
-        let { width, height } = img;
-        if (width > maxWidth) {
-          height = (height * maxWidth) / width;
-          width = maxWidth;
-        }
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext("2d")!;
-        ctx.drawImage(img, 0, 0, width, height);
-        const dataUrl = canvas.toDataURL("image/jpeg", quality);
-        resolve(dataUrl.split(",")[1]); // Return base64 without prefix
-      };
-      img.onerror = reject;
-      img.src = url;
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!screenshot) {
@@ -147,39 +123,56 @@ const Subscribe = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      // Step 1: Verify referral code matches screenshot using AI
-      toast.info("Verifying referral code from screenshot...");
-      const imageBase64 = await compressImage(screenshot);
-
       const plan = plans.find((p) => p.id === selectedPlan)!;
       const finalAmount = discountApplied ? plan.price - discountAmount : plan.price;
-      const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
-        "verify-referral-code",
-        { body: { imageBase64, referralCode: referralCode.trim(), expectedAmount: finalAmount } }
-      );
 
-      if (verifyError) throw new Error("Verification failed. Please try again.");
-
-      if (!verifyData.match) {
-        toast.error(verifyData.message || "Referral code does not match the screenshot.");
-        setLoading(false);
-        return;
-      }
-
-      const screenshotHash = verifyData.screenshotHash || null;
-      toast.success("Referral code verified!");
-
-      // Step 2: Upload screenshot
+      // Step 1: Upload screenshot to storage FIRST (small reliable request)
+      toast.info("Uploading payment screenshot...");
       const fileExt = screenshot.name.split(".").pop();
       const filePath = `${user.id}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from("payment-screenshots")
         .upload(filePath, screenshot);
-      if (uploadError) throw uploadError;
+      if (uploadError) throw new Error("Failed to upload screenshot. Please check your internet connection and try again.");
+
+      // Step 2: Verify using storage path (lightweight request — no base64 payload)
+      toast.info("Verifying payment details...");
+
+      const invokeWithRetry = async (attempts = 3): Promise<any> => {
+        for (let i = 0; i < attempts; i++) {
+          try {
+            const { data, error } = await supabase.functions.invoke(
+              "verify-referral-code",
+              { body: { storagePath: filePath, referralCode: referralCode.trim(), expectedAmount: finalAmount } }
+            );
+            if (error) {
+              // On last attempt, throw
+              if (i === attempts - 1) throw error;
+              // Wait before retry (1s, 2s, 4s)
+              await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));
+              continue;
+            }
+            return data;
+          } catch (err) {
+            if (i === attempts - 1) throw err;
+            await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));
+          }
+        }
+      };
+
+      const verifyData = await invokeWithRetry();
+
+      if (!verifyData.match) {
+        toast.error(verifyData.message || "Verification failed. Please check your details.");
+        setLoading(false);
+        return;
+      }
+
+      const screenshotHash = verifyData.screenshotHash || null;
+      toast.success("Payment verified!");
 
       // Step 3: Create subscription
-      
       const { error: insertError } = await supabase.from("subscriptions").insert({
         user_id: user.id,
         plan: selectedPlan,
