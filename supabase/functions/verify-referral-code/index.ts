@@ -102,31 +102,30 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Support both: new storagePath approach and legacy imageBase64 approach
-    let imageBase64: string;
-    let imageBytes: Uint8Array;
-
-    if (body.storagePath) {
-      // New approach: download from storage (no large payload in request)
-      console.log("Using storage-based verification for:", body.storagePath);
-      const downloaded = await downloadFromStorage(body.storagePath);
-      imageBase64 = downloaded.base64;
-      imageBytes = downloaded.bytes;
-    } else if (body.imageBase64) {
-      // Legacy approach: base64 in request body
-      console.log("Using legacy base64 verification");
-      imageBase64 = body.imageBase64;
-      const binaryStr = atob(imageBase64);
-      imageBytes = new Uint8Array(binaryStr.length);
-      for (let i = 0; i < binaryStr.length; i++) {
-        imageBytes[i] = binaryStr.charCodeAt(i);
+    if (!body.storagePath) {
+      // Legacy base64 approach is no longer supported — force user to refresh
+      if (body.imageBase64) {
+        console.warn("Blocked legacy base64 request — user needs to refresh browser");
+        return new Response(JSON.stringify({
+          error: "Please refresh your browser (Ctrl+Shift+R or clear cache) and try again. An important update is available.",
+          match: false,
+          message: "Your app is outdated. Please hard-refresh your browser (Ctrl+Shift+R) or clear your cache, then try again.",
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
-    } else {
-      return new Response(JSON.stringify({ error: "Missing storagePath or imageBase64" }), {
+      return new Response(JSON.stringify({ error: "Missing storagePath" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    // Download from storage (lightweight — no large payload in request)
+    console.log("Using storage-based verification for:", body.storagePath);
+    const downloaded = await downloadFromStorage(body.storagePath);
+    const imageBase64 = downloaded.base64;
+    const imageBytes = downloaded.bytes;
 
     // Check for duplicate screenshot
     const screenshotHash = await hashImage(imageBytes);
