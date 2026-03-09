@@ -426,6 +426,14 @@ const Subscribe = () => {
               Submit Payment
             </Button>
           </form>
+
+          <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mt-4">
+            <span>For payment related issues, mail</span>
+            <a href="mailto:cloudaviation4u@gmail.com" className="inline-flex items-center gap-1 text-primary hover:underline font-medium">
+              <Mail className="w-3.5 h-3.5" />
+              cloudaviation4u@gmail.com
+            </a>
+          </div>
         </div>
       </motion.div>
     </div>
