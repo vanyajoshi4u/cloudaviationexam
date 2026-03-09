@@ -5,6 +5,7 @@ import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
 import ReferralPanel from "@/components/ReferralPanel";
 import Footer from "@/components/Footer";
+import ReviewPopup from "@/components/ReviewPopup";
 
 const Index = () => {
   return (
@@ -17,7 +18,7 @@ const Index = () => {
       </div>
       <Features />
       <Testimonials />
-      
+      <ReviewPopup />
       <Footer />
     </div>
   );

@@ -187,7 +187,9 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          login_count: number
           phone: string
+          review_submitted: boolean
           updated_at: string
           user_id: string
         }
@@ -196,7 +198,9 @@ export type Database = {
           email: string
           full_name: string
           id?: string
+          login_count?: number
           phone: string
+          review_submitted?: boolean
           updated_at?: string
           user_id: string
         }
@@ -205,7 +209,9 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
+          login_count?: number
           phone?: string
+          review_submitted?: boolean
           updated_at?: string
           user_id?: string
         }
@@ -377,6 +383,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_login_count: { Args: { _user_id: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"
