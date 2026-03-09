@@ -191,6 +191,26 @@ export const oxfordGenNavCh25Topic: Topic = { id: "oxford-gn-ch25", title: "Ch 2
 export const oxfordGenNavCh26Topic: Topic = { id: "oxford-gn-ch26", title: "Ch 26 – Time (1)", questions: ch26Questions };
 export const oxfordGenNavCh27Topic: Topic = { id: "oxford-gn-ch27", title: "Ch 27 – Time (2)", questions: ch27Questions };
 export const oxfordGenNavCh28Topic: Topic = { id: "oxford-gn-ch28", title: "Ch 28 – Time (3)", questions: ch28Questions };
+// Ch 29 – Critical Point (CP) and Point of No Return (PNR)
+const ch29Questions: MCQuestion[] = [
+  { id: 1, question: "What is the Critical Point (CP)?", options: ["The farthest point aircraft can fly", "The point where fuel runs out", "The point where time to return equals time to continue", "The midpoint of a flight"], correct: 2 },
+  { id: 2, question: "CP is also known as:", options: ["Radius of Action", "Equal Time Point", "Maximum Range Point", "Return Point"], correct: 1 },
+  { id: 3, question: "In still air, the Critical Point is located:", options: ["At the departure airport", "At the destination airport", "Midway between departure and destination", "Beyond the destination"], correct: 2 },
+  { id: 4, question: "The Critical Point is independent of:", options: ["Distance", "Ground speed", "Fuel endurance", "Wind"], correct: 2 },
+  { id: 5, question: "With a headwind, the CP moves:", options: ["Toward the destination", "Toward the departure point", "Remains unchanged", "Randomly"], correct: 0 },
+  { id: 6, question: "With a tailwind, the CP moves:", options: ["Toward the destination", "Toward the departure point", "Remains fixed", "Outside the route"], correct: 1 },
+  { id: 7, question: "Increasing TAS while wind remains constant moves the CP:", options: ["Toward the midpoint (still air condition)", "Toward the destination", "Toward the departure point", "Beyond destination"], correct: 0 },
+  { id: 8, question: "The Point of No Return (PNR) is defined as:", options: ["The point where aircraft cannot continue", "The point furthest from departure from which aircraft can safely return", "The midpoint of the flight", "The destination"], correct: 1 },
+  { id: 9, question: "PNR is also called:", options: ["Critical Point", "Equal Time Point", "Point of Safe Return", "Radius of Action"], correct: 2 },
+  { id: 10, question: "In PNR calculations, the distance to PNR equals:", options: ["Distance remaining to destination", "Distance flown × 2", "Distance out equals distance back", "Total route distance"], correct: 2 },
+  { id: 11, question: "In still air conditions, the maximum PNR distance occurs:", options: ["With headwind", "With tailwind", "With crosswind", "In still air"], correct: 3 },
+  { id: 12, question: "Increasing headwind component will:", options: ["Increase PNR distance", "Decrease PNR distance", "Not affect PNR", "Move PNR beyond destination"], correct: 1 },
+  { id: 13, question: "Decreasing wind component will:", options: ["Reduce PNR distance", "Increase PNR distance", "Have no effect", "Stop the aircraft"], correct: 1 },
+  { id: 14, question: "Radius of Action is defined as:", options: ["Maximum distance aircraft can fly without returning", "Distance aircraft can fly out, perform a task, and return safely", "Distance between two airports", "Half the flight distance"], correct: 1 },
+  { id: 15, question: "For Radius of Action calculations, safe endurance becomes:", options: ["Fuel endurance × 2", "Safe endurance + patrol time", "Safe endurance – patrol time", "Safe endurance ÷ 2"], correct: 2 },
+];
+
+export const oxfordGenNavCh29Topic: Topic = { id: "oxford-gn-ch29", title: "Ch 29 – Critical Point (CP) and Point of No Return (PNR)", questions: ch29Questions };
 export const oxfordGenNavCh30Topic: Topic = { id: "oxford-gn-ch30", title: "Ch 30 – Gridded Charts", questions: ch30Questions };
 
 export const oxfordGenNavCh16to29Topics: Topic[] = [
@@ -204,5 +224,6 @@ export const oxfordGenNavCh16to29Topics: Topic[] = [
   oxfordGenNavCh26Topic,
   oxfordGenNavCh27Topic,
   oxfordGenNavCh28Topic,
+  oxfordGenNavCh29Topic,
   oxfordGenNavCh30Topic,
 ];
