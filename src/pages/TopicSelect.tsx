@@ -66,6 +66,7 @@ const TopicSelect = () => {
   const isOxfordInst = oxfordInstNavTopics.some((t) => t.id === topicId);
   const isKwInst = keithWilliamInstTopics.some((t) => t.id === topicId);
   const isRedbirdAirReg = redbirdAirRegTopic.id === topicId;
+  const isKwRadNav = keithWilliamRadioNavTopics.some((t) => t.id === topicId);
   const isCessna172R = cessna172RTopic.id === topicId;
   const isCessna152 = cessna152Topic.id === topicId;
   const isPiperArcher = piperArcherTopic.id === topicId;
