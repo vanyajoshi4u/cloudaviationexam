@@ -232,7 +232,6 @@ const paper1Scenarios: RtrScenario[] = [
     squawk: "7700",
     questions: [
       "You are passing 4000 feet for F160. Contact Delhi Approach on appropriate frequency as advised by Tower and inform the altitude passing (4000 feet) to Approach seek permission for climb to FL 360 as filed in FPL.",
-      "While passing FL160 you encountered bad weather ahead. You decided to deviate 10 NM right of track until abeam LKN. Request permission from ATC for deviation to Right of track.",
     ],
   },
   {
