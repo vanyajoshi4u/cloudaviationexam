@@ -215,52 +215,53 @@ Deno.serve(async (req) => {
       });
     }
 
-    const sendVerificationEmail = (verificationLink: string) => {
+    const sendVerificationEmail = async (verificationLink: string) => {
       const resendApiKey = Deno.env.get("RESEND_API_KEY");
       if (!resendApiKey || !user.email) {
         console.warn("Missing RESEND_API_KEY or user email");
         return;
       }
 
-      (globalThis as any).EdgeRuntime?.waitUntil?.((async () => {
-        try {
-          const res = await fetch("https://api.resend.com/emails", {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${resendApiKey}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              from: "CloudAviation Exam's <noreply@cloudaviationexams.com>",
-              to: [user.email],
-              subject: "Verify Your Login - CloudAviation Exam's",
-              html: `
-                <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
-                  <h2 style="color: #1a1a2e; text-align: center;">✈️ Login Verification</h2>
-                  <p style="color: #555; text-align: center;">
-                    A login attempt was made to your CloudAviation Exam's account. Click the button below to verify this login.
-                  </p>
-                  <div style="text-align: center; margin: 30px 0;">
-                    <a href="${verificationLink}" 
-                       style="background-color: #0ea5e9; color: white; padding: 12px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                      Verify Login
-                    </a>
-                  </div>
-                  <p style="color: #999; font-size: 12px; text-align: center;">
-                    This link expires in 10 minutes. If you didn't attempt to log in, please ignore this email.
-                  </p>
+      // Fire email inline so errors are always logged
+      try {
+        const res = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "CloudAviation Exam's <noreply@cloudaviationexams.com>",
+            to: [user.email],
+            subject: "Verify Your Login - CloudAviation Exam's",
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #1a1a2e; text-align: center;">✈️ Login Verification</h2>
+                <p style="color: #555; text-align: center;">
+                  A login attempt was made to your CloudAviation Exam's account. Click the button below to verify this login.
+                </p>
+                <div style="text-align: center; margin: 30px 0;">
+                  <a href="${verificationLink}" 
+                     style="background-color: #0ea5e9; color: white; padding: 12px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+                    Verify Login
+                  </a>
                 </div>
-              `,
-            }),
-          });
-          if (!res.ok) {
-            const errText = await res.text();
-            console.error("Email send error:", errText);
-          }
-        } catch (e) {
-          console.error("Email send exception:", e);
+                <p style="color: #999; font-size: 12px; text-align: center;">
+                  This link expires in 10 minutes. If you didn't attempt to log in, please ignore this email.
+                </p>
+              </div>
+            `,
+          }),
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          console.error("RESEND_EMAIL_FAILED:", res.status, errText);
+        } else {
+          console.log("RESEND_EMAIL_SENT to", user.email);
         }
-      })());
+      } catch (e) {
+        console.error("RESEND_EMAIL_EXCEPTION:", e);
+      }
     };
 
     const ensureProfile = async () => {
@@ -309,7 +310,7 @@ Deno.serve(async (req) => {
       // Always use the published custom domain to avoid auth-bridge interception
       const origin = "https://cloudaviationexams.com";
       const verificationLink = `${origin}/verify-login?token=${verifications[0].token}&uid=${user.id}`;
-      sendVerificationEmail(verificationLink);
+      await sendVerificationEmail(verificationLink);
     };
 
     if (action === "check-session" || action === "check-and-verify") {
