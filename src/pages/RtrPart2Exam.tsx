@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X } from "lucide-react";
+import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
@@ -16,6 +16,24 @@ import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png";
 import atsRouteBhubaneswarNagpur from "@/assets/ats-route-bhubaneswar-nagpur.png";
 import atsRouteJaipurAhmedabad from "@/assets/ats-route-jaipur-ahmedabad.png";
 import atsRouteHyderabadChennai from "@/assets/ats-route-hyderabad-chennai.png";
+import paper1SolutionPage1 from "@/assets/paper1-solution-page1.jpg";
+import paper1SolutionPage2 from "@/assets/paper1-solution-page2.jpg";
+import paper1SolutionPage3 from "@/assets/paper1-solution-page3.jpg";
+import paper1SolutionPage4 from "@/assets/paper1-solution-page4.jpg";
+import paper1SolutionPage5 from "@/assets/paper1-solution-page5.jpg";
+import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
+import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
+
+const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
+  "rtr2-paper-1": {
+    images: [paper1SolutionPage1, paper1SolutionPage2, paper1SolutionPage3, paper1SolutionPage4, paper1SolutionPage5],
+    label: "Paper 1",
+  },
+  "rtr2-paper-2": {
+    images: [paper2SolutionPage1, paper2SolutionPage2],
+    label: "Paper 2",
+  },
+};
 
 const chartImageMap: Record<string, string> = {
   "rtr2-paper-1": atsRouteDelhiLucknow,
@@ -49,6 +67,8 @@ const RtrPart2Exam = () => {
   const [pttPressed, setPttPressed] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [showAirportLayout, setShowAirportLayout] = useState(false);
+  const [visitedScenarios, setVisitedScenarios] = useState<Set<number>>(new Set([0]));
+  const [showSolution, setShowSolution] = useState(false);
 
   const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
@@ -81,6 +101,8 @@ const RtrPart2Exam = () => {
     setTimeLeft(EXAM_DURATION);
     setCurrentScenario(0);
     setExamEnded(false);
+    setVisitedScenarios(new Set([0]));
+    setShowSolution(false);
   }, []);
 
   const endExam = useCallback(() => {
@@ -104,6 +126,13 @@ const RtrPart2Exam = () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [examStarted, examEnded]);
+
+  // Track visited scenarios
+  useEffect(() => {
+    if (examStarted && !examEnded) {
+      setVisitedScenarios(prev => new Set([...prev, currentScenario]));
+    }
+  }, [currentScenario, examStarted, examEnded]);
 
   if (!paper) {
     return (
@@ -247,11 +276,50 @@ const RtrPart2Exam = () => {
                 <div className="text-xs text-muted-foreground">Time Taken</div>
               </div>
             </div>
+
+            {paperId && solutionImagesMap[paperId] && (
+              <div className="mb-4">
+                {visitedScenarios.size >= scenarios.length ? (
+                  <>
+                    <Button
+                      variant="outline"
+                      className="w-full gap-2 border-primary/30 text-primary hover:bg-primary/10"
+                      onClick={() => setShowSolution(!showSolution)}
+                    >
+                      <FileText className="w-4 h-4" /> {showSolution ? "Hide Solution" : `View Solution — ${solutionImagesMap[paperId].label}`}
+                    </Button>
+                    <AnimatePresence>
+                      {showSolution && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 space-y-3 overflow-hidden"
+                        >
+                          {solutionImagesMap[paperId].images.map((img, idx) => (
+                            <img key={idx} src={img} alt={`${solutionImagesMap[paperId].label} Solution — Page ${idx + 1}`} className="w-full rounded-lg border border-border/50 shadow-md" />
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-left">
+                    <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-600 dark:text-amber-400">
+                      Solution not visible because you haven't attempted paper properly. Please go through all {scenarios.length} scenarios to unlock the solution.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="flex gap-3 justify-center">
               <Button variant="outline" onClick={() => navigate("/")}>
                 <ArrowLeft className="w-4 h-4 mr-1" /> Home
               </Button>
-              <Button onClick={() => { setExamStarted(false); setTimeLeft(EXAM_DURATION); setCurrentScenario(0); setExamEnded(false); }}>
+              <Button onClick={() => { setExamStarted(false); setTimeLeft(EXAM_DURATION); setCurrentScenario(0); setExamEnded(false); setVisitedScenarios(new Set([0])); setShowSolution(false); }}>
                 Retry
               </Button>
             </div>

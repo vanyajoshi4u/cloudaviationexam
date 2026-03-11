@@ -16,8 +16,24 @@ import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png";
 import atsRouteBhubaneswarNagpur from "@/assets/ats-route-bhubaneswar-nagpur.png";
 import atsRouteJaipurAhmedabad from "@/assets/ats-route-jaipur-ahmedabad.png";
 import atsRouteHyderabadChennai from "@/assets/ats-route-hyderabad-chennai.png";
+import paper1SolutionPage1 from "@/assets/paper1-solution-page1.jpg";
+import paper1SolutionPage2 from "@/assets/paper1-solution-page2.jpg";
+import paper1SolutionPage3 from "@/assets/paper1-solution-page3.jpg";
+import paper1SolutionPage4 from "@/assets/paper1-solution-page4.jpg";
+import paper1SolutionPage5 from "@/assets/paper1-solution-page5.jpg";
 import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
 import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
+
+const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
+  "rtr2-paper-1": {
+    images: [paper1SolutionPage1, paper1SolutionPage2, paper1SolutionPage3, paper1SolutionPage4, paper1SolutionPage5],
+    label: "Paper 1",
+  },
+  "rtr2-paper-2": {
+    images: [paper2SolutionPage1, paper2SolutionPage2],
+    label: "Paper 2",
+  },
+};
 
 const chartImageMap: Record<string, string> = {
   "rtr2-paper-1": atsRouteDelhiLucknow,
@@ -492,7 +508,7 @@ const LiveAtcExam = () => {
               </div>
             )}
 
-            {paperId === "rtr2-paper-2" && (
+            {paperId && solutionImagesMap[paperId] && (
               <div className="mb-4">
                 {visitedScenarios.size >= scenarios.length ? (
                   <>
@@ -501,7 +517,7 @@ const LiveAtcExam = () => {
                       className="w-full gap-2 border-primary/30 text-primary hover:bg-primary/10"
                       onClick={() => setShowSolution(!showSolution)}
                     >
-                      <FileText className="w-4 h-4" /> {showSolution ? "Hide Solution" : "View Solution — Paper 2"}
+                      <FileText className="w-4 h-4" /> {showSolution ? "Hide Solution" : `View Solution — ${solutionImagesMap[paperId].label}`}
                     </Button>
                     <AnimatePresence>
                       {showSolution && (
@@ -512,8 +528,9 @@ const LiveAtcExam = () => {
                           transition={{ duration: 0.3 }}
                           className="mt-4 space-y-3 overflow-hidden"
                         >
-                          <img src={paper2SolutionPage1} alt="Paper 2 Solution — Page 1" className="w-full rounded-lg border border-border/50 shadow-md" />
-                          <img src={paper2SolutionPage2} alt="Paper 2 Solution — Page 2" className="w-full rounded-lg border border-border/50 shadow-md" />
+                          {solutionImagesMap[paperId].images.map((img, idx) => (
+                            <img key={idx} src={img} alt={`${solutionImagesMap[paperId].label} Solution — Page ${idx + 1}`} className="w-full rounded-lg border border-border/50 shadow-md" />
+                          ))}
                         </motion.div>
                       )}
                     </AnimatePresence>
