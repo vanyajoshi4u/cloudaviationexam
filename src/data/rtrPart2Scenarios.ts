@@ -275,7 +275,7 @@ const paper1Scenarios: RtrScenario[] = [
     ],
     squawk: "7700",
     questions: [
-      "You are passing FL170 for F250 as per app instructions over ALI-ALIGARAH flying 10 NM right of track due. Establish contact with Delhi Area Control, report deviation due weather to ATC and request FL 360.",
+      "You are passing FL170 for F250 over ALIGARAH. Establish contact with Delhi Area Control, report position to ATC and request FL 360.",
       "Over Lucknow Weather normal 1205, FL 360, Estimate BBN 1235, GGC 1255. Transmit your position report.",
     ],
   },
