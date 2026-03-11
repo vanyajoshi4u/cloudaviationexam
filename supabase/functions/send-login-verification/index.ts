@@ -215,7 +215,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const sendVerificationEmail = (verificationLink: string) => {
+    const sendVerificationEmail = async (verificationLink: string) => {
       const resendApiKey = Deno.env.get("RESEND_API_KEY");
       if (!resendApiKey || !user.email) {
         console.warn("Missing RESEND_API_KEY or user email");
