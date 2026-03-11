@@ -49,6 +49,8 @@ const RtrPart2Exam = () => {
   const [pttPressed, setPttPressed] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [showAirportLayout, setShowAirportLayout] = useState(false);
+  const [visitedScenarios, setVisitedScenarios] = useState<Set<number>>(new Set([0]));
+  const [showSolution, setShowSolution] = useState(false);
 
   const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
