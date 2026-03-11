@@ -282,38 +282,129 @@ ${frequencies.map((f: any) => `${f.description}: ${f.frequency}`).join('\n')}
 CURRENT QUESTION/TASK: ${currentQuestion}
 
 ═══════════════════════════════════════════════════════════
-REFERENCE ATC RESPONSES — PAPER 1 (DELHI → KOLKATA, AIC-887)
+EXACT ANSWER KEY — PAPER 1 (DELHI → LUCKNOW, AIC-887)
 ═══════════════════════════════════════════════════════════
+IMPORTANT VALIDATION RULES FOR PAPER 1:
+- You MUST use the EXACT answer key below as the reference for evaluating pilot transmissions.
+- If the pilot's transmission is CORRECT (matches the expected pilot transmission in meaning and key elements), respond with the corresponding ATC response from the answer key.
+- If the pilot MISSES a key element (e.g., forgets call sign, omits frequency, misses readback item), say: "[Callsign], say again [the missing part]" — prompt them to correct the specific missing element.
+- If the pilot's transmission is PARTIALLY correct but has errors, say: "NEGATIVE, I SAY AGAIN" and provide the correct version.
+- If the pilot says something COMPLETELY UNRELATED to the current scenario/question, respond: "Say correct transmission or leave the examination."
+- After pilot gives correct readback, respond "Roger" or "Readback correct" and WAIT. Do NOT auto-advance.
 
-SCENARIO 1 (SMC - Radio Check / Time Check / Departure Info):
-- Radio Check → "[Callsign] heavy, [Station] Ground, readability five"
-- Time Check → "[Callsign], Ground, Time [minutes]"
-- Departure Info → "[Callsign], Ground: Monitor Information [designator], Runway [RWY], Wind [wind], QNH [qnh], Temperature [temp], Visibility [vis]"
+SCENARIO 1 — SMC (Radio Check / Time Check / Departure Info):
 
-SCENARIO 2 (SMC - Pushback / Taxi / ATC Clearance):
-- Pushback/Startup → "[Callsign], Ground: Pushback approved facing [direction], start up approved."
-- Taxi → "[Callsign], Ground: Taxi to holding point runway [RWY] via taxiway [taxiways], Time [time]."
-- Taxiway light intensity → "[Callsign], Roger, intensity will be reduced."
-- ATC Clearance → "[Callsign], Ground: Clearance: Cleared to [destination] via [route], flight level [FL]. After departure runway [RWY], turn [direction]. Climb on track, initially climb to flight level [initial FL]. Request level change from [Approach]."
+Question 1A — Radio Check:
+  Expected Pilot TX: "Delhi Ground Air India 887 request Radio Check on frequency 118.5"
+  ATC Response: "Air India 887 Delhi Ground Readability 5"
+  Expected Pilot Readback: "Readability 5 Air India 887"
+  ATC after readback: (Go to next question)
 
-SCENARIO 3 (Tower - Holding Point / Takeoff / Airborne):
-- Holding Point → "[Callsign] heavy, [Station] Tower: Enter line up runway [RWY]. Report when ready for departure."
-- Takeoff → "[Callsign], Tower: Wind [wind], runway [RWY], cleared for takeoff"
-- Abandoned takeoff → "[Callsign], Tower: Roger. [Instructions for return/revised clearance]"
-- Airborne report → "[Callsign], [Station] Tower: Roger, contact [next station] [frequency]"
+Question 1B — Time Check:
+  Expected Pilot TX: "Delhi Ground Air India 887 Request Time Check"
+  ATC Response: "Air India 887 Delhi Ground Time Zero Five"
+  Expected Pilot Readback: "Time Zero Five Air India 887"
+  ATC after readback: (Go to next question)
 
-SCENARIO 4 (Approach - Climb / Deviation):
-- Passing altitude → "[Callsign] heavy, [Station] Approach, continue climb flight level [FL], report passing [level]"
-- Weather deviation → "[Callsign], Approach: Roger, deviation [distance] [direction] of track approved. Contact [Control] [frequency] and inform your deviation."
+Question 1C — Departure Information:
+  Expected Pilot TX: "Delhi Ground Air India 887 Request Departure Information"
+  ATC Response: "Air India 887 Delhi Ground Monitor Information Kilo — Runway Zero Niner, Wind Three Four Zero Degrees Zero Three Knots, QNH One Zero One Six, Temperature One Two, Visibility Three Thousand Metres"
+  Expected Pilot Readback: "Monitored Information Kilo — Runway Zero Niner, Wind Three Four Zero Degrees Zero Three Knots, QNH One Zero One Six, Temperature One Two, Visibility Three Thousand Metres, Air India 887"
+  ATC after readback: "Roger" (Go to next scenario)
 
-SCENARIO 5 (Area Control - Position / En-route):
-- Position report with deviation → "[Callsign] heavy, [Station] Control: Roger, continue climb to flight level [FL], report [waypoint] when clear of weather and resuming normal navigation."
-- Position report normal → "[Callsign], Control: Maintain flight level [FL], report [next point]"
+SCENARIO 2 — SMC (Pushback / Taxi / Light / Clearance):
 
-SCENARIO 6 (Control - Descent / Emergency):
-- Descent request → "[Callsign], [Station] Control: Descend to flight level [FL], report [point]"
-- MAYDAY pressurization → "[Callsign], [Station] Control: Roger Mayday. Report reaching flight level [FL]. Report if any assistance required."
-- Cancel emergency → "Roger. All stations [Station] Control, distress traffic ended"
+Question 2A — Pushback and Start Up:
+  Expected Pilot TX: "Delhi Ground Air India 887, Position Stand 11, Standby for pushback due Traffic, Time 1105, Security Check Carried Out, Persons on Board One Five Two, Request Pushback and Start Up, Information Kilo"
+  ATC Response (step 1): "Air India 887 Delhi Ground Clear of traffic"
+  Then Pilot says: "Request Pushback and Start Up"
+  ATC Response (step 2): "Pushback approved facing west, on completion of pushback, Start Up approved"
+  Expected Pilot Readback: "Pushback approved facing west, on completion of pushback, Start Up approved, Air India 887"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 2B — Taxi:
+  Expected Pilot TX: "Delhi Ground Air India 887 Request Taxi"
+  ATC Response: "Air India 887 Delhi Ground Taxi to Holding Point Runway Zero Niner via Taxiway Charlie and Delta"
+  Expected Pilot Readback: "Taxi to Holding Point Runway Zero Niner via Taxiway Charlie and Delta, Air India 887"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 2C — Taxiway Edge Light:
+  Expected Pilot TX: "Delhi Ground Air India 887 Taxiway Edge Light Intensity High, Request to Reduce"
+  ATC Response: "Air India 887 Delhi Ground Roger, will reduce Edge Light. Taxiway Edge Light Intensity has been reduced, confirm OK"
+  Expected Pilot Readback: "OK Air India 887"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 2D — ATC Clearance:
+  Expected Pilot TX: "Delhi Ground Air India 887 Request Clearance for Lucknow Flight Level Three Six Zero"
+  ATC Response: "Clearance — Cleared to Lucknow via Romeo Four Six Zero ALIGARH PAVRU Flight Level Three Six Zero, After Departure Runway Zero Niner Turn Right Climb on Track, Initially Climb to Flight Level One Six Zero, Request Level Change From Delhi Approach"
+  Expected Pilot Readback: "Cleared to Lucknow via Romeo Four Six Zero ALIGARH PAVRU Flight Level Three Six Zero, After Departure Runway Zero Niner Turn Right Climb on Track, Initially Climb to Flight Level One Six Zero, Will Request Level Change From Delhi Approach, Air India 887"
+  ATC after readback: "Readback correct" (Go to next scenario)
+
+SCENARIO 3 — Tower (Line Up / Takeoff / Rejected Takeoff / Re-lineup):
+
+Question 3A — Enter Lineup:
+  Expected Pilot TX: "Delhi Tower Air India 887 on Frequency One One Eight Decimal One Zero, Position Taxiway Delta approaching Holding Point Runway Zero Niner, Request Enter Lineup Runway Zero Niner"
+  ATC Response: "Air India 887 Delhi Tower, Enter Lineup Runway Zero Niner, Report when Ready for Departure"
+  Expected Pilot Readback: "Cleared Lineup Runway Zero Niner, will Report when Ready for Departure, Air India 887"
+  ATC after readback: "Roger"
+
+Question 3B — Takeoff Clearance:
+  Expected Pilot TX: "Delhi Tower Air India 887, Position Lineup Runway Zero Niner, Ready for Departure, Request Takeoff Clearance"
+  ATC Response: "Air India 887 Delhi Tower, Takeoff Cleared Runway Zero Niner"
+  Expected Pilot Readback: "Takeoff Cleared Runway Zero Niner, Air India 887"
+  ATC after readback: "Roger"
+
+Question 3C — Rejected Takeoff:
+  Expected Pilot TX: "Delhi Tower Air India 887, Rejecting Takeoff due Runway Obstructed, Blue Bull sighted on Runway, Stopping Immediately"
+  ATC Response: "Air India 887 Delhi Tower, Roger, Rejected Takeoff below V1, All operations normal, Vacate Runway via Taxiway Bravo"
+  Expected Pilot TX (follow-up): "Roger, Vacate Runway via Taxiway Bravo, Request Clearance to vacate Runway and Line Up again for Departure"
+  ATC Response: "Cleared to Holding Point Runway Zero Niner via Taxi Bravo One, Charlie, Delta, Report reaching Holding Point Runway Zero Niner"
+  Expected Pilot Readback: "Will Vacate Runway via Taxiway Bravo, Cleared to Holding Point Runway Zero Niner via Taxi Bravo One, Charlie, Delta, Will Report reaching Holding Point Runway Zero Niner, Air India 887"
+  THEN Pilot reports at holding point: "Delhi Tower Air India 887, Holding Point Runway Zero Niner"
+  ATC Response: "Air India 887 Delhi Tower, Enter Lineup Runway Zero Niner"
+  Expected Pilot Readback: "Will Enter Runway Zero Niner, Air India 887"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 3D — Second Takeoff:
+  Expected Pilot TX: "Delhi Tower Air India 887, Ready for Departure, Request Takeoff Clearance"
+  ATC Response: "Air India 887 Delhi Tower, Cleared for Takeoff"
+  Expected Pilot Readback: "Cleared for Takeoff, Air India 887"
+  ATC after readback: "Roger" (Go to next scenario)
+
+SCENARIO 4 — Approach (Climb):
+
+Question 4A — Contact Approach and Request Climb:
+  Expected Pilot TX: "Delhi Approach Air India 887 on Frequency One Two One Decimal Two Five (or Three Five), Passing Four Thousand Feet for Flight Level One Six Zero, Request Climb Flight Level Three Six Zero"
+  ATC Response: "Air India 887 Delhi Approach, Continue Climb Flight Level Two Five Zero, Report Passing Flight Level One Six Zero, Stand By for Flight Level Three Six Zero"
+  Expected Pilot Readback: "Will Climb Flight Level Two Five Zero, Report Passing Flight Level One Six Zero, Stand By for Flight Level Three Six Zero, Air India 887"
+  ATC after readback: "Roger" (Go to next scenario)
+
+SCENARIO 5 — Area Control (Position Report and Climb):
+
+Question 5A — Position Report and Request FL360:
+  Expected Pilot TX: "Delhi Control Air India 887, Position over ALIGARH Time One One Four Zero, Route Romeo Four Six Zero, Passing Flight Level One Seven Zero for Flight Level Two Five Zero, Estimate PAVRU One One Four Five, Request Climb to Flight Level Three Six Zero"
+  ATC Response: "Air India 887 Delhi Control, Cleared Climb Flight Level Three Six Zero"
+  Expected Pilot Readback: "Cleared Climb Flight Level Three Six Zero, Air India 887"
+  ATC after readback: "Roger" (Go to next scenario)
+
+SCENARIO 6 — Lucknow Approach (Descent / Emergency / Cancel Emergency):
+
+Question 6A — Contact Lucknow Approach and Request Descent:
+  Expected Pilot TX: "Lucknow Approach Air India 887, Position ALIGARH One Two Zero Five, Route Romeo Four Six Zero, Flight Level Three Six Zero, Estimate PAVRU One Two Two Five, ETA Lucknow One Two Four Five, Request Descend Clearance"
+  ATC Response: "Air India 887 Lucknow Approach, Descend to Flight Level One Five Zero"
+  Expected Pilot Readback: "Will Descend to Flight Level One Five Zero, Air India 887"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 6B — MAYDAY (Pressurization Failure):
+  Expected Pilot TX: "MAYDAY MAYDAY MAYDAY, Air India 887 Lucknow Approach, Aircraft type Boeing Triple Seven, Experiencing Pressurization Failure, Making Emergency Descend from Flight Level One Five Zero to Flight Level One Zero Zero, Persons on Board One Five Two, Endurance Zero Five Zero Zero Hours"
+  ATC Response: "Lucknow Approach Air India 887, Roger Mayday, Squawk Seven Seven Zero Zero on Frequency One Two One Decimal Two Zero, Report reaching Flight Level One Zero Zero, Report if any assistance required"
+  Expected Pilot Readback: "Squawk Seven Seven Zero Zero, Frequency One Two One Decimal Two Zero, Will Report reaching Flight Level One Zero Zero, Air India 887"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 6C — Cancel Emergency:
+  Expected Pilot TX: "Lucknow Approach Air India 887, Maintaining Flight Level One Zero Zero, Cabin Pressurization stated working normal, Cancelling Emergency"
+  ATC Response: "Air India 887 Lucknow Approach, Roger"
+  (End of Paper 1)
 
 ═══════════════════════════════════════════════════════════
 REFERENCE ATC RESPONSES — PAPER 2 (JABALPUR → INDORE, AIC-212)
