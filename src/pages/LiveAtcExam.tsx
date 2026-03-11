@@ -508,7 +508,7 @@ const LiveAtcExam = () => {
               </div>
             )}
 
-            {paperId === "rtr2-paper-2" && (
+            {paperId && solutionImagesMap[paperId] && (
               <div className="mb-4">
                 {visitedScenarios.size >= scenarios.length ? (
                   <>
@@ -517,7 +517,7 @@ const LiveAtcExam = () => {
                       className="w-full gap-2 border-primary/30 text-primary hover:bg-primary/10"
                       onClick={() => setShowSolution(!showSolution)}
                     >
-                      <FileText className="w-4 h-4" /> {showSolution ? "Hide Solution" : "View Solution — Paper 2"}
+                      <FileText className="w-4 h-4" /> {showSolution ? "Hide Solution" : `View Solution — ${solutionImagesMap[paperId].label}`}
                     </Button>
                     <AnimatePresence>
                       {showSolution && (
@@ -528,8 +528,9 @@ const LiveAtcExam = () => {
                           transition={{ duration: 0.3 }}
                           className="mt-4 space-y-3 overflow-hidden"
                         >
-                          <img src={paper2SolutionPage1} alt="Paper 2 Solution — Page 1" className="w-full rounded-lg border border-border/50 shadow-md" />
-                          <img src={paper2SolutionPage2} alt="Paper 2 Solution — Page 2" className="w-full rounded-lg border border-border/50 shadow-md" />
+                          {solutionImagesMap[paperId].images.map((img, idx) => (
+                            <img key={idx} src={img} alt={`${solutionImagesMap[paperId].label} Solution — Page ${idx + 1}`} className="w-full rounded-lg border border-border/50 shadow-md" />
+                          ))}
                         </motion.div>
                       )}
                     </AnimatePresence>

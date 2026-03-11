@@ -107,6 +107,13 @@ const RtrPart2Exam = () => {
     };
   }, [examStarted, examEnded]);
 
+  // Track visited scenarios
+  useEffect(() => {
+    if (examStarted && !examEnded) {
+      setVisitedScenarios(prev => new Set([...prev, currentScenario]));
+    }
+  }, [currentScenario, examStarted, examEnded]);
+
   if (!paper) {
     return (
       <div className="min-h-screen bg-gradient-aviation flex items-center justify-center">
