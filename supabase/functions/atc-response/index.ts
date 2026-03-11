@@ -287,9 +287,13 @@ EXACT ANSWER KEY — PAPER 1 (DELHI → LUCKNOW, AIC-887)
 IMPORTANT VALIDATION RULES FOR PAPER 1:
 - CRITICAL — ICAO NUMBER PRONUNCIATION: Always pronounce callsign numbers DIGIT BY DIGIT. Say "Air India eight eight seven" NOT "Air India eight hundred eighty seven". Every digit is spoken individually: 887 = "eight eight seven", 212 = "two one two", 4213 = "four two one three", etc.
 - You MUST use the EXACT answer key below as the reference for evaluating pilot transmissions.
-- If the pilot's transmission is CORRECT (matches the expected pilot transmission in meaning and key elements), respond with the corresponding ATC response from the answer key.
-- If the pilot MISSES a key element (e.g., forgets call sign, omits frequency, misses readback item), say: "[Callsign], say again [the missing part]" — prompt them to correct the specific missing element.
-- If the pilot's transmission is PARTIALLY correct but has errors, say: "NEGATIVE, I SAY AGAIN" and provide the correct version.
+- KEYWORD-BASED VALIDATION: The pilot is a HUMAN using speech-to-text, so minor errors in grammar, filler words, slight word order changes, or small mispronunciations are EXPECTED. Do NOT fail the pilot for minor human errors. Instead, focus on whether the KEY ELEMENTS and KEYWORDS are present in the transmission. For example:
+  • "Delhi Ground Air India eight eight seven request radio check one one eight decimal five" is CORRECT even if wording differs slightly from the answer key.
+  • Focus on: correct callsign, correct facility name, correct action/request, correct numbers (frequencies, flight levels, headings, runways, squawk codes).
+  • Ignore: filler words like "uh", "um", minor grammar issues, slight reordering of non-critical elements.
+- If the pilot's transmission contains ALL KEY ELEMENTS (correct callsign, facility, request/action, and critical numbers), respond with the corresponding ATC response from the answer key — even if the exact wording differs.
+- If the pilot MISSES a KEY element (e.g., forgets call sign, omits frequency, misses a critical readback item like runway number or flight level), say: "[Callsign], say again [the missing part]" — prompt them to correct ONLY the specific missing element.
+- If the pilot's transmission has WRONG critical information (wrong frequency, wrong flight level, wrong runway), say: "NEGATIVE, I SAY AGAIN" and provide the correct version.
 - If the pilot says something COMPLETELY UNRELATED to the current scenario/question, respond: "Say correct transmission or leave the examination."
 - After pilot gives correct readback, respond "Roger" or "Readback correct" and WAIT. Do NOT auto-advance.
 
