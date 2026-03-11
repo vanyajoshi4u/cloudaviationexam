@@ -310,7 +310,7 @@ Deno.serve(async (req) => {
       // Always use the published custom domain to avoid auth-bridge interception
       const origin = "https://cloudaviationexams.com";
       const verificationLink = `${origin}/verify-login?token=${verifications[0].token}&uid=${user.id}`;
-      sendVerificationEmail(verificationLink);
+      await sendVerificationEmail(verificationLink);
     };
 
     if (action === "check-session" || action === "check-and-verify") {
