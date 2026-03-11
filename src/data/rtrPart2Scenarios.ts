@@ -185,7 +185,7 @@ const paper1Scenarios: RtrScenario[] = [
     questions: [
       "You are approaching Holding Point D for Runway-09. Seek permission to enter Runway 09.",
       "After line up Rwy-09, Obtain Take off permission from TWR.",
-      "During take off roll below V1 you observed one Blue Bull on the Runway and had abandoned take off. Inform ATC regarding this occurrence. Your all operation is normal. Inform Tower about the same you want to continue flight as per flight plan request revised clearance for departure from ATC. Request for enter and line up Runway 09.",
+      "During take off roll below V1 you observed one Blue Bull on the Runway and had abandoned take off. Inform ATC regarding this occurrence. Your all operation is normal. Request tower for enter and line up Runway 09.",
       "Obtain Take off permission from Tower.",
       "Your airborne time 1125. Report airborne time to ATC.",
     ],
