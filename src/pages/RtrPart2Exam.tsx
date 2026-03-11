@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X } from "lucide-react";
+import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
