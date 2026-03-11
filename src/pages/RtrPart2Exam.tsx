@@ -81,6 +81,8 @@ const RtrPart2Exam = () => {
     setTimeLeft(EXAM_DURATION);
     setCurrentScenario(0);
     setExamEnded(false);
+    setVisitedScenarios(new Set([0]));
+    setShowSolution(false);
   }, []);
 
   const endExam = useCallback(() => {
