@@ -457,6 +457,16 @@ const LiveAtcExam = () => {
               </div>
             </div>
 
+            {/* Instructions */}
+            <div className="glass-panel px-5 py-4 rounded-xl mb-6 text-left">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-foreground mb-2">📋 Instructions</h3>
+              <ol className="text-xs sm:text-sm text-muted-foreground space-y-2 list-decimal list-inside">
+                <li>This exam is <strong className="text-foreground">Artificial Intelligence powered</strong> — AI can make mistakes. Use your own judgement.</li>
+                <li>Start your answer by stating the transmitting number, e.g. <strong className="text-foreground">"Transmitting One Alpha…"</strong>, then proceed with your transmission.</li>
+                <li>Use standard <strong className="text-foreground">ICAO radiotelephony phraseology</strong> throughout.</li>
+              </ol>
+            </div>
+
             <div className="flex items-start gap-3 p-4 rounded-xl bg-destructive/8 border border-destructive/15 mb-8 text-left">
               <AlertTriangle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
               <p className="text-xs sm:text-sm text-destructive leading-relaxed">
