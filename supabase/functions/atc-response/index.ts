@@ -285,6 +285,7 @@ CURRENT QUESTION/TASK: ${currentQuestion}
 EXACT ANSWER KEY — PAPER 1 (DELHI → LUCKNOW, AIC-887)
 ═══════════════════════════════════════════════════════════
 IMPORTANT VALIDATION RULES FOR PAPER 1:
+- CRITICAL — ICAO NUMBER PRONUNCIATION: Always pronounce callsign numbers DIGIT BY DIGIT. Say "Air India eight eight seven" NOT "Air India eight hundred eighty seven". Every digit is spoken individually: 887 = "eight eight seven", 212 = "two one two", 4213 = "four two one three", etc.
 - You MUST use the EXACT answer key below as the reference for evaluating pilot transmissions.
 - If the pilot's transmission is CORRECT (matches the expected pilot transmission in meaning and key elements), respond with the corresponding ATC response from the answer key.
 - If the pilot MISSES a key element (e.g., forgets call sign, omits frequency, misses readback item), say: "[Callsign], say again [the missing part]" — prompt them to correct the specific missing element.
