@@ -16,6 +16,24 @@ import atsRouteRanchiRaipur from "@/assets/ats-route-ranchi-raipur.png";
 import atsRouteBhubaneswarNagpur from "@/assets/ats-route-bhubaneswar-nagpur.png";
 import atsRouteJaipurAhmedabad from "@/assets/ats-route-jaipur-ahmedabad.png";
 import atsRouteHyderabadChennai from "@/assets/ats-route-hyderabad-chennai.png";
+import paper1SolutionPage1 from "@/assets/paper1-solution-page1.jpg";
+import paper1SolutionPage2 from "@/assets/paper1-solution-page2.jpg";
+import paper1SolutionPage3 from "@/assets/paper1-solution-page3.jpg";
+import paper1SolutionPage4 from "@/assets/paper1-solution-page4.jpg";
+import paper1SolutionPage5 from "@/assets/paper1-solution-page5.jpg";
+import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
+import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
+
+const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
+  "rtr2-paper-1": {
+    images: [paper1SolutionPage1, paper1SolutionPage2, paper1SolutionPage3, paper1SolutionPage4, paper1SolutionPage5],
+    label: "Paper 1",
+  },
+  "rtr2-paper-2": {
+    images: [paper2SolutionPage1, paper2SolutionPage2],
+    label: "Paper 2",
+  },
+};
 
 const chartImageMap: Record<string, string> = {
   "rtr2-paper-1": atsRouteDelhiLucknow,
