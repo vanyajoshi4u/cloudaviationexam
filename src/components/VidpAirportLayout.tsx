@@ -8,7 +8,7 @@ interface VidpAirportLayoutProps {
   holdingPointLabel?: string;
 }
 
-const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VIDP DELHI AIRPORT / AERODROME LAYOUT", standLeft = "5", standRight = "6", taxiwayLeft = "D", holdingPointLabel = "D" }: VidpAirportLayoutProps) => (
+const VidpAirportLayout = ({ runwayLeft = "09", runwayRight = "27", title = "VIDP DELHI AIRPORT / AERODROME LAYOUT", standLeft = "11", standRight = "12", taxiwayLeft = "D", holdingPointLabel = "D" }: VidpAirportLayoutProps) => (
   <svg viewBox="0 0 600 500" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
     {/* Title */}
     <text x="300" y="24" textAnchor="middle" className="fill-foreground" fontSize="14" fontWeight="bold" textDecoration="underline">
