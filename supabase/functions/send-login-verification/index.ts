@@ -399,7 +399,7 @@ Deno.serve(async (req) => {
 
       if (deviceCheck === false) {
         return new Response(JSON.stringify({
-          error: "You are up to the device limit. You have already set up 3 devices. For more info contact cloudaviation4u@gmail.com",
+          error: "You are up to the device limit. For more info contact cloudaviation4u@gmail.com",
           deviceBlocked: true,
         }), {
           status: 403,
