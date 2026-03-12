@@ -352,11 +352,14 @@ Deno.serve(async (req) => {
         );
 
         if (deviceCheck === false) {
+          // Fetch user's device limit for error message
+          const { data: profileData } = await dbQuery(`profiles?user_id=eq.${user.id}&select=max_devices&limit=1`);
+          const maxDevices = profileData?.[0]?.max_devices || 3;
           logAudit({ user_id: user.id, action: "login_blocked_device_limit", ip_address: ip, details: { fingerprint: normalizedFingerprint } });
           return new Response(JSON.stringify({
             hasActiveSession: false,
             deviceBlocked: true,
-            error: "You are up to the device limit. You have already set up 3 devices. For more info contact cloudaviation4u@gmail.com",
+            error: `You are up to the device limit. You have already set up ${maxDevices} devices. For more info contact cloudaviation4u@gmail.com`,
           }), {
             status: 403,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -396,7 +399,7 @@ Deno.serve(async (req) => {
 
       if (deviceCheck === false) {
         return new Response(JSON.stringify({
-          error: "You are up to the device limit. You have already set up 3 devices. For more info contact cloudaviation4u@gmail.com",
+          error: "You are up to the device limit. For more info contact cloudaviation4u@gmail.com",
           deviceBlocked: true,
         }), {
           status: 403,

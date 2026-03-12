@@ -188,6 +188,7 @@ export type Database = {
           full_name: string
           id: string
           login_count: number
+          max_devices: number
           phone: string
           review_submitted: boolean
           updated_at: string
@@ -199,6 +200,7 @@ export type Database = {
           full_name: string
           id?: string
           login_count?: number
+          max_devices?: number
           phone: string
           review_submitted?: boolean
           updated_at?: string
@@ -210,6 +212,7 @@ export type Database = {
           full_name?: string
           id?: string
           login_count?: number
+          max_devices?: number
           phone?: string
           review_submitted?: boolean
           updated_at?: string
