@@ -161,7 +161,65 @@ const AdminDashboard = () => {
     setReferralsLoading(false);
   };
 
-  const filtered = filter === "all" ? subscriptions : subscriptions.filter((s) => s.status === filter);
+  const sendWhatsApp = async () => {
+    if (!waMessage.trim()) {
+      toast.error("Please enter a message");
+      return;
+    }
+    setWaSending(true);
+    try {
+      let numbers: string[] = [];
+      if (waRecipients === "all") {
+        // Get all user phone numbers
+        const { data: profiles } = await supabase.from("profiles").select("phone");
+        numbers = profiles?.map(p => p.phone).filter(Boolean) || [];
+      } else if (waRecipients === "subscribed") {
+        const { data: subs } = await supabase
+          .from("subscriptions")
+          .select("user_id")
+          .eq("status", "approved");
+        if (subs && subs.length > 0) {
+          const userIds = [...new Set(subs.map(s => s.user_id))];
+          const { data: profiles } = await supabase
+            .from("profiles")
+            .select("phone, user_id")
+            .in("user_id", userIds);
+          numbers = profiles?.map(p => p.phone).filter(Boolean) || [];
+        }
+      } else {
+        numbers = waCustomNumbers.split(",").map(n => n.trim()).filter(Boolean);
+      }
+
+      if (numbers.length === 0) {
+        toast.error("No recipients found");
+        setWaSending(false);
+        return;
+      }
+
+      // Format numbers with country code if missing
+      const formatted = numbers.map(n => {
+        const clean = n.replace(/\D/g, "");
+        return clean.startsWith("91") ? `+${clean}` : `+91${clean}`;
+      });
+
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await supabase.functions.invoke("send-whatsapp", {
+        body: { to: formatted, message: waMessage },
+      });
+
+      if (res.error) throw res.error;
+      const results = res.data?.results || [];
+      const sent = results.filter((r: any) => r.success).length;
+      const failed = results.filter((r: any) => !r.success).length;
+      toast.success(`WhatsApp sent: ${sent} delivered, ${failed} failed`);
+      setWaMessage("");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send WhatsApp messages");
+    } finally {
+      setWaSending(false);
+    }
+  };
+
 
   const actionColors: Record<string, string> = {
     login_verified: "text-green-500",
