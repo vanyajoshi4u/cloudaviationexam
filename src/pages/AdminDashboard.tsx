@@ -25,11 +25,15 @@ const AdminDashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState<"subscriptions" | "audit" | "referrals">("subscriptions");
+  const [activeTab, setActiveTab] = useState<"subscriptions" | "audit" | "referrals" | "whatsapp">("subscriptions");
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [auditLoading, setAuditLoading] = useState(false);
   const [referrals, setReferrals] = useState<any[]>([]);
   const [referralsLoading, setReferralsLoading] = useState(false);
+  const [waMessage, setWaMessage] = useState("");
+  const [waRecipients, setWaRecipients] = useState<string>("all");
+  const [waCustomNumbers, setWaCustomNumbers] = useState("");
+  const [waSending, setWaSending] = useState(false);
 
   useEffect(() => {
     const checkAdmin = async () => {
