@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut, ScrollText, Gift, Users } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut, ScrollText, Gift, Users, MessageSquare, Send } from "lucide-react";
 
 interface Subscription {
   id: string;
@@ -24,11 +25,15 @@ const AdminDashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState<"subscriptions" | "audit" | "referrals">("subscriptions");
+  const [activeTab, setActiveTab] = useState<"subscriptions" | "audit" | "referrals" | "whatsapp">("subscriptions");
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [auditLoading, setAuditLoading] = useState(false);
   const [referrals, setReferrals] = useState<any[]>([]);
   const [referralsLoading, setReferralsLoading] = useState(false);
+  const [waMessage, setWaMessage] = useState("");
+  const [waRecipients, setWaRecipients] = useState<string>("all");
+  const [waCustomNumbers, setWaCustomNumbers] = useState("");
+  const [waSending, setWaSending] = useState(false);
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -156,6 +161,65 @@ const AdminDashboard = () => {
     setReferralsLoading(false);
   };
 
+  const sendWhatsApp = async () => {
+    if (!waMessage.trim()) {
+      toast.error("Please enter a message");
+      return;
+    }
+    setWaSending(true);
+    try {
+      let numbers: string[] = [];
+      if (waRecipients === "all") {
+        // Get all user phone numbers
+        const { data: profiles } = await supabase.from("profiles").select("phone");
+        numbers = profiles?.map(p => p.phone).filter(Boolean) || [];
+      } else if (waRecipients === "subscribed") {
+        const { data: subs } = await supabase
+          .from("subscriptions")
+          .select("user_id")
+          .eq("status", "approved");
+        if (subs && subs.length > 0) {
+          const userIds = [...new Set(subs.map(s => s.user_id))];
+          const { data: profiles } = await supabase
+            .from("profiles")
+            .select("phone, user_id")
+            .in("user_id", userIds);
+          numbers = profiles?.map(p => p.phone).filter(Boolean) || [];
+        }
+      } else {
+        numbers = waCustomNumbers.split(",").map(n => n.trim()).filter(Boolean);
+      }
+
+      if (numbers.length === 0) {
+        toast.error("No recipients found");
+        setWaSending(false);
+        return;
+      }
+
+      // Format numbers with country code if missing
+      const formatted = numbers.map(n => {
+        const clean = n.replace(/\D/g, "");
+        return clean.startsWith("91") ? `+${clean}` : `+91${clean}`;
+      });
+
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await supabase.functions.invoke("send-whatsapp", {
+        body: { to: formatted, message: waMessage },
+      });
+
+      if (res.error) throw res.error;
+      const results = res.data?.results || [];
+      const sent = results.filter((r: any) => r.success).length;
+      const failed = results.filter((r: any) => !r.success).length;
+      toast.success(`WhatsApp sent: ${sent} delivered, ${failed} failed`);
+      setWaMessage("");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send WhatsApp messages");
+    } finally {
+      setWaSending(false);
+    }
+  };
+
   const filtered = filter === "all" ? subscriptions : subscriptions.filter((s) => s.status === filter);
 
   const actionColors: Record<string, string> = {
@@ -220,6 +284,14 @@ const AdminDashboard = () => {
             className="text-xs"
           >
             <Gift className="w-3 h-3 mr-1" /> Referrals
+          </Button>
+          <Button
+            variant={activeTab === "whatsapp" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setActiveTab("whatsapp")}
+            className="text-xs"
+          >
+            <MessageSquare className="w-3 h-3 mr-1" /> WhatsApp
           </Button>
         </div>
 
@@ -427,6 +499,75 @@ const AdminDashboard = () => {
               </div>
             )}
           </>
+        ) : activeTab === "whatsapp" ? (
+          <div className="max-w-lg">
+            <h2 className="font-display text-sm font-bold text-foreground mb-4">Send WhatsApp Message</h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Recipients</label>
+                <div className="flex gap-2 flex-wrap">
+                  {[
+                    { value: "all", label: "All Users" },
+                    { value: "subscribed", label: "Subscribed Only" },
+                    { value: "custom", label: "Custom Numbers" },
+                  ].map((opt) => (
+                    <Button
+                      key={opt.value}
+                      variant={waRecipients === opt.value ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setWaRecipients(opt.value)}
+                      className="text-xs"
+                    >
+                      {opt.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {waRecipients === "custom" && (
+                <div>
+                  <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                    Phone Numbers (comma-separated, with country code)
+                  </label>
+                  <Textarea
+                    value={waCustomNumbers}
+                    onChange={(e) => setWaCustomNumbers(e.target.value)}
+                    placeholder="+919876543210, +919876543211"
+                    className="text-sm"
+                    rows={2}
+                  />
+                </div>
+              )}
+
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Message</label>
+                <Textarea
+                  value={waMessage}
+                  onChange={(e) => setWaMessage(e.target.value)}
+                  placeholder="Type your WhatsApp message here..."
+                  className="text-sm"
+                  rows={5}
+                />
+                <p className="text-[10px] text-muted-foreground mt-1">
+                  Note: For sandbox mode, recipients must have joined your sandbox first.
+                </p>
+              </div>
+
+              <Button
+                onClick={sendWhatsApp}
+                disabled={waSending || !waMessage.trim()}
+                className="w-full"
+              >
+                {waSending ? (
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                ) : (
+                  <Send className="w-4 h-4 mr-2" />
+                )}
+                Send WhatsApp Message
+              </Button>
+            </div>
+          </div>
         ) : null}
       </main>
     </div>
