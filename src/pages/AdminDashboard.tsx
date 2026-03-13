@@ -285,6 +285,14 @@ const AdminDashboard = () => {
           >
             <Gift className="w-3 h-3 mr-1" /> Referrals
           </Button>
+          <Button
+            variant={activeTab === "whatsapp" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setActiveTab("whatsapp")}
+            className="text-xs"
+          >
+            <MessageSquare className="w-3 h-3 mr-1" /> WhatsApp
+          </Button>
         </div>
 
         {activeTab === "subscriptions" ? (
