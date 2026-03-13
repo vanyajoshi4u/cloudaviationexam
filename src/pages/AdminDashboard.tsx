@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut, ScrollText, Gift, Users } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { CheckCircle, XCircle, Clock, ExternalLink, Loader2, ShieldCheck, LogOut, ScrollText, Gift, Users, MessageSquare, Send } from "lucide-react";
 
 interface Subscription {
   id: string;
