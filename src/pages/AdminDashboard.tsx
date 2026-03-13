@@ -220,6 +220,7 @@ const AdminDashboard = () => {
     }
   };
 
+  const filtered = filter === "all" ? subscriptions : subscriptions.filter((s) => s.status === filter);
 
   const actionColors: Record<string, string> = {
     login_verified: "text-green-500",
