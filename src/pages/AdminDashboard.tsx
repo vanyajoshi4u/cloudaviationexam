@@ -499,6 +499,75 @@ const AdminDashboard = () => {
               </div>
             )}
           </>
+        ) : activeTab === "whatsapp" ? (
+          <div className="max-w-lg">
+            <h2 className="font-display text-sm font-bold text-foreground mb-4">Send WhatsApp Message</h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Recipients</label>
+                <div className="flex gap-2 flex-wrap">
+                  {[
+                    { value: "all", label: "All Users" },
+                    { value: "subscribed", label: "Subscribed Only" },
+                    { value: "custom", label: "Custom Numbers" },
+                  ].map((opt) => (
+                    <Button
+                      key={opt.value}
+                      variant={waRecipients === opt.value ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setWaRecipients(opt.value)}
+                      className="text-xs"
+                    >
+                      {opt.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {waRecipients === "custom" && (
+                <div>
+                  <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                    Phone Numbers (comma-separated, with country code)
+                  </label>
+                  <Textarea
+                    value={waCustomNumbers}
+                    onChange={(e) => setWaCustomNumbers(e.target.value)}
+                    placeholder="+919876543210, +919876543211"
+                    className="text-sm"
+                    rows={2}
+                  />
+                </div>
+              )}
+
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1 block">Message</label>
+                <Textarea
+                  value={waMessage}
+                  onChange={(e) => setWaMessage(e.target.value)}
+                  placeholder="Type your WhatsApp message here..."
+                  className="text-sm"
+                  rows={5}
+                />
+                <p className="text-[10px] text-muted-foreground mt-1">
+                  Note: For sandbox mode, recipients must have joined your sandbox first.
+                </p>
+              </div>
+
+              <Button
+                onClick={sendWhatsApp}
+                disabled={waSending || !waMessage.trim()}
+                className="w-full"
+              >
+                {waSending ? (
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                ) : (
+                  <Send className="w-4 h-4 mr-2" />
+                )}
+                Send WhatsApp Message
+              </Button>
+            </div>
+          </div>
         ) : null}
       </main>
     </div>
