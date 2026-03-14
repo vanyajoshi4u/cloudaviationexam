@@ -24,6 +24,7 @@ import paper1SolutionPage4 from "@/assets/paper1-solution-page4.jpg";
 import paper1SolutionPage5 from "@/assets/paper1-solution-page5.jpg";
 import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
 import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
+import paper2SolutionPage3 from "@/assets/paper2-solution-page3.jpg";
 
 const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
   "rtr2-paper-1": {
