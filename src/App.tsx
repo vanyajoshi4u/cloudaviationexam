@@ -18,6 +18,7 @@ import EmailConfirmed from "./pages/EmailConfirmed";
 import ResetPassword from "./pages/ResetPassword";
 import RtrPart2Exam from "./pages/RtrPart2Exam";
 import LiveAtcExam from "./pages/LiveAtcExam";
+import AtcAnswerViewer from "./pages/AtcAnswerViewer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
