@@ -546,6 +546,29 @@ const RtrPart2Exam = () => {
                 </div>
               ))}
             </div>
+          {/* QR Code for ATC Examiner */}
+          {paperId && solutionImagesMap[paperId] && (
+            <div className="border-b border-border/30 p-3">
+              <div className="flex flex-col items-center gap-2">
+                <div className="flex items-center gap-1.5">
+                  <QrCode className="w-3.5 h-3.5 text-primary" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-primary">ATC Examiner Answer</span>
+                </div>
+                <div className="bg-white p-2 rounded-lg shadow-sm">
+                  <QRCodeSVG
+                    value={`${window.location.origin}/atc-answer/${paperId}`}
+                    size={100}
+                    level="M"
+                    includeMargin={false}
+                  />
+                </div>
+                <p className="text-[9px] text-muted-foreground text-center leading-tight max-w-[200px]">
+                  Scan this QR — Answer sheet for the person acting as ATC examiner
+                </p>
+              </div>
+            </div>
+          )}
+
           </div>
 
           </div>
