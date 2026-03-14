@@ -2,7 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X, FileText } from "lucide-react";
+import { ArrowLeft, Mic, Timer, AlertTriangle, Trophy, ChevronRight, Lock, X, FileText, QrCode } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import RtrUpgradeDialog from "@/components/RtrUpgradeDialog";
@@ -23,6 +24,7 @@ import paper1SolutionPage4 from "@/assets/paper1-solution-page4.jpg";
 import paper1SolutionPage5 from "@/assets/paper1-solution-page5.jpg";
 import paper2SolutionPage1 from "@/assets/paper2-solution-page1.jpg";
 import paper2SolutionPage2 from "@/assets/paper2-solution-page2.jpg";
+import paper2SolutionPage3 from "@/assets/paper2-solution-page3.jpg";
 
 const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
   "rtr2-paper-1": {
@@ -30,7 +32,7 @@ const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
     label: "Paper 1",
   },
   "rtr2-paper-2": {
-    images: [paper2SolutionPage1, paper2SolutionPage2],
+    images: [paper2SolutionPage1, paper2SolutionPage2, paper2SolutionPage3],
     label: "Paper 2",
   },
 };
@@ -544,6 +546,29 @@ const RtrPart2Exam = () => {
                 </div>
               ))}
             </div>
+          {/* QR Code for ATC Examiner */}
+          {paperId && solutionImagesMap[paperId] && (
+            <div className="border-b border-border/30 p-3">
+              <div className="flex flex-col items-center gap-2">
+                <div className="flex items-center gap-1.5">
+                  <QrCode className="w-3.5 h-3.5 text-primary" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-primary">ATC Examiner Answer</span>
+                </div>
+                <div className="bg-white p-2 rounded-lg shadow-sm">
+                  <QRCodeSVG
+                    value={`${window.location.origin}/atc-answer/${paperId}`}
+                    size={100}
+                    level="M"
+                    includeMargin={false}
+                  />
+                </div>
+                <p className="text-[9px] text-muted-foreground text-center leading-tight max-w-[200px]">
+                  Scan this QR — Answer sheet for the person acting as ATC examiner
+                </p>
+              </div>
+            </div>
+          )}
+
           </div>
 
           </div>
