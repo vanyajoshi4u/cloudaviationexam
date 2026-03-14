@@ -190,6 +190,7 @@ const RtrPart2Exam = () => {
   const scenarios = paper.scenarios;
   const scenario = scenarios[currentScenario];
   const isTimeLow = timeLeft < 300;
+  const atcAnswerUrl = paperId ? `${window.location.origin}/atc-answer/${paperId}` : "";
 
   // Pre-exam start screen
   if (!examStarted) {
@@ -300,7 +301,7 @@ const RtrPart2Exam = () => {
                     </p>
                     <div className="inline-block bg-white p-3 rounded-xl shadow-sm mb-4">
                       <QRCodeSVG
-                        value={`https://cloudaviationexam.lovable.app/atc-answer/${paperId}`}
+                        value={atcAnswerUrl}
                         size={160}
                         level="M"
                         includeMargin={false}
