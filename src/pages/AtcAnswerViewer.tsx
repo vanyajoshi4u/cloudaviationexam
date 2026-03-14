@@ -30,7 +30,19 @@ const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
 
 const AtcAnswerViewer = () => {
   const { paperId } = useParams();
-  const solution = paperId ? solutionImagesMap[paperId] : null;
+  const normalizedPaperId = paperId?.toLowerCase().trim();
+  const resolvedPaperId = normalizedPaperId
+    ? (solutionImagesMap[normalizedPaperId]
+        ? normalizedPaperId
+        : solutionImagesMap[`rtr2-${normalizedPaperId}`]
+          ? `rtr2-${normalizedPaperId}`
+          : /^paper-\d+$/.test(normalizedPaperId)
+            ? `rtr2-${normalizedPaperId}`
+            : /^\d+$/.test(normalizedPaperId)
+              ? `rtr2-paper-${normalizedPaperId}`
+              : null)
+    : null;
+  const solution = resolvedPaperId ? solutionImagesMap[resolvedPaperId] : null;
 
   if (!solution) {
     return (
