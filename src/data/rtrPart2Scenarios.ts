@@ -539,7 +539,6 @@ const paper3Scenarios: RtrScenario[] = [
     squawk: "7700",
     questions: [
       "Bomb threat onboard. Request priority landing.",
-      "Request Descend to Land.",
     ],
   },
   {
