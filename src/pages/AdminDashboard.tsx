@@ -253,7 +253,7 @@ const AdminDashboard = () => {
           <ShieldCheck className="w-5 h-5 text-primary" />
           <h1 className="font-display text-lg font-bold text-foreground">Admin Dashboard</h1>
         </div>
-        <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut()}>
+        <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut({ scope: "local" })}>
           <LogOut className="w-4 h-4 mr-2" /> Logout
         </Button>
       </header>

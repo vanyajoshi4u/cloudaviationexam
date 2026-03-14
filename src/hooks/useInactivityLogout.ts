@@ -38,7 +38,7 @@ export const useInactivityLogout = () => {
           await supabase.functions.invoke("send-login-verification", {
             body: { action: "logout" },
           });
-          await supabase.auth.signOut();
+          await supabase.auth.signOut({ scope: "local" });
           window.location.href = "/auth";
         }
       }, INACTIVITY_TIMEOUT);

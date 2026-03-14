@@ -71,7 +71,7 @@ const ResetPassword = () => {
         console.error("Failed to clear sessions:", e);
       }
 
-      await supabase.auth.signOut();
+      await supabase.auth.signOut({ scope: "local" });
       setSuccess(true);
       toast.success("Password updated successfully!");
     } catch (error: any) {
