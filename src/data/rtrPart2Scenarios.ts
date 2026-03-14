@@ -550,7 +550,6 @@ const paper3Scenarios: RtrScenario[] = [
     squawk: "7700",
     questions: [
       "Established on ILS Runway 09. Request further descent.",
-      "Vacate Runway and inform ATC.",
     ],
   },
 ];
