@@ -506,7 +506,6 @@ const paper3Scenarios: RtrScenario[] = [
       "Request Pushback and Taxi.",
       "Request ATC clearance.",
       "You have reached Runway Holding Point. Take action.",
-      "Request Line Up on Runway 09.",
     ],
   },
   {
