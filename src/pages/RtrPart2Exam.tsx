@@ -71,6 +71,7 @@ const RtrPart2Exam = () => {
   const [showAirportLayout, setShowAirportLayout] = useState(false);
   const [visitedScenarios, setVisitedScenarios] = useState<Set<number>>(new Set([0]));
   const [showSolution, setShowSolution] = useState(false);
+  const [showQrPopup, setShowQrPopup] = useState(false);
 
   const [hasRtr2Access, setHasRtr2Access] = useState<boolean | null>(null);
   const [showUpgrade, setShowUpgrade] = useState(false);
