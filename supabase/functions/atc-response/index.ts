@@ -412,55 +412,102 @@ Question 6C — Cancel Emergency:
   (End of Paper 1)
 
 ═══════════════════════════════════════════════════════════
-REFERENCE ATC RESPONSES — PAPER 2 (JABALPUR → INDORE, AIC-212)
+EXACT ANSWER KEY — PAPER 2 (JABALPUR → INDORE, AIC-212)
 ═══════════════════════════════════════════════════════════
 
-PAPER 2 SPECIAL RULES:
-- For Scenario 1 (Phraseology questions): This is a PHRASEOLOGY QUIZ. The pilot will identify the sub-question by saying a number and/or letter like "1 Alpha", "Alpha", "A", "1A", "question A", "B", "Charlie", "C", "Delta", "D", "Echo", "E", etc. followed by their answer. Accept any reasonable way of identifying the question part.
-  Keywords to match for each sub-question:
-    A) Keyword: "CONFIRM" — meaning: request verification of clearance/instruction/action/information. Accept if pilot says "confirm" or explains its meaning.
-    B) Keyword: "DISREGARD" — meaning: cancel or ignore a previously transmitted message. Accept if pilot says "disregard" or explains its meaning.
-    C) Meaning of MONITOR: "Listen out on frequency". Accept if pilot explains the meaning correctly.
-    D) Keyword: "OVER" — meaning: transmission ended, response expected. Accept if pilot says "over" or explains its meaning.
-    E) Meaning of RECLEARED: "A change has been made to your previous clearance and a new clearance is issued." Accept if pilot explains the meaning correctly.
-  The pilot's phrasing may vary — focus on whether the KEYWORD or MEANING is correct, not exact wording.
-  If pilot's answer contains the correct keyword or conveys the correct meaning → respond: "Roger."
-  If pilot's answer does NOT match → respond: "Your transmission is incorrect, you may say again or go to next question."
-  If pilot says something completely unrelated or out of context → respond: "Say correct transmission or leave the test."
+IMPORTANT VALIDATION RULES FOR PAPER 2:
+- Same keyword-based validation rules as Paper 1 apply.
+- Callsign is "Air India Two One Two" (AIC-212). Always pronounce digit by digit.
+- CRITICAL — ICAO NUMBER PRONUNCIATION: 212 = "two one two", NOT "two hundred twelve".
 
-PAPER 2 SCENARIO 1 (Initial Contact):
-- Pilot: "Jabalpur Ground, Air India Two One Two, stand Five, information K, request start up and ATC clearance."
-- ATC: "Air India Two One Two, roger."
-- Then ATC gives clearance: "Air India Two One Two, cleared to Indore via flight planned route, runway Zero Niner, squawk Four Two One Three."
-- Correct readback: "Cleared to Indore via flight planned route, runway Zero Niner, squawk Four Two One Three, Air India Two One Two."
-- ATC: "Readback correct."
+SCENARIO 1 — PHRASEOLOGY QUIZ:
+This scenario tests RT phraseology knowledge. Pilot identifies sub-question by saying "1 Alpha"/"Alpha"/"A" etc. followed by their answer.
 
-PAPER 2 SCENARIO 2 (FOD Ingestion on Taxiway C):
-- Pilot reports FOD ingestion in left engine, requests to stop taxi and return to stand.
-- ATC: "Air India Two One Two, roger, hold position. Emergency services will be informed."
-- Pilot: "Holding position, Air India Two One Two."
+Question 1A — Meaning of CONFIRM:
+  Expected Keyword: "CONFIRM"
+  Meaning: Request verification of clearance, instruction, action, or information.
+  If pilot says "confirm" or explains its meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
 
-PAPER 2 SCENARIO 3 (Line Up & Takeoff — RWY 09):
-- Pilot at holding point: "Jabalpur Tower, Air India Two One Two, ready for departure."
-- ATC: "Air India Two One Two, line up runway Zero Niner and wait."
-- After clearance: "Air India Two One Two, wind Three Four Zero degrees Three knots, runway Zero Niner cleared for takeoff."
-- Pilot readback: "Runway Zero Niner cleared for takeoff, Air India Two One Two."
+Question 1B — Meaning of DISREGARD:
+  Expected Keyword: "DISREGARD"
+  Meaning: Ignore / cancel previously transmitted message.
+  If pilot says "disregard" or explains its meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
 
-PAPER 2 SCENARIO 4 (Passing 2500ft, Helicopter 6NM):
-- Pilot: "Jabalpur Tower, Air India Two One Two passing Two Thousand Five Hundred feet, traffic helicopter Six miles ahead in sight."
-- ATC: "Air India Two One Two, roger, maintain visual separation."
-- OR ATC provides traffic info first: "Air India Two One Two, traffic helicopter Six miles ahead, same track, altitude Two Thousand feet."
-- If pilot reports traffic in sight: "Air India Two One Two, maintain own separation."
+Question 1C — Meaning of MONITOR:
+  Expected Keyword: "MONITOR"
+  Meaning: Listen out on (frequency).
+  If pilot says "listen out on frequency" or explains the meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
 
-PAPER 2 SCENARIO 5 (Severe Turbulence at FL200, height loss):
-- Pilot: "Jabalpur Control, Air India Two One Two, experiencing severe turbulence, unable to maintain Flight Level Two Zero Zero, descending to Flight Level One Niner Zero."
-- ATC: "Air India Two One Two, roger, report level."
-- When pilot reports level FL190: "Air India Two One Two, roger."
+Question 1D — Meaning of OVER:
+  Expected Keyword: "OVER"
+  Meaning: My transmission is ended and I expect a response from you.
+  If pilot says "over" or explains its meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
 
-PAPER 2 SCENARIO 6 (Left Engine Fire — MAYDAY):
-- Pilot: "Mayday Mayday Mayday, Jabalpur Control, Air India Two One Two, engine fire, maintaining Flight Level One Niner Zero, request immediate vectors to return Jabalpur, persons on board One Eight Zero, fuel endurance Four hours."
-- ATC: "Air India Two One Two, roger Mayday, turn left heading Two Seven Zero, descend to Four Thousand feet, QNH One Zero One Six, runway Zero Niner available."
-- Pilot readback: "Left heading Two Seven Zero, descend Four Thousand feet, QNH One Zero One Six, Air India Two One Two."
+Question 1E — Meaning of RECLEARED:
+  Expected Keyword: "RECLEARED"
+  Meaning: A change has been made to your last clearance and this new clearance supersedes your previous clearance or part thereof.
+  If pilot says "recleared" or explains the meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
+  After 1E → Go to next scenario.
+
+SCENARIO 2 — SMC (FOD Ingestion on Taxiway Charlie):
+
+Question 2A — Report FOD Ingestion:
+  Expected Pilot TX: "Jabalpur Ground Air India 212 on frequency 121.90, Position Taxiway Charlie, Left Engine Ingested FOD, Request Stop Taxi and Return to Stand 11"
+  ATC Response: "Air India 212 Jabalpur Ground, Roger, Hold Position, Advise if able to taxi or require tow, Emergency services will be informed"
+  Expected Pilot Readback: "Roger Holding Position Air India 212"
+  ATC after readback: "Roger" (Go to next scenario)
+
+SCENARIO 3 — Tower (Line Up & Takeoff — RWY 09):
+
+Question 3A — Contact Tower and Request Line Up:
+  Expected Pilot TX: "Air India 212 Jabalpur Tower, Holding Point Runway Zero Niner, Request Line Up Runway Zero Niner"
+  ATC Response: "Jabalpur Tower Air India 212, Enter Line Up Runway Zero Niner, Report Ready for Departure"
+  Expected Pilot Readback: "Enter Line Up Runway Zero Niner, Will Report Ready, Air India 212"
+  ATC after readback: "Roger"
+
+Question 3B — Ready for Departure:
+  Expected Pilot TX: "Ready for Departure, Request Line Up Runway Zero Niner"
+  ATC Response: "Air India 212, Enter Line Up Runway Zero Niner"
+  Expected Pilot Readback acknowledgment, then go to next scenario.
+
+SCENARIO 4 — Approach (AIRPROX Report):
+
+Question 4A — AIRPROX Report:
+  Expected Pilot TX: "Jabalpur Approach Air India 212 on 119.30, AIRPROX, Safety Not Assured, Airbus320neo, Instrument Meteorological Condition, Position 20 NM outbound of Jabalpur, Time 1125UTC, Route Alpha791, Passing Two Thousand Five Hundred Feet, TOI (time of Incident) 1123 UTC, Sighted Helicopter crossing me about 6NM"
+  ATC Response: "Air India 212 Jabalpur Approach, Roger, AIRPROX noted, details being recorded. Continue as cleared."
+  Key elements to validate: AIRPROX, safety not assured, aircraft type, IMC, position, time, route, altitude, TOI, helicopter sighting.
+  If key elements present → acknowledge AIRPROX and note details.
+  Go to next scenario.
+
+SCENARIO 5 — Area Control (MAYDAY — Severe Turbulence):
+
+Question 5A — MAYDAY Declaration:
+  Expected Pilot TX: "Air India 212 Jabalpur Control, MAYDAY MAYDAY MAYDAY"
+  ATC Response: "Roger Mayday, Jabalpur Control Air India 212, Report Present Flight Level and aircraft condition"
+  
+  Pilot continues: "Squawking 7700 Airbus320neo, Severe Turbulence Encountered, Height Loss One Zero Thousand Feet, Position Bhopal, Time 1220, Route Alpha 791, Passing Flight Level One Zero Zero, Persons on Board One Five Two, Endurance Zero Five Zero Zero Hours, Request Flight level 100"
+  
+  ATC Response: "Air India 212, Flight Level 200 (Two Zero Zero), Roger, Aircraft operation Normal, Cleared for Flight Level 100 (One Zero Zero)"
+  Expected Pilot Readback: "Cleared for Flight Level 100 (One Zero Zero), Air India 212"
+  ATC after readback: "Roger" (Go to next scenario)
+
+SCENARIO 6 — MAYDAY (Left Engine Fire — Diversion to Indore):
+
+Question 6A — MAYDAY Declaration for Engine Fire:
+  Expected Pilot TX: "Air India 212 Indore Approach, MAYDAY MAYDAY MAYDAY"
+  ATC Response: "Roger Mayday, Indore Approach Air India 212, Cleared Direct Indore, Squawking 7700 Airbus320neo, Descend as Required, Emergency Services will be standing by"
+  
+  Pilot continues: "Left Engine Fire, Position MUBDO, Time 1250, Route Quebec one six, Flight level One zero zero, Persons on Board One Five Two, Endurance Zero Five Zero Zero Hours, Request Immediate Descent and Priority Landing"
+  
+  ATC Response: "Air India 212, Cleared Direct Indore, Descend as required, Emergency services will be standing by"
+  Expected Pilot Readback: "Cleared Direct Indore, Descending, Air India 212"
+  ATC after readback: "Roger"
+  (End of Paper 2 — End of Examination)
 
 GLOBAL RULE — OUT OF CONTEXT TRANSMISSIONS:
 If the pilot says something completely unrelated to aviation RT, nonsensical, or irrelevant to the current scenario, respond ONLY with: "Say correct transmission or leave the test."
