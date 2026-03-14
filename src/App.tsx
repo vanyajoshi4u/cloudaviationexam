@@ -82,11 +82,7 @@ const App = () => (
                   <LiveAtcExam />
                 </ProtectedRoute>
               } />
-              <Route path="/atc-answer/:paperId" element={
-                <ProtectedRoute requireAuth requireSubscription>
-                  <AtcAnswerViewer />
-                </ProtectedRoute>
-              } />
+              <Route path="/atc-answer/:paperId" element={<AtcAnswerViewer />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </InactivityGuard>

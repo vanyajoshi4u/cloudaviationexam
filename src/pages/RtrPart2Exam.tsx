@@ -293,7 +293,7 @@ const RtrPart2Exam = () => {
                     </p>
                     <div className="inline-block bg-white p-3 rounded-xl shadow-sm mb-4">
                       <QRCodeSVG
-                        value={`${window.location.origin}/atc-answer/${paperId}`}
+                        value={`https://cloudaviationexam.lovable.app/atc-answer/${paperId}`}
                         size={160}
                         level="M"
                         includeMargin={false}
