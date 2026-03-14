@@ -532,7 +532,7 @@ const paper3Scenarios: RtrScenario[] = [
   },
   {
     id: 5,
-    scenarioContext: "You are in flight.",
+    scenarioContext: "You are at SAM. Contact Delhi Approach.",
     flightInfo: paper3FlightInfo,
     atisInfo: paper3AtisInfo,
     frequencies: paper3Frequencies,
