@@ -510,13 +510,13 @@ const paper3Scenarios: RtrScenario[] = [
   },
   {
     id: 3,
-    scenarioContext: "You are outbound Amritsar.",
+    scenarioContext: "You are outbound Amritsar and you experience Radio Communication Failure. Take action.",
     flightInfo: paper3FlightInfo,
     atisInfo: paper3AtisInfo,
     frequencies: paper3Frequencies,
-    squawk: "7700",
+    squawk: "7600",
     questions: [
-      "Request Departure clearance from ATC.",
+      "You experience Radio Communication Failure. Take action.",
     ],
   },
   {
