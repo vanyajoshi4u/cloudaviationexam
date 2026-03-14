@@ -190,7 +190,7 @@ const RtrPart2Exam = () => {
   const scenarios = paper.scenarios;
   const scenario = scenarios[currentScenario];
   const isTimeLow = timeLeft < 300;
-  const atcAnswerUrl = paperId ? `${window.location.origin}/atc-answer/${paperId}` : "";
+  const atcAnswerUrl = paperId ? `https://cloudaviationexam.lovable.app/atc-answer/${paperId}` : "";
 
   // Pre-exam start screen
   if (!examStarted) {
