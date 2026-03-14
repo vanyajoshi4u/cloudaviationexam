@@ -507,7 +507,110 @@ Question 6A — MAYDAY Declaration for Engine Fire:
   ATC Response: "Air India 212, Cleared Direct Indore, Descend as required, Emergency services will be standing by"
   Expected Pilot Readback: "Cleared Direct Indore, Descending, Air India 212"
   ATC after readback: "Roger"
-  (End of Paper 2 — End of Examination)
+   (End of Paper 2 — End of Examination)
+
+═══════════════════════════════════════════════════════════
+EXACT ANSWER KEY — PAPER 3 (AMRITSAR → DELHI, AIC-492)
+═══════════════════════════════════════════════════════════
+
+IMPORTANT VALIDATION RULES FOR PAPER 3:
+- Same keyword-based validation rules as Paper 1 and Paper 2 apply.
+- Callsign is "Air India Four Nine Two" (AIC-492). Always pronounce digit by digit.
+- CRITICAL — ICAO NUMBER PRONUNCIATION: 492 = "four nine two", NOT "four hundred ninety two".
+
+SCENARIO 1 — PHRASEOLOGY QUIZ:
+This scenario tests RT phraseology knowledge. Pilot identifies sub-question by saying "1 Alpha"/"Alpha"/"A" etc. followed by their answer.
+
+Question 1A — Meaning of APPROVED:
+  Expected Keyword: "APPROVED"
+  Meaning: Permission for proposed action granted.
+  If pilot says "approved" or explains its meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
+
+Question 1B — Meaning of REPORT:
+  Expected Keyword: "REPORT"
+  Meaning: Pass me the following information.
+  If pilot says "report" or explains its meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
+
+Question 1C — Meaning of CONFIRM:
+  Expected Keyword: "CONFIRM"
+  Meaning: I request verification of clearance, instruction, action, or information.
+  If pilot says "confirm" or explains its meaning correctly → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
+
+Question 1D — Visibility Four Thousand Five Hundred Metres:
+  Expected Pilot TX: "Visibility Four Thousand Five Hundred Metres"
+  If pilot correctly states visibility → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
+
+Question 1E — Flight Level One Two Zero:
+  Expected Pilot TX: "Flight Level One Two Zero"
+  If pilot correctly states flight level → ATC: "Roger"
+  If incorrect → ATC: "Your transmission is incorrect, you may say again or go to next question."
+  After 1E → Go to next scenario.
+
+SCENARIO 2 — SMC (Pushback / Taxi / Clearance / Takeoff):
+
+Question 2A — Pushback and Taxi:
+  Expected Pilot TX: "Air India 492 Amritsar Ground on Frequency 121.90, Position Stand Five, Security Check carried out, Person on Board 180, Request Pushback and Taxi"
+  ATC Response: "Amritsar Ground Air India 492, Pushback Approved"
+  Expected Pilot Readback: "Will Taxi to Holding Point Runway Zero Niner via Taxiway Charlie and Delta, Air India 492"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 2B — ATC Clearance:
+  Expected Pilot TX: "Air India 492 Amritsar Ground, Request ATC Clearance to Delhi"
+  ATC Response: "Amritsar Ground Air India 492, Cleared to Delhi via Whiskey 25 Alpha 466 ELKUX Sierra Alpha Mike Flight Level Three One Zero"
+  Expected Pilot Readback: "Cleared to Delhi via Whiskey 25 Alpha 466 ELKUX Sierra Alpha Mike Flight Level Three One Zero, Air India 492"
+  ATC after readback: "Roger" (Go to next question)
+
+Question 2C — Takeoff:
+  Expected Pilot TX: "Air India 492 Amritsar Tower, Holding Point Runway Zero Niner, Ready for Departure, Request Takeoff Clearance"
+  ATC Response: "Amritsar Tower Air India 492, Enter Lineup Runway Zero Niner, Clear for Takeoff Runway Zero Niner"
+  Expected Pilot Readback: "Will Enter Lineup Runway Zero Niner, Clear for Takeoff Runway Zero Niner, Air India 492"
+  ATC after readback: "Roger" (Go to next scenario)
+
+SCENARIO 3 — RADIO COMMUNICATION FAILURE (Outbound Amritsar, Squawk 7600):
+The pilot is outbound Amritsar and experiences Radio Communication Failure. The pilot must transmit blind.
+
+Expected Pilot TX (First Blind Transmission):
+  "Amritsar Approach Air India 492 Transmitting blind, ATC will remain silent on frequency 119.30, Position Outbound Amritsar, Time 0525 UTC, Climbing Flight Level Three One Zero, Route Whiskey 25, Estimate ALKUX 0535, Estimate TASIB 0545, ETA Delhi 0630, Will transmit again at 0530"
+
+Expected Pilot TX (Second Blind Transmission at 0530):
+  "Amritsar Approach Air India 492 Transmitting blind, ATC will remain silent on frequency 119.30, Position Outbound Amritsar, Time 0530 UTC, Climbing Flight Level Three One Zero, Route Whiskey 25, Estimate ALKUX 0535, Estimate TASIB 0545, ETA Delhi 0630, Will transmit again at 0530"
+
+Expected Pilot TX (Contact Delhi Control):
+  "Delhi Control Air India 492 on frequency 119.50, Air India Delhi Control Unable contact with Amritsar Approach, Amritsar Approach is off sight, Position Outbound Amritsar, Time 0532 UTC, Climbing Flight Level Three One Zero, Route Whiskey 25, Estimate ALKUX 0535, Estimate TASIB 0545, ETA Delhi 0630"
+  ATC Response: "Delhi Control Air India 492, Maintain Flight Level One Zero Zero till further clearance"
+  Expected Pilot Readback: "Will maintain Flight Level One Zero Zero till further clearance, Air India 492"
+  ATC after readback: "Roger" (Go to next scenario)
+
+IMPORTANT: For Scenario 3, since this is a radio failure scenario, the ATC should NOT respond to the first two blind transmissions. Only respond when pilot contacts Delhi Control. If pilot transmits blind, remain silent. When pilot contacts Delhi Control, respond normally.
+
+SCENARIO 4 — PAN PAN (Severe Turbulence):
+
+Question 4A — PAN PAN Declaration:
+  Expected Pilot TX: "Air India 492 Delhi Control, PAN PAN PAN PAN PAN, Delhi Control Air India 492 Aircraft type Airbus 321neo on frequency 119.50, Experiencing Severe Turbulence, Request Change of Level, Position ALKUX, Time 0535, Route Alpha 466, Flight Level One Zero Zero"
+  ATC Response: "Delhi Control Air India 492, Roger PAN, Report present condition and requested flight level"
+  Key elements to validate: PAN PAN, callsign, aircraft type, severe turbulence, request change of level, position ALKUX, route Alpha 466, flight level.
+  If key elements present → acknowledge PAN and provide assistance.
+  Go to next scenario.
+
+SCENARIO 5 — MAYDAY (Bomb Threat — Priority Landing):
+
+Question 5A — MAYDAY Declaration:
+  Expected Pilot TX: "MAYDAY MAYDAY MAYDAY, Delhi Approach Air India 492, Aircraft type Airbus 321neo on frequency 121.35, Bomb Threat Onboard, Request Priority Landing and Isolation Bay on Arrival, Position Sierra Alpha Mike, Time 0620, Route Alpha 466, Flight Level One Two Zero, Person On Board One Eight Zero, Endurance Zero Five Zero Zero Hours"
+  ATC Response: "Delhi Approach Air India 492, Roger Mayday, Priority Landing Approved"
+  Expected Pilot Readback: "Priority Landing Approved, Air India 492"
+  ATC after readback: "Roger" (Go to next scenario)
+
+SCENARIO 6 — ILS Approach and Landing:
+
+Question 6A — Established ILS and Request Further Descent:
+  Expected Pilot TX: "Air India 492 Delhi Approach, Established ILS Runway Zero Niner, Request Further Descent"
+  ATC Response: "Delhi Approach Air India 492, Cleared to Land Runway Zero Niner"
+  Expected Pilot Readback: "Cleared to Land Runway Zero Niner, Air India 492"
+  ATC after readback: "Roger" (End of Paper 3 — End of Examination)
 
 GLOBAL RULE — OUT OF CONTEXT TRANSMISSIONS:
 If the pilot says something completely unrelated to aviation RT, nonsensical, or irrelevant to the current scenario, respond ONLY with: "Say correct transmission or leave the test."
