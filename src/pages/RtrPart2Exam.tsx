@@ -254,11 +254,65 @@ const RtrPart2Exam = () => {
             {/* Start button */}
             <Button
               size="lg"
-              onClick={startExam}
+              onClick={() => {
+                if (paperId && solutionImagesMap[paperId]) {
+                  setShowQrPopup(true);
+                } else {
+                  startExam();
+                }
+              }}
               className="w-full h-12 text-base font-semibold tracking-wide glow-blue"
             >
               Start Examination
             </Button>
+
+            {/* QR Code Popup */}
+            <AnimatePresence>
+              {showQrPopup && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4"
+                  onClick={() => { setShowQrPopup(false); startExam(); }}
+                >
+                  <motion.div
+                    initial={{ scale: 0.85, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.85, opacity: 0 }}
+                    transition={{ type: "spring", duration: 0.4 }}
+                    className="bg-card rounded-2xl shadow-2xl max-w-sm w-full p-6 border border-border/50 text-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="w-12 h-12 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center mx-auto mb-4">
+                      <QrCode className="w-6 h-6 text-primary" />
+                    </div>
+                    <h2 className="font-display text-lg font-bold text-foreground mb-1">ATC Examiner Answer Sheet</h2>
+                    <p className="text-xs text-muted-foreground mb-4">
+                      Scan this QR code on the ATC examiner's phone to view the answer key
+                    </p>
+                    <div className="inline-block bg-white p-3 rounded-xl shadow-sm mb-4">
+                      <QRCodeSVG
+                        value={`${window.location.origin}/atc-answer/${paperId}`}
+                        size={160}
+                        level="M"
+                        includeMargin={false}
+                      />
+                    </div>
+                    <p className="text-[10px] text-muted-foreground mb-5">
+                      For the person acting as ATC examiner only
+                    </p>
+                    <Button
+                      size="lg"
+                      onClick={() => { setShowQrPopup(false); startExam(); }}
+                      className="w-full h-11 text-sm font-semibold glow-blue"
+                    >
+                      Continue & Start Exam
+                    </Button>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>
