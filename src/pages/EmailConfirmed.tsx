@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 const EmailConfirmed = () => {
   // Sign out immediately to prevent any auth-based redirects
   useEffect(() => {
-    supabase.auth.signOut().catch(() => {});
+    supabase.auth.signOut({ scope: "local" }).catch(() => {});
     // Clear hash tokens from URL
     if (window.location.hash) {
       window.history.replaceState(null, "", window.location.pathname);

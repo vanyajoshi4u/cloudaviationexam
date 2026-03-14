@@ -269,7 +269,7 @@ const Subscribe = () => {
           <div className="flex items-center mb-4">
             <button
               onClick={async () => {
-                await supabase.auth.signOut();
+                await supabase.auth.signOut({ scope: "local" });
                 navigate("/auth");
               }}
               className="text-muted-foreground hover:text-foreground transition-colors"
