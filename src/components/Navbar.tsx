@@ -73,7 +73,7 @@ const Navbar = () => {
                 await supabase.functions.invoke("send-login-verification", {
                   body: { action: "logout" },
                 });
-                await supabase.auth.signOut();
+                await supabase.auth.signOut({ scope: "local" });
                 toast.success("Logged out");
               }}
             >
