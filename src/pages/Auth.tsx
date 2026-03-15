@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import DemoVideoSection from "@/components/DemoVideoSection";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle, Eye, EyeOff } from "lucide-react";
