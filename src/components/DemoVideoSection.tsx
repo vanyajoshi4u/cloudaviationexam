@@ -43,25 +43,37 @@ const DemoVideoSection = () => {
   }, []);
 
   const handleShare = useCallback(async () => {
-    const videoUrl = `${window.location.origin}/demo-video.mov`;
+    const shareUrl = "https://cloudaviationexam.lovable.app";
     const shareData = {
       title: "Cloud Aviation Academy - RTR Part 2 Simulator Demo",
       text: "Watch how India's first DGCA question bank with a built-in RTR Part 2 simulator works!",
-      url: videoUrl,
+      url: shareUrl,
     };
 
-    if (navigator.share) {
-      try {
+    try {
+      if (navigator.share) {
         await navigator.share(shareData);
-      } catch (err) {
-        // User cancelled
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        toast({
+          title: "Link copied!",
+          description: "Share the link with others.",
+        });
       }
-    } else {
-      await navigator.clipboard.writeText(videoUrl);
-      toast({
-        title: "Video link copied!",
-        description: "Share the demo video link with others.",
-      });
+    } catch (err) {
+      // Fallback if both fail
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        toast({
+          title: "Link copied!",
+          description: "Share the link with others.",
+        });
+      } catch {
+        toast({
+          title: "Share this link",
+          description: shareUrl,
+        });
+      }
     }
   }, [toast]);
 
