@@ -65,18 +65,7 @@ const DemoVideoSection = () => {
     if (next) {
       window.speechSynthesis.cancel();
     } else if (isPlaying && speechSupported) {
-      // Resume narration from scratch when unmuting (browser TTS can't resume mid-sentence)
-      const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
-      utterance.rate = 0.95;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-      const voices = window.speechSynthesis.getVoices();
-      const preferred = voices.find(
-        (v) =>
-          v.lang.startsWith("en") &&
-          (v.name.includes("Google") || v.name.includes("Daniel") || v.name.includes("Samantha"))
-      ) || voices.find((v) => v.lang.startsWith("en"));
-      if (preferred) utterance.voice = preferred;
+      const utterance = createNarrationUtterance();
       utteranceRef.current = utterance;
       window.speechSynthesis.speak(utterance);
     }
