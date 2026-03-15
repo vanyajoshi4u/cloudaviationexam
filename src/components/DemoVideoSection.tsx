@@ -1,97 +1,111 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Play, Pause, Volume2, VolumeX, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+
+const NARRATION_SCRIPT = `Welcome to Cloud Aviation Academy — India's first DGCA question bank with a built-in RTR Part 2 simulator.
+
+On this platform, you get access to previous attempt questions across all DGCA subjects.
+
+You can practice in two modes. In Practice Mode, you see the correct answer instantly after each question — learn as you go. In Test Mode, you answer all questions first, then review your results to test your knowledge.
+
+But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
+
+Start the exam. The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
+
+Join Cloud Aviation Academy and ace your DGCA exams.`;
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [audioLoaded, setAudioLoaded] = useState(false);
-  const { toast } = useToast();
+  const [speechSupported, setSpeechSupported] = useState(true);
 
-  const loadNarration = useCallback(async () => {
-    if (audioLoaded && audioRef.current) return audioRef.current;
+  useEffect(() => {
+    setSpeechSupported("speechSynthesis" in window);
+  }, []);
 
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-demo-narration`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({}),
-        }
-      );
-
-      if (!response.ok) throw new Error("Failed to generate narration");
-
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
-      setAudioLoaded(true);
-      return audio;
-    } catch (error) {
-      console.error("Narration error:", error);
-      toast({
-        variant: "destructive",
-        title: "Could not load narration",
-        description: "Playing video without voiceover.",
-      });
-      return null;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [audioLoaded, toast]);
-
-  const handlePlayPause = useCallback(async () => {
+  const handlePlayPause = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
     if (isPlaying) {
       video.pause();
-      audioRef.current?.pause();
+      window.speechSynthesis.cancel();
       setIsPlaying(false);
       return;
     }
 
-    // Load narration on first play
-    const audio = await loadNarration();
-
     video.currentTime = 0;
-    if (audio) {
-      audio.currentTime = 0;
-      audio.muted = isMuted;
+
+    // Start browser TTS narration
+    if (speechSupported && !isMuted) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
+      utterance.rate = 0.95;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+
+      // Try to pick a good English voice
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find(
+        (v) =>
+          v.lang.startsWith("en") &&
+          (v.name.includes("Google") || v.name.includes("Daniel") || v.name.includes("Samantha"))
+      ) || voices.find((v) => v.lang.startsWith("en"));
+      if (preferred) utterance.voice = preferred;
+
+      utteranceRef.current = utterance;
+
+      utterance.onend = () => {
+        // Don't stop video when narration ends, let video finish naturally
+      };
+
+      window.speechSynthesis.speak(utterance);
     }
 
-    try {
-      await video.play();
-      if (audio) await audio.play();
+    video.play().then(() => {
       setIsPlaying(true);
-    } catch (err) {
+    }).catch((err) => {
       console.error("Playback error:", err);
-    }
+    });
 
-    // Sync end
     video.onended = () => {
-      audio?.pause();
+      window.speechSynthesis.cancel();
       setIsPlaying(false);
     };
-  }, [isPlaying, isMuted, loadNarration]);
+  }, [isPlaying, isMuted, speechSupported]);
 
   const toggleMute = useCallback(() => {
     const next = !isMuted;
     setIsMuted(next);
-    if (audioRef.current) audioRef.current.muted = next;
-  }, [isMuted]);
+    if (next) {
+      window.speechSynthesis.cancel();
+    } else if (isPlaying && speechSupported) {
+      // Resume narration from scratch when unmuting (browser TTS can't resume mid-sentence)
+      const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
+      utterance.rate = 0.95;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find(
+        (v) =>
+          v.lang.startsWith("en") &&
+          (v.name.includes("Google") || v.name.includes("Daniel") || v.name.includes("Samantha"))
+      ) || voices.find((v) => v.lang.startsWith("en"));
+      if (preferred) utterance.voice = preferred;
+      utteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
+  }, [isMuted, isPlaying, speechSupported]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
 
   return (
     <section className="py-10">
@@ -133,13 +147,10 @@ const DemoVideoSection = () => {
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity">
               <Button
                 onClick={handlePlayPause}
-                disabled={isLoading}
                 size="lg"
                 className="rounded-full w-14 h-14 bg-primary/90 hover:bg-primary text-primary-foreground shadow-lg"
               >
-                {isLoading ? (
-                  <Loader2 className="w-6 h-6 animate-spin" />
-                ) : isPlaying ? (
+                {isPlaying ? (
                   <Pause className="w-6 h-6" />
                 ) : (
                   <Play className="w-6 h-6 ml-0.5" />
