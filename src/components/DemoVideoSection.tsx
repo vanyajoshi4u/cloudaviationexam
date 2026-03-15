@@ -131,7 +131,7 @@ const DemoVideoSection = () => {
 
     if (isPlaying) {
       video.pause();
-      window.speechSynthesis.cancel();
+      cancelNarration();
       setIsPlaying(false);
       return;
     }
@@ -140,10 +140,7 @@ const DemoVideoSection = () => {
 
     // Start browser TTS narration
     if (speechSupported && !isMuted) {
-      window.speechSynthesis.cancel();
-      const utterance = createNarrationUtterance();
-      utteranceRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
+      speakNarration();
     }
 
     video.play().then(() => {
@@ -153,7 +150,7 @@ const DemoVideoSection = () => {
     });
 
     video.onended = () => {
-      window.speechSynthesis.cancel();
+      cancelNarration();
       setIsPlaying(false);
     };
   }, [isPlaying, isMuted, speechSupported]);
