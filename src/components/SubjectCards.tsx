@@ -334,6 +334,12 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "sk-met" as const,
       },
+      {
+        title: "DGCA Previous Papers",
+        chapters: dgcaPreviousMetTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "dgca-prev-met" as const,
+      },
     ],
   },
   {
