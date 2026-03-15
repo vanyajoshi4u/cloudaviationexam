@@ -24,7 +24,41 @@ const DemoVideoSection = () => {
 
   useEffect(() => {
     setSpeechSupported("speechSynthesis" in window);
+    // Pre-load voices (some browsers load them async)
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
   }, []);
+
+  const getBestVoice = useCallback(() => {
+    const voices = window.speechSynthesis.getVoices();
+    // Priority order: premium quality voices first
+    const priorityNames = [
+      "Google UK English Male", "Google UK English Female",
+      "Google US English", "Daniel", "Samantha", "Karen",
+      "Moira", "Tessa", "Rishi", "Microsoft Mark", "Microsoft David",
+      "Microsoft Zira", "Alex"
+    ];
+    for (const name of priorityNames) {
+      const match = voices.find((v) => v.name.includes(name) && v.lang.startsWith("en"));
+      if (match) return match;
+    }
+    // Fallback: any English voice
+    return voices.find((v) => v.lang.startsWith("en")) || null;
+  }, []);
+
+  const createNarrationUtterance = useCallback(() => {
+    const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
+    utterance.rate = 0.82;
+    utterance.pitch = 1.05;
+    utterance.volume = 1;
+    const voice = getBestVoice();
+    if (voice) utterance.voice = voice;
+    return utterance;
+  }, [getBestVoice]);
 
   const handlePlayPause = useCallback(() => {
     const video = videoRef.current;
@@ -42,26 +76,8 @@ const DemoVideoSection = () => {
     // Start browser TTS narration
     if (speechSupported && !isMuted) {
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
-      utterance.rate = 0.95;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-
-      // Try to pick a good English voice
-      const voices = window.speechSynthesis.getVoices();
-      const preferred = voices.find(
-        (v) =>
-          v.lang.startsWith("en") &&
-          (v.name.includes("Google") || v.name.includes("Daniel") || v.name.includes("Samantha"))
-      ) || voices.find((v) => v.lang.startsWith("en"));
-      if (preferred) utterance.voice = preferred;
-
+      const utterance = createNarrationUtterance();
       utteranceRef.current = utterance;
-
-      utterance.onend = () => {
-        // Don't stop video when narration ends, let video finish naturally
-      };
-
       window.speechSynthesis.speak(utterance);
     }
 
@@ -83,18 +99,7 @@ const DemoVideoSection = () => {
     if (next) {
       window.speechSynthesis.cancel();
     } else if (isPlaying && speechSupported) {
-      // Resume narration from scratch when unmuting (browser TTS can't resume mid-sentence)
-      const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
-      utterance.rate = 0.95;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-      const voices = window.speechSynthesis.getVoices();
-      const preferred = voices.find(
-        (v) =>
-          v.lang.startsWith("en") &&
-          (v.name.includes("Google") || v.name.includes("Daniel") || v.name.includes("Samantha"))
-      ) || voices.find((v) => v.lang.startsWith("en"));
-      if (preferred) utterance.voice = preferred;
+      const utterance = createNarrationUtterance();
       utteranceRef.current = utterance;
       window.speechSynthesis.speak(utterance);
     }
