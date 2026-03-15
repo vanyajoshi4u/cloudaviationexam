@@ -311,10 +311,16 @@ const subjectsData: Subject[] = [
               "Flight Director",
               "Engines & Temperature",
               "Warning & Recording Systems",
-            ],
-          },
         ],
       },
+      {
+        title: "DGCA Previous Papers",
+        chapters: dgcaPreviousNavTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "dgca-prev-nav" as const,
+      },
+    ],
+  },
     ],
   },
   {
