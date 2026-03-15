@@ -90,8 +90,8 @@ const DemoVideoSection = () => {
     return voices.find((v) => v.lang.startsWith("en")) || null;
   }, []);
 
-  const createNarrationUtterance = useCallback(() => {
-    const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
+  const createNarrationUtterance = useCallback((text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 0.82;
     utterance.pitch = 1.05;
     utterance.volume = 1;
@@ -99,6 +99,31 @@ const DemoVideoSection = () => {
     if (voice) utterance.voice = voice;
     return utterance;
   }, [getBestVoice]);
+
+  const speakNarration = useCallback(() => {
+    window.speechSynthesis.cancel();
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+
+    const firstUtterance = createNarrationUtterance(NARRATION_SEGMENTS[0]);
+    firstUtterance.onend = () => {
+      // 5 second pause after Test Mode segment
+      pauseTimerRef.current = setTimeout(() => {
+        const secondUtterance = createNarrationUtterance(NARRATION_SEGMENTS[1]);
+        utteranceRef.current = secondUtterance;
+        window.speechSynthesis.speak(secondUtterance);
+      }, PAUSE_AFTER_FIRST_SEGMENT_MS);
+    };
+    utteranceRef.current = firstUtterance;
+    window.speechSynthesis.speak(firstUtterance);
+  }, [createNarrationUtterance]);
+
+  const cancelNarration = useCallback(() => {
+    window.speechSynthesis.cancel();
+    if (pauseTimerRef.current) {
+      clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = null;
+    }
+  }, []);
 
   const handlePlayPause = useCallback(() => {
     const video = videoRef.current;
