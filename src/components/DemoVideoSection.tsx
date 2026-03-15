@@ -43,7 +43,7 @@ const DemoVideoSection = () => {
   }, []);
 
   const handleShare = useCallback(async () => {
-    const shareUrl = "https://cloudaviationexam.lovable.app";
+    const shareUrl = "https://cloudaviationexams.com";
     const shareData = {
       title: "Cloud Aviation Academy - RTR Part 2 Simulator Demo",
       text: "Watch how India's first DGCA question bank with a built-in RTR Part 2 simulator works!",
