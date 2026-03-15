@@ -67,33 +67,47 @@ const DemoVideoSection = () => {
     }
   }, [toast]);
 
-  // Soft ambient background music using Web Audio API
+  // Soft dreamy background music using Web Audio API
   const startBgMusic = useCallback(() => {
     try {
       const ctx = new AudioContext();
       audioCtxRef.current = ctx;
 
-      const gainNode = ctx.createGain();
-      gainNode.gain.setValueAtTime(0, ctx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.04, ctx.currentTime + 2); // Very soft
-      gainNode.connect(ctx.destination);
-      bgGainRef.current = gainNode;
+      const masterGain = ctx.createGain();
+      masterGain.gain.setValueAtTime(0, ctx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0.035, ctx.currentTime + 3);
+      masterGain.connect(ctx.destination);
+      bgGainRef.current = masterGain;
 
-      // Create a warm ambient pad with multiple detuned oscillators
-      const frequencies = [130.81, 164.81, 196.00, 261.63]; // C3, E3, G3, C4
+      // Ethereal pad: Cmaj7 voicing with triangle waves for softer tone
+      const notes = [
+        { freq: 65.41, type: "sine" as OscillatorType },       // C2 - deep bass
+        { freq: 130.81, type: "triangle" as OscillatorType },   // C3
+        { freq: 164.81, type: "triangle" as OscillatorType },   // E3
+        { freq: 196.00, type: "sine" as OscillatorType },       // G3
+        { freq: 246.94, type: "triangle" as OscillatorType },   // B3
+        { freq: 329.63, type: "sine" as OscillatorType },       // E4 - shimmer
+      ];
       const oscillators: OscillatorNode[] = [];
 
-      frequencies.forEach((freq, i) => {
+      notes.forEach(({ freq, type }, i) => {
         const osc = ctx.createOscillator();
-        osc.type = "sine";
+        osc.type = type;
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        // Slight detune for warmth
-        osc.detune.setValueAtTime((i - 1.5) * 4, ctx.currentTime);
+        // Gentle slow vibrato for dreaminess
+        const lfo = ctx.createOscillator();
+        lfo.frequency.setValueAtTime(0.3 + i * 0.1, ctx.currentTime);
+        const lfoGain = ctx.createGain();
+        lfoGain.gain.setValueAtTime(1.5, ctx.currentTime);
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc.frequency);
+        lfo.start();
 
         const oscGain = ctx.createGain();
-        oscGain.gain.setValueAtTime(0.25, ctx.currentTime);
+        // Higher notes quieter for balance
+        oscGain.gain.setValueAtTime(i < 2 ? 0.2 : 0.12, ctx.currentTime);
         osc.connect(oscGain);
-        oscGain.connect(gainNode);
+        oscGain.connect(masterGain);
         osc.start();
         oscillators.push(osc);
       });
