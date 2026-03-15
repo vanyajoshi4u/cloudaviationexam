@@ -42,26 +42,8 @@ const DemoVideoSection = () => {
     // Start browser TTS narration
     if (speechSupported && !isMuted) {
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
-      utterance.rate = 0.95;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-
-      // Try to pick a good English voice
-      const voices = window.speechSynthesis.getVoices();
-      const preferred = voices.find(
-        (v) =>
-          v.lang.startsWith("en") &&
-          (v.name.includes("Google") || v.name.includes("Daniel") || v.name.includes("Samantha"))
-      ) || voices.find((v) => v.lang.startsWith("en"));
-      if (preferred) utterance.voice = preferred;
-
+      const utterance = createNarrationUtterance();
       utteranceRef.current = utterance;
-
-      utterance.onend = () => {
-        // Don't stop video when narration ends, let video finish naturally
-      };
-
       window.speechSynthesis.speak(utterance);
     }
 
