@@ -311,6 +311,8 @@ const subjectsData: Subject[] = [
               "Flight Director",
               "Engines & Temperature",
               "Warning & Recording Systems",
+            ],
+          },
         ],
       },
       {
@@ -319,8 +321,6 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
         quizSource: "dgca-prev-nav" as const,
       },
-    ],
-  },
     ],
   },
   {
