@@ -6,6 +6,7 @@ import Testimonials from "@/components/Testimonials";
 import ReferralPanel from "@/components/ReferralPanel";
 import Footer from "@/components/Footer";
 import ReviewPopup from "@/components/ReviewPopup";
+import DemoVideoSection from "@/components/DemoVideoSection";
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <SubjectCards />
+      <DemoVideoSection />
       <div className="container mx-auto px-4 max-w-lg py-6">
         <ReferralPanel />
       </div>
