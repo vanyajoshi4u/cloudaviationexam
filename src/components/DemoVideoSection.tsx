@@ -13,12 +13,14 @@ You can practice in two modes. In Practice Mode, you see the correct answer inst
 
   `But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
 
-Start the exam. The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
+Start the exam.`,
+
+  `The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
 
 Join Cloud Aviation Academy and ace your DGCA exams.`,
 ];
 
-const PAUSE_AFTER_FIRST_SEGMENT_MS = 5000;
+const SEGMENT_PAUSE_MS = 5000;
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
