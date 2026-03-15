@@ -13,6 +13,9 @@ import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
 import { skMetTopics } from "@/data/skMetQuestions";
 import { dgcaPreviousMetTopics } from "@/data/dgcaPreviousMetQuestions";
+import { dgcaPreviousNavTopics } from "@/data/dgcaPreviousNavQuestions";
+import { dgcaPreviousRegTopics } from "@/data/dgcaPreviousRegQuestions";
+import { dgcaPreviousTechTopics } from "@/data/dgcaPreviousTechQuestions";
 import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
@@ -57,7 +60,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "kw-inst" | "kw-radnav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met";
+  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "kw-inst" | "kw-radnav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met" | "dgca-prev-nav" | "dgca-prev-reg" | "dgca-prev-tech";
 }
 
 interface Subject {
@@ -312,6 +315,12 @@ const subjectsData: Subject[] = [
           },
         ],
       },
+      {
+        title: "DGCA Previous Papers",
+        chapters: dgcaPreviousNavTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "dgca-prev-nav" as const,
+      },
     ],
   },
   {
@@ -406,6 +415,12 @@ const subjectsData: Subject[] = [
           "Additional Questions",
         ],
       },
+      {
+        title: "DGCA Previous Papers",
+        chapters: dgcaPreviousRegTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "dgca-prev-reg" as const,
+      },
     ],
   },
   {
@@ -422,6 +437,12 @@ const subjectsData: Subject[] = [
         ],
         hasQuiz: true,
         quizSource: "redbird-tech",
+      },
+      {
+        title: "DGCA Previous Papers",
+        chapters: dgcaPreviousTechTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "dgca-prev-tech" as const,
       },
     ],
   },
@@ -885,7 +906,7 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "dgca-prev-met" ? dgcaPreviousMetTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : subtopic.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : subtopic.quizSource === "oxford-radnav" ? oxfordRadioNavTopics : subtopic.quizSource === "oxford-inst" ? oxfordInstNavTopics : subtopic.quizSource === "redbird-radnav" ? redbirdRadioNavTopics : subtopic.quizSource === "redbird-inst" ? redbirdInstTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "sk-reg-additional" ? [skRegAdditionalTopic] : subtopic.quizSource === "kw-radnav" ? keithWilliamRadioNavTopics : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : subtopic.quizSource === "pa-34-220t" ? [pa34220tTopic] : subtopic.quizSource === "tecnam-p2006t" ? [tecnamP2006tTopic] : subtopic.quizSource === "tecnam-p2008jc" ? [tecnamP2008jcTopic] : subtopic.quizSource === "da-42-austro" ? [da42AustroTopic] : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rkbali-reg" ? rkBaliRegTopics : subtopic.quizSource === "rkbali-samples" ? rkBaliSamplePapers : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "dgca-prev-met" ? dgcaPreviousMetTopics : subtopic.quizSource === "dgca-prev-nav" ? dgcaPreviousNavTopics : subtopic.quizSource === "dgca-prev-reg" ? dgcaPreviousRegTopics : subtopic.quizSource === "dgca-prev-tech" ? dgcaPreviousTechTopics : subtopic.quizSource === "rkbali-gennav" ? rkBaliGenNavTopics : subtopic.quizSource === "rkbali-radnav" ? rkBaliRadioNavTopics : subtopic.quizSource === "rkbali-inst" ? rkBaliInstrumentTopics : subtopic.quizSource === "oxford-radnav" ? oxfordRadioNavTopics : subtopic.quizSource === "oxford-inst" ? oxfordInstNavTopics : subtopic.quizSource === "redbird-radnav" ? redbirdRadioNavTopics : subtopic.quizSource === "redbird-inst" ? redbirdInstTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "sk-reg-additional" ? [skRegAdditionalTopic] : subtopic.quizSource === "kw-radnav" ? keithWilliamRadioNavTopics : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : subtopic.quizSource === "pa-34-220t" ? [pa34220tTopic] : subtopic.quizSource === "tecnam-p2006t" ? [tecnamP2006tTopic] : subtopic.quizSource === "tecnam-p2008jc" ? [tecnamP2008jcTopic] : subtopic.quizSource === "da-42-austro" ? [da42AustroTopic] : icJoshiTopics;
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
