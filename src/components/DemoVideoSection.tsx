@@ -22,6 +22,40 @@ const DemoVideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
+  const { toast } = useToast();
+
+  const handleFullscreen = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if ((video as any).webkitEnterFullscreen) {
+      (video as any).webkitEnterFullscreen();
+    }
+  }, []);
+
+  const handleShare = useCallback(async () => {
+    const shareUrl = window.location.origin;
+    const shareData = {
+      title: "Cloud Aviation Academy - RTR Part 2 Simulator Demo",
+      text: "Check out India's first DGCA question bank with a built-in RTR Part 2 simulator!",
+      url: shareUrl,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // User cancelled or error
+      }
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({
+        title: "Link copied!",
+        description: "Share link copied to clipboard.",
+      });
+    }
+  }, [toast]);
 
   useEffect(() => {
     setSpeechSupported("speechSynthesis" in window);
