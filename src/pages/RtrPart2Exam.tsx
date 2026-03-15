@@ -36,7 +36,7 @@ import paper5SolutionPage2 from "@/assets/paper5-solution-page2.jpg";
 import paper5SolutionPage3 from "@/assets/paper5-solution-page3.jpg";
 import paper6SolutionPage1 from "@/assets/paper6-solution-page1.jpg";
 import paper6SolutionPage2 from "@/assets/paper6-solution-page2.jpg";
-import paper6SolutionPage3 from "@/assets/paper6-solution-page3.jpg";
+
 import paper7SolutionPage1 from "@/assets/paper7-solution-page1.jpg";
 import paper7SolutionPage2 from "@/assets/paper7-solution-page2.jpg";
 import paper8SolutionPage1 from "@/assets/paper8-solution-page1.jpg";
@@ -64,7 +64,7 @@ const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
     label: "Paper 5",
   },
   "rtr2-paper-6": {
-    images: [paper6SolutionPage1, paper6SolutionPage2, paper6SolutionPage3],
+    images: [paper6SolutionPage1, paper6SolutionPage2],
     label: "Paper 6",
   },
   "rtr2-paper-7": {
