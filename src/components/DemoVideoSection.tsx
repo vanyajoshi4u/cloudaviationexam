@@ -77,79 +77,31 @@ const DemoVideoSection = () => {
     }
   }, [toast]);
 
-  // Soft dreamy background music using Web Audio API
   const startBgMusic = useCallback(() => {
     try {
-      const ctx = new AudioContext();
-      audioCtxRef.current = ctx;
-
-      const masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(0, ctx.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0.035, ctx.currentTime + 3);
-      masterGain.connect(ctx.destination);
-      bgGainRef.current = masterGain;
-
-      // Ethereal pad: Cmaj7 voicing with triangle waves for softer tone
-      const notes = [
-        { freq: 65.41, type: "sine" as OscillatorType },       // C2 - deep bass
-        { freq: 130.81, type: "triangle" as OscillatorType },   // C3
-        { freq: 164.81, type: "triangle" as OscillatorType },   // E3
-        { freq: 196.00, type: "sine" as OscillatorType },       // G3
-        { freq: 246.94, type: "triangle" as OscillatorType },   // B3
-        { freq: 329.63, type: "sine" as OscillatorType },       // E4 - shimmer
-      ];
-      const oscillators: OscillatorNode[] = [];
-
-      notes.forEach(({ freq, type }, i) => {
-        const osc = ctx.createOscillator();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        // Gentle slow vibrato for dreaminess
-        const lfo = ctx.createOscillator();
-        lfo.frequency.setValueAtTime(0.3 + i * 0.1, ctx.currentTime);
-        const lfoGain = ctx.createGain();
-        lfoGain.gain.setValueAtTime(1.5, ctx.currentTime);
-        lfo.connect(lfoGain);
-        lfoGain.connect(osc.frequency);
-        lfo.start();
-
-        const oscGain = ctx.createGain();
-        // Higher notes quieter for balance
-        oscGain.gain.setValueAtTime(i < 2 ? 0.2 : 0.12, ctx.currentTime);
-        osc.connect(oscGain);
-        oscGain.connect(masterGain);
-        osc.start();
-        oscillators.push(osc);
-      });
-
-      bgOscillatorsRef.current = oscillators;
+      const audio = new Audio("/bg-music.mp3");
+      audio.loop = true;
+      audio.volume = 0.08;
+      audio.play();
+      bgAudioRef.current = audio;
     } catch (err) {
       console.error("Background music error:", err);
     }
   }, []);
 
   const stopBgMusic = useCallback(() => {
-    const ctx = audioCtxRef.current;
-    const gain = bgGainRef.current;
-    if (ctx && gain) {
-      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1);
-      setTimeout(() => {
-        bgOscillatorsRef.current.forEach((osc) => {
-          try { osc.stop(); } catch {}
-        });
-        bgOscillatorsRef.current = [];
-        ctx.close();
-        audioCtxRef.current = null;
-        bgGainRef.current = null;
-      }, 1200);
+    const audio = bgAudioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      bgAudioRef.current = null;
     }
   }, []);
 
   const muteBgMusic = useCallback((muted: boolean) => {
-    const ctx = audioCtxRef.current;
-    const gain = bgGainRef.current;
-    if (ctx && gain) {
-      gain.gain.linearRampToValueAtTime(muted ? 0 : 0.04, ctx.currentTime + 0.5);
+    const audio = bgAudioRef.current;
+    if (audio) {
+      audio.volume = muted ? 0 : 0.08;
     }
   }, []);
 
