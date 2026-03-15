@@ -26,6 +26,9 @@ const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const bgGainRef = useRef<GainNode | null>(null);
+  const bgOscillatorsRef = useRef<OscillatorNode[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
@@ -42,27 +45,89 @@ const DemoVideoSection = () => {
   }, []);
 
   const handleShare = useCallback(async () => {
-    const shareUrl = window.location.origin;
+    const videoUrl = `${window.location.origin}/demo-video.mov`;
     const shareData = {
       title: "Cloud Aviation Academy - RTR Part 2 Simulator Demo",
-      text: "Check out India's first DGCA question bank with a built-in RTR Part 2 simulator!",
-      url: shareUrl,
+      text: "Watch how India's first DGCA question bank with a built-in RTR Part 2 simulator works!",
+      url: videoUrl,
     };
 
     if (navigator.share) {
       try {
         await navigator.share(shareData);
       } catch (err) {
-        // User cancelled or error
+        // User cancelled
       }
     } else {
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(videoUrl);
       toast({
-        title: "Link copied!",
-        description: "Share link copied to clipboard.",
+        title: "Video link copied!",
+        description: "Share the demo video link with others.",
       });
     }
   }, [toast]);
+
+  // Soft ambient background music using Web Audio API
+  const startBgMusic = useCallback(() => {
+    try {
+      const ctx = new AudioContext();
+      audioCtxRef.current = ctx;
+
+      const gainNode = ctx.createGain();
+      gainNode.gain.setValueAtTime(0, ctx.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.04, ctx.currentTime + 2); // Very soft
+      gainNode.connect(ctx.destination);
+      bgGainRef.current = gainNode;
+
+      // Create a warm ambient pad with multiple detuned oscillators
+      const frequencies = [130.81, 164.81, 196.00, 261.63]; // C3, E3, G3, C4
+      const oscillators: OscillatorNode[] = [];
+
+      frequencies.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        // Slight detune for warmth
+        osc.detune.setValueAtTime((i - 1.5) * 4, ctx.currentTime);
+
+        const oscGain = ctx.createGain();
+        oscGain.gain.setValueAtTime(0.25, ctx.currentTime);
+        osc.connect(oscGain);
+        oscGain.connect(gainNode);
+        osc.start();
+        oscillators.push(osc);
+      });
+
+      bgOscillatorsRef.current = oscillators;
+    } catch (err) {
+      console.error("Background music error:", err);
+    }
+  }, []);
+
+  const stopBgMusic = useCallback(() => {
+    const ctx = audioCtxRef.current;
+    const gain = bgGainRef.current;
+    if (ctx && gain) {
+      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1);
+      setTimeout(() => {
+        bgOscillatorsRef.current.forEach((osc) => {
+          try { osc.stop(); } catch {}
+        });
+        bgOscillatorsRef.current = [];
+        ctx.close();
+        audioCtxRef.current = null;
+        bgGainRef.current = null;
+      }, 1200);
+    }
+  }, []);
+
+  const muteBgMusic = useCallback((muted: boolean) => {
+    const ctx = audioCtxRef.current;
+    const gain = bgGainRef.current;
+    if (ctx && gain) {
+      gain.gain.linearRampToValueAtTime(muted ? 0 : 0.04, ctx.currentTime + 0.5);
+    }
+  }, []);
 
   useEffect(() => {
     setSpeechSupported("speechSynthesis" in window);
@@ -141,11 +206,17 @@ const DemoVideoSection = () => {
     if (isPlaying) {
       video.pause();
       cancelNarration();
+      stopBgMusic();
       setIsPlaying(false);
       return;
     }
 
     video.currentTime = 0;
+
+    // Start background music
+    if (!isMuted) {
+      startBgMusic();
+    }
 
     // Start browser TTS narration
     if (speechSupported && !isMuted) {
@@ -160,26 +231,30 @@ const DemoVideoSection = () => {
 
     video.onended = () => {
       cancelNarration();
+      stopBgMusic();
       setIsPlaying(false);
     };
-  }, [isPlaying, isMuted, speechSupported]);
+  }, [isPlaying, isMuted, speechSupported, cancelNarration, speakNarration, startBgMusic, stopBgMusic]);
 
   const toggleMute = useCallback(() => {
     const next = !isMuted;
     setIsMuted(next);
     if (next) {
       cancelNarration();
-    } else if (isPlaying && speechSupported) {
-      speakNarration();
+      muteBgMusic(true);
+    } else if (isPlaying) {
+      if (speechSupported) speakNarration();
+      muteBgMusic(false);
     }
-  }, [isMuted, isPlaying, speechSupported, cancelNarration, speakNarration]);
+  }, [isMuted, isPlaying, speechSupported, cancelNarration, speakNarration, muteBgMusic]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       cancelNarration();
+      stopBgMusic();
     };
-  }, [cancelNarration]);
+  }, [cancelNarration, stopBgMusic]);
 
   return (
     <section className="py-10">
