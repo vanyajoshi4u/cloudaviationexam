@@ -120,12 +120,14 @@ const DemoVideoSection = () => {
           <div className="relative">
             <video
               ref={videoRef}
-              src="/demo-video.mov"
               className="w-full aspect-video object-cover bg-black"
               playsInline
               muted
               preload="metadata"
-            />
+            >
+              <source src="/demo-video.mp4" type="video/mp4" />
+              <source src="/demo-video.mov" type="video/quicktime" />
+            </video>
 
             {/* Overlay controls */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity">
