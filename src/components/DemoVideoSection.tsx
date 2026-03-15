@@ -24,7 +24,41 @@ const DemoVideoSection = () => {
 
   useEffect(() => {
     setSpeechSupported("speechSynthesis" in window);
+    // Pre-load voices (some browsers load them async)
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
   }, []);
+
+  const getBestVoice = useCallback(() => {
+    const voices = window.speechSynthesis.getVoices();
+    // Priority order: premium quality voices first
+    const priorityNames = [
+      "Google UK English Male", "Google UK English Female",
+      "Google US English", "Daniel", "Samantha", "Karen",
+      "Moira", "Tessa", "Rishi", "Microsoft Mark", "Microsoft David",
+      "Microsoft Zira", "Alex"
+    ];
+    for (const name of priorityNames) {
+      const match = voices.find((v) => v.name.includes(name) && v.lang.startsWith("en"));
+      if (match) return match;
+    }
+    // Fallback: any English voice
+    return voices.find((v) => v.lang.startsWith("en")) || null;
+  }, []);
+
+  const createNarrationUtterance = useCallback(() => {
+    const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
+    utterance.rate = 0.82;
+    utterance.pitch = 1.05;
+    utterance.volume = 1;
+    const voice = getBestVoice();
+    if (voice) utterance.voice = voice;
+    return utterance;
+  }, [getBestVoice]);
 
   const handlePlayPause = useCallback(() => {
     const video = videoRef.current;
