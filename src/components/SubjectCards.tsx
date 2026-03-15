@@ -12,6 +12,7 @@ import { rtrQuestionBank4Topic } from "@/data/rtrQuestionBank4";
 import { rkBaliRegTopics } from "@/data/rkBaliRegQuestions";
 import { rkBaliSamplePapers } from "@/data/rkBaliSamplePapers";
 import { skMetTopics } from "@/data/skMetQuestions";
+import { dgcaPreviousMetTopics } from "@/data/dgcaPreviousMetQuestions";
 import { rkBaliGenNavTopics } from "@/data/rkBaliGenNavQuestions";
 import { rkBaliInstrumentTopics } from "@/data/rkBaliInstrumentQuestions";
 import { rkBaliRadioNavTopics } from "@/data/rkBaliRadioNavQuestions";
