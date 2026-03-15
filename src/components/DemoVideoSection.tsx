@@ -1,7 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Play, Pause, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const NARRATION_SCRIPT = `Welcome to Cloud Aviation Academy — India's first DGCA question bank with a built-in RTR Part 2 simulator.
 
@@ -21,6 +22,40 @@ const DemoVideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
+  const { toast } = useToast();
+
+  const handleFullscreen = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if ((video as any).webkitEnterFullscreen) {
+      (video as any).webkitEnterFullscreen();
+    }
+  }, []);
+
+  const handleShare = useCallback(async () => {
+    const shareUrl = window.location.origin;
+    const shareData = {
+      title: "Cloud Aviation Academy - RTR Part 2 Simulator Demo",
+      text: "Check out India's first DGCA question bank with a built-in RTR Part 2 simulator!",
+      url: shareUrl,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // User cancelled or error
+      }
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({
+        title: "Link copied!",
+        description: "Share link copied to clipboard.",
+      });
+    }
+  }, [toast]);
 
   useEffect(() => {
     setSpeechSupported("speechSynthesis" in window);
@@ -163,19 +198,31 @@ const DemoVideoSection = () => {
               </Button>
             </div>
 
-            {/* Mute toggle */}
+            {/* Bottom controls */}
             {isPlaying && (
-              <button
-                onClick={toggleMute}
-                className="absolute bottom-3 right-3 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-              >
-                {isMuted ? (
-                  <VolumeX className="w-4 h-4" />
-                ) : (
-                  <Volume2 className="w-4 h-4" />
-                )}
-              </button>
+              <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                <button
+                  onClick={toggleMute}
+                  className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                >
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={handleFullscreen}
+                  className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                >
+                  <Maximize className="w-4 h-4" />
+                </button>
+              </div>
             )}
+
+            {/* Share button - always visible */}
+            <button
+              onClick={handleShare}
+              className="absolute top-3 right-3 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+            >
+              <Share2 className="w-4 h-4" />
+            </button>
           </div>
         </motion.div>
       </div>
