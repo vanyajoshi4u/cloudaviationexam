@@ -26,9 +26,7 @@ const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const bgGainRef = useRef<GainNode | null>(null);
-  const bgOscillatorsRef = useRef<OscillatorNode[]>([]);
+  const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
