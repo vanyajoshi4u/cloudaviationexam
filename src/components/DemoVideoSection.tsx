@@ -139,8 +139,8 @@ const DemoVideoSection = () => {
               muted
               preload="metadata"
             >
-              <source src="/demo-video.mp4" type="video/mp4" />
               <source src="/demo-video.mov" type="video/quicktime" />
+              <source src="/demo-video.mp4" type="video/mp4" />
             </video>
 
             {/* Overlay controls */}
