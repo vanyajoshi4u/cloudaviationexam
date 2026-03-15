@@ -28,6 +28,19 @@ import paper2SolutionPage3 from "@/assets/paper2-solution-page3.jpg";
 import paper3SolutionPage1 from "@/assets/paper3-solution-page1.jpg";
 import paper3SolutionPage2 from "@/assets/paper3-solution-page2.jpg";
 import paper3SolutionPage3 from "@/assets/paper3-solution-page3.jpg";
+import paper4SolutionPage1 from "@/assets/paper4-solution-page1.jpg";
+import paper4SolutionPage2 from "@/assets/paper4-solution-page2.jpg";
+import paper4SolutionPage3 from "@/assets/paper4-solution-page3.jpg";
+import paper5SolutionPage1 from "@/assets/paper5-solution-page1.jpg";
+import paper5SolutionPage2 from "@/assets/paper5-solution-page2.jpg";
+import paper5SolutionPage3 from "@/assets/paper5-solution-page3.jpg";
+import paper6SolutionPage1 from "@/assets/paper6-solution-page1.jpg";
+import paper6SolutionPage2 from "@/assets/paper6-solution-page2.jpg";
+import paper6SolutionPage3 from "@/assets/paper6-solution-page3.jpg";
+import paper7SolutionPage1 from "@/assets/paper7-solution-page1.jpg";
+import paper7SolutionPage2 from "@/assets/paper7-solution-page2.jpg";
+import paper8SolutionPage1 from "@/assets/paper8-solution-page1.jpg";
+import paper8SolutionPage2 from "@/assets/paper8-solution-page2.jpg";
 
 const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
   "rtr2-paper-1": {
@@ -41,6 +54,26 @@ const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
   "rtr2-paper-3": {
     images: [paper3SolutionPage1, paper3SolutionPage2, paper3SolutionPage3],
     label: "Paper 3",
+  },
+  "rtr2-paper-4": {
+    images: [paper4SolutionPage1, paper4SolutionPage2, paper4SolutionPage3],
+    label: "Paper 4",
+  },
+  "rtr2-paper-5": {
+    images: [paper5SolutionPage1, paper5SolutionPage2, paper5SolutionPage3],
+    label: "Paper 5",
+  },
+  "rtr2-paper-6": {
+    images: [paper6SolutionPage1, paper6SolutionPage2, paper6SolutionPage3],
+    label: "Paper 6",
+  },
+  "rtr2-paper-7": {
+    images: [paper7SolutionPage1, paper7SolutionPage2],
+    label: "Paper 7",
+  },
+  "rtr2-paper-8": {
+    images: [paper8SolutionPage1, paper8SolutionPage2],
+    label: "Paper 8",
   },
 };
 
