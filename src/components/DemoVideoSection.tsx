@@ -4,21 +4,26 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const NARRATION_SCRIPT = `Welcome to Cloud Aviation Academy — India's first DGCA question bank with a built-in RTR Part 2 simulator.
+const NARRATION_SEGMENTS = [
+  `Welcome to Cloud Aviation Academy — India's first DGCA question bank with a built-in RTR Part 2 simulator.
 
 On this platform, you get access to previous attempt questions across all DGCA subjects.
 
-You can practice in two modes. In Practice Mode, you see the correct answer instantly after each question — learn as you go. In Test Mode, you answer all questions first, then review your results to test your knowledge.
+You can practice in two modes. In Practice Mode, you see the correct answer instantly after each question — learn as you go. In Test Mode, you answer all questions first, then review your results to test your knowledge.`,
 
-But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
+  `But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
 
 Start the exam. The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
 
-Join Cloud Aviation Academy and ace your DGCA exams.`;
+Join Cloud Aviation Academy and ace your DGCA exams.`,
+];
+
+const PAUSE_AFTER_FIRST_SEGMENT_MS = 5000;
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
@@ -85,8 +90,8 @@ const DemoVideoSection = () => {
     return voices.find((v) => v.lang.startsWith("en")) || null;
   }, []);
 
-  const createNarrationUtterance = useCallback(() => {
-    const utterance = new SpeechSynthesisUtterance(NARRATION_SCRIPT);
+  const createNarrationUtterance = useCallback((text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 0.82;
     utterance.pitch = 1.05;
     utterance.volume = 1;
@@ -95,13 +100,38 @@ const DemoVideoSection = () => {
     return utterance;
   }, [getBestVoice]);
 
+  const speakNarration = useCallback(() => {
+    window.speechSynthesis.cancel();
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+
+    const firstUtterance = createNarrationUtterance(NARRATION_SEGMENTS[0]);
+    firstUtterance.onend = () => {
+      // 5 second pause after Test Mode segment
+      pauseTimerRef.current = setTimeout(() => {
+        const secondUtterance = createNarrationUtterance(NARRATION_SEGMENTS[1]);
+        utteranceRef.current = secondUtterance;
+        window.speechSynthesis.speak(secondUtterance);
+      }, PAUSE_AFTER_FIRST_SEGMENT_MS);
+    };
+    utteranceRef.current = firstUtterance;
+    window.speechSynthesis.speak(firstUtterance);
+  }, [createNarrationUtterance]);
+
+  const cancelNarration = useCallback(() => {
+    window.speechSynthesis.cancel();
+    if (pauseTimerRef.current) {
+      clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = null;
+    }
+  }, []);
+
   const handlePlayPause = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
     if (isPlaying) {
       video.pause();
-      window.speechSynthesis.cancel();
+      cancelNarration();
       setIsPlaying(false);
       return;
     }
@@ -110,10 +140,7 @@ const DemoVideoSection = () => {
 
     // Start browser TTS narration
     if (speechSupported && !isMuted) {
-      window.speechSynthesis.cancel();
-      const utterance = createNarrationUtterance();
-      utteranceRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
+      speakNarration();
     }
 
     video.play().then(() => {
@@ -123,7 +150,7 @@ const DemoVideoSection = () => {
     });
 
     video.onended = () => {
-      window.speechSynthesis.cancel();
+      cancelNarration();
       setIsPlaying(false);
     };
   }, [isPlaying, isMuted, speechSupported]);
@@ -132,20 +159,18 @@ const DemoVideoSection = () => {
     const next = !isMuted;
     setIsMuted(next);
     if (next) {
-      window.speechSynthesis.cancel();
+      cancelNarration();
     } else if (isPlaying && speechSupported) {
-      const utterance = createNarrationUtterance();
-      utteranceRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
+      speakNarration();
     }
-  }, [isMuted, isPlaying, speechSupported]);
+  }, [isMuted, isPlaying, speechSupported, cancelNarration, speakNarration]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      window.speechSynthesis.cancel();
+      cancelNarration();
     };
-  }, []);
+  }, [cancelNarration]);
 
   return (
     <section className="py-10">
