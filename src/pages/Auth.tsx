@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import DemoVideoSection from "@/components/DemoVideoSection";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle, Eye, EyeOff } from "lucide-react";
@@ -359,7 +360,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 py-8">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -664,6 +665,8 @@ const Auth = () => {
           )}
         </div>
       </motion.div>
+
+      <DemoVideoSection />
     </div>
   );
 };
