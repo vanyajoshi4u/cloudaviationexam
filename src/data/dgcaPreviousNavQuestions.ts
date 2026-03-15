@@ -761,6 +761,537 @@ const navPaper3Questions: MCQuestion[] = [
   },
 ];
 
+const navPaper4Questions: MCQuestion[] = [
+  {
+    id: 301,
+    question: "A rhumb line cuts every meridian at the same angle. It gives:",
+    options: [
+      "A line of constant direction",
+      "The shortest distance between two points",
+      "A great circle track",
+      "A line of varying direction",
+    ],
+    correct: 0,
+  },
+  {
+    id: 302,
+    question: "QNH is the pressure setting which, when set on the subscale of an altimeter, will cause it to read:",
+    options: [
+      "Height above the aerodrome",
+      "Altitude above mean sea level",
+      "Flight level",
+      "Height above ground level",
+    ],
+    correct: 1,
+  },
+  {
+    id: 303,
+    question: "The principle of primary radar is based on:",
+    options: [
+      "Reflection of radio energy from a target",
+      "Interrogation and response from a transponder",
+      "Triangulation from two ground stations",
+      "Phase comparison of two signals",
+    ],
+    correct: 0,
+  },
+  {
+    id: 304,
+    question: "Which one is NOT an advantage of primary radar over secondary radar?",
+    options: [
+      "Does not require aircraft equipment",
+      "Provides aircraft identification",
+      "Can detect any object",
+      "Can detect non-cooperative targets",
+    ],
+    correct: 1,
+  },
+  {
+    id: 305,
+    question: "An aircraft flies a range of 800 NM. It climbs for 30 mins at 84 kts G/S, cruises at 180 kts G/S, and descends for 30 mins at 85 kts G/S. What is the flight time?",
+    options: ["4 hr 52 min", "5 hr 03 min", "4 hr 30 min", "5 hr 15 min"],
+    correct: 0,
+  },
+  {
+    id: 306,
+    question: "Fuel consumption is 120 kg/hr for 1 hr 20 min. What is total fuel consumed?",
+    options: ["160 kg", "140 kg", "180 kg", "120 kg"],
+    correct: 0,
+  },
+  {
+    id: 307,
+    question: "The frequency range of NDB is:",
+    options: [
+      "190 – 1750 kHz",
+      "108 – 117.95 MHz",
+      "960 – 1215 MHz",
+      "329 – 335 MHz",
+    ],
+    correct: 0,
+  },
+  {
+    id: 308,
+    question: "In a slip/skid indicator (ball), during a left turn, if the ball moves to the right, this indicates:",
+    options: [
+      "A slip – too little bank",
+      "A skid – too much bank",
+      "Coordinated flight",
+      "A slip – too much bank",
+    ],
+    correct: 0,
+  },
+  {
+    id: 309,
+    question: "When we file a flight plan, the time mentioned for EET (Estimated Elapsed Time) is:",
+    options: [
+      "UTC time of arrival at destination",
+      "Duration of flight from takeoff to landing",
+      "Local time at destination",
+      "Time from off-blocks to on-blocks",
+    ],
+    correct: 1,
+  },
+  {
+    id: 310,
+    question: "A flight plan must be filed at least ______ prior to departure for an IFR flight:",
+    options: ["30 minutes", "60 minutes", "45 minutes", "15 minutes"],
+    correct: 1,
+  },
+  {
+    id: 311,
+    question: "How is flight time of 1 hr 55 min written on the ICAO flight plan form?",
+    options: ["0155", "1h55", "115", "155"],
+    correct: 0,
+  },
+  {
+    id: 312,
+    question: "Which time do we mention in the flight plan?",
+    options: ["UTC", "LMT", "IST", "Zone time"],
+    correct: 0,
+  },
+  {
+    id: 313,
+    question: "On a Lambert conformal chart, where do we place the protractor for measuring track direction?",
+    options: [
+      "At the mid-meridian of the track",
+      "At the departure point",
+      "At the destination",
+      "At any convenient meridian",
+    ],
+    correct: 0,
+  },
+  {
+    id: 314,
+    question: "What is the minimum height an aircraft must be to receive signals from a VOR at 19 ft AMSL at a range of 175 NM?",
+    options: ["26000 ft", "16000 ft", "24000 ft", "20000 ft"],
+    correct: 3,
+  },
+  {
+    id: 315,
+    question: "The amplitude modulation of the ILS outer marker is ______ and it illuminates the ______ light:",
+    options: [
+      "400 Hz – Blue",
+      "1300 Hz – Amber",
+      "3000 Hz – White",
+      "400 Hz – Purple",
+    ],
+    correct: 0,
+  },
+  {
+    id: 316,
+    question: "The most accurate fixing information from GPS satellites will be obtained from:",
+    options: [
+      "Four satellites spaced 90° apart at 30° above the visual horizon",
+      "One satellite close to the horizon and 3 equally at 60° above the horizon",
+      "One satellite directly overhead and 3 equally spaced at 60° above the horizon",
+      "One satellite directly overhead and 3 spaced 120° apart close to the horizon",
+    ],
+    correct: 0,
+  },
+  {
+    id: 317,
+    question: "On an ILS approach, if the 150 Hz signal is stronger than the 90 Hz signal, the aircraft is:",
+    options: [
+      "Below the glide slope",
+      "Above the glide slope",
+      "Left of the localizer",
+      "Right of the localizer",
+    ],
+    correct: 0,
+  },
+  {
+    id: 318,
+    question: "The main reason that day and night throughout the year have different duration is due to:",
+    options: [
+      "The tilt of the Earth's axis",
+      "The elliptical orbit of the Earth",
+      "The rotation speed of the Earth",
+      "The distance from the Sun",
+    ],
+    correct: 0,
+  },
+  {
+    id: 319,
+    question: "380 US gallons of fuel with specific gravity 0.78. What is the mass in kg?",
+    options: ["1122 kg", "1050 kg", "1200 kg", "980 kg"],
+    correct: 0,
+  },
+  {
+    id: 320,
+    question: "Civil twilight is defined as the period when the sun is:",
+    options: [
+      "Between 0° and 6° below the horizon",
+      "Between 6° and 12° below the horizon",
+      "Between 12° and 18° below the horizon",
+      "Exactly at the horizon",
+    ],
+    correct: 0,
+  },
+  {
+    id: 321,
+    question: "The runway slope affects aircraft performance. The maximum allowable runway slope for a certified runway is:",
+    options: ["±1%", "±2%", "±4%", "±1.5%"],
+    correct: 1,
+  },
+  {
+    id: 322,
+    question: "Rate of descent required for a 3° glide slope at a groundspeed of 120 kts is approximately:",
+    options: ["600 ft/min", "640 ft/min", "700 ft/min", "550 ft/min"],
+    correct: 1,
+  },
+  {
+    id: 323,
+    question: "An aircraft departs aerodrome A (QNH 1023 hPa) and flies to aerodrome B (QNH 1003 hPa). If the pilot forgets to reset the altimeter subscale, the altimeter will:",
+    options: [
+      "Over-read by approximately 600 ft",
+      "Under-read by approximately 600 ft",
+      "Over-read by approximately 200 ft",
+      "Read correctly",
+    ],
+    correct: 0,
+  },
+  {
+    id: 324,
+    question: "Pressure altitude is:",
+    options: [
+      "Altitude when the altimeter subscale is set to 1013.25 hPa",
+      "Altitude above the airfield elevation",
+      "True altitude corrected for temperature",
+      "Height above mean sea level on QNH",
+    ],
+    correct: 0,
+  },
+  {
+    id: 325,
+    question: "IAS 84 kts, OAT +10°C, pressure altitude 8000 ft. The approximate TAS is:",
+    options: ["100 kts", "96 kts", "105 kts", "92 kts"],
+    correct: 0,
+  },
+];
+
+const navPaper5Questions: MCQuestion[] = [
+  {
+    id: 401,
+    question: "The graticule of a Direct Mercator chart is:",
+    options: ["Rectangular", "Square", "Circular", "Triangular"],
+    correct: 0,
+  },
+  {
+    id: 402,
+    question: "On a Direct Mercator chart, rhumb lines are:",
+    options: [
+      "Curves concave to the equator",
+      "Ellipses",
+      "Straight lines",
+      "Curves convex to the equator",
+    ],
+    correct: 2,
+  },
+  {
+    id: 403,
+    question: "On a Direct Mercator chart, great circles can be represented as:",
+    options: [
+      "Always straight lines",
+      "Curves concave to the nearer pole",
+      "Straight lines and curves (equator and meridians are straight)",
+      "Always curves convex to the equator",
+    ],
+    correct: 2,
+  },
+  {
+    id: 404,
+    question: "The angle between a straight line on a Mercator chart and the corresponding great circle is:",
+    options: [
+      "Variation",
+      "Earth convergency",
+      "Conversion angle",
+      "Deviation",
+    ],
+    correct: 2,
+  },
+  {
+    id: 405,
+    question: "If the rhumb line track from Turin (45N 008E) to Khartoum (15N 032E) is 145°(T), the great circle track measured at Turin is:",
+    options: ["133°(T)", "139°(T)", "145°(T)", "151°(T)"],
+    correct: 0,
+  },
+  {
+    id: 406,
+    question: "On a Mercator chart, the rhumb line track from Durban (30S 032E) to Perth (30S 116E) is 090°(T). The great circle track from Perth to Durban is:",
+    options: ["291°(T)", "312°(T)", "228°(T)", "249°(T)"],
+    correct: 3,
+  },
+  {
+    id: 407,
+    question: "At 60°S on a Mercator chart, chart convergence is:",
+    options: [
+      "Greater than Earth convergency",
+      "Correct (equal to Earth convergency)",
+      "Less than Earth convergency",
+      "Equal to change of longitude × 0.866",
+    ],
+    correct: 0,
+  },
+  {
+    id: 408,
+    question: "Which one of the following, concerning great circles on a Direct Mercator chart, is correct?",
+    options: [
+      "With the exception of meridians and the equator, they are curves concave to the equator",
+      "They are always straight lines",
+      "They are curves concave to the nearest pole",
+      "With the exception of meridians and equator, they are curves convex to the equator",
+    ],
+    correct: 0,
+  },
+  {
+    id: 409,
+    question: "A DRMC (Direct Reading Magnetic Compass) will NOT be affected by:",
+    options: [
+      "Non-ferrous metals",
+      "Ferrous metals",
+      "Magnetic fields",
+      "Electrical currents",
+    ],
+    correct: 0,
+  },
+  {
+    id: 410,
+    question: "When turning from SW to SE at 45°N, the roll out on a direct reading compass should occur:",
+    options: [
+      "Before reaching the required heading",
+      "On the required heading",
+      "After passing the required heading",
+      "It depends on the speed of the turn",
+    ],
+    correct: 2,
+  },
+  {
+    id: 411,
+    question: "What will a direct reading compass indicate when the aircraft lands on a westerly heading in the Northern hemisphere?",
+    options: [
+      "An apparent turn to south",
+      "An apparent turn to west",
+      "No turn indicated",
+      "An apparent turn to north",
+    ],
+    correct: 2,
+  },
+  {
+    id: 412,
+    question: "An observer is situated on the parallel of 23½°S. On which date will the sun pass directly overhead at noon?",
+    options: [
+      "December 22",
+      "June 21",
+      "March 21",
+      "September 23",
+    ],
+    correct: 0,
+  },
+  {
+    id: 413,
+    question: "On a Lambert conformal conic chart, the scale is:",
+    options: [
+      "Correct along the two standard parallels",
+      "Correct along the parallel of origin only",
+      "Constant throughout the chart",
+      "Correct at the equator",
+    ],
+    correct: 0,
+  },
+  {
+    id: 414,
+    question: "On a Lambert conformal chart, convergence of meridians is:",
+    options: [
+      "Equal to Earth convergency at the parallel of origin",
+      "Equal to Earth convergency at all latitudes",
+      "Greater than Earth convergency",
+      "Zero",
+    ],
+    correct: 0,
+  },
+  {
+    id: 415,
+    question: "On a Polar Stereographic chart centered on the North Pole, meridians appear as:",
+    options: [
+      "Straight lines radiating from the center",
+      "Curved lines",
+      "Parallel lines",
+      "Concentric circles",
+    ],
+    correct: 0,
+  },
+  {
+    id: 416,
+    question: "Departure (in NM) is calculated using the formula:",
+    options: [
+      "Change in longitude (minutes) × cos(latitude)",
+      "Change in latitude (minutes) × cos(longitude)",
+      "Change in longitude (degrees) × 60",
+      "Change in latitude (degrees) × sin(latitude)",
+    ],
+    correct: 0,
+  },
+  {
+    id: 417,
+    question: "The scale of a Mercator chart at latitude 60°N compared to the equator is:",
+    options: [
+      "Twice as large (2:1)",
+      "Half as large (1:2)",
+      "The same",
+      "Four times as large",
+    ],
+    correct: 0,
+  },
+  {
+    id: 418,
+    question: "On a Mercator chart at latitude 30°S, a distance of 5 cm represents 100 NM. At latitude 60°S, the same 5 cm will represent approximately:",
+    options: ["57.7 NM", "86.6 NM", "100 NM", "173.2 NM"],
+    correct: 0,
+  },
+  {
+    id: 419,
+    question: "Earth convergency between two meridians is calculated as:",
+    options: [
+      "Change of longitude × sin(latitude)",
+      "Change of longitude × cos(latitude)",
+      "Change of longitude × tan(latitude)",
+      "Change of latitude × sin(longitude)",
+    ],
+    correct: 0,
+  },
+  {
+    id: 420,
+    question: "Conversion angle is:",
+    options: [
+      "Half the Earth convergency",
+      "Equal to Earth convergency",
+      "Twice the Earth convergency",
+      "The difference between variation and deviation",
+    ],
+    correct: 0,
+  },
+  {
+    id: 421,
+    question: "On a Direct Mercator chart, the distance between parallels of latitude:",
+    options: [
+      "Increases toward the poles",
+      "Decreases toward the poles",
+      "Remains constant",
+      "Is greatest at the equator",
+    ],
+    correct: 0,
+  },
+  {
+    id: 422,
+    question: "The Coriolis effect causes a freely moving body in the Northern hemisphere to be deflected to the:",
+    options: ["Right", "Left", "Straight ahead", "Upward"],
+    correct: 0,
+  },
+  {
+    id: 423,
+    question: "The isogonal line connecting points of zero magnetic variation is called the:",
+    options: ["Agonic line", "Isoclinic line", "Isogonic line", "Aclinic line"],
+    correct: 0,
+  },
+  {
+    id: 424,
+    question: "The aclinic line (magnetic equator) connects all points where:",
+    options: [
+      "Magnetic dip is zero",
+      "Magnetic variation is zero",
+      "Magnetic deviation is zero",
+      "Total magnetic force is zero",
+    ],
+    correct: 0,
+  },
+  {
+    id: 425,
+    question: "A gyroscope has the property of rigidity in space. This means:",
+    options: [
+      "Its spin axis remains fixed in space",
+      "It always points to magnetic north",
+      "It resists any force applied to it",
+      "It precesses at a constant rate",
+    ],
+    correct: 0,
+  },
+  {
+    id: 426,
+    question: "Apparent wander of a gyroscope at the North Pole is:",
+    options: [
+      "15° per hour clockwise when viewed from above",
+      "15° per hour anti-clockwise",
+      "Zero",
+      "30° per hour",
+    ],
+    correct: 0,
+  },
+  {
+    id: 427,
+    question: "Transport wander of a gyroscope is caused by:",
+    options: [
+      "Movement of the gyro over the earth's surface",
+      "Friction in the gimbal bearings",
+      "Earth's rotation",
+      "Precession due to applied force",
+    ],
+    correct: 0,
+  },
+  {
+    id: 428,
+    question: "The VOR operates in the frequency range:",
+    options: [
+      "108.0 – 117.95 MHz",
+      "190 – 1750 kHz",
+      "960 – 1215 MHz",
+      "329 – 335 MHz",
+    ],
+    correct: 0,
+  },
+  {
+    id: 429,
+    question: "DME operates on the principle of:",
+    options: [
+      "Secondary radar – measuring time delay between interrogation and reply",
+      "Primary radar – measuring reflected signals",
+      "Phase comparison of two signals",
+      "Doppler shift of reflected signals",
+    ],
+    correct: 0,
+  },
+  {
+    id: 430,
+    question: "DME provides:",
+    options: [
+      "Slant range distance to the station",
+      "Ground distance to the station",
+      "Bearing to the station",
+      "True altitude above the station",
+    ],
+    correct: 0,
+  },
+];
+
 export const dgcaPreviousNavPaper1: Topic = {
   id: "dgca-prev-nav-paper-1",
   title: "Navigation Paper 1",
@@ -779,4 +1310,16 @@ export const dgcaPreviousNavPaper3: Topic = {
   questions: navPaper3Questions,
 };
 
-export const dgcaPreviousNavTopics: Topic[] = [dgcaPreviousNavPaper1, dgcaPreviousNavPaper2, dgcaPreviousNavPaper3];
+export const dgcaPreviousNavPaper4: Topic = {
+  id: "dgca-prev-nav-paper-4",
+  title: "Navigation Paper 4 (PAQ 2025)",
+  questions: navPaper4Questions,
+};
+
+export const dgcaPreviousNavPaper5: Topic = {
+  id: "dgca-prev-nav-paper-5",
+  title: "Navigation Paper 5 (Charts & Instruments)",
+  questions: navPaper5Questions,
+};
+
+export const dgcaPreviousNavTopics: Topic[] = [dgcaPreviousNavPaper1, dgcaPreviousNavPaper2, dgcaPreviousNavPaper3, dgcaPreviousNavPaper4, dgcaPreviousNavPaper5];
