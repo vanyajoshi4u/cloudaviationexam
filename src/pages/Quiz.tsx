@@ -37,51 +37,16 @@ import { tecnamP2006tTopic } from "@/data/tecnamP2006tQuestions";
 import { tecnamP2008jcTopic } from "@/data/tecnamP2008jcQuestions";
 import { da42AustroTopic } from "@/data/da42AustroQuestions";
 import { skRegAdditionalTopic } from "@/data/skRegQuestions";
+import { dgcaPreviousMetTopics } from "@/data/dgcaPreviousMetQuestions";
 import oxfordRadNavAppendixA from "@/assets/oxford-radnav-appendix-a.jpg";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Progress } from "@/components/ui/progress";
-import pressureAnnexes from "@/assets/pressure-systems-annexes.png";
-import turbulenceAppendixA from "@/assets/turbulence-appendix-a.png";
-import altimetryDiagram13 from "@/assets/altimetry-diagram-13.png";
-import altimetryDiagram29 from "@/assets/altimetry-diagram-29.png";
-import cloudsId from "@/assets/clouds-identification.png";
-import stationModelDiagram from "@/assets/station-model-diagram.png";
-import airMassesAppendixA from "@/assets/air-masses-appendix-a.jpg";
-import airMassesAppendixB from "@/assets/air-masses-appendix-b.jpg";
-import edP5 from "@/assets/electronic-display-p5.jpg";
-import edP6 from "@/assets/electronic-display-p6.jpg";
-import edP7 from "@/assets/electronic-display-p7.jpg";
-import edP8 from "@/assets/electronic-display-p8.jpg";
-import edP9 from "@/assets/electronic-display-p9.jpg";
-import edP10 from "@/assets/electronic-display-p10.jpg";
-
-const diagramMap: Record<string, string> = {
-  "pressure-annexes": pressureAnnexes,
-  "turbulence-appendix-a": turbulenceAppendixA,
-  "altimetry-13": altimetryDiagram13,
-  "altimetry-29": altimetryDiagram29,
-  "clouds-id": cloudsId,
-  "station-model": stationModelDiagram,
-  "air-masses-appendix-a": airMassesAppendixA,
-  "air-masses-appendix-b": airMassesAppendixB,
-  "ed-p5": edP5,
-  "ed-p6": edP6,
-  "ed-p7": edP7,
-  "ed-p8": edP8,
-  "ed-p9": edP9,
-  "ed-p10": edP10,
-  "oxford-radnav-appendix-a": oxfordRadNavAppendixA,
-};
-
+...
 const Quiz = () => {
   const { topicId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const mode = searchParams.get("mode") as "practice" | "test" || "practice";
 
-  const allTopics = useMemo(() => [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic], []);
+  const allTopics = useMemo(() => [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic, ...dgcaPreviousMetTopics], []);
   const topic = useMemo(() => allTopics.find((t) => t.id === topicId), [topicId, allTopics]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
