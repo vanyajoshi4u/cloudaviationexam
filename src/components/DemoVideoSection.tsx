@@ -4,17 +4,21 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const NARRATION_SCRIPT = `Welcome to Cloud Aviation Academy — India's first DGCA question bank with a built-in RTR Part 2 simulator.
+const NARRATION_SEGMENTS = [
+  `Welcome to Cloud Aviation Academy — India's first DGCA question bank with a built-in RTR Part 2 simulator.
 
 On this platform, you get access to previous attempt questions across all DGCA subjects.
 
-You can practice in two modes. In Practice Mode, you see the correct answer instantly after each question — learn as you go. In Test Mode, you answer all questions first, then review your results to test your knowledge.
+You can practice in two modes. In Practice Mode, you see the correct answer instantly after each question — learn as you go. In Test Mode, you answer all questions first, then review your results to test your knowledge.`,
 
-But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
+  `But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
 
 Start the exam. The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
 
-Join Cloud Aviation Academy and ace your DGCA exams.`;
+Join Cloud Aviation Academy and ace your DGCA exams.`,
+];
+
+const PAUSE_AFTER_FIRST_SEGMENT_MS = 5000;
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
