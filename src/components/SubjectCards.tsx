@@ -409,6 +409,12 @@ const subjectsData: Subject[] = [
           "Additional Questions",
         ],
       },
+      {
+        title: "DGCA Previous Papers",
+        chapters: dgcaPreviousRegTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "dgca-prev-reg" as const,
+      },
     ],
   },
   {
@@ -425,6 +431,12 @@ const subjectsData: Subject[] = [
         ],
         hasQuiz: true,
         quizSource: "redbird-tech",
+      },
+      {
+        title: "DGCA Previous Papers",
+        chapters: dgcaPreviousTechTopics.map((t) => t.title),
+        hasQuiz: true,
+        quizSource: "dgca-prev-tech" as const,
       },
     ],
   },
