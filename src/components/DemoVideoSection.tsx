@@ -159,20 +159,18 @@ const DemoVideoSection = () => {
     const next = !isMuted;
     setIsMuted(next);
     if (next) {
-      window.speechSynthesis.cancel();
+      cancelNarration();
     } else if (isPlaying && speechSupported) {
-      const utterance = createNarrationUtterance();
-      utteranceRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
+      speakNarration();
     }
-  }, [isMuted, isPlaying, speechSupported]);
+  }, [isMuted, isPlaying, speechSupported, cancelNarration, speakNarration]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      window.speechSynthesis.cancel();
+      cancelNarration();
     };
-  }, []);
+  }, [cancelNarration]);
 
   return (
     <section className="py-10">
