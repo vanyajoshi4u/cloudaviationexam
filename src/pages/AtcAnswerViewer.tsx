@@ -48,7 +48,7 @@ const solutionImagesMap: Record<string, { images: string[]; label: string }> = {
     label: "Paper 5",
   },
   "rtr2-paper-6": {
-    images: [paper6SolutionPage1, paper6SolutionPage2, paper6SolutionPage3],
+    images: [paper6SolutionPage1, paper6SolutionPage2],
     label: "Paper 6",
   },
   "rtr2-paper-7": {
