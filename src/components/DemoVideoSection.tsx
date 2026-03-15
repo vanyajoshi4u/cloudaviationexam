@@ -13,12 +13,14 @@ You can practice in two modes. In Practice Mode, you see the correct answer inst
 
   `But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
 
-Start the exam. The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
+Start the exam.`,
+
+  `The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
 
 Join Cloud Aviation Academy and ace your DGCA exams.`,
 ];
 
-const PAUSE_AFTER_FIRST_SEGMENT_MS = 5000;
+const SEGMENT_PAUSE_MS = 5000;
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -104,17 +106,24 @@ const DemoVideoSection = () => {
     window.speechSynthesis.cancel();
     if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
 
-    const firstUtterance = createNarrationUtterance(NARRATION_SEGMENTS[0]);
-    firstUtterance.onend = () => {
-      // 5 second pause after Test Mode segment
-      pauseTimerRef.current = setTimeout(() => {
-        const secondUtterance = createNarrationUtterance(NARRATION_SEGMENTS[1]);
-        utteranceRef.current = secondUtterance;
-        window.speechSynthesis.speak(secondUtterance);
-      }, PAUSE_AFTER_FIRST_SEGMENT_MS);
+    let segmentIndex = 0;
+
+    const speakSegment = (index: number) => {
+      if (index >= NARRATION_SEGMENTS.length) return;
+      const utterance = createNarrationUtterance(NARRATION_SEGMENTS[index]);
+      utterance.onend = () => {
+        const nextIndex = index + 1;
+        if (nextIndex < NARRATION_SEGMENTS.length) {
+          pauseTimerRef.current = setTimeout(() => {
+            speakSegment(nextIndex);
+          }, SEGMENT_PAUSE_MS);
+        }
+      };
+      utteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
     };
-    utteranceRef.current = firstUtterance;
-    window.speechSynthesis.speak(firstUtterance);
+
+    speakSegment(segmentIndex);
   }, [createNarrationUtterance]);
 
   const cancelNarration = useCallback(() => {
