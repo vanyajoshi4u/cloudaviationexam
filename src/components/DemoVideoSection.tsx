@@ -206,11 +206,17 @@ const DemoVideoSection = () => {
     if (isPlaying) {
       video.pause();
       cancelNarration();
+      stopBgMusic();
       setIsPlaying(false);
       return;
     }
 
     video.currentTime = 0;
+
+    // Start background music
+    if (!isMuted) {
+      startBgMusic();
+    }
 
     // Start browser TTS narration
     if (speechSupported && !isMuted) {
@@ -225,26 +231,30 @@ const DemoVideoSection = () => {
 
     video.onended = () => {
       cancelNarration();
+      stopBgMusic();
       setIsPlaying(false);
     };
-  }, [isPlaying, isMuted, speechSupported]);
+  }, [isPlaying, isMuted, speechSupported, cancelNarration, speakNarration, startBgMusic, stopBgMusic]);
 
   const toggleMute = useCallback(() => {
     const next = !isMuted;
     setIsMuted(next);
     if (next) {
       cancelNarration();
-    } else if (isPlaying && speechSupported) {
-      speakNarration();
+      muteBgMusic(true);
+    } else if (isPlaying) {
+      if (speechSupported) speakNarration();
+      muteBgMusic(false);
     }
-  }, [isMuted, isPlaying, speechSupported, cancelNarration, speakNarration]);
+  }, [isMuted, isPlaying, speechSupported, cancelNarration, speakNarration, muteBgMusic]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       cancelNarration();
+      stopBgMusic();
     };
-  }, [cancelNarration]);
+  }, [cancelNarration, stopBgMusic]);
 
   return (
     <section className="py-10">
