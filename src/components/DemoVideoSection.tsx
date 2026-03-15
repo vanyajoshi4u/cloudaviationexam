@@ -198,19 +198,31 @@ const DemoVideoSection = () => {
               </Button>
             </div>
 
-            {/* Mute toggle */}
+            {/* Bottom controls */}
             {isPlaying && (
-              <button
-                onClick={toggleMute}
-                className="absolute bottom-3 right-3 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-              >
-                {isMuted ? (
-                  <VolumeX className="w-4 h-4" />
-                ) : (
-                  <Volume2 className="w-4 h-4" />
-                )}
-              </button>
+              <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                <button
+                  onClick={toggleMute}
+                  className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                >
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={handleFullscreen}
+                  className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                >
+                  <Maximize className="w-4 h-4" />
+                </button>
+              </div>
             )}
+
+            {/* Share button - always visible */}
+            <button
+              onClick={handleShare}
+              className="absolute top-3 right-3 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+            >
+              <Share2 className="w-4 h-4" />
+            </button>
           </div>
         </motion.div>
       </div>
