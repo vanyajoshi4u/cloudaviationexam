@@ -665,6 +665,8 @@ const Auth = () => {
           )}
         </div>
       </motion.div>
+
+      <DemoVideoSection />
     </div>
   );
 };
