@@ -117,7 +117,7 @@ const Quiz = () => {
         setBookmarkNotes(notes);
       }
     })();
-  });
+  }, [topicId]);
 
   const toggleBookmark = async (questionId: number) => {
     const { data: { user } } = await supabase.auth.getUser();
