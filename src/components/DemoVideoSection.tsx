@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const CACHE_BUST = "v5";
+const CACHE_BUST = Date.now().toString();
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
