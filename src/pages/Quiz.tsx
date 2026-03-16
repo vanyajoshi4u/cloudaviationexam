@@ -101,7 +101,7 @@ const Quiz = () => {
   const [resultsSaved, setResultsSaved] = useState(false);
 
   // Load existing bookmarks for this topic
-  useState(() => {
+  useEffect(() => {
     (async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user || !topicId) return;
