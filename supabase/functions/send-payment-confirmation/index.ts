@@ -39,7 +39,13 @@ Deno.serve(async (req) => {
     const userEmail = claimsData.claims.email;
 
     const { plan, amount } = await req.json();
-    const planLabel = plan === "12_months" ? "12 Months" : "6 Months";
+    const planLabels: Record<string, string> = {
+      "3_months": "3 Months (RTR Part-2)",
+      "6_months": "6 Months",
+      "12_months": "12 Months",
+      "live_atc_3_months": "3 Months (Live ATC)",
+    };
+    const planLabel = planLabels[plan] || plan;
 
     // Get profile name
     const adminClient = createClient(
