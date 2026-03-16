@@ -660,6 +660,12 @@ const Auth = () => {
                 {mode === "login" ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
               </button>
             )}
+            <p className="text-xs text-muted-foreground text-center mt-3">
+              If you face any problem signing in, contact{" "}
+              <a href="mailto:cloudaviation4u@gmail.com" className="text-primary hover:underline">
+                cloudaviation4u@gmail.com
+              </a>
+            </p>
           </div>
           </>
           )}
