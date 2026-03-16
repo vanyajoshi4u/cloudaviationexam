@@ -15,6 +15,7 @@ const DemoVideoSection = () => {
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
   const narrationBlobUrlRef = useRef<string | null>(null);
+  const narrationFallbackModeRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -22,6 +23,8 @@ const DemoVideoSection = () => {
 
   // ── Fetch & cache ElevenLabs narration (George voice) ──
   const fetchNarrationBlob = useCallback(async (): Promise<string | null> => {
+    if (narrationFallbackModeRef.current) return null;
+
     // Return cached blob URL if available
     if (narrationBlobUrlRef.current) return narrationBlobUrlRef.current;
 
@@ -38,14 +41,17 @@ const DemoVideoSection = () => {
         }
       );
 
-      if (!res.ok) {
-        console.warn("Narration edge function returned", res.status);
-        return null;
-      }
-
       const contentType = res.headers.get("Content-Type") || "";
-      if (!contentType.includes("audio")) {
-        console.warn("Narration response was not audio, falling back");
+      if (!res.ok || !contentType.includes("audio")) {
+        const payload = contentType.includes("application/json")
+          ? await res.json().catch(() => null)
+          : null;
+
+        if (payload?.reason === "quota_exceeded" || res.status === 429) {
+          narrationFallbackModeRef.current = true;
+        }
+
+        console.warn("Narration audio unavailable, using speech fallback");
         return null;
       }
 
@@ -54,6 +60,7 @@ const DemoVideoSection = () => {
       narrationBlobUrlRef.current = url;
       return url;
     } catch (e) {
+      narrationFallbackModeRef.current = true;
       console.warn("Failed to fetch narration:", e);
       return null;
     }
