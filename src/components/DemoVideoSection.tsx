@@ -13,6 +13,7 @@ const DemoVideoSection = () => {
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const narrationBlobUrlRef = useRef<string | null>(null);
   const narrationFetchPromiseRef = useRef<Promise<string> | null>(null);
+  const narrationQuotaExhaustedRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -22,6 +23,10 @@ const DemoVideoSection = () => {
   const fetchNarrationAudio = useCallback(async () => {
     if (narrationBlobUrlRef.current) {
       return narrationBlobUrlRef.current;
+    }
+
+    if (narrationQuotaExhaustedRef.current) {
+      throw new Error("quota_exceeded");
     }
 
     if (!narrationFetchPromiseRef.current) {
@@ -40,6 +45,9 @@ const DemoVideoSection = () => {
 
         if (!response.ok) {
           const errorText = await response.text();
+          if (response.status === 429 || errorText.includes("quota_exceeded")) {
+            narrationQuotaExhaustedRef.current = true;
+          }
           throw new Error(errorText || `Narration fetch failed: ${response.status}`);
         }
 
