@@ -1,36 +1,50 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Play, Pause, Volume2, VolumeX, Maximize, Share2 } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize, Share2, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const NARRATION_SEGMENTS = [
-  `Welcome to Cloud Aviation Academy — India's first DGCA question bank with a built-in RTR Part 2 simulator.
-
-On this platform, you get access to previous attempt questions across all DGCA subjects.
-
-You can practice in two modes. In Practice Mode, you see the correct answer instantly after each question — learn as you go. In Test Mode, you answer all questions first, then review your results to test your knowledge.`,
-
-  `But what truly sets us apart is the RTR Part 2 DGCA Practice Simulator. Here, you can practice the real-life DGCA examination.
-
-Start the exam.`,
-
-  `The person acting as ATC simply scans the QR code on their phone to see the answers. Use the PTT button, just like in the actual examination. Navigate through each scenario to build your confidence.
-
-Join Cloud Aviation Academy and ace your DGCA exams.`,
-];
-
-const SEGMENT_PAUSE_MS = 5000;
-
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [speechSupported, setSpeechSupported] = useState(true);
+  const [isLoadingNarration, setIsLoadingNarration] = useState(false);
+  const narrationBlobUrlRef = useRef<string | null>(null);
   const { toast } = useToast();
+
+  // Pre-fetch and cache narration audio on mount
+  useEffect(() => {
+    const prefetchNarration = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-demo-narration`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const blob = await response.blob();
+          narrationBlobUrlRef.current = URL.createObjectURL(blob);
+        }
+      } catch (err) {
+        console.error("Prefetch narration failed:", err);
+      }
+    };
+    prefetchNarration();
+
+    return () => {
+      if (narrationBlobUrlRef.current) {
+        URL.revokeObjectURL(narrationBlobUrlRef.current);
+      }
+    };
+  }, []);
 
   const handleFullscreen = useCallback(() => {
     const video = videoRef.current;
@@ -55,24 +69,14 @@ const DemoVideoSection = () => {
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(shareUrl);
-        toast({
-          title: "Link copied!",
-          description: "Share the link with others.",
-        });
+        toast({ title: "Link copied!", description: "Share the link with others." });
       }
-    } catch (err) {
-      // Fallback if both fail
+    } catch {
       try {
         await navigator.clipboard.writeText(shareUrl);
-        toast({
-          title: "Link copied!",
-          description: "Share the link with others.",
-        });
+        toast({ title: "Link copied!", description: "Share the link with others." });
       } catch {
-        toast({
-          title: "Share this link",
-          description: shareUrl,
-        });
+        toast({ title: "Share this link", description: shareUrl });
       }
     }
   }, [toast]);
@@ -98,80 +102,51 @@ const DemoVideoSection = () => {
     }
   }, []);
 
-  const muteBgMusic = useCallback((muted: boolean) => {
-    const audio = bgAudioRef.current;
+  const stopNarration = useCallback(() => {
+    const audio = narrationAudioRef.current;
     if (audio) {
-      audio.volume = muted ? 0 : 0.08;
+      audio.pause();
+      audio.currentTime = 0;
+      narrationAudioRef.current = null;
     }
   }, []);
 
-  useEffect(() => {
-    setSpeechSupported("speechSynthesis" in window);
-    // Pre-load voices (some browsers load them async)
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.getVoices();
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-      };
-    }
-  }, []);
+  const fetchAndPlayNarration = useCallback(async () => {
+    try {
+      let audioUrl = narrationBlobUrlRef.current;
 
-  const getBestVoice = useCallback(() => {
-    const voices = window.speechSynthesis.getVoices();
-    // Priority order: premium quality voices first
-    const priorityNames = [
-      "Google UK English Male", "Google UK English Female",
-      "Google US English", "Daniel", "Samantha", "Karen",
-      "Moira", "Tessa", "Rishi", "Microsoft Mark", "Microsoft David",
-      "Microsoft Zira", "Alex"
-    ];
-    for (const name of priorityNames) {
-      const match = voices.find((v) => v.name.includes(name) && v.lang.startsWith("en"));
-      if (match) return match;
-    }
-    // Fallback: any English voice
-    return voices.find((v) => v.lang.startsWith("en")) || null;
-  }, []);
+      // If not pre-cached, fetch now
+      if (!audioUrl) {
+        setIsLoadingNarration(true);
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-demo-narration`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            },
+          }
+        );
 
-  const createNarrationUtterance = useCallback((text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.82;
-    utterance.pitch = 1.05;
-    utterance.volume = 1;
-    const voice = getBestVoice();
-    if (voice) utterance.voice = voice;
-    return utterance;
-  }, [getBestVoice]);
-
-  const speakNarration = useCallback(() => {
-    window.speechSynthesis.cancel();
-    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
-
-    let segmentIndex = 0;
-
-    const speakSegment = (index: number) => {
-      if (index >= NARRATION_SEGMENTS.length) return;
-      const utterance = createNarrationUtterance(NARRATION_SEGMENTS[index]);
-      utterance.onend = () => {
-        const nextIndex = index + 1;
-        if (nextIndex < NARRATION_SEGMENTS.length) {
-          pauseTimerRef.current = setTimeout(() => {
-            speakSegment(nextIndex);
-          }, SEGMENT_PAUSE_MS);
+        if (!response.ok) {
+          throw new Error(`Narration fetch failed: ${response.status}`);
         }
-      };
-      utteranceRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
-    };
 
-    speakSegment(segmentIndex);
-  }, [createNarrationUtterance]);
+        const blob = await response.blob();
+        audioUrl = URL.createObjectURL(blob);
+        narrationBlobUrlRef.current = audioUrl;
+        setIsLoadingNarration(false);
+      }
 
-  const cancelNarration = useCallback(() => {
-    window.speechSynthesis.cancel();
-    if (pauseTimerRef.current) {
-      clearTimeout(pauseTimerRef.current);
-      pauseTimerRef.current = null;
+      const audio = new Audio(audioUrl);
+      audio.volume = 1;
+      narrationAudioRef.current = audio;
+      await audio.play();
+    } catch (err) {
+      console.error("Narration playback error:", err);
+      setIsLoadingNarration(false);
     }
   }, []);
 
@@ -181,7 +156,7 @@ const DemoVideoSection = () => {
 
     if (isPlaying) {
       video.pause();
-      cancelNarration();
+      stopNarration();
       stopBgMusic();
       setIsPlaying(false);
       return;
@@ -189,14 +164,9 @@ const DemoVideoSection = () => {
 
     video.currentTime = 0;
 
-    // Start background music
     if (!isMuted) {
       startBgMusic();
-    }
-
-    // Start browser TTS narration
-    if (speechSupported && !isMuted) {
-      speakNarration();
+      fetchAndPlayNarration();
     }
 
     video.play().then(() => {
@@ -206,31 +176,31 @@ const DemoVideoSection = () => {
     });
 
     video.onended = () => {
-      cancelNarration();
+      stopNarration();
       stopBgMusic();
       setIsPlaying(false);
     };
-  }, [isPlaying, isMuted, speechSupported, cancelNarration, speakNarration, startBgMusic, stopBgMusic]);
+  }, [isPlaying, isMuted, stopNarration, stopBgMusic, startBgMusic, fetchAndPlayNarration]);
 
   const toggleMute = useCallback(() => {
     const next = !isMuted;
     setIsMuted(next);
     if (next) {
-      cancelNarration();
-      muteBgMusic(true);
+      stopNarration();
+      if (bgAudioRef.current) bgAudioRef.current.volume = 0;
     } else if (isPlaying) {
-      if (speechSupported) speakNarration();
-      muteBgMusic(false);
+      fetchAndPlayNarration();
+      if (bgAudioRef.current) bgAudioRef.current.volume = 0.08;
     }
-  }, [isMuted, isPlaying, speechSupported, cancelNarration, speakNarration, muteBgMusic]);
+  }, [isMuted, isPlaying, stopNarration, fetchAndPlayNarration]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      cancelNarration();
+      stopNarration();
       stopBgMusic();
     };
-  }, [cancelNarration, stopBgMusic]);
+  }, [stopNarration, stopBgMusic]);
 
   return (
     <section className="py-10">
@@ -273,9 +243,12 @@ const DemoVideoSection = () => {
               <Button
                 onClick={handlePlayPause}
                 size="lg"
+                disabled={isLoadingNarration}
                 className="rounded-full w-14 h-14 bg-primary/90 hover:bg-primary text-primary-foreground shadow-lg"
               >
-                {isPlaying ? (
+                {isLoadingNarration ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : isPlaying ? (
                   <Pause className="w-6 h-6" />
                 ) : (
                   <Play className="w-6 h-6 ml-0.5" />
