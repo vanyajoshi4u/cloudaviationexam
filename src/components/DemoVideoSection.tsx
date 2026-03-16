@@ -232,11 +232,9 @@ const DemoVideoSection = () => {
               className="w-full aspect-video object-cover bg-black"
               playsInline
               muted
-              preload="metadata"
-            >
-              <source src="/demo-video.mov" type="video/quicktime" />
-              <source src="/demo-video.mp4" type="video/mp4" />
-            </video>
+              preload="auto"
+              src="/demo-video.mov"
+            />
 
             {/* Overlay controls */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity">
