@@ -161,7 +161,6 @@ const DemoVideoSection = () => {
               muted
               preload="auto"
             >
-              <source src={`/demo-video.mov?${CACHE_BUST}`} type="video/quicktime" />
               <source src={`/demo-video.mp4?${CACHE_BUST}`} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
