@@ -13,6 +13,7 @@ const DemoVideoSection = () => {
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const narrationBlobUrlRef = useRef<string | null>(null);
   const narrationFetchPromiseRef = useRef<Promise<string> | null>(null);
+  const narrationQuotaExhaustedRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
