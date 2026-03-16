@@ -122,19 +122,11 @@ const DemoVideoSection = () => {
     }
   }, [toast]);
 
-  // Preload voices for fallback
-  useEffect(() => {
-    if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
-  }, []);
-
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       stopNarration();
       stopBgMusic();
-      if (narrationBlobUrlRef.current) {
-        URL.revokeObjectURL(narrationBlobUrlRef.current);
-      }
     };
   }, [stopNarration, stopBgMusic]);
 
