@@ -74,9 +74,10 @@ serve(async (req) => {
       }),
     });
     const data = await res.json();
+    console.log("Resend API response:", JSON.stringify(data), "status:", res.status);
     if (!res.ok) throw new Error(JSON.stringify(data));
 
-    return new Response(JSON.stringify({ success: true, message: `Email sent to ${to}` }), {
+    return new Response(JSON.stringify({ success: true, message: `Email sent to ${to}`, resendResponse: data }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
