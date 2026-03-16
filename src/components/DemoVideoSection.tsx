@@ -21,83 +21,13 @@ const DemoVideoSection = () => {
   const [isMuted, setIsMuted] = useState(false);
   const { toast } = useToast();
 
-  // ── Fetch & cache ElevenLabs narration (George voice) ──
-  const fetchNarrationBlob = useCallback(async (): Promise<string | null> => {
-    if (narrationFallbackModeRef.current) return null;
-
-    // Return cached blob URL if available
-    if (narrationBlobUrlRef.current) return narrationBlobUrlRef.current;
-
-    try {
-      const res = await fetch(
-        `${SUPABASE_URL}/functions/v1/generate-demo-narration`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${SUPABASE_KEY}`,
-          },
-        }
-      );
-
-      const contentType = res.headers.get("Content-Type") || "";
-      if (!res.ok || !contentType.includes("audio")) {
-        const payload = contentType.includes("application/json")
-          ? await res.json().catch(() => null)
-          : null;
-
-        if (payload?.reason === "quota_exceeded" || res.status === 429) {
-          narrationFallbackModeRef.current = true;
-        }
-
-        console.warn("Narration audio unavailable, using speech fallback");
-        return null;
-      }
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      narrationBlobUrlRef.current = url;
-      return url;
-    } catch (e) {
-      narrationFallbackModeRef.current = true;
-      console.warn("Failed to fetch narration:", e);
-      return null;
-    }
+  // ── Play narration from local MP3 ──
+  const playNarration = useCallback(() => {
+    const audio = new Audio("/narration.mp3");
+    audio.volume = 1;
+    audio.play().catch((e) => console.warn("Narration play failed:", e));
+    narrationAudioRef.current = audio;
   }, []);
-
-  // ── Play narration: try ElevenLabs first, fallback to speechSynthesis ──
-  const playNarration = useCallback(async () => {
-    // Try ElevenLabs George voice via edge function
-    const blobUrl = await fetchNarrationBlob();
-    if (blobUrl) {
-      const audio = new Audio(blobUrl);
-      audio.volume = 1;
-      try {
-        await audio.play();
-        narrationAudioRef.current = audio;
-        return;
-      } catch (e) {
-        console.warn("ElevenLabs audio play failed:", e);
-      }
-    }
-
-    // Fallback: browser speechSynthesis with male voice
-    if (!("speechSynthesis" in window)) return;
-    const synth = window.speechSynthesis;
-    synth.cancel();
-    const utterance = new SpeechSynthesisUtterance(NARRATION_TEXT);
-    utterance.rate = 0.95;
-    utterance.pitch = 0.9;
-    const voices = synth.getVoices();
-    const maleVoice = voices.find((v) =>
-      /male|alex|daniel|david|george|liam|brian|fred|raj|aarav|mark|rishi|mohan/i.test(
-        `${v.name} ${v.voiceURI}`
-      )
-    );
-    if (maleVoice) utterance.voice = maleVoice;
-    synth.speak(utterance);
-  }, [fetchNarrationBlob]);
 
   const stopNarration = useCallback(() => {
     // Stop ElevenLabs audio
