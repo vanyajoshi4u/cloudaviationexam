@@ -95,6 +95,84 @@ const Quiz = () => {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [revealed, setRevealed] = useState<Record<number, boolean>>({});
   const [showResults, setShowResults] = useState(false);
+  const [bookmarkedIds, setBookmarkedIds] = useState<Set<number>>(new Set());
+  const [bookmarkNotes, setBookmarkNotes] = useState<Record<number, string>>({});
+  const [showNoteInput, setShowNoteInput] = useState<number | null>(null);
+  const [resultsSaved, setResultsSaved] = useState(false);
+
+  // Load existing bookmarks for this topic
+  useState(() => {
+    (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user || !topicId) return;
+      const { data } = await supabase
+        .from("bookmarked_questions")
+        .select("question_id, note")
+        .eq("user_id", user.id)
+        .eq("topic_id", topicId);
+      if (data) {
+        setBookmarkedIds(new Set(data.map((d: any) => d.question_id)));
+        const notes: Record<number, string> = {};
+        data.forEach((d: any) => { if (d.note) notes[d.question_id] = d.note; });
+        setBookmarkNotes(notes);
+      }
+    })();
+  });
+
+  const toggleBookmark = async (questionId: number) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || !topicId) return;
+
+    if (bookmarkedIds.has(questionId)) {
+      await supabase
+        .from("bookmarked_questions")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("topic_id", topicId)
+        .eq("question_id", questionId);
+      setBookmarkedIds((prev) => { const n = new Set(prev); n.delete(questionId); return n; });
+      toast.success("Bookmark removed");
+    } else {
+      await supabase
+        .from("bookmarked_questions")
+        .insert({ user_id: user.id, topic_id: topicId, question_id: questionId, note: bookmarkNotes[questionId] || "" });
+      setBookmarkedIds((prev) => new Set(prev).add(questionId));
+      toast.success("Bookmarked!");
+    }
+  };
+
+  const saveNote = async (questionId: number, note: string) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || !topicId) return;
+    setBookmarkNotes((prev) => ({ ...prev, [questionId]: note }));
+
+    if (bookmarkedIds.has(questionId)) {
+      await supabase
+        .from("bookmarked_questions")
+        .update({ note, updated_at: new Date().toISOString() })
+        .eq("user_id", user.id)
+        .eq("topic_id", topicId)
+        .eq("question_id", questionId);
+    }
+    setShowNoteInput(null);
+    toast.success("Note saved");
+  };
+
+  const saveQuizResult = async () => {
+    if (resultsSaved) return;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || !topicId) return;
+    const subject = getSubjectForTopic(topicId);
+    await supabase.from("quiz_results").insert({
+      user_id: user.id,
+      topic_id: topicId,
+      subject,
+      total_questions: questions.length,
+      correct_answers: score,
+      mode,
+    });
+    setResultsSaved(true);
+  };
 
   if (!topic) {
     return (
