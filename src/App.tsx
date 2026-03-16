@@ -19,6 +19,8 @@ import ResetPassword from "./pages/ResetPassword";
 import RtrPart2Exam from "./pages/RtrPart2Exam";
 import LiveAtcExam from "./pages/LiveAtcExam";
 import AtcAnswerViewer from "./pages/AtcAnswerViewer";
+import Bookmarks from "./pages/Bookmarks";
+import PerformanceAnalytics from "./pages/PerformanceAnalytics";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -83,6 +85,16 @@ const App = () => (
                 </ProtectedRoute>
               } />
               <Route path="/atc-answer/:paperId" element={<AtcAnswerViewer />} />
+              <Route path="/bookmarks" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <Bookmarks />
+                </ProtectedRoute>
+              } />
+              <Route path="/analytics" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <PerformanceAnalytics />
+                </ProtectedRoute>
+              } />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </InactivityGuard>

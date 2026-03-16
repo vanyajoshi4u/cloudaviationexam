@@ -62,6 +62,36 @@ export type Database = {
         }
         Relationships: []
       }
+      bookmarked_questions: {
+        Row: {
+          created_at: string
+          id: string
+          note: string | null
+          question_id: number
+          topic_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          question_id: number
+          topic_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          question_id?: number
+          topic_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       device_fingerprints: {
         Row: {
           device_label: string | null
@@ -216,6 +246,39 @@ export type Database = {
           phone?: string
           review_submitted?: boolean
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quiz_results: {
+        Row: {
+          completed_at: string
+          correct_answers: number
+          id: string
+          mode: string
+          subject: string
+          topic_id: string
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          correct_answers: number
+          id?: string
+          mode?: string
+          subject: string
+          topic_id: string
+          total_questions: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          correct_answers?: number
+          id?: string
+          mode?: string
+          subject?: string
+          topic_id?: string
+          total_questions?: number
           user_id?: string
         }
         Relationships: []
