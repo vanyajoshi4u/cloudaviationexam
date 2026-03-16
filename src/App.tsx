@@ -19,6 +19,8 @@ import ResetPassword from "./pages/ResetPassword";
 import RtrPart2Exam from "./pages/RtrPart2Exam";
 import LiveAtcExam from "./pages/LiveAtcExam";
 import AtcAnswerViewer from "./pages/AtcAnswerViewer";
+import Bookmarks from "./pages/Bookmarks";
+import PerformanceAnalytics from "./pages/PerformanceAnalytics";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
