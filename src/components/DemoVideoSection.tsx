@@ -4,20 +4,28 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
+const FALLBACK_NARRATION =
+  "Welcome to Cloud Aviation Academy. Practice DGCA questions in Practice and Test modes, then train in the RTR Part Two simulator with push to talk and QR answer flow.";
+
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
+  const narrationBlobUrlRef = useRef<string | null>(null);
+  const narrationFetchPromiseRef = useRef<Promise<string> | null>(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isLoadingNarration, setIsLoadingNarration] = useState(false);
-  const narrationBlobUrlRef = useRef<string | null>(null);
   const { toast } = useToast();
 
-  // Pre-fetch and cache narration audio on mount
-  useEffect(() => {
-    const prefetchNarration = async () => {
-      try {
+  const fetchNarrationAudio = useCallback(async () => {
+    if (narrationBlobUrlRef.current) {
+      return narrationBlobUrlRef.current;
+    }
+
+    if (!narrationFetchPromiseRef.current) {
+      narrationFetchPromiseRef.current = (async () => {
         const response = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-demo-narration`,
           {
@@ -29,22 +37,38 @@ const DemoVideoSection = () => {
             },
           }
         );
-        if (response.ok) {
-          const blob = await response.blob();
-          narrationBlobUrlRef.current = URL.createObjectURL(blob);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || `Narration fetch failed: ${response.status}`);
         }
-      } catch (err) {
-        console.error("Prefetch narration failed:", err);
-      }
-    };
-    prefetchNarration();
+
+        const blob = await response.blob();
+        const audioUrl = URL.createObjectURL(blob);
+        narrationBlobUrlRef.current = audioUrl;
+        return audioUrl;
+      })();
+    }
+
+    try {
+      return await narrationFetchPromiseRef.current;
+    } finally {
+      narrationFetchPromiseRef.current = null;
+    }
+  }, []);
+
+  // Pre-fetch narration once per page load
+  useEffect(() => {
+    fetchNarrationAudio().catch((err) => {
+      console.error("Prefetch narration failed:", err);
+    });
 
     return () => {
       if (narrationBlobUrlRef.current) {
         URL.revokeObjectURL(narrationBlobUrlRef.current);
       }
     };
-  }, []);
+  }, [fetchNarrationAudio]);
 
   const handleFullscreen = useCallback(() => {
     const video = videoRef.current;
@@ -86,7 +110,9 @@ const DemoVideoSection = () => {
       const audio = new Audio("/bg-music.mp3");
       audio.loop = true;
       audio.volume = 0.08;
-      audio.play();
+      audio.play().catch(() => {
+        // Ignore autoplay policy errors silently
+      });
       bgAudioRef.current = audio;
     } catch (err) {
       console.error("Background music error:", err);
@@ -107,48 +133,58 @@ const DemoVideoSection = () => {
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
-      narrationAudioRef.current = null;
     }
+
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+  }, []);
+
+  const playFallbackNarration = useCallback(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+    synth.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(FALLBACK_NARRATION);
+    utterance.rate = 0.95;
+
+    const voices = synth.getVoices();
+    const maleVoice = voices.find((voice) =>
+      /male|alex|daniel|david|george|liam|brian|fred|raj|aarav|mark/i.test(
+        `${voice.name} ${voice.voiceURI}`
+      )
+    );
+
+    if (maleVoice) {
+      utterance.voice = maleVoice;
+    }
+
+    synth.speak(utterance);
   }, []);
 
   const fetchAndPlayNarration = useCallback(async () => {
+    setIsLoadingNarration(true);
+
     try {
-      let audioUrl = narrationBlobUrlRef.current;
-
-      // If not pre-cached, fetch now
-      if (!audioUrl) {
-        setIsLoadingNarration(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-demo-narration`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Narration fetch failed: ${response.status}`);
-        }
-
-        const blob = await response.blob();
-        audioUrl = URL.createObjectURL(blob);
-        narrationBlobUrlRef.current = audioUrl;
-        setIsLoadingNarration(false);
-      }
-
-      const audio = new Audio(audioUrl);
-      audio.volume = 1;
+      const audioUrl = await fetchNarrationAudio();
+      const audio = narrationAudioRef.current ?? new Audio();
       narrationAudioRef.current = audio;
+
+      audio.src = audioUrl;
+      audio.volume = 1;
+      audio.currentTime = 0;
+
       await audio.play();
     } catch (err) {
       console.error("Narration playback error:", err);
+      playFallbackNarration();
+    } finally {
       setIsLoadingNarration(false);
     }
-  }, []);
+  }, [fetchNarrationAudio, playFallbackNarration]);
 
   const handlePlayPause = useCallback(() => {
     const video = videoRef.current;
@@ -158,33 +194,59 @@ const DemoVideoSection = () => {
       video.pause();
       stopNarration();
       stopBgMusic();
-      setIsPlaying(false);
       return;
     }
 
     video.currentTime = 0;
 
     if (!isMuted) {
+      const narrationAudio = narrationAudioRef.current ?? new Audio();
+      narrationAudioRef.current = narrationAudio;
+
+      // Unlock audio in direct user gesture context (iOS/Safari compatibility)
+      narrationAudio.play().then(() => {
+        narrationAudio.pause();
+        narrationAudio.currentTime = 0;
+      }).catch(() => {
+        // Ignore unlock failures and proceed
+      });
+
       startBgMusic();
       fetchAndPlayNarration();
     }
 
-    video.play().then(() => {
-      setIsPlaying(true);
-    }).catch((err) => {
+    video.play().catch((err) => {
       console.error("Playback error:", err);
     });
+  }, [isPlaying, isMuted, stopNarration, stopBgMusic, startBgMusic, fetchAndPlayNarration]);
 
-    video.onended = () => {
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onEnded = () => {
       stopNarration();
       stopBgMusic();
       setIsPlaying(false);
     };
-  }, [isPlaying, isMuted, stopNarration, stopBgMusic, startBgMusic, fetchAndPlayNarration]);
+
+    video.addEventListener("play", onPlay);
+    video.addEventListener("pause", onPause);
+    video.addEventListener("ended", onEnded);
+
+    return () => {
+      video.removeEventListener("play", onPlay);
+      video.removeEventListener("pause", onPause);
+      video.removeEventListener("ended", onEnded);
+    };
+  }, [stopNarration, stopBgMusic]);
 
   const toggleMute = useCallback(() => {
     const next = !isMuted;
     setIsMuted(next);
+
     if (next) {
       stopNarration();
       if (bgAudioRef.current) bgAudioRef.current.volume = 0;
@@ -233,15 +295,19 @@ const DemoVideoSection = () => {
               playsInline
               muted
               preload="auto"
-              src="/demo-video.mov"
-            />
+              poster="/placeholder.svg"
+            >
+              <source src="/demo-video.mp4" type="video/mp4" />
+              <source src="/demo-video.mov" type="video/quicktime" />
+              Your browser does not support the video tag.
+            </video>
 
             {/* Overlay controls */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity">
               <Button
                 onClick={handlePlayPause}
                 size="lg"
-                disabled={isLoadingNarration}
+                disabled={!isPlaying && isLoadingNarration}
                 className="rounded-full w-14 h-14 bg-primary/90 hover:bg-primary text-primary-foreground shadow-lg"
               >
                 {isLoadingNarration ? (
