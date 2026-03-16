@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const CACHE_BUST = "v2";
+const CACHE_BUST = "v3";
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -161,7 +161,6 @@ const DemoVideoSection = () => {
               muted
               preload="auto"
             >
-              <source src={`/demo-video.mov?${CACHE_BUST}`} type="video/quicktime" />
               <source src={`/demo-video.mp4?${CACHE_BUST}`} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
