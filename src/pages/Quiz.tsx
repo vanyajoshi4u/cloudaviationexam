@@ -334,10 +334,57 @@ const Quiz = () => {
             transition={{ duration: 0.2 }}
             className="glass-card p-5 sm:p-6 mb-6"
           >
-            <p className="font-medium text-sm sm:text-base mb-5">
-              <span className="text-primary mr-2">Q{currentIndex + 1}.</span>
-              {currentQ.question}
-            </p>
+            <div className="flex items-start justify-between gap-2 mb-5">
+              <p className="font-medium text-sm sm:text-base">
+                <span className="text-primary mr-2">Q{currentIndex + 1}.</span>
+                {currentQ.question}
+              </p>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <button
+                  onClick={() => setShowNoteInput(showNoteInput === currentQ.id ? null : currentQ.id)}
+                  className="p-1.5 rounded-lg text-muted-foreground hover:text-accent transition-colors"
+                  title="Add note"
+                >
+                  <StickyNote className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => toggleBookmark(currentQ.id)}
+                  className={`p-1.5 rounded-lg transition-colors ${bookmarkedIds.has(currentQ.id) ? "text-primary" : "text-muted-foreground hover:text-primary"}`}
+                  title={bookmarkedIds.has(currentQ.id) ? "Remove bookmark" : "Bookmark"}
+                >
+                  {bookmarkedIds.has(currentQ.id) ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {showNoteInput === currentQ.id && (
+              <div className="mb-4 flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Add a note for this question..."
+                  defaultValue={bookmarkNotes[currentQ.id] || ""}
+                  className="flex-1 text-xs px-3 py-2 rounded-lg bg-secondary/50 border border-border/40 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      saveNote(currentQ.id, (e.target as HTMLInputElement).value);
+                      if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id);
+                    }
+                  }}
+                />
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs"
+                  onClick={(e) => {
+                    const input = (e.currentTarget.previousSibling as HTMLInputElement);
+                    saveNote(currentQ.id, input.value);
+                    if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id);
+                  }}
+                >
+                  Save
+                </Button>
+              </div>
+            )
 
             {currentQ.diagram && diagramMap[currentQ.diagram] && (
               <div className="mb-5 rounded-lg overflow-hidden border border-border/30">
