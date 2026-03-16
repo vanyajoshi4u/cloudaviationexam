@@ -3,6 +3,7 @@ import DemoVideoSection from "@/components/DemoVideoSection";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle, Eye, EyeOff } from "lucide-react";
+import rtrSimPreview from "@/assets/rtr-part2-sim-preview.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
