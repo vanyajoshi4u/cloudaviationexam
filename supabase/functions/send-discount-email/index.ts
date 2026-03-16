@@ -16,7 +16,7 @@ serve(async (req) => {
 
     const { to } = await req.json();
 
-    const subject = "🎁 Exclusive Discount – ₹250 OFF on Live ATC Add-on!";
+    const subject = "🎁 Your Exclusive Code: YASH250 – ₹250 OFF on RTR Live ATC Simulator!";
     const htmlBody = `
 <!DOCTYPE html>
 <html>
@@ -28,16 +28,31 @@ serve(async (req) => {
     </div>
     <div style="padding:32px 24px;">
       <p style="color:#333;font-size:16px;line-height:1.6;margin-top:0;">Dear Yash,</p>
-      <p style="color:#333;font-size:16px;line-height:1.6;">We have an <strong>exclusive offer</strong> just for you! 🎉</p>
-      <p style="color:#333;font-size:16px;line-height:1.6;">Use the discount code below to get <strong>₹250 OFF</strong> on the <strong>Live ATC Simulator Add-on</strong> (₹499 → ₹249):</p>
+      <p style="color:#333;font-size:16px;line-height:1.6;">Great news! We have an <strong>exclusive discount code</strong> just for you! 🎉</p>
+      <p style="color:#333;font-size:16px;line-height:1.6;">Your code <strong>YASH250</strong> gives you <strong>₹250 OFF</strong> on the <strong>RTR Live ATC Simulator</strong> add-on.</p>
+      
       <div style="text-align:center;margin:24px 0;">
         <div style="display:inline-block;background:#f0f9ff;border:2px dashed #3b82f6;border-radius:12px;padding:16px 32px;">
           <span style="font-size:28px;font-weight:800;color:#1e40af;letter-spacing:4px;">YASH250</span>
         </div>
+        <p style="color:#6b7280;font-size:13px;margin-top:8px;">Use this code while subscribing to the Live ATC Simulator</p>
       </div>
+
+      <div style="background:#f8fafc;border-radius:10px;padding:20px;margin:20px 0;border-left:4px solid #3b82f6;">
+        <p style="color:#333;font-size:15px;line-height:1.6;margin:0 0 8px 0;font-weight:600;">How to use:</p>
+        <ol style="color:#555;font-size:14px;line-height:1.8;margin:0;padding-left:20px;">
+          <li>Log in to <strong>Cloud Aviation Exams</strong></li>
+          <li>Go to the <strong>RTR Live ATC Simulator</strong> section</li>
+          <li>Click <strong>Subscribe / Upgrade</strong></li>
+          <li>Enter code <strong>YASH250</strong> in the Discount Code field</li>
+          <li>Pay only <strong>₹249</strong> instead of ₹499! 🎉</li>
+        </ol>
+      </div>
+
       <p style="color:#333;font-size:16px;line-height:1.6;">This code is <strong>exclusive to you</strong> and can only be used once. Don't miss out!</p>
+      
       <div style="text-align:center;margin:28px 0;">
-        <a href="https://cloudaviationexams.com/auth?mode=login" style="display:inline-block;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#ffffff;text-decoration:none;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:600;">Login &amp; Subscribe Now</a>
+        <a href="https://cloudaviationexams.com/auth?mode=login" style="display:inline-block;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#ffffff;text-decoration:none;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:600;">Login & Use Your Code</a>
       </div>
       <p style="color:#333;font-size:16px;line-height:1.6;">If you have any questions, feel free to reach out to us.</p>
       <p style="color:#333;font-size:16px;line-height:1.6;margin-bottom:0;">Best regards,<br><strong>Team Cloud Aviation</strong><br>Cloud Aviation Exams</p>
@@ -48,7 +63,6 @@ serve(async (req) => {
   </div>
 </body>
 </html>`;
-
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_API_KEY}` },
