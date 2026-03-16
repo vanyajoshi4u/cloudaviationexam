@@ -3,6 +3,7 @@ import DemoVideoSection from "@/components/DemoVideoSection";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Plane, Mail, Phone, User, Lock, ArrowRight, Loader2, ArrowLeft, CheckCircle, Eye, EyeOff } from "lucide-react";
+import rtrSimPreview from "@/assets/rtr-part2-sim-preview.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -673,6 +674,26 @@ const Auth = () => {
       </motion.div>
 
       <DemoVideoSection />
+
+      {/* RTR Part 2 Simulator Preview */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="w-full max-w-2xl mx-auto px-4 pb-10"
+      >
+        <h3 className="font-display text-lg font-bold text-center mb-3 text-foreground">
+          RTR Part 2 Simulator
+        </h3>
+        <div className="rounded-xl overflow-hidden border border-border shadow-lg">
+          <img
+            src={rtrSimPreview}
+            alt="RTR Part 2 Simulator - Radio Telephony Practice Interface"
+            className="w-full h-auto"
+            loading="lazy"
+          />
+        </div>
+      </motion.div>
     </div>
   );
 };
