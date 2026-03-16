@@ -22,11 +22,8 @@ const DemoVideoSection = () => {
   }, []);
 
   const stopNarration = useCallback(() => {
-    // Stop ElevenLabs audio
     const a = narrationAudioRef.current;
     if (a) { a.pause(); a.currentTime = 0; narrationAudioRef.current = null; }
-    // Stop speechSynthesis fallback
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   }, []);
 
   // ── Background music helpers ──
