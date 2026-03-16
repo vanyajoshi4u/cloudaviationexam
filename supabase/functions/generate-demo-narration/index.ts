@@ -7,38 +7,59 @@ const corsHeaders = {
 };
 
 const NARRATION_SCRIPT = `Welcome to Cloud Aviation Academy. Practice DGCA questions in Practice and Test modes, then train in the RTR Part 2 simulator with push to talk and QR answer flow.`;
+const GEORGE_VOICE_ID = "JBFqnCBsd6RMkjVDRZzb";
 
 let cachedAudioBuffer: ArrayBuffer | null = null;
 let cachedAt = 0;
+let quotaCooldownUntil = 0;
+
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const QUOTA_COOLDOWN_MS = 30 * 60 * 1000;
+
+const jsonResponse = (payload: unknown) =>
+  new Response(JSON.stringify(payload), {
+    status: 200,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
+  const now = Date.now();
+
+  if (cachedAudioBuffer && now - cachedAt < CACHE_TTL_MS) {
+    return new Response(cachedAudioBuffer.slice(0), {
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "audio/mpeg",
+        "Cache-Control": "public, max-age=86400",
+      },
+    });
+  }
+
+  if (quotaCooldownUntil > now) {
+    return jsonResponse({
+      fallback: "speech_synthesis",
+      reason: "quota_exceeded",
+      voice: "george",
+    });
+  }
+
   try {
-    const now = Date.now();
-    if (cachedAudioBuffer && now - cachedAt < CACHE_TTL_MS) {
-      return new Response(cachedAudioBuffer.slice(0), {
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "audio/mpeg",
-          "Cache-Control": "public, max-age=86400",
-        },
+    const ELEVENLABS_API_KEY = Deno.env.get("ELEVENLABS_API_KEY");
+    if (!ELEVENLABS_API_KEY) {
+      console.error("TTS error: ELEVENLABS_API_KEY is not configured");
+      return jsonResponse({
+        fallback: "speech_synthesis",
+        reason: "missing_api_key",
+        voice: "george",
       });
     }
 
-    const ELEVENLABS_API_KEY = Deno.env.get("ELEVENLABS_API_KEY");
-    if (!ELEVENLABS_API_KEY) {
-      throw new Error("ELEVENLABS_API_KEY is not configured");
-    }
-
-    // Male default voice: George
-    const voiceId = "JBFqnCBsd6RMkjVDRZzb";
-
     const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
+      `https://api.elevenlabs.io/v1/text-to-speech/${GEORGE_VOICE_ID}?output_format=mp3_44100_128`,
       {
         method: "POST",
         headers: {
@@ -63,14 +84,25 @@ serve(async (req) => {
       const errorText = await response.text();
       console.error("ElevenLabs error:", response.status, errorText);
 
-      if (errorText.includes("quota_exceeded")) {
-        return new Response(JSON.stringify({ error: "quota_exceeded" }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+      const isQuotaExceeded =
+        response.status === 429 ||
+        errorText.includes("quota_exceeded") ||
+        (response.status === 401 && errorText.toLowerCase().includes("quota"));
+
+      if (isQuotaExceeded) {
+        quotaCooldownUntil = now + QUOTA_COOLDOWN_MS;
+        return jsonResponse({
+          fallback: "speech_synthesis",
+          reason: "quota_exceeded",
+          voice: "george",
         });
       }
 
-      throw new Error(`ElevenLabs API error: ${response.status}`);
+      return jsonResponse({
+        fallback: "speech_synthesis",
+        reason: `provider_error_${response.status}`,
+        voice: "george",
+      });
     }
 
     const audioBuffer = await response.arrayBuffer();
@@ -86,14 +118,11 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("TTS error:", error);
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Unknown error",
-      }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
-    );
+    return jsonResponse({
+      fallback: "speech_synthesis",
+      reason: "tts_unavailable",
+      voice: "george",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 });
