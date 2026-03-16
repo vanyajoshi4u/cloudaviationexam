@@ -212,6 +212,7 @@ const Quiz = () => {
 
   const finishTest = () => {
     setShowResults(true);
+    saveQuizResult();
   };
 
   const restart = () => {
