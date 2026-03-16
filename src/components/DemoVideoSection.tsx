@@ -45,6 +45,9 @@ const DemoVideoSection = () => {
 
         if (!response.ok) {
           const errorText = await response.text();
+          if (response.status === 429 || errorText.includes("quota_exceeded")) {
+            narrationQuotaExhaustedRef.current = true;
+          }
           throw new Error(errorText || `Narration fetch failed: ${response.status}`);
         }
 
