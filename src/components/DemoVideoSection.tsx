@@ -7,25 +7,81 @@ import { useToast } from "@/hooks/use-toast";
 const NARRATION_TEXT =
   "Welcome to Cloud Aviation Academy. Practice DGCA questions in Practice and Test modes, then train in the RTR Part Two simulator with push to talk and QR answer flow.";
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
+  const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
+  const narrationBlobUrlRef = useRef<string | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const { toast } = useToast();
 
-  // ── Speech Synthesis helpers ──
-  const speakNarration = useCallback(() => {
-    if (!("speechSynthesis" in window)) return;
+  // ── Fetch & cache ElevenLabs narration (George voice) ──
+  const fetchNarrationBlob = useCallback(async (): Promise<string | null> => {
+    // Return cached blob URL if available
+    if (narrationBlobUrlRef.current) return narrationBlobUrlRef.current;
 
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/functions/v1/generate-demo-narration`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${SUPABASE_KEY}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        console.warn("Narration edge function returned", res.status);
+        return null;
+      }
+
+      const contentType = res.headers.get("Content-Type") || "";
+      if (!contentType.includes("audio")) {
+        console.warn("Narration response was not audio, falling back");
+        return null;
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      narrationBlobUrlRef.current = url;
+      return url;
+    } catch (e) {
+      console.warn("Failed to fetch narration:", e);
+      return null;
+    }
+  }, []);
+
+  // ── Play narration: try ElevenLabs first, fallback to speechSynthesis ──
+  const playNarration = useCallback(async () => {
+    // Try ElevenLabs George voice via edge function
+    const blobUrl = await fetchNarrationBlob();
+    if (blobUrl) {
+      const audio = new Audio(blobUrl);
+      audio.volume = 1;
+      try {
+        await audio.play();
+        narrationAudioRef.current = audio;
+        return;
+      } catch (e) {
+        console.warn("ElevenLabs audio play failed:", e);
+      }
+    }
+
+    // Fallback: browser speechSynthesis with male voice
+    if (!("speechSynthesis" in window)) return;
     const synth = window.speechSynthesis;
     synth.cancel();
-
     const utterance = new SpeechSynthesisUtterance(NARRATION_TEXT);
     utterance.rate = 0.95;
     utterance.pitch = 0.9;
-
     const voices = synth.getVoices();
     const maleVoice = voices.find((v) =>
       /male|alex|daniel|david|george|liam|brian|fred|raj|aarav|mark|rishi|mohan/i.test(
@@ -33,11 +89,14 @@ const DemoVideoSection = () => {
       )
     );
     if (maleVoice) utterance.voice = maleVoice;
-
     synth.speak(utterance);
-  }, []);
+  }, [fetchNarrationBlob]);
 
   const stopNarration = useCallback(() => {
+    // Stop ElevenLabs audio
+    const a = narrationAudioRef.current;
+    if (a) { a.pause(); a.currentTime = 0; narrationAudioRef.current = null; }
+    // Stop speechSynthesis fallback
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   }, []);
 
@@ -74,9 +133,9 @@ const DemoVideoSection = () => {
 
     if (!isMuted) {
       startBgMusic();
-      speakNarration();
+      playNarration();
     }
-  }, [isPlaying, isMuted, stopNarration, stopBgMusic, startBgMusic, speakNarration]);
+  }, [isPlaying, isMuted, stopNarration, stopBgMusic, startBgMusic, playNarration]);
 
   // ── Sync state with video events ──
   useEffect(() => {
@@ -106,10 +165,10 @@ const DemoVideoSection = () => {
       stopNarration();
       if (bgAudioRef.current) bgAudioRef.current.volume = 0;
     } else if (isPlaying) {
-      speakNarration();
+      playNarration();
       if (bgAudioRef.current) bgAudioRef.current.volume = 0.08;
     }
-  }, [isMuted, isPlaying, stopNarration, speakNarration]);
+  }, [isMuted, isPlaying, stopNarration, playNarration]);
 
   // ── Fullscreen ──
   const handleFullscreen = useCallback(() => {
@@ -134,14 +193,20 @@ const DemoVideoSection = () => {
     }
   }, [toast]);
 
-  // Preload voices (some browsers load async)
+  // Preload voices for fallback
   useEffect(() => {
     if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
   }, []);
 
   // Cleanup on unmount
   useEffect(() => {
-    return () => { stopNarration(); stopBgMusic(); };
+    return () => {
+      stopNarration();
+      stopBgMusic();
+      if (narrationBlobUrlRef.current) {
+        URL.revokeObjectURL(narrationBlobUrlRef.current);
+      }
+    };
   }, [stopNarration, stopBgMusic]);
 
   return (
