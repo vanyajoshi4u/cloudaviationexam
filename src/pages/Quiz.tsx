@@ -384,7 +384,7 @@ const Quiz = () => {
                   Save
                 </Button>
               </div>
-            )
+            )}
 
             {currentQ.diagram && diagramMap[currentQ.diagram] && (
               <div className="mb-5 rounded-lg overflow-hidden border border-border/30">
