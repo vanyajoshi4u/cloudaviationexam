@@ -25,6 +25,10 @@ const DemoVideoSection = () => {
       return narrationBlobUrlRef.current;
     }
 
+    if (narrationQuotaExhaustedRef.current) {
+      throw new Error("quota_exceeded");
+    }
+
     if (!narrationFetchPromiseRef.current) {
       narrationFetchPromiseRef.current = (async () => {
         const response = await fetch(
