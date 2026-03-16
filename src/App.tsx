@@ -85,6 +85,16 @@ const App = () => (
                 </ProtectedRoute>
               } />
               <Route path="/atc-answer/:paperId" element={<AtcAnswerViewer />} />
+              <Route path="/bookmarks" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <Bookmarks />
+                </ProtectedRoute>
+              } />
+              <Route path="/analytics" element={
+                <ProtectedRoute requireAuth requireSubscription>
+                  <PerformanceAnalytics />
+                </ProtectedRoute>
+              } />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </InactivityGuard>

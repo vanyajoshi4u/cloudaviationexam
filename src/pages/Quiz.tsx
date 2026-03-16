@@ -454,7 +454,7 @@ const Quiz = () => {
                 Submit Test <Trophy className="w-4 h-4 ml-1" />
               </Button>
             ) : (
-              <Button size="sm" variant="outline" onClick={() => navigate(`/topics/${topicId}`)}>
+              <Button size="sm" variant="outline" onClick={() => { saveQuizResult(); navigate(`/topics/${topicId}`); }}>
                 Finish <CheckCircle2 className="w-4 h-4 ml-1" />
               </Button>
             )
