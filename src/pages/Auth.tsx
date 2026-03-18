@@ -76,17 +76,15 @@ const Auth = () => {
       if (!session) return;
       if (oauthProcessingRef.current) return;
 
-      // Detect OAuth sign-in: check if providers include google/apple
-      // For users who signed up with email but now sign in via Google, 
-      // app_metadata.provider stays "email" but providers array includes "google"
+      // Detect OAuth sign-in via sessionStorage flag set before redirect
+      const oauthPending = sessionStorage.getItem("oauth_pending");
       const providers: string[] = session.user.app_metadata?.providers || [];
       const hasOAuthProvider = providers.includes("google") || providers.includes("apple");
-      // Only treat as OAuth if the URL has OAuth callback hash or if primary provider is OAuth
-      const hasOAuthHash = window.location.hash.includes("access_token") || window.location.hash.includes("provider_token");
-      const primaryIsOAuth = session.user.app_metadata?.provider && session.user.app_metadata.provider !== "email";
-      const isOAuth = hasOAuthProvider && (hasOAuthHash || primaryIsOAuth);
+      const primaryIsOAuth = session.user.app_metadata?.provider !== "email";
+      const isOAuth = oauthPending === "true" || primaryIsOAuth || (hasOAuthProvider && !session.user.app_metadata?.provider);
 
-      if (isOAuth) {
+      if (isOAuth || oauthPending === "true") {
+        sessionStorage.removeItem("oauth_pending");
         oauthProcessingRef.current = true;
         // OAuth users bypass email verification - create profile & session directly
         try {
