@@ -14,6 +14,7 @@ const DemoVideoSection = () => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const { toast } = useToast();
 
   // ── Play narration from local MP3 ──
@@ -155,12 +156,22 @@ const DemoVideoSection = () => {
           className="glass-card overflow-hidden rounded-xl"
         >
           <div className="relative">
+            {/* Logo poster overlay - shown until video loads */}
+            {!isVideoLoaded && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center bg-background aspect-video">
+                <div className="flex flex-col items-center gap-2">
+                  <img src="/favicon-48x48.png" alt="Cloud Aviation" className="w-12 h-12 animate-pulse" />
+                  <span className="text-xs text-muted-foreground font-medium">Loading video…</span>
+                </div>
+              </div>
+            )}
             <video
               ref={videoRef}
-              className="w-full aspect-video object-cover bg-black"
+              className="w-full aspect-video object-cover bg-background"
               playsInline
               muted
               preload="auto"
+              onLoadedData={() => setIsVideoLoaded(true)}
             >
               <source src={`/demo-video-v5.mp4?${VIDEO_VERSION}`} type="video/mp4" />
               Your browser does not support the video tag.
