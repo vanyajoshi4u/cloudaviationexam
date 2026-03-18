@@ -227,6 +227,7 @@ const Auth = () => {
         } catch (err: any) {
           console.error("OAuth fallback session setup error:", err);
           toast.error("Sign in failed. Please try again.");
+          setOauthProcessingScreen(false);
         }
       }
     };
