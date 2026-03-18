@@ -14,30 +14,15 @@ const AboutSection = () => {
 
   return (
     <section ref={sectionRef} className="relative py-20 overflow-hidden" id="about">
-      {/* Rich layered background */}
+      {/* Static layered background — no JS animations */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Base gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-card/80 to-accent/10" />
-        {/* Mesh-like radial spots */}
         <div className="absolute inset-0" style={{
           background: "radial-gradient(ellipse 60% 50% at 20% 20%, hsl(var(--primary) / 0.15), transparent), radial-gradient(ellipse 50% 60% at 80% 80%, hsl(var(--accent) / 0.12), transparent), radial-gradient(ellipse 40% 40% at 50% 50%, hsl(var(--primary) / 0.08), transparent)"
         }} />
-        {/* Animated orbs - brighter */}
-        <motion.div
-          animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.3, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-10 left-10 w-72 h-72 rounded-full bg-primary/20 blur-3xl"
-        />
-        <motion.div
-          animate={{ x: [0, -35, 0], y: [0, 40, 0], scale: [1, 1.4, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-accent/20 blur-3xl"
-        />
-        <motion.div
-          animate={{ x: [0, 20, 0], y: [0, -20, 0], scale: [1, 1.2, 1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute top-1/2 left-1/3 w-64 h-64 rounded-full bg-primary/15 blur-3xl"
-        />
+        {/* CSS-animated orbs instead of framer-motion */}
+        <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-primary/15 blur-3xl animate-[float_8s_ease-in-out_infinite]" />
+        <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-accent/15 blur-3xl animate-[float_10s_ease-in-out_infinite_2s]" />
         {/* Subtle grid overlay */}
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)",
@@ -46,46 +31,27 @@ const AboutSection = () => {
       </div>
 
       <div className="container mx-auto px-4 max-w-lg relative z-10">
-        {/* 3D Logo */}
+        {/* Logo — simplified, no infinite JS animations */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
-          animate={isInView ? { opacity: 1, scale: 1, rotateY: 0 } : {}}
-          transition={{ duration: 1.2, type: "spring", bounce: 0.4 }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
           className="flex justify-center mb-8"
-          style={{ perspective: "1000px" }}
         >
-          <div className="relative group">
-            {/* Outer glow rings */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-6 rounded-full border border-primary/20"
-            />
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-10 rounded-full border border-accent/10"
-            />
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-14 rounded-full border border-primary/5"
-            />
+          <div className="relative">
+            {/* CSS rotating rings */}
+            <div className="absolute -inset-6 rounded-full border border-primary/20 animate-[spin_20s_linear_infinite]" />
+            <div className="absolute -inset-10 rounded-full border border-accent/10 animate-[spin_15s_linear_infinite_reverse]" />
+            <div className="absolute -inset-14 rounded-full border border-primary/5 animate-[spin_25s_linear_infinite]" />
 
-            {/* Logo container with 3D depth layers */}
-            <motion.div
-              whileHover={{ scale: 1.1, rotateY: 15, rotateX: -10 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="relative"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              {/* Shadow/depth layers for 7D effect */}
+            {/* 3D depth layers — static, GPU-composited */}
+            <div className="relative" style={{ transformStyle: "preserve-3d" }}>
               {[...Array(7)].map((_, i) => (
                 <img
                   key={i}
                   src="/academyFevicon.png"
                   alt=""
-                  className="absolute inset-0 w-24 h-24 rounded-2xl"
+                  className="absolute inset-0 w-24 h-24 rounded-2xl will-change-transform"
                   style={{
                     transform: `translateZ(${-(i + 1) * 3}px)`,
                     opacity: 0.15 - i * 0.02,
@@ -93,33 +59,21 @@ const AboutSection = () => {
                   }}
                 />
               ))}
-              {/* Main logo */}
-              <motion.img
+              <img
                 src="/academyFevicon.png"
                 alt="CloudAviation Logo"
-                className="w-24 h-24 rounded-2xl shadow-2xl relative z-10"
-                style={{
-                  transform: "translateZ(10px)",
-                  boxShadow: "0 0 40px hsl(var(--primary) / 0.3), 0 20px 60px hsl(var(--primary) / 0.15), inset 0 1px 0 hsl(var(--primary) / 0.2)",
-                }}
-                animate={{
-                  boxShadow: [
-                    "0 0 40px hsl(217 91% 60% / 0.3), 0 20px 60px hsl(217 91% 60% / 0.15)",
-                    "0 0 60px hsl(38 92% 55% / 0.3), 0 20px 60px hsl(38 92% 55% / 0.15)",
-                    "0 0 40px hsl(217 91% 60% / 0.3), 0 20px 60px hsl(217 91% 60% / 0.15)",
-                  ],
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="w-24 h-24 rounded-2xl shadow-2xl relative z-10 animate-pulse-glow"
+                style={{ transform: "translateZ(10px)" }}
               />
-            </motion.div>
+            </div>
           </div>
         </motion.div>
 
         {/* Title */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="text-center mb-8"
         >
           <h2 className="text-2xl font-bold text-foreground mb-2 font-display">
@@ -132,22 +86,22 @@ const AboutSection = () => {
           <motion.div
             initial={{ width: 0 }}
             animate={isInView ? { width: "6rem" } : {}}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="h-0.5 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"
           />
         </motion.div>
 
-        {/* Plane divider animation */}
+        {/* Plane divider */}
         <motion.div
           initial={{ x: "-100%" }}
           animate={isInView ? { x: "200%" } : {}}
-          transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
           className="flex items-center justify-center mb-8"
         >
           <Plane className="w-5 h-5 text-primary" />
         </motion.div>
 
-        {/* Content cards with stagger */}
+        {/* Content — simple fade-up stagger, no sideways slides */}
         <div className="space-y-4">
           {[
             "At CloudAviation, exams are not just tests — they are launchpads for future aviators.",
@@ -158,9 +112,9 @@ const AboutSection = () => {
           ].map((text, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 + i * 0.15 }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
             >
               <p
                 className={`text-sm leading-relaxed ${
@@ -175,11 +129,11 @@ const AboutSection = () => {
           ))}
         </div>
 
-        {/* Feature cards */}
+        {/* Feature cards — no infinite rotateY on icons */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.2 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
           className="grid grid-cols-3 gap-3 mt-8"
         >
           {features.map((f, i) => (
@@ -189,13 +143,9 @@ const AboutSection = () => {
               transition={{ type: "spring", stiffness: 400 }}
               className="glass-card p-3 text-center group cursor-default"
             >
-              <motion.div
-                animate={{ rotateY: [0, 360] }}
-                transition={{ duration: 6, repeat: Infinity, delay: i * 2, ease: "easeInOut" }}
-                className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 mb-2 group-hover:bg-primary/20 transition-colors"
-              >
+              <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 mb-2 group-hover:bg-primary/20 transition-colors">
                 <f.icon className="w-5 h-5 text-primary" />
-              </motion.div>
+              </div>
               <p className="text-xs font-semibold text-foreground mb-1">{f.title}</p>
               <p className="text-[10px] text-muted-foreground leading-tight">{f.desc}</p>
             </motion.div>
@@ -204,17 +154,13 @@ const AboutSection = () => {
 
         {/* Closing quote */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.5 }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 1.1 }}
           className="mt-8 text-center"
         >
           <div className="glass-card p-6 border-t-2 border-accent relative overflow-hidden">
-            <motion.div
-              animate={{ opacity: [0.05, 0.15, 0.05] }}
-              transition={{ duration: 4, repeat: Infinity }}
-              className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10"
-            />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
             <p className="text-sm font-medium text-foreground relative z-10 italic">
               "Step into the future of aviation learning."
             </p>
@@ -226,44 +172,38 @@ const AboutSection = () => {
 
         {/* Social links */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1.8 }}
+          transition={{ duration: 0.5, delay: 1.3 }}
           className="flex flex-wrap items-center justify-center gap-3 mt-8"
         >
-          <motion.a
+          <a
             href="https://www.instagram.com/cloudaviation.4u/"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.15, rotate: 5 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-pink-500/40 transition-colors"
+            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-destructive/30 hover:scale-105 transition-all duration-200"
           >
-            <Instagram className="w-4 h-4 text-pink-400 group-hover:text-pink-300 transition-colors" />
+            <Instagram className="w-4 h-4 text-destructive/70 group-hover:text-destructive transition-colors" />
             <span className="text-xs font-medium text-foreground">@cloudaviation.4u</span>
-          </motion.a>
+          </a>
 
-          <motion.a
+          <a
             href="mailto:cloudaviation4u@gmail.com"
-            whileHover={{ scale: 1.15, rotate: -5 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-primary/40 transition-colors"
+            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-primary/40 hover:scale-105 transition-all duration-200"
           >
             <Mail className="w-4 h-4 text-primary group-hover:text-primary/80 transition-colors" />
             <span className="text-xs font-medium text-foreground">Email Us</span>
-          </motion.a>
+          </a>
 
-          <motion.a
+          <a
             href="https://cloudaviation.in"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.15, rotate: 5 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-accent/40 transition-colors"
+            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-accent/40 hover:scale-105 transition-all duration-200"
           >
             <Globe className="w-4 h-4 text-accent group-hover:text-accent/80 transition-colors" />
             <span className="text-xs font-medium text-foreground">cloudaviation.in</span>
-          </motion.a>
+          </a>
         </motion.div>
       </div>
     </section>
