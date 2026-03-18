@@ -12,7 +12,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { getFingerprint, getDeviceLabel } from "@/lib/fingerprint";
 
-type AuthMode = "signup" | "login" | "forgot" | "awaiting-verification";
+type AuthMode = "signup" | "login" | "forgot" | "awaiting-verification" | "collect-phone";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -37,6 +37,7 @@ const Auth = () => {
   });
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [referralRef, setReferralRef] = useState<string | null>(null);
+  const [oauthPhone, setOauthPhone] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -98,17 +99,27 @@ const Auth = () => {
           // Ensure profile exists
           const { data: existingProfile } = await supabase
             .from("profiles")
-            .select("id")
+            .select("id, phone")
             .eq("user_id", session.user.id)
             .limit(1);
+
+          const profilePhone = existingProfile?.[0]?.phone;
+          const needsPhone = !existingProfile || existingProfile.length === 0 || !profilePhone || profilePhone.trim() === "";
 
           if (!existingProfile || existingProfile.length === 0) {
             await supabase.from("profiles").insert({
               user_id: session.user.id,
               full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "",
-              phone: session.user.user_metadata?.phone || "",
+              phone: "",
               email: session.user.email || "",
             });
+          }
+
+          if (needsPhone) {
+            // Show phone collection screen
+            setOauthProcessingScreen(false);
+            setMode("collect-phone");
+            return;
           }
 
           // Create active session (clear old ones first)
@@ -180,17 +191,26 @@ const Auth = () => {
           // Ensure profile exists
           const { data: existingProfile } = await supabase
             .from("profiles")
-            .select("id")
+            .select("id, phone")
             .eq("user_id", session.user.id)
             .limit(1);
+
+          const profilePhone = existingProfile?.[0]?.phone;
+          const needsPhone = !existingProfile || existingProfile.length === 0 || !profilePhone || profilePhone.trim() === "";
 
           if (!existingProfile || existingProfile.length === 0) {
             await supabase.from("profiles").insert({
               user_id: session.user.id,
               full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "",
-              phone: session.user.user_metadata?.phone || "",
+              phone: "",
               email: session.user.email || "",
             });
+          }
+
+          if (needsPhone) {
+            setOauthProcessingScreen(false);
+            setMode("collect-phone");
+            return;
           }
 
           // Create active session
@@ -507,6 +527,71 @@ const Auth = () => {
     login: { title: "Welcome Back", subtitle: "Sign in to continue your preparation" },
     forgot: { title: "Reset Password", subtitle: "Enter your email and create a new password" },
     "awaiting-verification": { title: "Check Your Email", subtitle: "We sent a verification link to your inbox" },
+    "collect-phone": { title: "Almost There!", subtitle: "Please enter your mobile number to continue" },
+  };
+
+  const handlePhoneSubmit = async () => {
+    const phone = oauthPhone.trim();
+    if (!/^[0-9]{10}$/.test(phone)) {
+      toast.error("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Session expired. Please sign in again.");
+
+      await supabase
+        .from("profiles")
+        .update({ phone })
+        .eq("user_id", session.user.id);
+
+      // Now complete the OAuth session setup
+      await supabase.functions.invoke("send-login-verification", {
+        body: { action: "logout" },
+      });
+      await supabase.functions.invoke("send-login-verification", {
+        body: { action: "create-session" },
+      });
+
+      // Register device fingerprint
+      try {
+        const fp = await getFingerprint();
+        const label = getDeviceLabel();
+        if (fp) {
+          const { data: existingDevice } = await supabase
+            .from("device_fingerprints")
+            .select("id")
+            .eq("user_id", session.user.id)
+            .eq("fingerprint", fp)
+            .limit(1);
+
+          if (!existingDevice || existingDevice.length === 0) {
+            await supabase.from("device_fingerprints").insert({
+              user_id: session.user.id,
+              fingerprint: fp,
+              device_label: label || null,
+            });
+          } else {
+            await supabase
+              .from("device_fingerprints")
+              .update({ last_seen_at: new Date().toISOString(), device_label: label || null })
+              .eq("user_id", session.user.id)
+              .eq("fingerprint", fp);
+          }
+        }
+      } catch (fpErr) {
+        console.error("Fingerprint registration failed:", fpErr);
+      }
+
+      toast.success("Signed in successfully!");
+      navigate("/subscribe", { replace: true });
+    } catch (err: any) {
+      console.error("Phone submit error:", err);
+      toast.error(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (oauthProcessingScreen) {
@@ -660,6 +745,40 @@ const Auth = () => {
               >
                 <ArrowLeft className="w-3 h-3" /> Back to Sign In
               </button>
+            </div>
+          ) : mode === "collect-phone" ? (
+            <div className="space-y-5 py-4">
+              <div className="relative mx-auto w-fit">
+                <Phone className="w-14 h-14 text-primary" />
+                <div className="absolute inset-0 blur-xl bg-primary/20 rounded-full" />
+              </div>
+              <p className="text-sm text-muted-foreground text-center">
+                We need your mobile number to complete your registration.
+              </p>
+              <div className="space-y-2">
+                <Label htmlFor="oauthPhone" className="text-sm text-foreground">Mobile Number</Label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="oauthPhone"
+                    type="tel"
+                    placeholder="10-digit mobile number"
+                    value={oauthPhone}
+                    onChange={(e) => setOauthPhone(e.target.value)}
+                    className="pl-10"
+                    maxLength={10}
+                    autoFocus
+                  />
+                </div>
+              </div>
+              <Button
+                onClick={handlePhoneSubmit}
+                className="w-full glow-blue font-display text-sm tracking-wider py-5"
+                disabled={loading}
+              >
+                {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ArrowRight className="w-4 h-4 mr-2" />}
+                Continue
+              </Button>
             </div>
           ) : mode === "forgot" && resetSuccess ? (
             <div className="text-center space-y-5 py-4">
