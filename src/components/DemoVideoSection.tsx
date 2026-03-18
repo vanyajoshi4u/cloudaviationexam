@@ -18,7 +18,7 @@ const DemoVideoSection = () => {
 
   // ── Play narration from local MP3 ──
   const playNarration = useCallback(() => {
-    const audio = new Audio(`/narration.mp3?${CACHE_BUST}`);
+    const audio = new Audio(`/narration.mp3?${AUDIO_VERSION}`);
     audio.volume = 1;
     audio.play().catch((e) => console.warn("Narration play failed:", e));
     narrationAudioRef.current = audio;
