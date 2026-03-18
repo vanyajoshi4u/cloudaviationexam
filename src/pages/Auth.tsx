@@ -76,8 +76,13 @@ const Auth = () => {
       if (!session) return;
       if (oauthProcessingRef.current) return;
 
-      // Check if this is an OAuth user (no password identity = social login)
-      const isOAuth = session.user.app_metadata?.provider && session.user.app_metadata.provider !== "email";
+      // Check if current session was created via OAuth (check amr method, not primary provider)
+      const amr = (session as any).amr || [];
+      const isOAuthSession = amr.some((a: any) => a.method === "oauth");
+      // Also check providers array for Google/Apple
+      const providers = session.user.app_metadata?.providers || [];
+      const hasOAuthProvider = providers.includes("google") || providers.includes("apple");
+      const isOAuth = isOAuthSession || (hasOAuthProvider && session.user.app_metadata?.provider !== "email");
 
       if (isOAuth) {
         oauthProcessingRef.current = true;
