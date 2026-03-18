@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const CACHE_BUST = Date.now().toString();
+const VIDEO_VERSION = "v5";
+const AUDIO_VERSION = "v1";
 
 const DemoVideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -17,7 +18,7 @@ const DemoVideoSection = () => {
 
   // ── Play narration from local MP3 ──
   const playNarration = useCallback(() => {
-    const audio = new Audio(`/narration.mp3?${CACHE_BUST}`);
+    const audio = new Audio(`/narration.mp3?${AUDIO_VERSION}`);
     audio.volume = 1;
     audio.play().catch((e) => console.warn("Narration play failed:", e));
     narrationAudioRef.current = audio;
@@ -31,7 +32,7 @@ const DemoVideoSection = () => {
   // ── Background music helpers ──
   const startBgMusic = useCallback(() => {
     try {
-      const audio = new Audio(`/bg-music.mp3?${CACHE_BUST}`);
+      const audio = new Audio(`/bg-music.mp3?${AUDIO_VERSION}`);
       audio.loop = true;
       audio.volume = 0.08;
       audio.play().catch(() => {});
@@ -161,7 +162,7 @@ const DemoVideoSection = () => {
               muted
               preload="auto"
             >
-              <source src={`/demo-video-v5.mp4?${CACHE_BUST}`} type="video/mp4" />
+              <source src={`/demo-video-v5.mp4?${VIDEO_VERSION}`} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
