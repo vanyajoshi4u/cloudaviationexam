@@ -106,13 +106,20 @@ const Auth = () => {
           const profilePhone = existingProfile?.[0]?.phone;
           const needsPhone = !existingProfile || existingProfile.length === 0 || !profilePhone || profilePhone.trim() === "";
 
-          if (!existingProfile || existingProfile.length === 0) {
+          const isNewSignup = !existingProfile || existingProfile.length === 0;
+
+          if (isNewSignup) {
             await supabase.from("profiles").insert({
               user_id: session.user.id,
               full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "",
               phone: "",
               email: session.user.email || "",
             });
+
+            // Send admin notification immediately for new OAuth signups
+            supabase.functions.invoke("send-login-verification", {
+              body: { action: "oauth-signup-notify" },
+            }).catch((err) => console.error("OAuth signup notification failed:", err));
           }
 
           if (needsPhone) {
