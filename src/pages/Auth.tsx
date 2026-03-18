@@ -76,13 +76,15 @@ const Auth = () => {
       if (!session) return;
       if (oauthProcessingRef.current) return;
 
-      // Check if current session was created via OAuth (check amr method, not primary provider)
-      const amr = (session as any).amr || [];
-      const isOAuthSession = amr.some((a: any) => a.method === "oauth");
-      // Also check providers array for Google/Apple
-      const providers = session.user.app_metadata?.providers || [];
+      // Detect OAuth sign-in: check if providers include google/apple
+      // For users who signed up with email but now sign in via Google, 
+      // app_metadata.provider stays "email" but providers array includes "google"
+      const providers: string[] = session.user.app_metadata?.providers || [];
       const hasOAuthProvider = providers.includes("google") || providers.includes("apple");
-      const isOAuth = isOAuthSession || (hasOAuthProvider && session.user.app_metadata?.provider !== "email");
+      // Only treat as OAuth if the URL has OAuth callback hash or if primary provider is OAuth
+      const hasOAuthHash = window.location.hash.includes("access_token") || window.location.hash.includes("provider_token");
+      const primaryIsOAuth = session.user.app_metadata?.provider && session.user.app_metadata.provider !== "email";
+      const isOAuth = hasOAuthProvider && (hasOAuthHash || primaryIsOAuth);
 
       if (isOAuth) {
         oauthProcessingRef.current = true;
