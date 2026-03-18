@@ -367,8 +367,9 @@ const Quiz = () => {
                   className="flex-1 text-xs px-3 py-2 rounded-lg bg-secondary/50 border border-border/40 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      saveNote(currentQ.id, (e.target as HTMLInputElement).value);
-                      if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id);
+                      const noteVal = (e.target as HTMLInputElement).value;
+                      saveNote(currentQ.id, noteVal);
+                      if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id, noteVal);
                     }
                   }}
                 />
