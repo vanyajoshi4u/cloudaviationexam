@@ -31,6 +31,7 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [oauthLoading, setOauthLoading] = useState(false);
+  const oauthProcessingRef = useRef(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [referralRef, setReferralRef] = useState<string | null>(null);
   const [formData, setFormData] = useState({
