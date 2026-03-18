@@ -712,6 +712,7 @@ const Auth = () => {
                   disabled={loading || oauthLoading}
                   onClick={async () => {
                     setOauthLoading(true);
+                    sessionStorage.setItem("oauth_pending", "true");
                     try {
                       const { error } = await lovable.auth.signInWithOAuth("apple", {
                         redirect_uri: window.location.origin + "/auth",
