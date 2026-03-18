@@ -746,6 +746,40 @@ const Auth = () => {
                 <ArrowLeft className="w-3 h-3" /> Back to Sign In
               </button>
             </div>
+          ) : mode === "collect-phone" ? (
+            <div className="space-y-5 py-4">
+              <div className="relative mx-auto w-fit">
+                <Phone className="w-14 h-14 text-primary" />
+                <div className="absolute inset-0 blur-xl bg-primary/20 rounded-full" />
+              </div>
+              <p className="text-sm text-muted-foreground text-center">
+                We need your mobile number to complete your registration.
+              </p>
+              <div className="space-y-2">
+                <Label htmlFor="oauthPhone" className="text-sm text-foreground">Mobile Number</Label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="oauthPhone"
+                    type="tel"
+                    placeholder="10-digit mobile number"
+                    value={oauthPhone}
+                    onChange={(e) => setOauthPhone(e.target.value)}
+                    className="pl-10"
+                    maxLength={10}
+                    autoFocus
+                  />
+                </div>
+              </div>
+              <Button
+                onClick={handlePhoneSubmit}
+                className="w-full glow-blue font-display text-sm tracking-wider py-5"
+                disabled={loading}
+              >
+                {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ArrowRight className="w-4 h-4 mr-2" />}
+                Continue
+              </Button>
+            </div>
           ) : mode === "forgot" && resetSuccess ? (
             <div className="text-center space-y-5 py-4">
               <div className="relative mx-auto w-fit">
