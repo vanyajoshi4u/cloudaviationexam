@@ -99,17 +99,27 @@ const Auth = () => {
           // Ensure profile exists
           const { data: existingProfile } = await supabase
             .from("profiles")
-            .select("id")
+            .select("id, phone")
             .eq("user_id", session.user.id)
             .limit(1);
+
+          const profilePhone = existingProfile?.[0]?.phone;
+          const needsPhone = !existingProfile || existingProfile.length === 0 || !profilePhone || profilePhone.trim() === "";
 
           if (!existingProfile || existingProfile.length === 0) {
             await supabase.from("profiles").insert({
               user_id: session.user.id,
               full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "",
-              phone: session.user.user_metadata?.phone || "",
+              phone: "",
               email: session.user.email || "",
             });
+          }
+
+          if (needsPhone) {
+            // Show phone collection screen
+            setOauthProcessingScreen(false);
+            setMode("collect-phone");
+            return;
           }
 
           // Create active session (clear old ones first)
