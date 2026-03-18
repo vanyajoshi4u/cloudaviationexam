@@ -76,10 +76,15 @@ const Auth = () => {
       if (!session) return;
       if (oauthProcessingRef.current) return;
 
-      // Check if this is an OAuth user (no password identity = social login)
-      const isOAuth = session.user.app_metadata?.provider && session.user.app_metadata.provider !== "email";
+      // Detect OAuth sign-in via sessionStorage flag set before redirect
+      const oauthPending = sessionStorage.getItem("oauth_pending");
+      const providers: string[] = session.user.app_metadata?.providers || [];
+      const hasOAuthProvider = providers.includes("google") || providers.includes("apple");
+      const primaryIsOAuth = session.user.app_metadata?.provider !== "email";
+      const isOAuth = oauthPending === "true" || primaryIsOAuth || (hasOAuthProvider && !session.user.app_metadata?.provider);
 
-      if (isOAuth) {
+      if (isOAuth || oauthPending === "true") {
+        sessionStorage.removeItem("oauth_pending");
         oauthProcessingRef.current = true;
         // OAuth users bypass email verification - create profile & session directly
         try {
@@ -146,7 +151,7 @@ const Auth = () => {
         return;
       }
 
-      // Regular email user - check for active session
+      // Regular email user or fallback - check for active session
       const { data } = await supabase
         .from("active_sessions")
         .select("id")
@@ -155,6 +160,66 @@ const Auth = () => {
 
       if (data && data.length > 0) {
         navigate("/subscribe", { replace: true });
+        return;
+      }
+
+      // Fallback: if user has OAuth providers but no active session (e.g. sessionStorage was lost),
+      // create session automatically for OAuth users
+      const userProviders: string[] = session.user.app_metadata?.providers || [];
+      if (userProviders.includes("google") || userProviders.includes("apple")) {
+        oauthProcessingRef.current = true;
+        try {
+          // Ensure profile exists
+          const { data: existingProfile } = await supabase
+            .from("profiles")
+            .select("id")
+            .eq("user_id", session.user.id)
+            .limit(1);
+
+          if (!existingProfile || existingProfile.length === 0) {
+            await supabase.from("profiles").insert({
+              user_id: session.user.id,
+              full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "",
+              phone: session.user.user_metadata?.phone || "",
+              email: session.user.email || "",
+            });
+          }
+
+          // Create active session
+          await supabase.functions.invoke("send-login-verification", {
+            body: { action: "create-session" },
+          });
+
+          // Register device fingerprint
+          try {
+            const fp = await getFingerprint();
+            const label = getDeviceLabel();
+            if (fp) {
+              const { data: existingDevice } = await supabase
+                .from("device_fingerprints")
+                .select("id")
+                .eq("user_id", session.user.id)
+                .eq("fingerprint", fp)
+                .limit(1);
+
+              if (!existingDevice || existingDevice.length === 0) {
+                await supabase.from("device_fingerprints").insert({
+                  user_id: session.user.id,
+                  fingerprint: fp,
+                  device_label: label || null,
+                });
+              }
+            }
+          } catch (fpErr) {
+            console.error("Fingerprint registration failed:", fpErr);
+          }
+
+          toast.success("Signed in successfully!");
+          navigate("/subscribe", { replace: true });
+        } catch (err: any) {
+          console.error("OAuth fallback session setup error:", err);
+          toast.error("Sign in failed. Please try again.");
+        }
       }
     };
     handleOAuthCallback();
@@ -679,6 +744,7 @@ const Auth = () => {
                   disabled={loading || oauthLoading}
                   onClick={async () => {
                     setOauthLoading(true);
+                    sessionStorage.setItem("oauth_pending", "true");
                     try {
                       const { error } = await lovable.auth.signInWithOAuth("google", {
                         redirect_uri: window.location.origin + "/auth",
@@ -706,6 +772,7 @@ const Auth = () => {
                   disabled={loading || oauthLoading}
                   onClick={async () => {
                     setOauthLoading(true);
+                    sessionStorage.setItem("oauth_pending", "true");
                     try {
                       const { error } = await lovable.auth.signInWithOAuth("apple", {
                         redirect_uri: window.location.origin + "/auth",
