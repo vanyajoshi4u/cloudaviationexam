@@ -119,7 +119,7 @@ const Quiz = () => {
     })();
   }, [topicId]);
 
-  const toggleBookmark = async (questionId: number) => {
+  const toggleBookmark = async (questionId: number, noteOverride?: string) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user || !topicId) return;
 
@@ -133,9 +133,10 @@ const Quiz = () => {
       setBookmarkedIds((prev) => { const n = new Set(prev); n.delete(questionId); return n; });
       toast.success("Bookmark removed");
     } else {
+      const note = noteOverride ?? bookmarkNotes[questionId] ?? "";
       await supabase
         .from("bookmarked_questions")
-        .insert({ user_id: user.id, topic_id: topicId, question_id: questionId, note: bookmarkNotes[questionId] || "" });
+        .insert({ user_id: user.id, topic_id: topicId, question_id: questionId, note });
       setBookmarkedIds((prev) => new Set(prev).add(questionId));
       toast.success("Bookmarked!");
     }
@@ -366,8 +367,9 @@ const Quiz = () => {
                   className="flex-1 text-xs px-3 py-2 rounded-lg bg-secondary/50 border border-border/40 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      saveNote(currentQ.id, (e.target as HTMLInputElement).value);
-                      if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id);
+                      const noteVal = (e.target as HTMLInputElement).value;
+                      saveNote(currentQ.id, noteVal);
+                      if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id, noteVal);
                     }
                   }}
                 />
@@ -377,8 +379,9 @@ const Quiz = () => {
                   className="text-xs"
                   onClick={(e) => {
                     const input = (e.currentTarget.previousSibling as HTMLInputElement);
-                    saveNote(currentQ.id, input.value);
-                    if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id);
+                    const noteVal = input.value;
+                    saveNote(currentQ.id, noteVal);
+                    if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id, noteVal);
                   }}
                 >
                   Save
