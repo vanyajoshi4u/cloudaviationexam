@@ -507,6 +507,32 @@ const Auth = () => {
     "awaiting-verification": { title: "Check Your Email", subtitle: "We sent a verification link to your inbox" },
   };
 
+  if (oauthProcessingScreen) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="flex flex-col items-center gap-6"
+        >
+          <div className="relative">
+            <Plane className="w-12 h-12 text-primary" />
+            <div className="absolute inset-0 blur-xl bg-primary/30 rounded-full animate-pulse" />
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="font-display text-xl font-bold text-foreground">Signing you in...</h2>
+            <p className="text-sm text-muted-foreground">Verifying your Google account</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Loader2 className="w-5 h-5 animate-spin text-primary" />
+            <span className="text-sm text-muted-foreground">Setting up your session</span>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 py-8">
       <motion.div
