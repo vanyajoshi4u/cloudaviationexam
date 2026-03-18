@@ -129,8 +129,19 @@ const ProtectedRoute = ({ children, requireAuth, requireSubscription, requireAdm
 
   if (loading || !accessResult.checked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-6">
+        <div className="flex flex-col items-center gap-3 animate-fade-in">
+          <img 
+            src="/academyFevicon.png" 
+            alt="Cloud Aviation" 
+            className="w-16 h-16 rounded-2xl shadow-lg animate-pulse" 
+          />
+          <h1 className="text-xl font-bold text-foreground tracking-tight">Cloud Aviation</h1>
+        </div>
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-muted-foreground animate-fade-in">Preparing your cockpit...</p>
+        </div>
       </div>
     );
   }
