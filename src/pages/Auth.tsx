@@ -12,7 +12,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { getFingerprint, getDeviceLabel } from "@/lib/fingerprint";
 
-type AuthMode = "signup" | "login" | "forgot" | "awaiting-verification";
+type AuthMode = "signup" | "login" | "forgot" | "awaiting-verification" | "collect-phone";
 
 const Auth = () => {
   const navigate = useNavigate();
