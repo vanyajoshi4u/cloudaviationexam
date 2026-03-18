@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Instagram, Mail, Plane, Target, Compass, Rocket } from "lucide-react";
+import { Instagram, Mail, Plane, Target, Compass, Rocket, Globe } from "lucide-react";
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
