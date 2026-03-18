@@ -119,7 +119,7 @@ const Quiz = () => {
     })();
   }, [topicId]);
 
-  const toggleBookmark = async (questionId: number) => {
+  const toggleBookmark = async (questionId: number, noteOverride?: string) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user || !topicId) return;
 
@@ -133,9 +133,10 @@ const Quiz = () => {
       setBookmarkedIds((prev) => { const n = new Set(prev); n.delete(questionId); return n; });
       toast.success("Bookmark removed");
     } else {
+      const note = noteOverride ?? bookmarkNotes[questionId] ?? "";
       await supabase
         .from("bookmarked_questions")
-        .insert({ user_id: user.id, topic_id: topicId, question_id: questionId, note: bookmarkNotes[questionId] || "" });
+        .insert({ user_id: user.id, topic_id: topicId, question_id: questionId, note });
       setBookmarkedIds((prev) => new Set(prev).add(questionId));
       toast.success("Bookmarked!");
     }
