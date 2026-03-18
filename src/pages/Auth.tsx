@@ -527,6 +527,71 @@ const Auth = () => {
     login: { title: "Welcome Back", subtitle: "Sign in to continue your preparation" },
     forgot: { title: "Reset Password", subtitle: "Enter your email and create a new password" },
     "awaiting-verification": { title: "Check Your Email", subtitle: "We sent a verification link to your inbox" },
+    "collect-phone": { title: "Almost There!", subtitle: "Please enter your mobile number to continue" },
+  };
+
+  const handlePhoneSubmit = async () => {
+    const phone = oauthPhone.trim();
+    if (!/^[0-9]{10}$/.test(phone)) {
+      toast.error("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Session expired. Please sign in again.");
+
+      await supabase
+        .from("profiles")
+        .update({ phone })
+        .eq("user_id", session.user.id);
+
+      // Now complete the OAuth session setup
+      await supabase.functions.invoke("send-login-verification", {
+        body: { action: "logout" },
+      });
+      await supabase.functions.invoke("send-login-verification", {
+        body: { action: "create-session" },
+      });
+
+      // Register device fingerprint
+      try {
+        const fp = await getFingerprint();
+        const label = getDeviceLabel();
+        if (fp) {
+          const { data: existingDevice } = await supabase
+            .from("device_fingerprints")
+            .select("id")
+            .eq("user_id", session.user.id)
+            .eq("fingerprint", fp)
+            .limit(1);
+
+          if (!existingDevice || existingDevice.length === 0) {
+            await supabase.from("device_fingerprints").insert({
+              user_id: session.user.id,
+              fingerprint: fp,
+              device_label: label || null,
+            });
+          } else {
+            await supabase
+              .from("device_fingerprints")
+              .update({ last_seen_at: new Date().toISOString(), device_label: label || null })
+              .eq("user_id", session.user.id)
+              .eq("fingerprint", fp);
+          }
+        }
+      } catch (fpErr) {
+        console.error("Fingerprint registration failed:", fpErr);
+      }
+
+      toast.success("Signed in successfully!");
+      navigate("/subscribe", { replace: true });
+    } catch (err: any) {
+      console.error("Phone submit error:", err);
+      toast.error(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (oauthProcessingScreen) {
