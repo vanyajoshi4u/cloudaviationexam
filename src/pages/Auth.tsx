@@ -155,6 +155,7 @@ const Auth = () => {
           console.error("OAuth session setup error:", err);
           toast.error("Sign in failed. Please try again.");
           setOauthProcessingScreen(false);
+        }
         return;
       }
 
