@@ -32,7 +32,7 @@ const DemoVideoSection = () => {
   // ── Background music helpers ──
   const startBgMusic = useCallback(() => {
     try {
-      const audio = new Audio(`/bg-music.mp3?${CACHE_BUST}`);
+      const audio = new Audio(`/bg-music.mp3?${AUDIO_VERSION}`);
       audio.loop = true;
       audio.volume = 0.08;
       audio.play().catch(() => {});
