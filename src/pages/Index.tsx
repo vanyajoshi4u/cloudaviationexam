@@ -5,6 +5,7 @@ import SubjectCards from "@/components/SubjectCards";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
 import ReferralPanel from "@/components/ReferralPanel";
+import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
 import ReviewPopup from "@/components/ReviewPopup";
 import DemoVideoSection from "@/components/DemoVideoSection";
