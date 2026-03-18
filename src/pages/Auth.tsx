@@ -161,7 +161,7 @@ const Auth = () => {
           }
 
           toast.success("Signed in successfully!");
-          navigate("/subscribe", { replace: true });
+          navigate("/", { replace: true });
         } catch (err: any) {
           console.error("OAuth session setup error:", err);
           toast.error("Sign in failed. Please try again.");
@@ -178,7 +178,7 @@ const Auth = () => {
         .limit(1);
 
       if (data && data.length > 0) {
-        navigate("/subscribe", { replace: true });
+        navigate("/", { replace: true });
         return;
       }
 
@@ -243,7 +243,7 @@ const Auth = () => {
           }
 
           toast.success("Signed in successfully!");
-          navigate("/subscribe", { replace: true });
+          navigate("/", { replace: true });
         } catch (err: any) {
           console.error("OAuth fallback session setup error:", err);
           toast.error("Sign in failed. Please try again.");
@@ -302,7 +302,7 @@ const Auth = () => {
           }
 
           toast.success("Login verified! Signing you in...");
-          navigate("/subscribe", { replace: true });
+          navigate("/", { replace: true });
         }
       } catch (e) {
         console.error("Polling error:", e);
@@ -449,7 +449,7 @@ const Auth = () => {
           }
 
           toast.success("Signed in successfully!");
-          navigate("/subscribe", { replace: true });
+          navigate("/", { replace: true });
           return;
         }
 
@@ -596,7 +596,7 @@ const Auth = () => {
       }
 
       toast.success("Signed in successfully!");
-      navigate("/subscribe", { replace: true });
+      navigate("/", { replace: true });
     } catch (err: any) {
       console.error("Phone submit error:", err);
       toast.error(err.message || "Something went wrong. Please try again.");
