@@ -32,6 +32,9 @@ const Auth = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [oauthLoading, setOauthLoading] = useState(false);
   const oauthProcessingRef = useRef(false);
+  const [oauthProcessingScreen, setOauthProcessingScreen] = useState(() => {
+    return sessionStorage.getItem("oauth_pending") === "true";
+  });
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [referralRef, setReferralRef] = useState<string | null>(null);
   const [formData, setFormData] = useState({
