@@ -30,6 +30,7 @@ const Auth = () => {
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [referralRef, setReferralRef] = useState<string | null>(null);
   const [formData, setFormData] = useState({
