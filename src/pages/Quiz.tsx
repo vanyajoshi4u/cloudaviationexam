@@ -378,8 +378,9 @@ const Quiz = () => {
                   className="text-xs"
                   onClick={(e) => {
                     const input = (e.currentTarget.previousSibling as HTMLInputElement);
-                    saveNote(currentQ.id, input.value);
-                    if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id);
+                    const noteVal = input.value;
+                    saveNote(currentQ.id, noteVal);
+                    if (!bookmarkedIds.has(currentQ.id)) toggleBookmark(currentQ.id, noteVal);
                   }}
                 >
                   Save
