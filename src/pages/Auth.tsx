@@ -151,7 +151,7 @@ const Auth = () => {
         return;
       }
 
-      // Regular email user - check for active session
+      // Regular email user or fallback - check for active session
       const { data } = await supabase
         .from("active_sessions")
         .select("id")
@@ -160,6 +160,66 @@ const Auth = () => {
 
       if (data && data.length > 0) {
         navigate("/subscribe", { replace: true });
+        return;
+      }
+
+      // Fallback: if user has OAuth providers but no active session (e.g. sessionStorage was lost),
+      // create session automatically for OAuth users
+      const userProviders: string[] = session.user.app_metadata?.providers || [];
+      if (userProviders.includes("google") || userProviders.includes("apple")) {
+        oauthProcessingRef.current = true;
+        try {
+          // Ensure profile exists
+          const { data: existingProfile } = await supabase
+            .from("profiles")
+            .select("id")
+            .eq("user_id", session.user.id)
+            .limit(1);
+
+          if (!existingProfile || existingProfile.length === 0) {
+            await supabase.from("profiles").insert({
+              user_id: session.user.id,
+              full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "",
+              phone: session.user.user_metadata?.phone || "",
+              email: session.user.email || "",
+            });
+          }
+
+          // Create active session
+          await supabase.functions.invoke("send-login-verification", {
+            body: { action: "create-session" },
+          });
+
+          // Register device fingerprint
+          try {
+            const fp = await getFingerprint();
+            const label = getDeviceLabel();
+            if (fp) {
+              const { data: existingDevice } = await supabase
+                .from("device_fingerprints")
+                .select("id")
+                .eq("user_id", session.user.id)
+                .eq("fingerprint", fp)
+                .limit(1);
+
+              if (!existingDevice || existingDevice.length === 0) {
+                await supabase.from("device_fingerprints").insert({
+                  user_id: session.user.id,
+                  fingerprint: fp,
+                  device_label: label || null,
+                });
+              }
+            }
+          } catch (fpErr) {
+            console.error("Fingerprint registration failed:", fpErr);
+          }
+
+          toast.success("Signed in successfully!");
+          navigate("/subscribe", { replace: true });
+        } catch (err: any) {
+          console.error("OAuth fallback session setup error:", err);
+          toast.error("Sign in failed. Please try again.");
+        }
       }
     };
     handleOAuthCallback();
