@@ -76,7 +76,10 @@ const Auth = () => {
   useEffect(() => {
     const handleOAuthCallback = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
+      if (!session) {
+        setOauthProcessingScreen(false);
+        return;
+      }
       if (oauthProcessingRef.current) return;
 
       // Detect OAuth sign-in via sessionStorage flag set before redirect
@@ -89,6 +92,7 @@ const Auth = () => {
       if (isOAuth || oauthPending === "true") {
         sessionStorage.removeItem("oauth_pending");
         oauthProcessingRef.current = true;
+        setOauthProcessingScreen(true);
         // OAuth users bypass email verification - create profile & session directly
         try {
           // Ensure profile exists
