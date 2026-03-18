@@ -68,23 +68,93 @@ const Auth = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Redirect if already logged in
+  // Handle OAuth callback and redirect if already logged in
   useEffect(() => {
-    const checkSession = async () => {
+    const handleOAuthCallback = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { data } = await supabase
-          .from("active_sessions")
-          .select("id")
-          .eq("user_id", session.user.id)
-          .limit(1);
-        
-        if (data && data.length > 0) {
+      if (!session) return;
+
+      // Check if this is an OAuth user (no password identity = social login)
+      const isOAuth = session.user.app_metadata?.provider && session.user.app_metadata.provider !== "email";
+
+      if (isOAuth) {
+        // OAuth users bypass email verification - create profile & session directly
+        try {
+          // Ensure profile exists
+          const { data: existingProfile } = await supabase
+            .from("profiles")
+            .select("id")
+            .eq("user_id", session.user.id)
+            .limit(1);
+
+          if (!existingProfile || existingProfile.length === 0) {
+            await supabase.from("profiles").insert({
+              user_id: session.user.id,
+              full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "",
+              phone: session.user.user_metadata?.phone || "",
+              email: session.user.email || "",
+            });
+          }
+
+          // Create active session (clear old ones first)
+          await supabase.functions.invoke("send-login-verification", {
+            body: { action: "logout" },
+          });
+          await supabase.functions.invoke("send-login-verification", {
+            body: { action: "create-session" },
+          });
+
+          // Register device fingerprint
+          try {
+            const fp = await getFingerprint();
+            const label = getDeviceLabel();
+            if (fp) {
+              const { data: existingDevice } = await supabase
+                .from("device_fingerprints")
+                .select("id")
+                .eq("user_id", session.user.id)
+                .eq("fingerprint", fp)
+                .limit(1);
+
+              if (!existingDevice || existingDevice.length === 0) {
+                await supabase.from("device_fingerprints").insert({
+                  user_id: session.user.id,
+                  fingerprint: fp,
+                  device_label: label || null,
+                });
+              } else {
+                await supabase
+                  .from("device_fingerprints")
+                  .update({ last_seen_at: new Date().toISOString(), device_label: label || null })
+                  .eq("user_id", session.user.id)
+                  .eq("fingerprint", fp);
+              }
+            }
+          } catch (fpErr) {
+            console.error("Fingerprint registration failed for OAuth user:", fpErr);
+          }
+
+          toast.success("Signed in successfully!");
           navigate("/subscribe", { replace: true });
+        } catch (err: any) {
+          console.error("OAuth session setup error:", err);
+          toast.error("Sign in failed. Please try again.");
         }
+        return;
+      }
+
+      // Regular email user - check for active session
+      const { data } = await supabase
+        .from("active_sessions")
+        .select("id")
+        .eq("user_id", session.user.id)
+        .limit(1);
+
+      if (data && data.length > 0) {
+        navigate("/subscribe", { replace: true });
       }
     };
-    checkSession();
+    handleOAuthCallback();
   }, [navigate]);
 
   // Cleanup polling on unmount
