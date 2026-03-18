@@ -37,6 +37,7 @@ const Auth = () => {
   });
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [referralRef, setReferralRef] = useState<string | null>(null);
+  const [oauthPhone, setOauthPhone] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
