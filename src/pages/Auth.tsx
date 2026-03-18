@@ -554,6 +554,11 @@ const Auth = () => {
         body: { action: "create-session" },
       });
 
+      // Send admin notification for OAuth signup
+      supabase.functions.invoke("send-login-verification", {
+        body: { action: "oauth-signup-notify" },
+      }).catch((err) => console.error("OAuth signup notification failed:", err));
+
       // Register device fingerprint
       try {
         const fp = await getFingerprint();

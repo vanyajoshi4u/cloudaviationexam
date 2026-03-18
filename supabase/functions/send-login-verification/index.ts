@@ -413,6 +413,59 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "oauth-signup-notify") {
+      // Send admin notification for OAuth signups
+      const resendApiKey = Deno.env.get("RESEND_API_KEY");
+      if (resendApiKey) {
+        const profileRes = await dbQuery(`profiles?user_id=eq.${user.id}&select=full_name,phone,email&limit=1`);
+        const profile = profileRes.data?.[0];
+        const userName = profile?.full_name || user.user_metadata?.full_name || "Unknown";
+        const userPhone = profile?.phone || "N/A";
+        const userEmail = profile?.email || user.email || "N/A";
+        const provider = (user.app_metadata?.providers || []).includes("apple") ? "Apple" : "Google";
+
+        // Check subscription status
+        const subRes = await dbQuery(`subscriptions?user_id=eq.${user.id}&status=eq.approved&order=created_at.desc&limit=1&select=plan,expires_at`);
+        const activeSub = subRes.data?.[0];
+        const subStatus = activeSub ? `${activeSub.plan} (expires ${new Date(activeSub.expires_at).toLocaleDateString("en-IN")})` : "No subscription";
+
+        try {
+          await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${resendApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              from: "CloudAviation Exam's <noreply@cloudaviationexams.com>",
+              to: ["cloudaviation4u@gmail.com"],
+              subject: `🔑 New ${provider} Sign-Up – ${userName}`,
+              html: `
+                <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
+                  <h2 style="color: #0ea5e9; text-align: center;">🔑 New ${provider} Sign-Up</h2>
+                  <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #888;">Name</td><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">${userName}</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #888;">Email</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${userEmail}</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #888;">Phone</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${userPhone}</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #888;">Provider</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${provider}</td></tr>
+                    <tr><td style="padding: 8px; color: #888;">Subscription</td><td style="padding: 8px;">${subStatus}</td></tr>
+                  </table>
+                  <p style="color: #888; font-size: 12px; text-align: center;">
+                    ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+                  </p>
+                </div>
+              `,
+            }),
+          });
+        } catch (emailErr) {
+          console.error("OAuth signup admin notification email failed:", emailErr);
+        }
+      }
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     if (action === "create-session") {
       await ensureProfile();
       await dbQuery(`active_sessions?user_id=eq.${user.id}`, { method: "DELETE" });
