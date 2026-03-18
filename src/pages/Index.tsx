@@ -51,6 +51,7 @@ const Index = () => {
         <ReferralPanel />
       </div>
       <Features />
+      <AboutSection />
       <Testimonials />
       <ReviewPopup />
       <Footer />
