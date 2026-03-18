@@ -14,6 +14,7 @@ const DemoVideoSection = () => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const { toast } = useToast();
 
   // ── Play narration from local MP3 ──
