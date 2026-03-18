@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Instagram, Mail, Plane, Target, Compass, Rocket } from "lucide-react";
+import { Instagram, Mail, Plane, Target, Compass, Rocket, Globe } from "lucide-react";
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -229,7 +229,7 @@ const AboutSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 1.8 }}
-          className="flex items-center justify-center gap-4 mt-8"
+          className="flex flex-wrap items-center justify-center gap-3 mt-8"
         >
           <motion.a
             href="https://www.instagram.com/cloudaviation.4u/"
@@ -251,6 +251,18 @@ const AboutSection = () => {
           >
             <Mail className="w-4 h-4 text-primary group-hover:text-primary/80 transition-colors" />
             <span className="text-xs font-medium text-foreground">Email Us</span>
+          </motion.a>
+
+          <motion.a
+            href="https://cloudaviation.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-accent/40 transition-colors"
+          >
+            <Globe className="w-4 h-4 text-accent group-hover:text-accent/80 transition-colors" />
+            <span className="text-xs font-medium text-foreground">cloudaviation.in</span>
           </motion.a>
         </motion.div>
       </div>
