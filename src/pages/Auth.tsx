@@ -31,6 +31,7 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [oauthLoading, setOauthLoading] = useState(false);
+  const oauthProcessingRef = useRef(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [referralRef, setReferralRef] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -73,11 +74,13 @@ const Auth = () => {
     const handleOAuthCallback = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
+      if (oauthProcessingRef.current) return;
 
       // Check if this is an OAuth user (no password identity = social login)
       const isOAuth = session.user.app_metadata?.provider && session.user.app_metadata.provider !== "email";
 
       if (isOAuth) {
+        oauthProcessingRef.current = true;
         // OAuth users bypass email verification - create profile & session directly
         try {
           // Ensure profile exists
@@ -678,7 +681,7 @@ const Auth = () => {
                     setOauthLoading(true);
                     try {
                       const { error } = await lovable.auth.signInWithOAuth("google", {
-                        redirect_uri: window.location.origin,
+                        redirect_uri: window.location.origin + "/auth",
                       });
                       if (error) throw error;
                     } catch (err: any) {
@@ -705,7 +708,7 @@ const Auth = () => {
                     setOauthLoading(true);
                     try {
                       const { error } = await lovable.auth.signInWithOAuth("apple", {
-                        redirect_uri: window.location.origin,
+                        redirect_uri: window.location.origin + "/auth",
                       });
                       if (error) throw error;
                     } catch (err: any) {
