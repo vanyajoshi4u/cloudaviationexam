@@ -352,6 +352,8 @@ const Auth = () => {
 
     try {
       if (mode === "login") {
+        setShowSessionWarning(false);
+
         const { data: loginData, error } = await supabase.auth.signInWithPassword({
           email: formData.email.trim(),
           password: formData.password,
@@ -377,7 +379,7 @@ const Auth = () => {
           throw new Error("Device verification failed. Please try again from your trusted browser.");
         }
 
-        // Check session and send verification in one call (with fingerprint)
+        // Check device/session and either auto-login trusted devices or send verification email for new devices
         const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
           "send-login-verification",
           {
@@ -438,16 +440,20 @@ const Auth = () => {
           throw new Error(serverErrorMessage || "Verification failed");
         }
 
-        if (verifyResult?.hasActiveSession) {
-          // Keep the session temporarily for force-logout capability
-          setPendingCredentials({ email: formData.email.trim(), password: formData.password });
-          setShowSessionWarning(true);
-          toast.error("You are already logged in on another device.");
-          setLoading(false);
+        // Trusted device: login is completed server-side without email verification
+        if (verifyResult?.sessionCreated) {
+          try {
+            await supabase.rpc('increment_login_count' as any, { _user_id: loginData.session?.user.id });
+          } catch (e) {
+            console.error("Failed to increment login count:", e);
+          }
+
+          toast.success("Signed in successfully!");
+          navigate("/subscribe", { replace: true });
           return;
         }
 
-        // Sign out locally and start polling for verification
+        // Unknown device: continue with email verification flow
         const userId = loginData.user?.id;
         await supabase.auth.signOut({ scope: "local" });
         if (userId) {

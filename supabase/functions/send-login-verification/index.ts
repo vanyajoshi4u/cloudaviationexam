@@ -319,62 +319,89 @@ Deno.serve(async (req) => {
       const { data: sessions } = await dbQuery(
         `active_sessions?user_id=eq.${user.id}&select=id`
       );
+      const hasActiveSession = Array.isArray(sessions) && sessions.length > 0;
 
-      if (sessions && sessions.length > 0) {
-        logAudit({ user_id: user.id, action: "login_blocked_session", ip_address: ip });
+      // Legacy check endpoint support
+      if (action === "check-session") {
+        return new Response(JSON.stringify({ hasActiveSession }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // SERVER-SIDE strict fingerprint check before login flow
+      if (!normalizedFingerprint) {
         return new Response(JSON.stringify({
-          hasActiveSession: true,
-          message: "You are already logged in on another device. Please log out from the other device first.",
+          hasActiveSession: false,
+          deviceBlocked: true,
+          error: "Device verification failed. Please disable private mode/content blockers and try again.",
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { data: deviceCheck } = await dbQuery(
+        `rpc/check_device_allowed`,
+        {
+          method: "POST",
+          body: JSON.stringify({ _user_id: user.id, _fingerprint: normalizedFingerprint }),
+        }
+      );
+
+      if (deviceCheck === false) {
+        const { data: profileData } = await dbQuery(`profiles?user_id=eq.${user.id}&select=max_devices&limit=1`);
+        const maxDevices = profileData?.[0]?.max_devices || 3;
+        logAudit({ user_id: user.id, action: "login_blocked_device_limit", ip_address: ip, details: { fingerprint: normalizedFingerprint } });
+        return new Response(JSON.stringify({
+          hasActiveSession: false,
+          deviceBlocked: true,
+          error: `You are up to the device limit. You have already set up ${maxDevices} devices. For more info contact cloudaviation4u@gmail.com`,
+        }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // If device is already trusted, skip email verification and create session directly
+      const { data: knownDevice } = await dbQuery(
+        `device_fingerprints?user_id=eq.${user.id}&fingerprint=eq.${encodeURIComponent(normalizedFingerprint)}&select=id&limit=1`
+      );
+      const isTrustedDevice = Array.isArray(knownDevice) && knownDevice.length > 0;
+
+      if (isTrustedDevice) {
+        await ensureProfile();
+        await dbQuery(`active_sessions?user_id=eq.${user.id}`, { method: "DELETE" });
+        await dbQuery("active_sessions", {
+          method: "POST",
+          body: JSON.stringify({ user_id: user.id }),
+        });
+
+        logAudit({
+          user_id: user.id,
+          action: hasActiveSession ? "login_trusted_device_session_replaced" : "login_trusted_device",
+          ip_address: ip,
+          details: { fingerprint: normalizedFingerprint },
+        });
+
+        return new Response(JSON.stringify({
+          hasActiveSession: false,
+          success: true,
+          sessionCreated: true,
+          trustedDevice: true,
+          message: "Trusted device login successful",
         }), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
 
-      // SERVER-SIDE strict fingerprint check before sending verification
-      if (action === "check-and-verify") {
-        if (!normalizedFingerprint) {
-          return new Response(JSON.stringify({
-            hasActiveSession: false,
-            deviceBlocked: true,
-            error: "Device verification failed. Please disable private mode/content blockers and try again.",
-          }), {
-            status: 400,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          });
-        }
-
-        const { data: deviceCheck } = await dbQuery(
-          `rpc/check_device_allowed`,
-          {
-            method: "POST",
-            body: JSON.stringify({ _user_id: user.id, _fingerprint: normalizedFingerprint }),
-          }
-        );
-
-        if (deviceCheck === false) {
-          // Fetch user's device limit for error message
-          const { data: profileData } = await dbQuery(`profiles?user_id=eq.${user.id}&select=max_devices&limit=1`);
-          const maxDevices = profileData?.[0]?.max_devices || 3;
-          logAudit({ user_id: user.id, action: "login_blocked_device_limit", ip_address: ip, details: { fingerprint: normalizedFingerprint } });
-          return new Response(JSON.stringify({
-            hasActiveSession: false,
-            deviceBlocked: true,
-            error: `You are up to the device limit. You have already set up ${maxDevices} devices. For more info contact cloudaviation4u@gmail.com`,
-          }), {
-            status: 403,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          });
-        }
-      }
-
-      if (action === "check-and-verify") {
-        await createAndQueueVerification();
-        return new Response(JSON.stringify({ hasActiveSession: false, success: true, message: "Verification email sent" }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-
-      return new Response(JSON.stringify({ hasActiveSession: false }), {
+      // Unknown but allowed device: require email verification
+      await createAndQueueVerification();
+      return new Response(JSON.stringify({
+        hasActiveSession: false,
+        success: true,
+        requiresVerification: true,
+        message: "Verification email sent",
+      }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
