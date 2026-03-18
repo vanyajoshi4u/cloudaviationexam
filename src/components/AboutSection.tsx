@@ -252,6 +252,18 @@ const AboutSection = () => {
             <Mail className="w-4 h-4 text-primary group-hover:text-primary/80 transition-colors" />
             <span className="text-xs font-medium text-foreground">Email Us</span>
           </motion.a>
+
+          <motion.a
+            href="https://cloudaviation.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 glass-card px-4 py-2.5 group hover:border-accent/40 transition-colors"
+          >
+            <Globe className="w-4 h-4 text-accent group-hover:text-accent/80 transition-colors" />
+            <span className="text-xs font-medium text-foreground">cloudaviation.in</span>
+          </motion.a>
         </motion.div>
       </div>
     </section>
