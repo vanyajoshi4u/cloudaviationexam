@@ -74,11 +74,13 @@ const Auth = () => {
     const handleOAuthCallback = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
+      if (oauthProcessingRef.current) return;
 
       // Check if this is an OAuth user (no password identity = social login)
       const isOAuth = session.user.app_metadata?.provider && session.user.app_metadata.provider !== "email";
 
       if (isOAuth) {
+        oauthProcessingRef.current = true;
         // OAuth users bypass email verification - create profile & session directly
         try {
           // Ensure profile exists
