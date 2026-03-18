@@ -14,23 +14,35 @@ const AboutSection = () => {
 
   return (
     <section ref={sectionRef} className="relative py-20 overflow-hidden" id="about">
-      {/* Animated background orbs */}
+      {/* Rich layered background */}
       <div className="absolute inset-0 pointer-events-none">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-card/80 to-accent/10" />
+        {/* Mesh-like radial spots */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 60% 50% at 20% 20%, hsl(var(--primary) / 0.15), transparent), radial-gradient(ellipse 50% 60% at 80% 80%, hsl(var(--accent) / 0.12), transparent), radial-gradient(ellipse 40% 40% at 50% 50%, hsl(var(--primary) / 0.08), transparent)"
+        }} />
+        {/* Animated orbs - brighter */}
         <motion.div
-          animate={{ x: [0, 30, 0], y: [0, -20, 0], scale: [1, 1.2, 1] }}
+          animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.3, 1] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-10 left-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl"
+          className="absolute top-10 left-10 w-72 h-72 rounded-full bg-primary/20 blur-3xl"
         />
         <motion.div
-          animate={{ x: [0, -25, 0], y: [0, 30, 0], scale: [1, 1.3, 1] }}
+          animate={{ x: [0, -35, 0], y: [0, 40, 0], scale: [1, 1.4, 1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-accent/5 blur-3xl"
+          className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-accent/20 blur-3xl"
         />
         <motion.div
-          animate={{ x: [0, 15, 0], y: [0, -15, 0] }}
+          animate={{ x: [0, 20, 0], y: [0, -20, 0], scale: [1, 1.2, 1] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/3 blur-3xl"
+          className="absolute top-1/2 left-1/3 w-64 h-64 rounded-full bg-primary/15 blur-3xl"
         />
+        {/* Subtle grid overlay */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)",
+          backgroundSize: "40px 40px"
+        }} />
       </div>
 
       <div className="container mx-auto px-4 max-w-lg relative z-10">
