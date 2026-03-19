@@ -42,7 +42,7 @@ const Subscribe = () => {
         .order("created_at", { ascending: false })
         .limit(1);
       if (data && data.length > 0) {
-        if (data[0].status === "approved") {
+        if (data[0].status === "approved" && data[0].expires_at && new Date(data[0].expires_at) > new Date()) {
           setAlreadySubscribed(true);
         } else if (data[0].status === "pending") {
           setSubmitted(true);
