@@ -37,7 +37,7 @@ const Subscribe = () => {
       if (!user) return;
       const { data } = await supabase
         .from("subscriptions")
-        .select("status")
+        .select("status, expires_at")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(1);
