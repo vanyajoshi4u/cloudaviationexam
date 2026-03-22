@@ -70,6 +70,7 @@ interface ChatMessage {
 }
 
 const LiveAtcExam = () => {
+  useScreenProtection();
   const { paperId } = useParams();
   const navigate = useNavigate();
   const paper = rtrPart2Papers.find((p) => p.id === paperId);
