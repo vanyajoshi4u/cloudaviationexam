@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-const ADMIN_EMAIL = "rahulbajwa733@gmail.com";
+// TEMP: disabled exemption for testing — revert after test
+const ADMIN_EMAIL = "nobody@test.com";
 
 export const useScreenProtection = () => {
   const [isAdmin, setIsAdmin] = useState(false);
