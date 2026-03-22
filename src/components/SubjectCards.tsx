@@ -582,6 +582,12 @@ const subjectsData: Subject[] = [
           "Ch 44 – Sample Paper 9",
         ],
       },
+      {
+        title: "Previous Attempt Questions",
+        chapters: ["March, 2026"],
+        hasQuiz: true,
+        quizSource: "rtr-prev-attempt" as const,
+      },
     ],
   },
   {
