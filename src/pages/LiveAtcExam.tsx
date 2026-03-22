@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useScreenProtection } from "@/hooks/useScreenProtection";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { rtrPart2Papers } from "@/data/rtrPart2Scenarios";
 import { Button } from "@/components/ui/button";
@@ -70,6 +71,7 @@ interface ChatMessage {
 }
 
 const LiveAtcExam = () => {
+  useScreenProtection();
   const { paperId } = useParams();
   const navigate = useNavigate();
   const paper = rtrPart2Papers.find((p) => p.id === paperId);
