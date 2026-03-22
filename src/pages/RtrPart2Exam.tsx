@@ -98,6 +98,7 @@ const formatTime = (seconds: number) => {
 };
 
 const RtrPart2Exam = () => {
+  useScreenProtection();
   const { paperId } = useParams();
   const navigate = useNavigate();
   const paper = rtrPart2Papers.find((p) => p.id === paperId);
