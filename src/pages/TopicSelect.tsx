@@ -41,6 +41,7 @@ import { dgcaPreviousMetTopics } from "@/data/dgcaPreviousMetQuestions";
 import { dgcaPreviousNavTopics } from "@/data/dgcaPreviousNavQuestions";
 import { dgcaPreviousRegTopics } from "@/data/dgcaPreviousRegQuestions";
 import { dgcaPreviousTechTopics } from "@/data/dgcaPreviousTechQuestions";
+import { rtrPreviousAttemptTopics } from "@/data/rtrPreviousAttemptQuestions";
 import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
