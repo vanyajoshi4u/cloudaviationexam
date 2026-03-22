@@ -56,6 +56,7 @@ const TopicSelect = () => {
   const isOxford = oxfordMetTopics.some((t) => t.id === topicId);
   const isRtr = rtrTopics.some((t) => t.id === topicId);
   const isRtrBank = rtrQuestionBank1Topic.id === topicId || rtrQuestionBank2Topic.id === topicId || rtrQuestionBank3Topic.id === topicId || rtrQuestionBank4Topic.id === topicId;
+  const isRtrPrevAttempt = rtrPreviousAttemptTopics.some((t) => t.id === topicId);
   const isRkBaliReg = rkBaliRegTopics.some((t) => t.id === topicId);
   const isRkBaliSample = rkBaliSamplePapers.some((t) => t.id === topicId);
   const isSkMet = skMetTopics.some((t) => t.id === topicId);
