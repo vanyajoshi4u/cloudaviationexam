@@ -135,7 +135,8 @@
   }
 
   .light .glass-card {
-    @apply bg-card/92 border-border/45;
+    background-color: hsla(30, 20%, 99%, 0.92);
+    @apply border-border/45;
     box-shadow: 0 6px 24px 0 hsla(217, 50%, 45%, 0.09),
                 0 2px 6px 0 hsla(217, 50%, 45%, 0.06),
                 inset 0 1px 0 0 hsla(0, 0%, 100%, 0.9);

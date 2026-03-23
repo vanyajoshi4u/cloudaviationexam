@@ -65,7 +65,7 @@ const Hero = () => {
             <span className="text-gradient-sky">DGCA</span>{" "}
             <br className="hidden sm:block" />
             Question{" "}
-            <span className="text-gradient-gold">Bank</span>
+            <span className="text-accent font-bold">Bank</span>
             <br />
             <span className="inline-flex items-center gap-2 mt-3 text-base sm:text-xl md:text-2xl font-semibold">
               <span className="text-muted-foreground">with</span>
