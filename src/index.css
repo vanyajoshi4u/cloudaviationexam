@@ -154,8 +154,8 @@
   }
 
   .light .glow-blue {
-    box-shadow: 0 4px 16px hsla(217, 91%, 50%, 0.25),
-                0 2px 6px hsla(217, 91%, 50%, 0.15);
+    box-shadow: 0 6px 20px hsla(217, 91%, 45%, 0.30),
+                0 2px 8px hsla(217, 91%, 45%, 0.18);
   }
 
   .glow-text {
