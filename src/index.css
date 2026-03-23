@@ -127,7 +127,8 @@
   }
 
   .light .glass-panel {
-    @apply bg-card/85 backdrop-blur-xl border-border/50;
+    background-color: hsla(30, 20%, 99%, 0.85);
+    @apply backdrop-blur-xl border-border/50;
     box-shadow: 0 4px 28px 0 hsla(217, 60%, 45%, 0.10),
                 0 1px 4px 0 hsla(217, 60%, 45%, 0.07),
                 inset 0 1px 0 0 hsla(0, 0%, 100%, 1);
