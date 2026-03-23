@@ -127,22 +127,25 @@
   }
 
   .light .glass-panel {
-    @apply bg-card/80 border-border/60;
-    box-shadow: 0 4px 24px 0 hsla(217, 60%, 50%, 0.08),
-                0 1px 3px 0 hsla(217, 60%, 50%, 0.06),
-                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.9);
-  }
-
-  .glass-card {
-    @apply bg-card/40 backdrop-blur-lg border border-border/40 rounded-2xl;
-    box-shadow: 0 4px 24px 0 hsla(217, 91%, 60%, 0.06);
+    @apply bg-card/85 backdrop-blur-xl border-border/50;
+    box-shadow: 0 4px 28px 0 hsla(217, 60%, 45%, 0.10),
+                0 1px 4px 0 hsla(217, 60%, 45%, 0.07),
+                inset 0 1px 0 0 hsla(0, 0%, 100%, 1);
   }
 
   .light .glass-card {
-    @apply bg-card/90 border-border/50;
-    box-shadow: 0 4px 20px 0 hsla(217, 50%, 50%, 0.07),
-                0 1px 4px 0 hsla(217, 50%, 50%, 0.05),
-                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.8);
+    @apply bg-card/92 border-border/45;
+    box-shadow: 0 6px 24px 0 hsla(217, 50%, 45%, 0.09),
+                0 2px 6px 0 hsla(217, 50%, 45%, 0.06),
+                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.9);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .light .glass-card:hover {
+    box-shadow: 0 10px 36px 0 hsla(217, 55%, 45%, 0.14),
+                0 4px 10px 0 hsla(217, 55%, 45%, 0.08),
+                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.95);
+    transform: translateY(-2px);
   }
 
   .glow-blue {
