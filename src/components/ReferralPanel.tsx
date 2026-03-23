@@ -125,8 +125,7 @@ const ReferralPanel = () => {
           <Gift className="w-4 h-4 text-primary-foreground" />
         </motion.div>
         <h3 className="font-display text-lg font-bold text-foreground">
-          Refer & Earn{" "}
-          <span className="text-gradient-gold">₹200</span>
+          Refer & Earn ₹200
         </h3>
         <motion.div
           animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
