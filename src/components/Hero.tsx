@@ -98,12 +98,12 @@ const Hero = () => {
             className="grid grid-cols-3 gap-4 sm:gap-8 mt-4 sm:mt-8 max-w-xl mx-auto"
           >
             {[
-              { value: "10,000+", label: "Questions" },
-              { value: "5,000+", label: "Students" },
-              { value: "95%", label: "Pass Rate" },
+              { value: "10,000+", label: "Questions", color: "text-gradient-sky" },
+              { value: "5,000+", label: "Students", color: "text-gradient-sky" },
+              { value: "95%", label: "Pass Rate", color: "text-accent" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-gradient-sky">
+                <div className={`font-display text-xl sm:text-2xl md:text-3xl font-bold ${stat.color}`}>
                   {stat.value}
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground mt-1">
