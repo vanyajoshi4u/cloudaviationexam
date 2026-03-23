@@ -127,17 +127,14 @@
   }
 
   .light .glass-panel {
-    @apply backdrop-blur-xl;
-    background-color: hsla(30, 20%, 99%, 0.85);
-    border: 1px solid hsla(220, 18%, 82%, 0.5);
+    @apply bg-card/85 backdrop-blur-xl border-border/50;
     box-shadow: 0 4px 28px 0 hsla(217, 60%, 45%, 0.10),
                 0 1px 4px 0 hsla(217, 60%, 45%, 0.07),
                 inset 0 1px 0 0 hsla(0, 0%, 100%, 1);
   }
 
   .light .glass-card {
-    background-color: hsla(30, 20%, 99%, 0.92);
-    border: 1px solid hsla(220, 18%, 82%, 0.45);
+    @apply bg-card/92 border-border/45;
     box-shadow: 0 6px 24px 0 hsla(217, 50%, 45%, 0.09),
                 0 2px 6px 0 hsla(217, 50%, 45%, 0.06),
                 inset 0 1px 0 0 hsla(0, 0%, 100%, 0.9);
