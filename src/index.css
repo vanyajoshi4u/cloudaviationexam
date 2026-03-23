@@ -56,51 +56,51 @@
   }
 
   .light {
-    --background: 216 40% 97%;
+    --background: 220 30% 97%;
     --foreground: 222 47% 11%;
 
-    --card: 0 0% 100%;
+    --card: 30 20% 99%;
     --card-foreground: 222 47% 11%;
 
-    --popover: 0 0% 100%;
+    --popover: 30 20% 99%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 217 91% 50%;
+    --primary: 217 91% 48%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 214 32% 91%;
+    --secondary: 220 25% 93%;
     --secondary-foreground: 222 47% 15%;
 
-    --muted: 214 25% 92%;
-    --muted-foreground: 215 16% 42%;
+    --muted: 220 20% 94%;
+    --muted-foreground: 215 16% 40%;
 
-    --accent: 35 92% 50%;
+    --accent: 33 95% 48%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 25% 85%;
-    --input: 214 25% 85%;
-    --ring: 217 91% 50%;
+    --border: 220 18% 82%;
+    --input: 220 18% 82%;
+    --ring: 217 91% 48%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 216 33% 95%;
+    --sidebar-background: 220 25% 96%;
     --sidebar-foreground: 222 47% 15%;
-    --sidebar-primary: 217 91% 50%;
+    --sidebar-primary: 217 91% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 214 32% 91%;
+    --sidebar-accent: 220 25% 93%;
     --sidebar-accent-foreground: 222 47% 15%;
-    --sidebar-border: 214 25% 85%;
-    --sidebar-ring: 217 91% 50%;
+    --sidebar-border: 220 18% 82%;
+    --sidebar-ring: 217 91% 48%;
 
-    --glass: 216 33% 96%;
-    --glass-border: 214 25% 82%;
-    --glow: 217 91% 50%;
-    --sky-gradient-start: 217 91% 50%;
-    --sky-gradient-end: 225 80% 40%;
-    --gold: 35 92% 50%;
+    --glass: 220 25% 97%;
+    --glass-border: 220 18% 78%;
+    --glow: 217 91% 48%;
+    --sky-gradient-start: 217 91% 48%;
+    --sky-gradient-end: 225 80% 38%;
+    --gold: 33 95% 48%;
   }
 }
 
@@ -127,22 +127,25 @@
   }
 
   .light .glass-panel {
-    @apply bg-card/80 border-border/60;
-    box-shadow: 0 4px 24px 0 hsla(217, 60%, 50%, 0.08),
-                0 1px 3px 0 hsla(217, 60%, 50%, 0.06),
-                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.9);
-  }
-
-  .glass-card {
-    @apply bg-card/40 backdrop-blur-lg border border-border/40 rounded-2xl;
-    box-shadow: 0 4px 24px 0 hsla(217, 91%, 60%, 0.06);
+    @apply bg-card/85 backdrop-blur-xl border-border/50;
+    box-shadow: 0 4px 28px 0 hsla(217, 60%, 45%, 0.10),
+                0 1px 4px 0 hsla(217, 60%, 45%, 0.07),
+                inset 0 1px 0 0 hsla(0, 0%, 100%, 1);
   }
 
   .light .glass-card {
-    @apply bg-card/90 border-border/50;
-    box-shadow: 0 4px 20px 0 hsla(217, 50%, 50%, 0.07),
-                0 1px 4px 0 hsla(217, 50%, 50%, 0.05),
-                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.8);
+    @apply bg-card/92 border-border/45;
+    box-shadow: 0 6px 24px 0 hsla(217, 50%, 45%, 0.09),
+                0 2px 6px 0 hsla(217, 50%, 45%, 0.06),
+                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.9);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .light .glass-card:hover {
+    box-shadow: 0 10px 36px 0 hsla(217, 55%, 45%, 0.14),
+                0 4px 10px 0 hsla(217, 55%, 45%, 0.08),
+                inset 0 1px 0 0 hsla(0, 0%, 100%, 0.95);
+    transform: translateY(-2px);
   }
 
   .glow-blue {
@@ -151,8 +154,8 @@
   }
 
   .light .glow-blue {
-    box-shadow: 0 4px 16px hsla(217, 91%, 50%, 0.25),
-                0 2px 6px hsla(217, 91%, 50%, 0.15);
+    box-shadow: 0 6px 20px hsla(217, 91%, 45%, 0.30),
+                0 2px 8px hsla(217, 91%, 45%, 0.18);
   }
 
   .glow-text {
@@ -166,16 +169,11 @@
   }
 
   .light .text-gradient-sky {
-    background-image: linear-gradient(135deg, hsl(217, 91%, 45%), hsl(200, 85%, 50%));
-  }
-
-  .text-gradient-gold {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(38, 92%, 55%), hsl(45, 95%, 65%));
+    background-image: linear-gradient(135deg, hsl(217, 91%, 42%), hsl(200, 88%, 45%));
   }
 
   .light .text-gradient-gold {
-    background-image: linear-gradient(135deg, hsl(35, 92%, 42%), hsl(25, 90%, 50%));
+    background-image: linear-gradient(135deg, hsl(33, 95%, 40%), hsl(20, 92%, 48%));
   }
 
   .bg-gradient-aviation {
@@ -188,9 +186,9 @@
   }
 
   .light .bg-gradient-hero {
-    background: linear-gradient(135deg, hsla(217, 91%, 55%, 0.12) 0%, transparent 50%),
-                linear-gradient(225deg, hsla(35, 92%, 50%, 0.08) 0%, transparent 50%),
-                linear-gradient(180deg, hsla(216, 40%, 95%, 0.5) 0%, transparent 100%);
+    background: linear-gradient(135deg, hsla(217, 91%, 50%, 0.14) 0%, transparent 50%),
+                linear-gradient(225deg, hsla(33, 95%, 48%, 0.10) 0%, transparent 50%),
+                linear-gradient(180deg, hsla(220, 30%, 96%, 0.6) 0%, transparent 100%);
   }
 
   .floating {
