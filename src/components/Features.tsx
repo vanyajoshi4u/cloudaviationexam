@@ -71,7 +71,8 @@ const Features = () => {
           className="text-center mb-12 sm:mb-16"
         >
           <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Everything You Need to Pass
+            Everything You Need to{" "}
+            <span className="text-accent">Pass</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
             Built by pilots, for aspiring pilots. Every feature designed to maximize your exam readiness.
