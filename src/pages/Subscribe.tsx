@@ -192,7 +192,7 @@ const Subscribe = () => {
 
       // Send confirmation email (fire and forget)
       supabase.functions.invoke("send-payment-confirmation", {
-        body: { plan: selectedPlan, amount: finalAmount },
+        body: { plan: selectedPlan, amount: finalAmount, discountCode: discountApplied ? discountCode : undefined },
       }).catch((err) => console.error("Email sending failed:", err));
 
       // Redirect to homepage after a short delay

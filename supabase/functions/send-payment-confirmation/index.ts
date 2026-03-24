@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
     const userId = claimsData.claims.sub;
     const userEmail = claimsData.claims.email;
 
-    const { plan, amount } = await req.json();
+    const { plan, amount, discountCode } = await req.json();
     const planLabels: Record<string, string> = {
       "3_months": "3 Months (RTR Part-2)",
       "6_months": "6 Months",
@@ -181,6 +181,10 @@ Deno.serve(async (req) => {
                   <td style="color: #94a3b8; padding: 8px 0; font-size: 14px;">Amount</td>
                   <td style="color: #1e293b; padding: 8px 0; font-size: 14px; text-align: right; font-weight: 600;">₹${amount}</td>
                 </tr>
+                ${discountCode ? `<tr>
+                  <td style="color: #94a3b8; padding: 8px 0; font-size: 14px;">Discount Code</td>
+                  <td style="color: #f59e0b; padding: 8px 0; font-size: 14px; text-align: right; font-weight: 600;">${discountCode}</td>
+                </tr>` : ''}
               </table>
             </div>
           </div>
