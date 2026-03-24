@@ -214,6 +214,9 @@ const Subscribe = () => {
 
       toast.success("Payment successful! Your subscription is now active.");
 
+      // Clear persisted discount state
+      sessionStorage.removeItem("ca_discount");
+
       // Send confirmation email (fire and forget)
       supabase.functions.invoke("send-payment-confirmation", {
         body: { plan: selectedPlan, amount: finalAmount, discountCode: discountApplied ? discountCode : undefined },
