@@ -60,7 +60,7 @@ const Subscribe = () => {
         }
       }
 
-      // Restore discount from sessionStorage (user switched tabs to pay)
+      // Restore discount: first try sessionStorage, then check DB for previously used codes
       const saved = sessionStorage.getItem("ca_discount");
       if (saved && !discountApplied) {
         try {
@@ -71,6 +71,41 @@ const Subscribe = () => {
             setDiscountApplied(true);
           }
         } catch { /* ignore */ }
+      } else if (!discountApplied) {
+        // Check if user has a previously used discount code (tab was closed)
+        const { data: usageData } = await supabase
+          .from("discount_usage")
+          .select("discount_code_id")
+          .eq("user_id", user.id)
+          .order("used_at", { ascending: false })
+          .limit(1);
+
+        if (usageData && usageData.length > 0) {
+          // Check if user has NO active subscription — means they used a code but haven't subscribed yet
+          const { data: activeSub } = await supabase
+            .from("subscriptions")
+            .select("id")
+            .eq("user_id", user.id)
+            .eq("status", "approved")
+            .limit(1);
+
+          if (!activeSub || activeSub.length === 0) {
+            // Fetch the discount code details
+            const { data: codeData } = await supabase
+              .from("discount_codes")
+              .select("code, discount_amount")
+              .eq("id", usageData[0].discount_code_id)
+              .single();
+
+            if (codeData) {
+              setDiscountCode(codeData.code);
+              setDiscountAmount(codeData.discount_amount);
+              setDiscountApplied(true);
+              // Re-persist to sessionStorage
+              sessionStorage.setItem("ca_discount", JSON.stringify({ code: codeData.code, amount: codeData.discount_amount }));
+            }
+          }
+        }
       }
     };
     checkExisting();
