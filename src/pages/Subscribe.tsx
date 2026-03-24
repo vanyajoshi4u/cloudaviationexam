@@ -31,10 +31,19 @@ const Subscribe = () => {
   const [applyingDiscount, setApplyingDiscount] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
 
+  // Persist discount state to sessionStorage so it survives tab switches
+  useEffect(() => {
+    if (discountApplied) {
+      sessionStorage.setItem("ca_discount", JSON.stringify({ code: discountCode, amount: discountAmount }));
+    }
+  }, [discountApplied, discountCode, discountAmount]);
+
   useEffect(() => {
     const checkExisting = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+
+      // Check existing subscription
       const { data } = await supabase
         .from("subscriptions")
         .select("status, expires_at")
@@ -44,9 +53,24 @@ const Subscribe = () => {
       if (data && data.length > 0) {
         if (data[0].status === "approved" && data[0].expires_at && new Date(data[0].expires_at) > new Date()) {
           setAlreadySubscribed(true);
+          return;
         } else if (data[0].status === "pending") {
           setSubmitted(true);
+          return;
         }
+      }
+
+      // Restore discount from sessionStorage (user switched tabs to pay)
+      const saved = sessionStorage.getItem("ca_discount");
+      if (saved && !discountApplied) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed.code && parsed.amount) {
+            setDiscountCode(parsed.code);
+            setDiscountAmount(parsed.amount);
+            setDiscountApplied(true);
+          }
+        } catch { /* ignore */ }
       }
     };
     checkExisting();
@@ -189,6 +213,9 @@ const Subscribe = () => {
       if (insertError) throw insertError;
 
       toast.success("Payment successful! Your subscription is now active.");
+
+      // Clear persisted discount state
+      sessionStorage.removeItem("ca_discount");
 
       // Send confirmation email (fire and forget)
       supabase.functions.invoke("send-payment-confirmation", {
