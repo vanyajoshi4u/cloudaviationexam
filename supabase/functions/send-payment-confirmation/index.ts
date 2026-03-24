@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
     const userId = claimsData.claims.sub;
     const userEmail = claimsData.claims.email;
 
-    const { plan, amount } = await req.json();
+    const { plan, amount, discountCode } = await req.json();
     const planLabels: Record<string, string> = {
       "3_months": "3 Months (RTR Part-2)",
       "6_months": "6 Months",
