@@ -14,10 +14,62 @@ serve(async (req) => {
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY not set");
 
-    const { to } = await req.json();
+    const { to, template } = await req.json();
 
-    const subject = "🎁 Your Exclusive Code: YASH250 – ₹250 OFF on RTR Live ATC Simulator!";
-    const htmlBody = `
+    let subject: string;
+    let htmlBody: string;
+
+    if (template === "purchase-notification") {
+      subject = "🛒 New Subscription – Test User bought 6 Months (via FLY70)";
+      htmlBody = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,sans-serif;">
+  <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;margin-top:24px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+    <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);padding:32px 24px;text-align:center;">
+      <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">☁️ Cloud Aviation Exams</h1>
+    </div>
+    <div style="padding:32px 24px;">
+      <h2 style="color:#1e293b;margin:0 0 16px;">New Subscription Purchase 🎉</h2>
+      <div style="background:#f8fafc;border-radius:12px;padding:24px;">
+        <table style="width:100%;border-collapse:collapse;">
+          <tr>
+            <td style="color:#94a3b8;padding:8px 0;font-size:14px;">Name</td>
+            <td style="color:#1e293b;padding:8px 0;font-size:14px;text-align:right;font-weight:600;">Test User</td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;padding:8px 0;font-size:14px;">Email</td>
+            <td style="color:#1e293b;padding:8px 0;font-size:14px;text-align:right;font-weight:600;">testuser@example.com</td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;padding:8px 0;font-size:14px;">Phone</td>
+            <td style="color:#1e293b;padding:8px 0;font-size:14px;text-align:right;font-weight:600;">+91 9876543210</td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;padding:8px 0;font-size:14px;">Plan</td>
+            <td style="color:#1e293b;padding:8px 0;font-size:14px;text-align:right;font-weight:600;">6 Months</td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;padding:8px 0;font-size:14px;">Amount</td>
+            <td style="color:#1e293b;padding:8px 0;font-size:14px;text-align:right;font-weight:600;">₹229</td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;padding:8px 0;font-size:14px;">Discount Code</td>
+            <td style="color:#f59e0b;padding:8px 0;font-size:14px;text-align:right;font-weight:600;">FLY70</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div style="background:#f9fafb;padding:16px 24px;text-align:center;border-top:1px solid #e5e7eb;">
+      <p style="color:#9ca3af;font-size:12px;margin:0;">© 2026 Cloud Aviation Exams. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>`;
+    } else {
+      subject = "🎁 Your Exclusive Code: YASH250 – ₹250 OFF on RTR Live ATC Simulator!";
+      htmlBody = `
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
@@ -63,6 +115,8 @@ serve(async (req) => {
   </div>
 </body>
 </html>`;
+    }
+
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_API_KEY}` },
