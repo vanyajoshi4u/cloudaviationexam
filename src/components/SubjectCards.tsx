@@ -622,9 +622,6 @@ const SubjectCards = () => {
       .toLowerCase();
 
   const getNestedTopicSource = (quizSource?: SubTopic["quizSource"]) => {
-    if (quizSource === "rkbali-gennav") return rkBaliGenNavTopics;
-    if (quizSource === "rkbali-inst") return rkBaliInstrumentTopics;
-    if (quizSource === "rkbali-radnav") return rkBaliRadioNavTopics;
     if (quizSource === "oxford-gennav") return oxfordGenNavTopics;
     if (quizSource === "kw-gennav") return keithWilliamGenNavTopics;
     if (quizSource === "redbird-gennav") return redbirdGenNavTopics;
