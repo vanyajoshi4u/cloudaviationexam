@@ -56,7 +56,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "rkbali-reg" | "rkbali-samples" | "sk-met" | "rkbali-gennav" | "rkbali-inst" | "rkbali-radnav" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "kw-inst" | "kw-radnav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met" | "dgca-prev-nav" | "dgca-prev-reg" | "dgca-prev-tech" | "rtr-prev-attempt";
+  quizSource?: "joshi" | "oxford" | "rtr" | "sk-met" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "kw-inst" | "kw-radnav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met" | "dgca-prev-nav" | "dgca-prev-reg" | "dgca-prev-tech" | "rtr-prev-attempt";
 }
 
 interface Subject {
