@@ -28,7 +28,7 @@ export function getSubjectForTopic(topicId: string): string {
     return "Radio Navigation";
   }
   // Instrument Navigation
-  if (topicId.includes("inst") || topicId.startsWith("oxford-inst") || topicId.startsWith("kw-inst") || topicId.startsWith("redbird-inst") || topicId.startsWith("rkbali-inst")) {
+  if (topicId.includes("inst") || topicId.startsWith("oxford-inst") || topicId.startsWith("kw-inst") || topicId.startsWith("redbird-inst")) {
     return "Instrument Navigation";
   }
   // General Navigation
