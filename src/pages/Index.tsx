@@ -9,6 +9,8 @@ import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
 import ReviewPopup from "@/components/ReviewPopup";
 import DemoVideoSection from "@/components/DemoVideoSection";
+import PersonalCalendar from "@/components/PersonalCalendar";
+import CaptainGreeting from "@/components/CaptainGreeting";
 import { Bookmark, BarChart3 } from "lucide-react";
 
 const Index = () => {
@@ -17,6 +19,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-aviation">
       <Navbar />
+      <CaptainGreeting />
       <Hero />
 
       {/* Quick Access Buttons */}
@@ -43,6 +46,11 @@ const Index = () => {
             </div>
           </button>
         </div>
+      </div>
+
+      {/* Personal Calendar */}
+      <div className="container mx-auto px-4 max-w-lg py-2">
+        <PersonalCalendar />
       </div>
 
       <SubjectCards />
