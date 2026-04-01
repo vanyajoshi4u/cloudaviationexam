@@ -41,7 +41,7 @@ import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...rkBaliRegTopics, ...rkBaliSamplePapers, ...skMetTopics, ...rkBaliGenNavTopics, ...rkBaliInstrumentTopics, ...rkBaliRadioNavTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...keithWilliamRadioNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic, ...dgcaPreviousMetTopics, ...dgcaPreviousNavTopics, ...dgcaPreviousRegTopics, ...dgcaPreviousTechTopics, ...rtrPreviousAttemptTopics];
+const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...skMetTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...keithWilliamRadioNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic, ...dgcaPreviousMetTopics, ...dgcaPreviousNavTopics, ...dgcaPreviousRegTopics, ...dgcaPreviousTechTopics, ...rtrPreviousAttemptTopics];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
@@ -52,12 +52,7 @@ const TopicSelect = () => {
   const isRtr = rtrTopics.some((t) => t.id === topicId);
   const isRtrBank = rtrQuestionBank1Topic.id === topicId || rtrQuestionBank2Topic.id === topicId || rtrQuestionBank3Topic.id === topicId || rtrQuestionBank4Topic.id === topicId;
   const isRtrPrevAttempt = rtrPreviousAttemptTopics.some((t) => t.id === topicId);
-  const isRkBaliReg = rkBaliRegTopics.some((t) => t.id === topicId);
-  const isRkBaliSample = rkBaliSamplePapers.some((t) => t.id === topicId);
   const isSkMet = skMetTopics.some((t) => t.id === topicId);
-  const isRkBaliGenNav = rkBaliGenNavTopics.some((t) => t.id === topicId);
-  const isRkBaliInst = rkBaliInstrumentTopics.some((t) => t.id === topicId);
-  const isRkBaliRadNav = rkBaliRadioNavTopics.some((t) => t.id === topicId);
   const isOxfordGenNav = oxfordGenNavTopics.some((t) => t.id === topicId);
   const isRedbirdTech = redbirdTechGeneralTopic.id === topicId;
   const isRedbirdGenNav = redbirdGenNavTopics.some((t) => t.id === topicId);
