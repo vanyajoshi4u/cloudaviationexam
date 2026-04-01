@@ -273,7 +273,7 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
       },
       {
-        title: "Oxford",
+        title: "Practice Questions",
         chapters: oxfordMetTopics.map((t) => t.title),
         hasQuiz: true,
         quizSource: "oxford",
