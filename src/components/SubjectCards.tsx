@@ -147,21 +147,6 @@ const subjectsData: Subject[] = [
       {
         title: "Radio Navigation",
         chapters: [
-          {
-            name: "R K Bali",
-            hasQuiz: true,
-            quizSource: "rkbali-radnav" as const,
-            subChapters: [
-              "Ch 1 – Basic Radio Theory",
-              "Ch 2 – ADF / NDB",
-              "Ch 3 – Track and Drift Questions",
-              "Ch 4 – Very High Frequency Omni Direction Radio Range (VOR)",
-              "Ch 5 – VOR/RMI/ADF Related Questions",
-              "Ch 6 – Holding, Radial Intercept, Bearing to Plot",
-              "Ch 7 – ILS (Instrument Landing System)",
-              "Ch 8 – Radar",
-              "Ch 9 – Global Navigation Satellite Systems (GNSS)",
-            ],
           },
           {
             name: "Oxford",
