@@ -214,7 +214,7 @@ const subjectsData: Subject[] = [
             ],
           },
           {
-            name: "Oxford",
+            name: "Practice Questions",
             hasQuiz: true,
             quizSource: "oxford-inst" as const,
             subChapters: [
