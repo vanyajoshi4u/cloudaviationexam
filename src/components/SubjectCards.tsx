@@ -148,7 +148,7 @@ const subjectsData: Subject[] = [
         title: "Radio Navigation",
         chapters: [
           {
-            name: "Oxford",
+            name: "Practice Questions",
             hasQuiz: true,
             quizSource: "oxford-radnav" as const,
             subChapters: [
