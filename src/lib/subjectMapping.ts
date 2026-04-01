@@ -12,7 +12,7 @@ export function getSubjectForTopic(topicId: string): string {
     return "RTR";
   }
   // Air Regulations
-  if (topicId.startsWith("rkbali-reg") || topicId.startsWith("rkbali-sample") || topicId.startsWith("redbird-airreg") || topicId.startsWith("sk-reg") || topicId.startsWith("dgca-prev-reg")) {
+  if (topicId.startsWith("redbird-airreg") || topicId.startsWith("sk-reg") || topicId.startsWith("dgca-prev-reg")) {
     return "Air Regulations";
   }
   // Technical General
