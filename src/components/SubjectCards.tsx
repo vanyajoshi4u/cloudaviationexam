@@ -72,7 +72,7 @@ const subjectsData: Subject[] = [
         title: "General Navigation",
         chapters: [
           {
-            name: "Oxford",
+            name: "Practice Questions",
             hasQuiz: true,
             quizSource: "oxford-gennav" as const,
             subChapters: [
@@ -148,7 +148,7 @@ const subjectsData: Subject[] = [
         title: "Radio Navigation",
         chapters: [
           {
-            name: "Oxford",
+            name: "Practice Questions",
             hasQuiz: true,
             quizSource: "oxford-radnav" as const,
             subChapters: [
@@ -214,7 +214,7 @@ const subjectsData: Subject[] = [
             ],
           },
           {
-            name: "Oxford",
+            name: "Practice Questions",
             hasQuiz: true,
             quizSource: "oxford-inst" as const,
             subChapters: [
@@ -273,7 +273,7 @@ const subjectsData: Subject[] = [
         hasQuiz: true,
       },
       {
-        title: "Oxford",
+        title: "Practice Questions",
         chapters: oxfordMetTopics.map((t) => t.title),
         hasQuiz: true,
         quizSource: "oxford",
