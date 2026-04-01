@@ -230,7 +230,7 @@ const subjectsData: Subject[] = [
             ],
           },
           {
-            name: "Keith William",
+            name: "Extra Practice Questions",
             hasQuiz: true,
             quizSource: "kw-inst" as const,
             subChapters: [
