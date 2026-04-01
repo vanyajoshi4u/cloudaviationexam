@@ -72,7 +72,7 @@ const subjectsData: Subject[] = [
         title: "General Navigation",
         chapters: [
           {
-            name: "Oxford",
+            name: "Practice Questions",
             hasQuiz: true,
             quizSource: "oxford-gennav" as const,
             subChapters: [
