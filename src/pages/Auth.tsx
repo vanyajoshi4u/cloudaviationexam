@@ -1053,7 +1053,7 @@ const Auth = () => {
         </div>
       </motion.div>
 
-      <DemoVideoSection />
+      {/* DemoVideoSection temporarily disabled */}
 
       {/* RTR Part 2 Simulator Preview */}
       <motion.div
