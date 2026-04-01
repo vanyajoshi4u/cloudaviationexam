@@ -48,6 +48,11 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Personal Calendar */}
+      <div className="container mx-auto px-4 max-w-lg py-2">
+        <PersonalCalendar />
+      </div>
+
       <SubjectCards />
       <DemoVideoSection />
       <div className="container mx-auto px-4 max-w-lg py-6">
