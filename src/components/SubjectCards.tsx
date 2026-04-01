@@ -205,22 +205,6 @@ const subjectsData: Subject[] = [
         title: "Instrument Navigation",
         chapters: [
           {
-            name: "R K Bali",
-            hasQuiz: true,
-            quizSource: "rkbali-inst" as const,
-            subChapters: [
-              "Ch 1 – Air Data Systems (Pressure Instruments)",
-              "Ch 2 – Altimeter",
-              "Ch 3 – Air Speed Indicator (ASI)",
-              "Ch 4 – Vertical Speed Indicator (VSI)",
-              "Ch 5 – Gyroscope",
-              "Ch 6 – Inertial Navigation",
-              "Ch 7 – Altitude Alert Systems",
-              "Ch 8 – Power Plant and System Monitoring Instruments",
-              "Ch 9 – Basics of Electronic Displays",
-            ],
-          },
-          {
             name: "Redbird",
             hasQuiz: true,
             quizSource: "redbird-inst" as const,
