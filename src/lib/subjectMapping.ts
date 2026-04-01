@@ -24,7 +24,7 @@ export function getSubjectForTopic(topicId: string): string {
     return "Technical Specific";
   }
   // Radio Navigation
-  if (topicId.includes("radnav") || topicId.includes("radio-nav") || topicId.startsWith("oxford-radnav") || topicId.startsWith("kw-radnav") || topicId.startsWith("redbird-radnav") || topicId.startsWith("rkbali-radnav")) {
+  if (topicId.includes("radnav") || topicId.includes("radio-nav") || topicId.startsWith("oxford-radnav") || topicId.startsWith("kw-radnav") || topicId.startsWith("redbird-radnav")) {
     return "Radio Navigation";
   }
   // Instrument Navigation
