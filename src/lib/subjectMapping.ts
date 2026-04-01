@@ -32,7 +32,7 @@ export function getSubjectForTopic(topicId: string): string {
     return "Instrument Navigation";
   }
   // General Navigation
-  if (topicId.includes("gennav") || topicId.includes("gen-nav") || topicId.startsWith("oxford-gennav") || topicId.startsWith("kw-gennav") || topicId.startsWith("redbird-gennav") || topicId.startsWith("rkbali-gennav") || topicId.startsWith("dgca-prev-nav")) {
+  if (topicId.includes("gennav") || topicId.includes("gen-nav") || topicId.startsWith("oxford-gennav") || topicId.startsWith("kw-gennav") || topicId.startsWith("redbird-gennav") || topicId.startsWith("dgca-prev-nav")) {
     return "General Navigation";
   }
   // Default fallback - check broader patterns
