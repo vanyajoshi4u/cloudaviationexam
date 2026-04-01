@@ -12,7 +12,7 @@ export function getSubjectForTopic(topicId: string): string {
     return "RTR";
   }
   // Air Regulations
-  if (topicId.startsWith("rkbali-reg") || topicId.startsWith("rkbali-sample") || topicId.startsWith("redbird-airreg") || topicId.startsWith("sk-reg") || topicId.startsWith("dgca-prev-reg")) {
+  if (topicId.startsWith("redbird-airreg") || topicId.startsWith("sk-reg") || topicId.startsWith("dgca-prev-reg")) {
     return "Air Regulations";
   }
   // Technical General
@@ -24,15 +24,15 @@ export function getSubjectForTopic(topicId: string): string {
     return "Technical Specific";
   }
   // Radio Navigation
-  if (topicId.includes("radnav") || topicId.includes("radio-nav") || topicId.startsWith("oxford-radnav") || topicId.startsWith("kw-radnav") || topicId.startsWith("redbird-radnav") || topicId.startsWith("rkbali-radnav")) {
+  if (topicId.includes("radnav") || topicId.includes("radio-nav") || topicId.startsWith("oxford-radnav") || topicId.startsWith("kw-radnav") || topicId.startsWith("redbird-radnav")) {
     return "Radio Navigation";
   }
   // Instrument Navigation
-  if (topicId.includes("inst") || topicId.startsWith("oxford-inst") || topicId.startsWith("kw-inst") || topicId.startsWith("redbird-inst") || topicId.startsWith("rkbali-inst")) {
+  if (topicId.includes("inst") || topicId.startsWith("oxford-inst") || topicId.startsWith("kw-inst") || topicId.startsWith("redbird-inst")) {
     return "Instrument Navigation";
   }
   // General Navigation
-  if (topicId.includes("gennav") || topicId.includes("gen-nav") || topicId.startsWith("oxford-gennav") || topicId.startsWith("kw-gennav") || topicId.startsWith("redbird-gennav") || topicId.startsWith("rkbali-gennav") || topicId.startsWith("dgca-prev-nav")) {
+  if (topicId.includes("gennav") || topicId.includes("gen-nav") || topicId.startsWith("oxford-gennav") || topicId.startsWith("kw-gennav") || topicId.startsWith("redbird-gennav") || topicId.startsWith("dgca-prev-nav")) {
     return "General Navigation";
   }
   // Default fallback - check broader patterns
