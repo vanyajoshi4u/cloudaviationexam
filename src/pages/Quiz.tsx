@@ -1,7 +1,6 @@
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
-import { icJoshiTopics, MCQuestion } from "@/data/icJoshiQuestions";
-import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
+import { MCQuestion } from "@/data/icJoshiQuestions";
 import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
 import { rtrQuestionBank2Topic } from "@/data/rtrQuestionBank2";
@@ -12,14 +11,12 @@ import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
-import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { keithWilliamInstTopics } from "@/data/keithWilliamInstQuestions";
+import { keithWilliamRadioNavTopics } from "@/data/keithWilliamRadioNavQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
-import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
-import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
 import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import { cessna172RTopic } from "@/data/cessna172RQuestions";
@@ -37,7 +34,6 @@ import { dgcaPreviousNavTopics } from "@/data/dgcaPreviousNavQuestions";
 import { dgcaPreviousRegTopics } from "@/data/dgcaPreviousRegQuestions";
 import { dgcaPreviousTechTopics } from "@/data/dgcaPreviousTechQuestions";
 import { rtrPreviousAttemptTopics } from "@/data/rtrPreviousAttemptQuestions";
-import oxfordRadNavAppendixA from "@/assets/oxford-radnav-appendix-a.jpg";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight, Bookmark, BookmarkCheck, StickyNote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -75,7 +71,6 @@ const diagramMap: Record<string, string> = {
   "ed-p8": edP8,
   "ed-p9": edP9,
   "ed-p10": edP10,
-  "oxford-radnav-appendix-a": oxfordRadNavAppendixA,
 };
 
 const Quiz = () => {
@@ -84,7 +79,7 @@ const Quiz = () => {
   const navigate = useNavigate();
   const mode = searchParams.get("mode") as "practice" | "test" || "practice";
 
-  const allTopics = useMemo(() => [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...skMetTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic, ...dgcaPreviousMetTopics, ...dgcaPreviousNavTopics, ...dgcaPreviousRegTopics, ...dgcaPreviousTechTopics, ...rtrPreviousAttemptTopics], []);
+  const allTopics = useMemo(() => [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...skMetTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...keithWilliamRadioNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic, ...dgcaPreviousMetTopics, ...dgcaPreviousNavTopics, ...dgcaPreviousRegTopics, ...dgcaPreviousTechTopics, ...rtrPreviousAttemptTopics], []);
   const topic = useMemo(() => allTopics.find((t) => t.id === topicId), [topicId, allTopics]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
