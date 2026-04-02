@@ -2,8 +2,6 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, ChevronDown, ChevronRight, Library, Lock } from "lucide-react";
-import { icJoshiTopics } from "@/data/icJoshiQuestions";
-import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
 import { rtrQuestionBank2Topic } from "@/data/rtrQuestionBank2";
@@ -15,7 +13,6 @@ import { dgcaPreviousNavTopics } from "@/data/dgcaPreviousNavQuestions";
 import { dgcaPreviousRegTopics } from "@/data/dgcaPreviousRegQuestions";
 import { dgcaPreviousTechTopics } from "@/data/dgcaPreviousTechQuestions";
 import { rtrPreviousAttemptTopics } from "@/data/rtrPreviousAttemptQuestions";
-import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { keithWilliamInstTopics } from "@/data/keithWilliamInstQuestions";
 import { keithWilliamRadioNavTopics } from "@/data/keithWilliamRadioNavQuestions";
@@ -23,8 +20,6 @@ import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
-import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
-import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
@@ -56,7 +51,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "joshi" | "oxford" | "rtr" | "sk-met" | "redbird-tech" | "oxford-gennav" | "kw-gennav" | "kw-inst" | "kw-radnav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "oxford-radnav" | "oxford-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met" | "dgca-prev-nav" | "dgca-prev-reg" | "dgca-prev-tech" | "rtr-prev-attempt";
+  quizSource?: "rtr" | "sk-met" | "redbird-tech" | "kw-gennav" | "kw-inst" | "kw-radnav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met" | "dgca-prev-nav" | "dgca-prev-reg" | "dgca-prev-tech" | "rtr-prev-attempt";
 }
 
 interface Subject {
@@ -71,43 +66,6 @@ const subjectsData: Subject[] = [
       {
         title: "General Navigation",
         chapters: [
-          {
-            name: "Practice Questions",
-            hasQuiz: true,
-            quizSource: "oxford-gennav" as const,
-            subChapters: [
-              "Ch 1 – Direction, Latitude and Longitude",
-              "Ch 2 – Great Circles, Rhumb Lines and Directions on the Earth",
-              "Ch 3 – Earth Magnetism",
-              "Ch 10 – The 1 in 60 Rule",
-              "Ch 11 – Navigation Using the 1 in 60 Rule",
-              "Ch 12 – Other Applications of the 1 in 60 Rule",
-              "Ch 13 – Topographical Maps and Map Reading",
-              "Ch 14 – Convergency and Conversion Angle",
-              "Ch 15 – Departure",
-              "Ch 16 – Scale",
-              "Ch 17 – General Chart Properties",
-              "Ch 18 – Mercator Charts - Properties",
-              "Ch 19 – Mercator Charts - Scale",
-              "Ch 20 – Mercator Charts - Plotting",
-              "Ch 21 – Lambert's Conformal Chart",
-              "Ch 22 – Lambert's Conformal Chart - 2",
-              "Ch 23 – Mid Course Test",
-              "Ch 24 – The Polar Stereographic Chart",
-              "Ch 25 – Transverse and Oblique Mercator Charts",
-              "Ch 26 – Time (1)",
-              "Ch 27 – Time (2)",
-              "Ch 28 – Time (3)",
-              "Ch 29 – Critical Point (CP) and Point of No Return (PNR)",
-              "Ch 30 – Gridded Charts",
-              "Ch 31 – Plotting",
-              "Ch 32 – The Direct Indicating Compass",
-              "Ch 33 – Remote Indicating Magnetic Compass",
-              "Ch 34 – Aircraft Magnetism",
-              "Ch 35 – Inertial Navigation System",
-              "Revision Questions",
-            ],
-          },
           {
             name: "Extra Practice Questions",
             hasQuiz: true,
@@ -148,33 +106,6 @@ const subjectsData: Subject[] = [
         title: "Radio Navigation",
         chapters: [
           {
-            name: "Practice Questions",
-            hasQuiz: true,
-            quizSource: "oxford-radnav" as const,
-            subChapters: [
-              "Ch 1 – Properties of Radio Waves",
-              "Ch 2 – Radio Propagation Theory",
-              "Ch 3 – Modulation",
-              "Ch 4 – Antennae",
-              "Ch 5 – Doppler Radar Systems",
-              "Ch 6 – VHF Direction Finder (VDF)",
-              "Ch 7 – NDB and ADF",
-              "Ch 8 – VOR",
-              "Ch 9 – Instrument Landing System (ILS)",
-              "Ch 10 – MLS & Radar Principles",
-              "Ch 11 – Ground Radar & AWR",
-              "Ch 12 – Secondary Surveillance Radar (SSR)",
-              "Ch 13 – Distance Measuring Equipment (DME)",
-              "Ch 14 – Area Navigation (RNAV) & FMS",
-              "Ch 15 – Electronic Flight Information System (EFIS)",
-              "Ch 16 – GNSS / GPS (Part 1)",
-              "Ch 17 – GNSS / GPS (Part 2)",
-              "Ch 18 – Revision: VDF, ADF & VOR",
-              "Ch 19 – Revision: ILS & Mixed Topics",
-              "Specimen Examination Paper",
-            ],
-          },
-          {
             name: "Extra Practice Questions",
             hasQuiz: true,
             quizSource: "kw-radnav" as const,
@@ -211,22 +142,6 @@ const subjectsData: Subject[] = [
               "Pressure Instruments",
               "Gyro Instruments",
               "Magnetic Instruments",
-            ],
-          },
-          {
-            name: "Practice Questions",
-            hasQuiz: true,
-            quizSource: "oxford-inst" as const,
-            subChapters: [
-              "Ch 1 – Pressure Heads",
-              "Ch 2 – Air Temperature Measurement",
-              "Ch 3 – Gyroscopes",
-              "Ch 4 – Directional Gyro Indicator (DGI)",
-              "Ch 5 – Artificial Horizon",
-              "Ch 6 – EFIS",
-              "Ch 7 – AFCS Revision Paper 1",
-              "Ch 8 – AFCS Revision Paper 2",
-              "Ch 9 – EICAS & ECAM",
             ],
           },
           {
@@ -267,17 +182,6 @@ const subjectsData: Subject[] = [
   {
     title: "Air Meteorology",
     subtopics: [
-      {
-        title: "I C Joshi",
-        chapters: icJoshiTopics.map((t) => t.title),
-        hasQuiz: true,
-      },
-      {
-        title: "Practice Questions",
-        chapters: oxfordMetTopics.map((t) => t.title),
-        hasQuiz: true,
-        quizSource: "oxford",
-      },
       {
         title: "Question Bank",
         chapters: ["Question Bank-1"],
@@ -347,73 +251,55 @@ const subjectsData: Subject[] = [
     subtopics: [
       {
         title: "Cessna 172R",
-        chapters: [
-          "Cessna 172R",
-        ],
+        chapters: ["Cessna 172R"],
         hasQuiz: true,
         quizSource: "cessna-172r",
       },
       {
         title: "Cessna 152",
-        chapters: [
-          "Cessna 152",
-        ],
+        chapters: ["Cessna 152"],
         hasQuiz: true,
         quizSource: "cessna-152",
       },
       {
         title: "Piper Archer III DX",
-        chapters: [
-          "Piper Archer III DX",
-        ],
+        chapters: ["Piper Archer III DX"],
         hasQuiz: true,
         quizSource: "piper-archer",
       },
       {
         title: "DA 40 (Thielert)",
-        chapters: [
-          "DA 40 (Thielert)",
-        ],
+        chapters: ["DA 40 (Thielert)"],
         hasQuiz: true,
         quizSource: "da-40",
       },
       {
         title: "DA 42 (Thielert)",
-        chapters: [
-          "DA 42 (Thielert)",
-        ],
+        chapters: ["DA 42 (Thielert)"],
         hasQuiz: true,
         quizSource: "da-42",
       },
       {
         title: "PA-34-220T",
-        chapters: [
-          "PA-34-220T",
-        ],
+        chapters: ["PA-34-220T"],
         hasQuiz: true,
         quizSource: "pa-34-220t",
       },
       {
         title: "TECHNAM P2006T",
-        chapters: [
-          "TECHNAM P2006T",
-        ],
+        chapters: ["TECHNAM P2006T"],
         hasQuiz: true,
         quizSource: "tecnam-p2006t",
       },
       {
         title: "TECHNAM P2008JC",
-        chapters: [
-          "TECHNAM P2008JC",
-        ],
+        chapters: ["TECHNAM P2008JC"],
         hasQuiz: true,
         quizSource: "tecnam-p2008jc",
       },
       {
         title: "DA42 Austro",
-        chapters: [
-          "DA42 Austro",
-        ],
+        chapters: ["DA42 Austro"],
         hasQuiz: true,
         quizSource: "da-42-austro",
       },
@@ -488,75 +374,27 @@ const subjectsData: Subject[] = [
   {
     title: "RTR Part 2 (DGCA) Practice",
     subtopics: [
-      {
-        title: "Radio Telephony Paper 1",
-        chapters: ["Paper 1 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 2",
-        chapters: ["Paper 2 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 3",
-        chapters: ["Paper 3 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 4",
-        chapters: ["Paper 4 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 5",
-        chapters: ["Paper 5 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 6",
-        chapters: ["Paper 6 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 7",
-        chapters: ["Paper 7 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 8",
-        chapters: ["Paper 8 – Full Practice Set"],
-      },
+      { title: "Radio Telephony Paper 1", chapters: ["Paper 1 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 2", chapters: ["Paper 2 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 3", chapters: ["Paper 3 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 4", chapters: ["Paper 4 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 5", chapters: ["Paper 5 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 6", chapters: ["Paper 6 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 7", chapters: ["Paper 7 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 8", chapters: ["Paper 8 – Full Practice Set"] },
     ],
   },
   {
     title: "RTR Part 2 (DGCA) Practice with Live ATC",
     subtopics: [
-      {
-        title: "Radio Telephony Paper 1",
-        chapters: ["Paper 1 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 2",
-        chapters: ["Paper 2 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 3",
-        chapters: ["Paper 3 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 4",
-        chapters: ["Paper 4 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 5",
-        chapters: ["Paper 5 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 6",
-        chapters: ["Paper 6 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 7",
-        chapters: ["Paper 7 – Full Practice Set"],
-      },
-      {
-        title: "Radio Telephony Paper 8",
-        chapters: ["Paper 8 – Full Practice Set"],
-      },
+      { title: "Radio Telephony Paper 1", chapters: ["Paper 1 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 2", chapters: ["Paper 2 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 3", chapters: ["Paper 3 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 4", chapters: ["Paper 4 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 5", chapters: ["Paper 5 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 6", chapters: ["Paper 6 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 7", chapters: ["Paper 7 – Full Practice Set"] },
+      { title: "Radio Telephony Paper 8", chapters: ["Paper 8 – Full Practice Set"] },
     ],
   },
 ];
@@ -621,13 +459,10 @@ const SubjectCards = () => {
       .toLowerCase();
 
   const getNestedTopicSource = (quizSource?: SubTopic["quizSource"]) => {
-    if (quizSource === "oxford-gennav") return oxfordGenNavTopics;
     if (quizSource === "kw-gennav") return keithWilliamGenNavTopics;
     if (quizSource === "redbird-gennav") return redbirdGenNavTopics;
     if (quizSource === "redbird-radnav") return redbirdRadioNavTopics;
     if (quizSource === "redbird-inst") return redbirdInstTopics;
-    if (quizSource === "oxford-radnav") return oxfordRadioNavTopics;
-    if (quizSource === "oxford-inst") return oxfordInstNavTopics;
     if (quizSource === "kw-inst") return keithWilliamInstTopics;
     if (quizSource === "kw-radnav") return keithWilliamRadioNavTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic];
@@ -677,7 +512,6 @@ const SubjectCards = () => {
           className="flex flex-col gap-2"
         >
           {subjectsData.filter((subject) => {
-            // Live ATC is an add-on only for ₹999 (3_months) users or those who already have it
             if (subject.title === "RTR Part 2 (DGCA) Practice with Live ATC") {
               return hasRtr2Access || hasLiveAtcAccess;
             }
@@ -805,28 +639,27 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "oxford" ? oxfordMetTopics : subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rtr-prev-attempt" ? rtrPreviousAttemptTopics : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "dgca-prev-met" ? dgcaPreviousMetTopics : subtopic.quizSource === "dgca-prev-nav" ? dgcaPreviousNavTopics : subtopic.quizSource === "dgca-prev-reg" ? dgcaPreviousRegTopics : subtopic.quizSource === "dgca-prev-tech" ? dgcaPreviousTechTopics : subtopic.quizSource === "oxford-radnav" ? oxfordRadioNavTopics : subtopic.quizSource === "oxford-inst" ? oxfordInstNavTopics : subtopic.quizSource === "redbird-radnav" ? redbirdRadioNavTopics : subtopic.quizSource === "redbird-inst" ? redbirdInstTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "sk-reg-additional" ? [skRegAdditionalTopic] : subtopic.quizSource === "kw-radnav" ? keithWilliamRadioNavTopics : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : subtopic.quizSource === "pa-34-220t" ? [pa34220tTopic] : subtopic.quizSource === "tecnam-p2006t" ? [tecnamP2006tTopic] : subtopic.quizSource === "tecnam-p2008jc" ? [tecnamP2008jcTopic] : subtopic.quizSource === "da-42-austro" ? [da42AustroTopic] : icJoshiTopics;
+                                const topicSource = subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rtr-prev-attempt" ? rtrPreviousAttemptTopics : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "dgca-prev-met" ? dgcaPreviousMetTopics : subtopic.quizSource === "dgca-prev-nav" ? dgcaPreviousNavTopics : subtopic.quizSource === "dgca-prev-reg" ? dgcaPreviousRegTopics : subtopic.quizSource === "dgca-prev-tech" ? dgcaPreviousTechTopics : subtopic.quizSource === "redbird-radnav" ? redbirdRadioNavTopics : subtopic.quizSource === "redbird-inst" ? redbirdInstTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "sk-reg-additional" ? [skRegAdditionalTopic] : subtopic.quizSource === "kw-radnav" ? keithWilliamRadioNavTopics : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : subtopic.quizSource === "pa-34-220t" ? [pa34220tTopic] : subtopic.quizSource === "tecnam-p2006t" ? [tecnamP2006tTopic] : subtopic.quizSource === "tecnam-p2008jc" ? [tecnamP2008jcTopic] : subtopic.quizSource === "da-42-austro" ? [da42AustroTopic] : [];
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
                                 
-                                // Check for content pages (non-quiz chapters)
-const contentPageMap: Record<string, string> = {
+                                const contentPageMap: Record<string, string> = {
                                   "Ch 1 – Broad Guidelines, Syllabus, Radio Telephone Restricted Licence Examination": "/rtr-chapter/rtr-ch1",
                                   "Ch 2 – Definitions Related with Annex-10": "/rtr-chapter/rtr-ch2",
-                                   "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP": "/rtr-chapter/rtr-ch3",
-                                 "Ch 18 – INS – Inertial Navigation System": "/rtr-chapter/rtr-ch18",
-                                   "Ch 22 – Squelch, Microphones & Headphones": "/rtr-chapter/rtr-ch22",
-                                   "Met Instruments": "/rtr-chapter/icj-met-instruments",
+                                  "Ch 3 – Definitions Related with DOC 4444, DOC 9432, AIP": "/rtr-chapter/rtr-ch3",
+                                  "Ch 18 – INS – Inertial Navigation System": "/rtr-chapter/rtr-ch18",
+                                  "Ch 22 – Squelch, Microphones & Headphones": "/rtr-chapter/rtr-ch22",
+                                  "Met Instruments": "/rtr-chapter/icj-met-instruments",
                                   "Paper 1 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-1" : "/rtr2-exam/rtr2-paper-1",
-                                   "Paper 2 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-2" : "/rtr2-exam/rtr2-paper-2",
-                                   "Paper 3 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-3" : "/rtr2-exam/rtr2-paper-3",
-                                   "Paper 4 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-4" : "/rtr2-exam/rtr2-paper-4",
-                                   "Paper 5 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-5" : "/rtr2-exam/rtr2-paper-5",
-                                   "Paper 6 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-6" : "/rtr2-exam/rtr2-paper-6",
-                                    "Paper 7 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-7" : "/rtr2-exam/rtr2-paper-7",
-                                    "Paper 8 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-8" : "/rtr2-exam/rtr2-paper-8",
-                                 };
+                                  "Paper 2 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-2" : "/rtr2-exam/rtr2-paper-2",
+                                  "Paper 3 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-3" : "/rtr2-exam/rtr2-paper-3",
+                                  "Paper 4 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-4" : "/rtr2-exam/rtr2-paper-4",
+                                  "Paper 5 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-5" : "/rtr2-exam/rtr2-paper-5",
+                                  "Paper 6 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-6" : "/rtr2-exam/rtr2-paper-6",
+                                  "Paper 7 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-7" : "/rtr2-exam/rtr2-paper-7",
+                                  "Paper 8 – Full Practice Set": subject.title.includes("Live ATC") ? "/live-atc-exam/rtr2-paper-8" : "/rtr2-exam/rtr2-paper-8",
+                                };
                                 const contentLink = contentPageMap[chapterName];
                                 const isClickable = !!quizTopic || !!contentLink;
 
@@ -835,7 +668,7 @@ const contentPageMap: Record<string, string> = {
                                     key={chapterName}
                                     onClick={() => {
                                       if (contentLink) {
-                                    if (contentLink.startsWith("/live-atc-exam/") && !hasLiveAtcAccess) {
+                                        if (contentLink.startsWith("/live-atc-exam/") && !hasLiveAtcAccess) {
                                           setShowLiveAtcUpgrade(true);
                                           return;
                                         }

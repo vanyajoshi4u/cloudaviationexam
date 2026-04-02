@@ -1,6 +1,4 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { icJoshiTopics } from "@/data/icJoshiQuestions";
-import { oxfordMetTopics } from "@/data/oxfordMetQuestions";
 import { rtrTopics } from "@/data/rtrQuestions";
 import { rtrQuestionBank1Topic } from "@/data/rtrQuestionBank1";
 import { rtrQuestionBank2Topic } from "@/data/rtrQuestionBank2";
@@ -11,15 +9,12 @@ import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
-import { oxfordGenNavTopics } from "@/data/oxfordGenNavQuestions";
 import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
 import { keithWilliamInstTopics } from "@/data/keithWilliamInstQuestions";
 import { keithWilliamRadioNavTopics } from "@/data/keithWilliamRadioNavQuestions";
 import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
 import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
 import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
-import { oxfordRadioNavTopics } from "@/data/oxfordRadioNavQuestions";
-import { oxfordInstNavTopics } from "@/data/oxfordInstNavQuestions";
 import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
 import { skTechQB5Topic } from "@/data/skTechQB5Questions";
 import { cessna172RTopic } from "@/data/cessna172RQuestions";
@@ -41,25 +36,22 @@ import { ArrowLeft, GraduationCap, Dumbbell, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const allTopics = [...icJoshiTopics, ...oxfordMetTopics, ...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...skMetTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...oxfordGenNavTopics, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...keithWilliamRadioNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, ...oxfordRadioNavTopics, ...oxfordInstNavTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic, ...dgcaPreviousMetTopics, ...dgcaPreviousNavTopics, ...dgcaPreviousRegTopics, ...dgcaPreviousTechTopics, ...rtrPreviousAttemptTopics];
+const allTopics = [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic, ...skMetTopics, redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic, ...keithWilliamGenNavTopics, ...keithWilliamInstTopics, ...keithWilliamRadioNavTopics, ...redbirdGenNavTopics, ...redbirdRadioNavTopics, ...redbirdInstTopics, redbirdAirRegTopic, cessna172RTopic, cessna152Topic, piperArcherTopic, da40Topic, da42Topic, pa34220tTopic, tecnamP2006tTopic, tecnamP2008jcTopic, da42AustroTopic, skRegAdditionalTopic, ...dgcaPreviousMetTopics, ...dgcaPreviousNavTopics, ...dgcaPreviousRegTopics, ...dgcaPreviousTechTopics, ...rtrPreviousAttemptTopics];
 
 const TopicSelect = () => {
   const { topicId } = useParams();
   const navigate = useNavigate();
   const topic = allTopics.find((t) => t.id === topicId);
 
-  const isOxford = oxfordMetTopics.some((t) => t.id === topicId);
   const isRtr = rtrTopics.some((t) => t.id === topicId);
   const isRtrBank = rtrQuestionBank1Topic.id === topicId || rtrQuestionBank2Topic.id === topicId || rtrQuestionBank3Topic.id === topicId || rtrQuestionBank4Topic.id === topicId;
   const isRtrPrevAttempt = rtrPreviousAttemptTopics.some((t) => t.id === topicId);
   const isSkMet = skMetTopics.some((t) => t.id === topicId);
-  const isOxfordGenNav = oxfordGenNavTopics.some((t) => t.id === topicId);
   const isRedbirdTech = redbirdTechGeneralTopic.id === topicId;
   const isRedbirdGenNav = redbirdGenNavTopics.some((t) => t.id === topicId);
   const isSkTechQB = skTechQB2Topic.id === topicId || skTechQB3Topic.id === topicId || skTechQB4Topic.id === topicId || skTechQB5Topic.id === topicId;
   const isRedbirdRadNav = redbirdRadioNavTopics.some((t) => t.id === topicId);
   const isRedbirdInst = redbirdInstTopics.some((t) => t.id === topicId);
-  const isOxfordInst = oxfordInstNavTopics.some((t) => t.id === topicId);
   const isKwInst = keithWilliamInstTopics.some((t) => t.id === topicId);
   const isRedbirdAirReg = redbirdAirRegTopic.id === topicId;
   const isKwRadNav = keithWilliamRadioNavTopics.some((t) => t.id === topicId);
@@ -72,7 +64,12 @@ const TopicSelect = () => {
   const isTecnamP2006t = tecnamP2006tTopic.id === topicId;
   const isTecnamP2008jc = tecnamP2008jcTopic.id === topicId;
   const isDa42Austro = da42AustroTopic.id === topicId;
-  const subtitle = isDa42Austro ? "Technical Specific — DA42 Austro" : isTecnamP2008jc ? "Technical Specific — TECHNAM P2008JC" : isTecnamP2006t ? "Technical Specific — TECHNAM P2006T" : isPa34220t ? "Technical Specific — PA-34-220T" : isDa40 ? "Technical Specific — DA 40 (Thielert)" : isDa42 ? "Technical Specific — DA 42 (Thielert)" : isPiperArcher ? "Technical Specific — Piper Archer III DX" : isCessna152 ? "Technical Specific — Cessna 152" : isCessna172R ? "Technical Specific — Cessna 172R" : isRedbirdAirReg ? "Redbird — Air Regulations" : isKwRadNav ? "Extra Practice Questions — Radio Navigation" : isKwInst ? "Extra Practice Questions — Instrument Navigation" : isOxfordInst ? "Practice Questions — Instrument Navigation" : isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isOxfordGenNav ? "Practice Questions — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRtrPrevAttempt ? "RTR — Previous Attempt Questions" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isOxford ? "Practice Questions — Air Meteorology" : "I C Joshi — Air Meteorology";
+  const isDgcaPrevMet = dgcaPreviousMetTopics.some((t) => t.id === topicId);
+  const isDgcaPrevNav = dgcaPreviousNavTopics.some((t) => t.id === topicId);
+  const isDgcaPrevReg = dgcaPreviousRegTopics.some((t) => t.id === topicId);
+  const isDgcaPrevTech = dgcaPreviousTechTopics.some((t) => t.id === topicId);
+  const isKwGenNav = keithWilliamGenNavTopics.some((t) => t.id === topicId);
+  const subtitle = isDa42Austro ? "Technical Specific — DA42 Austro" : isTecnamP2008jc ? "Technical Specific — TECHNAM P2008JC" : isTecnamP2006t ? "Technical Specific — TECHNAM P2006T" : isPa34220t ? "Technical Specific — PA-34-220T" : isDa40 ? "Technical Specific — DA 40 (Thielert)" : isDa42 ? "Technical Specific — DA 42 (Thielert)" : isPiperArcher ? "Technical Specific — Piper Archer III DX" : isCessna152 ? "Technical Specific — Cessna 152" : isCessna172R ? "Technical Specific — Cessna 172R" : isRedbirdAirReg ? "Redbird — Air Regulations" : isKwRadNav ? "Extra Practice Questions — Radio Navigation" : isKwInst ? "Extra Practice Questions — Instrument Navigation" : isSkTechQB ? "Technical General — Question Bank" : isRedbirdTech ? "Technical General — Question Bank" : isRedbirdInst ? "Redbird — Instrument Navigation" : isRedbirdRadNav ? "Redbird — Radio Navigation" : isRedbirdGenNav ? "Redbird — General Navigation" : isKwGenNav ? "Extra Practice Questions — General Navigation" : isSkMet ? "Air Meteorology — Question Bank" : isRtrPrevAttempt ? "RTR — Previous Attempt Questions" : isRtrBank ? "RTR — Question Bank" : isRtr ? "RTR Part 1 (DGCA)" : isDgcaPrevMet ? "DGCA Previous Papers — Met" : isDgcaPrevNav ? "DGCA Previous Papers — Nav" : isDgcaPrevReg ? "DGCA Previous Papers — Reg" : isDgcaPrevTech ? "DGCA Previous Papers — Tech" : "Air Navigation";
 
   if (!topic) {
     return (
