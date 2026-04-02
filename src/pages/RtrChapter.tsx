@@ -926,7 +926,7 @@ const rtrChapters: Record<string, ChapterContent> = {
   },
   "icj-met-instruments": {
     title: "Ch 23 – Met Instruments",
-    subtitle: "I C Joshi — Air Meteorology",
+    subtitle: "Air Meteorology",
     sections: [
       {
         heading: "Table 23.1 – Meteorological Instruments",
