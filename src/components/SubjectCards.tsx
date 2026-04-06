@@ -13,18 +13,12 @@ import { dgcaPreviousNavTopics } from "@/data/dgcaPreviousNavQuestions";
 import { dgcaPreviousRegTopics } from "@/data/dgcaPreviousRegQuestions";
 import { dgcaPreviousTechTopics } from "@/data/dgcaPreviousTechQuestions";
 import { rtrPreviousAttemptTopics } from "@/data/rtrPreviousAttemptQuestions";
-import { keithWilliamGenNavTopics } from "@/data/keithWilliamGenNavQuestions";
-import { keithWilliamInstTopics } from "@/data/keithWilliamInstQuestions";
-import { keithWilliamRadioNavTopics } from "@/data/keithWilliamRadioNavQuestions";
 import { redbirdTechGeneralTopic } from "@/data/redbirdTechGeneralQuestions";
-import { redbirdGenNavTopics } from "@/data/redbirdGenNavQuestions";
-import { redbirdRadioNavTopics } from "@/data/redbirdRadioNavQuestions";
-import { redbirdInstTopics } from "@/data/redbirdInstQuestions";
 import { skTechQB2Topic } from "@/data/skTechQB2Questions";
 import { skTechQB3Topic } from "@/data/skTechQB3Questions";
 import { skTechQB4Topic } from "@/data/skTechQB4Questions";
 import { skTechQB5Topic } from "@/data/skTechQB5Questions";
-import { redbirdAirRegTopic } from "@/data/redbirdAirRegQuestions";
+
 import { skRegAdditionalTopic } from "@/data/skRegQuestions";
 import { cessna172RTopic } from "@/data/cessna172RQuestions";
 import { cessna152Topic } from "@/data/cessna152Questions";
@@ -51,7 +45,7 @@ interface SubTopic {
   chapters: (string | ChapterWithSubs)[];
   books?: string[];
   hasQuiz?: boolean;
-  quizSource?: "rtr" | "sk-met" | "redbird-tech" | "kw-gennav" | "kw-inst" | "kw-radnav" | "redbird-gennav" | "redbird-radnav" | "redbird-inst" | "redbird-airreg" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met" | "dgca-prev-nav" | "dgca-prev-reg" | "dgca-prev-tech" | "rtr-prev-attempt";
+  quizSource?: "rtr" | "sk-met" | "redbird-tech" | "cessna-172r" | "cessna-152" | "piper-archer" | "da-42" | "da-40" | "pa-34-220t" | "tecnam-p2006t" | "tecnam-p2008jc" | "da-42-austro" | "sk-reg-additional" | "dgca-prev-met" | "dgca-prev-nav" | "dgca-prev-reg" | "dgca-prev-tech" | "rtr-prev-attempt";
 }
 
 interface Subject {
@@ -63,114 +57,6 @@ const subjectsData: Subject[] = [
   {
     title: "Air Navigation",
     subtopics: [
-      {
-        title: "General Navigation",
-        chapters: [
-          {
-            name: "Extra Practice Questions",
-            hasQuiz: true,
-            quizSource: "kw-gennav" as const,
-            subChapters: [
-              "CRPS",
-              "Chart Theory",
-              "Circles",
-              "Magnetic Compasses",
-              "Descents",
-              "INS/IRS/FMS",
-              "Plotting",
-              "PSR/PET",
-              "Scale",
-              "Solar System & Time",
-            ],
-          },
-          {
-            name: "Redbird",
-            hasQuiz: true,
-            quizSource: "redbird-gennav" as const,
-            subChapters: [
-              "Earth Basics & Magnetism",
-              "The 1 in 60 Rule",
-              "Convergency & Departure",
-              "Charts & Scale",
-              "Time & Twilight",
-              "CP-PNR",
-              "Payload & Mass Balance",
-              "Performance",
-              "Flight Plan",
-              "Dead Reckoning Navigation",
-            ],
-          },
-        ],
-      },
-      {
-        title: "Radio Navigation",
-        chapters: [
-          {
-            name: "Extra Practice Questions",
-            hasQuiz: true,
-            quizSource: "kw-radnav" as const,
-            subChapters: [
-              "Basic Principles",
-              "VDF (VHF Direction Finder)",
-              "ADF (Automatic Direction Finder)",
-            ],
-          },
-          {
-            name: "Redbird",
-            hasQuiz: true,
-            quizSource: "redbird-radnav" as const,
-            subChapters: [
-              "Basic Radio & VDF",
-              "NDB & ADF",
-              "VOR",
-              "Radar Basics",
-              "DME & SSR",
-              "Airborne Weather Radar (AWR)",
-              "Instrument Landing System (ILS)",
-            ],
-          },
-        ],
-      },
-      {
-        title: "Instrument Navigation",
-        chapters: [
-          {
-            name: "Redbird",
-            hasQuiz: true,
-            quizSource: "redbird-inst" as const,
-            subChapters: [
-              "Pressure Instruments",
-              "Gyro Instruments",
-              "Magnetic Instruments",
-            ],
-          },
-          {
-            name: "Extra Practice Questions",
-            hasQuiz: true,
-            quizSource: "kw-inst" as const,
-            subChapters: [
-              "Pitot Statics",
-              "Barometric Altimeters",
-              "Radio Altimeters",
-              "Vertical Speed Indicator (VSI)",
-              "Air Speed Indicator (ASI)",
-              "Airspeeds",
-              "Mach Meters",
-              "Gyroscopes",
-              "Attitude Indicators",
-              "Turn & Slip Indicators",
-              "Magnetic Compass",
-              "INS/IRS/FMS",
-              "EFIS",
-              "EICAS/ECAM",
-              "Autoflight",
-              "Flight Director",
-              "Engines & Temperature",
-              "Warning & Recording Systems",
-            ],
-          },
-        ],
-      },
       {
         title: "DGCA Previous Papers",
         chapters: dgcaPreviousNavTopics.map((t) => t.title),
@@ -199,14 +85,6 @@ const subjectsData: Subject[] = [
   {
     title: "Air Regulations",
     subtopics: [
-      {
-        title: "Redbird Question Bank",
-        hasQuiz: true,
-        quizSource: "redbird-airreg" as const,
-        chapters: [
-          "Redbird Question Bank",
-        ],
-      },
       {
         title: "Additional Questions",
         hasQuiz: true,
