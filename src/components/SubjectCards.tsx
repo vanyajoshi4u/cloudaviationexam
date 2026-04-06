@@ -337,12 +337,6 @@ const SubjectCards = () => {
       .toLowerCase();
 
   const getNestedTopicSource = (quizSource?: SubTopic["quizSource"]) => {
-    if (quizSource === "kw-gennav") return keithWilliamGenNavTopics;
-    if (quizSource === "redbird-gennav") return redbirdGenNavTopics;
-    if (quizSource === "redbird-radnav") return redbirdRadioNavTopics;
-    if (quizSource === "redbird-inst") return redbirdInstTopics;
-    if (quizSource === "kw-inst") return keithWilliamInstTopics;
-    if (quizSource === "kw-radnav") return keithWilliamRadioNavTopics;
     if (quizSource === "redbird-tech") return [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic];
     if (quizSource === "cessna-172r") return [cessna172RTopic];
     if (quizSource === "cessna-152") return [cessna152Topic];
@@ -517,7 +511,7 @@ const SubjectCards = () => {
                                 }
 
                                 const chapterName = chapter as string;
-                                const topicSource = subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rtr-prev-attempt" ? rtrPreviousAttemptTopics : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "dgca-prev-met" ? dgcaPreviousMetTopics : subtopic.quizSource === "dgca-prev-nav" ? dgcaPreviousNavTopics : subtopic.quizSource === "dgca-prev-reg" ? dgcaPreviousRegTopics : subtopic.quizSource === "dgca-prev-tech" ? dgcaPreviousTechTopics : subtopic.quizSource === "redbird-radnav" ? redbirdRadioNavTopics : subtopic.quizSource === "redbird-inst" ? redbirdInstTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "redbird-gennav" ? redbirdGenNavTopics : subtopic.quizSource === "redbird-airreg" ? [redbirdAirRegTopic] : subtopic.quizSource === "sk-reg-additional" ? [skRegAdditionalTopic] : subtopic.quizSource === "kw-radnav" ? keithWilliamRadioNavTopics : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : subtopic.quizSource === "pa-34-220t" ? [pa34220tTopic] : subtopic.quizSource === "tecnam-p2006t" ? [tecnamP2006tTopic] : subtopic.quizSource === "tecnam-p2008jc" ? [tecnamP2008jcTopic] : subtopic.quizSource === "da-42-austro" ? [da42AustroTopic] : [];
+                                const topicSource = subtopic.quizSource === "rtr" ? [...rtrTopics, rtrQuestionBank1Topic, rtrQuestionBank2Topic, rtrQuestionBank3Topic, rtrQuestionBank4Topic] : subtopic.quizSource === "rtr-prev-attempt" ? rtrPreviousAttemptTopics : subtopic.quizSource === "sk-met" ? skMetTopics : subtopic.quizSource === "dgca-prev-met" ? dgcaPreviousMetTopics : subtopic.quizSource === "dgca-prev-nav" ? dgcaPreviousNavTopics : subtopic.quizSource === "dgca-prev-reg" ? dgcaPreviousRegTopics : subtopic.quizSource === "dgca-prev-tech" ? dgcaPreviousTechTopics : subtopic.quizSource === "redbird-tech" ? [redbirdTechGeneralTopic, skTechQB2Topic, skTechQB3Topic, skTechQB4Topic, skTechQB5Topic] : subtopic.quizSource === "sk-reg-additional" ? [skRegAdditionalTopic] : subtopic.quizSource === "cessna-172r" ? [cessna172RTopic] : subtopic.quizSource === "cessna-152" ? [cessna152Topic] : subtopic.quizSource === "piper-archer" ? [piperArcherTopic] : subtopic.quizSource === "da-40" ? [da40Topic] : subtopic.quizSource === "da-42" ? [da42Topic] : subtopic.quizSource === "pa-34-220t" ? [pa34220tTopic] : subtopic.quizSource === "tecnam-p2006t" ? [tecnamP2006tTopic] : subtopic.quizSource === "tecnam-p2008jc" ? [tecnamP2008jcTopic] : subtopic.quizSource === "da-42-austro" ? [da42AustroTopic] : [];
                                 const quizTopic = subtopic.hasQuiz
                                   ? topicSource.find((t) => t.title === chapterName)
                                   : null;
